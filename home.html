@@ -4,9 +4,6 @@
         <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
         <script src="https://cdn.firebase.com/libs/firebaseui/4.0.0/firebaseui.js"></script>
-		
-        
-
         <link rel="manifest" href="/manifest.json">
         <link rel="stylesheet" href="styles.css">
     </head>
@@ -16,15 +13,22 @@
 
         <div class="content">
 
-            <button onclick="googleLogin()">
-                Login with Google
+            <form id="add-site-form">
+                <input type="text" name="name" placeholder="Site name">
+                <input type="text" name="city" placeholder="Site city">
+                <button>Add Site</button>
+            </form>
+
+            <ul id="site-list"></ul>
+
+            <button onclick="googleLogout()">
+                Log out of Google
             </button>
 
         </div>
-
         <script>
-            // Your web app's Firebase configuration
-            var firebaseConfig = {
+             // Your web app's Firebase configuration
+             var firebaseConfig = {
               apiKey: "AIzaSyDxnwrW4yBF4d0QDXoFSCF9FBNDauq68gE",
               authDomain: "jewish-trail.firebaseapp.com",
               databaseURL: "https://jewish-trail.firebaseio.com",
@@ -34,26 +38,11 @@
               appId: "1:1060927552672:web:7288a483d83a16b7da9dc5",
               measurementId: "G-D4K9DSRZ0K"
             };
-            firebase.initializeApp(firebaseConfig);
-            const db = firebase.firestore();
-             
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const db = firebase.firestore();           
         </script>
-		    <script src="worker.js"></script>
-		    <script>
-    		  if ('serviceWorker' in navigator) {
-    			window.addEventListener('load', function() {
-    			  navigator.serviceWorker.register('worker.js').then(function(registration) {
-    				console.log('Worker registration successful', registration.scope);
-    			  }, function(err) {
-    				console.log('Worker registration failed', err);
-    			  }).catch(function(err) {
-    				console.log(err);
-    			  });
-    			});
-    		  } else {
-    			console.log('Service Worker is not supported by browser.');
-    		  }
-    		</script>
-        <script src="app.js"></script>
+        <script src="personal_info.js"></script>
     </body>
 </html>

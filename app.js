@@ -1,9 +1,9 @@
 
 const siteList = document.querySelector('#site-list');
-const form = document.querySelector('#add-site-form');
+//const form = document.querySelector('#add-site-form');
 
 // create element & render 
-function renderSite(doc){
+/* function renderSite(doc){
     let li = document.createElement('li');
     let name = document.createElement('span');
     let city = document.createElement('span');
@@ -27,7 +27,7 @@ function renderSite(doc){
         db.collection('data collection').doc(id).delete();
     });
 }
-
+ */
 // getting data
 // db.collection('cafes').orderBy('city').get().then(snapshot => {
 //     snapshot.docs.forEach(doc => {
@@ -36,7 +36,8 @@ function renderSite(doc){
 // });
 
 // saving data
-form.addEventListener('submit', (e) => {
+
+/* form.addEventListener('submit', (e) => {
     e.preventDefault();
     db.collection('data collection').add({
         name: form.name.value,
@@ -45,9 +46,9 @@ form.addEventListener('submit', (e) => {
     form.name.value = '';
     form.city.value = '';
 });
-
+ */
 // real-time listener
-db.collection('data collection').orderBy('city').onSnapshot(snapshot => {
+/* db.collection('data collection').orderBy('city').onSnapshot(snapshot => {
     let changes = snapshot.docChanges();
     changes.forEach(change => {
         console.log(change.doc.data());
@@ -58,9 +59,9 @@ db.collection('data collection').orderBy('city').onSnapshot(snapshot => {
             siteList.removeChild(li);
         }
     });
-});
+}); */
 
-function googleLogin3(){
+/* function googleLogin3(){
     console.log("in")
     var provider = new firebase.auth.GoogleAuthProvider();
     console.log("in3")
@@ -80,7 +81,7 @@ function googleLogin3(){
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
       });
-}
+} */
 
 
 function googleLogin(){
@@ -104,23 +105,16 @@ function googleLogin(){
 
 
 }
-function googleLogout(){
-    alert("googleLogout start");
-    //gapi.auth2.getAuthInstance().signOut();
-    //OR (both are same)
-    var auth2 = gapi.auth2.getAuthInstance();
-	    auth2.signOut().then(function () {
-       	console.log('User signed out.');
-	   });   
-    alert("googleLogout done."); 
 
-}
+
 //Handle Account Status
-//firebase.auth().onAuthStateChanged(user => {
-//    if(user) {
-//      window.location = 'home.html'; //After successful login, user will be redirected to home.html
-//    }
-//  });
+firebase.auth().onAuthStateChanged(user => {
+    if(user) {
+      sessionStorage.setItem('user_id', user.uid)
+      console.log(user.uid)  
+      window.location = 'home.html'; //After successful login, user will be redirected to home.html
+    }
+  });
 
 
 // updating records (console demo)

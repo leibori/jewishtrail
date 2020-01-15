@@ -89,6 +89,7 @@ form:after{
 }
 
 button{
+    margin: 20;
     border: 0;
     background: #fff;
     border-radius: 10px;
@@ -98,5 +99,7 @@ button{
     font-weight: bold;
     font-family: ubuntu;
     letter-spacing: 1px;
+    
     color: #999;
+    text-align: center;
 }   
