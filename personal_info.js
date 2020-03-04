@@ -4,6 +4,17 @@ const form = document.querySelector('#add-site-form');
 const user_id = sessionStorage.getItem('user_id');
 console.log(user_id)
 
+// auth.onAuthStateChanged(user => {
+//     if(user) {
+//         user.getIdTokenResult().then(idTokenResult => {
+//             user.admin = idTokenResult.claims.admin;
+//             setupUI(user);
+//         })
+//         db.collection('accounts').onSnapshot(snapshot => {
+//         })
+//     }
+// })
+
 // create element & render 
 function renderSite(doc){
     let li = document.createElement('li');
@@ -32,20 +43,21 @@ function renderSite(doc){
 }
 
 // saving data
-form.addEventListener('submit', (e) => {
-    console.log("here")
-    e.preventDefault();
-    db.collection('data collection').add({
-        name: form.name.value,
-        city: form.city.value,
-        user_uid:  user_id
-    });
-    form.name.value = '';
-    form.city.value = '';
-});
+// form.addEventListener('submit', (e) => {
+//     console.log("here")
+//     e.preventDefault();
+//     db.collection('data collection').add({
+//         name: form.name.value,
+//         city: form.city.value,
+//         user_uid:  user_id
+//     });
+//     form.name.value = '';
+//     form.city.value = '';
+// });
 
 // real-time listener
 db.collection('data collection').where('user_uid','==',user_id).onSnapshot(snapshot => {
+// db.collection('data collection').where({user_uid:user_id}).onSnapshot(snapshot => {
     let changes = snapshot.docChanges();
     changes.forEach(change => {
         console.log(change.doc.data());
@@ -59,7 +71,7 @@ db.collection('data collection').where('user_uid','==',user_id).onSnapshot(snaps
 });
 
 
-function googleLogout(){
+function logout(){
     firebase.auth().signOut().then(function () {
         console.log('User signed out.');
         window.location = 'index.html';
