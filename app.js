@@ -85,21 +85,19 @@ const siteList = document.querySelector('#site-list');
 
 
 function googleLogin(){
-   const provider = new firebase.auth.GoogleAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then(result =>{
         const user = result.user;
-        console.log(user)
+        console.log(user.email);
         const userUid = user.uid;
         const displayName = user.displayName;
         const account = {
             useruid: userUid,
             displayName: displayName,
             calendarEvents: []
-          }
-
+        }
 
         firebase.firestore().collection('accounts').add(account); 
-
 
     }). catch(console.log)
 
