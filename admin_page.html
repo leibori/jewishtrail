@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+        <script src="https://cdn.firebase.com/libs/firebaseui/4.0.0/firebaseui.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+
+        <h1>Jewish Trail</h1>
+
+        <div class="content">
+
+            <form id="add-site-form">
+                <input type="text" name="name" placeholder="Site name">
+                <input type="text" name="city" placeholder="Site city">
+                <!-- <input type="text" name="coordinates" placeholder="coordinates">
+                <input type="image" name="image" placeholder="placeholder_image"> -->
+                <input type="text" name="information" placeholder="information">
+                <button>Add Site</button>
+            </form>
+
+            <ul id="site-list"></ul>
+
+            <!-- <button onclick="googleLogout()">
+                Log out of Google
+            </button> -->
+
+        </div>
+        <script>
+             // Your web app's Firebase configuration
+             var firebaseConfig = {
+              apiKey: "AIzaSyDxnwrW4yBF4d0QDXoFSCF9FBNDauq68gE",
+              authDomain: "jewish-trail.firebaseapp.com",
+              databaseURL: "https://jewish-trail.firebaseio.com",
+              projectId: "jewish-trail",
+              storageBucket: "jewish-trail.appspot.com",
+              messagingSenderId: "1060927552672",
+              appId: "1:1060927552672:web:7288a483d83a16b7da9dc5",
+              measurementId: "G-D4K9DSRZ0K"
+            };
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            const db = firebase.firestore();           
+        </script>
+        <script src="admin_functionality.js"></script>
+    </body>
+</html>
