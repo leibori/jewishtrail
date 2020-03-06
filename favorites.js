@@ -1,22 +1,7 @@
+// Get the user's id.
 const user_id = sessionStorage.getItem('user_id');
 
-// const adminItems = document.querySelectorAll('.admin');
-// const loggedInLinks = document.querySelectorAll('.logged-in');
-
-// const setupUI = (user) => {
-//     if (user) {
-//         console.log("logged in");
-//       if (user.admin) {
-//         adminItems.forEach(item => item.style.display = 'block');
-//       }
-//       // toggle user UI elements 
-//       loggedInLinks.forEach(item => item.style.display = 'block');
-//     } else {
-//       // toggle user elements
-//       adminItems.forEach(item => item.style.display = 'none');
-//       loggedInLinks.forEach(item => item.style.display = 'none');
-//     }
-// };
+// Pulls the user's favorite sites based on his id from the database and show them.
 const showFavorites = (user) => {
     console.log(user.uid)
     db.collection('user info').doc(user.uid).get().then(doc => {
@@ -29,6 +14,7 @@ const showFavorites = (user) => {
     })
 }
 
+// If the user's status has changed then check his status and show his favorites.
 auth.onAuthStateChanged(user => {
     if(user) {
         showFavorites(user)

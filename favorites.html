@@ -16,17 +16,18 @@
             <!-- <form id="add-site-form">
                 <input type="text" name="name" placeholder="Site name">
                 <input type="text" name="city" placeholder="Site city">
-                <button>Sear Site</button>
+                <button>Add Site</button>
             </form> -->
 
-            <ul id="site-list"></ul>
+            <!-- <ul id="site-list"></ul> -->
 
+            <!-- This button returns the user to the "home page". -->
             <button onclick="window.location.href='home.html'">Return</button>
 
         </div>
 
         <script>
-             // Your web app's Firebase configuration
+             // Firebase configuration.
              var firebaseConfig = {
               apiKey: "AIzaSyDxnwrW4yBF4d0QDXoFSCF9FBNDauq68gE",
               authDomain: "jewish-trail.firebaseapp.com",
@@ -40,7 +41,11 @@
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
             }
+
+            // Sets up access to the databases.
             const db = firebase.firestore();  
+
+            // Sets up access to the authentications functionalities.
             auth = firebase.auth();         
         </script>
 
