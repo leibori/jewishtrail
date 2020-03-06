@@ -3,39 +3,59 @@ const form = document.querySelector('#add-site-form');
 const user_id = sessionStorage.getItem('user_id');
 console.log(user_id)
 
+// Group elements in home.html file based on logged user or admin user.
 const adminItems = document.querySelectorAll('.admin');
-const loggedInLinks = document.querySelectorAll('.logged-in');
+const loggedInItems = document.querySelectorAll('.logged-in');
 
+// This function sets elements to be usable based on the status of the user (guest, logged or admin).
 const setupUI = (user) => {
-    console.log("check user");
+    // If user if logged in.
     if (user) {
-        console.log("logged in");
-      if (user.admin) {
-        adminItems.forEach(item => item.style.display = 'block');
-      }
-      // toggle user UI elements 
-      loggedInLinks.forEach(item => item.style.display = 'block');
+
+        // If user is admin.
+        if (user.admin) {
+            // Show admin elements.
+            adminItems.forEach(item => item.style.display = 'block');
+        
+        // Otherwise user is just logged.
+        } else {
+            // Hide admin elements.
+            adminItems.forEach(item => item.style.display = 'none');
+        }
+
+        // Show logged user UI elements.
+        loggedInItems.forEach(item => item.style.display = 'block');
+
+    // Otherwise user is a guest.
     } else {
-      // toggle user elements
+
+      // Hide both admin and logged user elements
       adminItems.forEach(item => item.style.display = 'none');
-      loggedInLinks.forEach(item => item.style.display = 'none');
+      loggedInItems.forEach(item => item.style.display = 'none');
     }
 };
 
+// This function executes when a user login status changes.
 auth.onAuthStateChanged(user => {
-    if(user) {
-        user.getIdTokenResult().then(idTokenResult => {
-            user.admin = idTokenResult.claims.admin;
-            console.log(user.admin);
-            setupUI(user);
-        });
-        // db.collection('accounts').onSnapshot(snapshot => {
+    
+    // Sets whether or not the user is admin. And execute a function that sets the UI elements.
+    user.getIdTokenResult().then(idTokenResult => {
+        user.admin = idTokenResult.claims.admin;
+        console.log("Is the user and admin?" + user.admin);
+        setupUI(user);
+    });
+    // db.collection('accounts').onSnapshot(snapshot => {
 
-        // })
-    }
+    // })
 })
 
-
+// This function is logging out the user.
+function logout(){
+    firebase.auth().signOut().then(function () {
+        console.log('User signed out.');
+        window.location = 'index.html';
+    });   
+}
 
 // create element & render 
 // function renderSite(doc){
@@ -91,11 +111,3 @@ auth.onAuthStateChanged(user => {
 //         }
 //     });
 // });
-
-
-function logout(){
-    firebase.auth().signOut().then(function () {
-        console.log('User signed out.');
-        window.location = 'index.html';
-    });   
-}

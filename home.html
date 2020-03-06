@@ -14,26 +14,22 @@
 
         <div class="content">
 
-            <!-- <form id="add-site-form">
-                <input type="text" name="name" placeholder="Site name">
-                <input type="text" name="city" placeholder="Site city">
-                <button>Add Site</button>
-            </form> -->
-
-            <ul id="site-list"></ul>
-
+            <!-- This butten executes a function that execute the log-out. -->
             <button onclick="logout()">Logout</button>
 
+            <!-- This butten takes the user to the "about page", meaning "about.html". -->
             <button onclick="window.location.href='about.html'">About</button>
 
+            <!-- This butten takes an admin to it's "managing page", meaning "admin_page.html". -->
             <button class="manage admin" style="display: none;" onclick="window.location.href='admin_page.html'">Manage</button>
 
+            <!-- This butten takes a logged user to it's "favorites page", meaning "favorites.html". -->
             <button class="favorites logged-in" style="display: none;" onclick="window.location.href='favorites.html'">Favorites</button>
 
         </div>
 
         <script>
-             // Your web app's Firebase configuration
+             // Firebase configuration.
              var firebaseConfig = {
               apiKey: "AIzaSyDxnwrW4yBF4d0QDXoFSCF9FBNDauq68gE",
               authDomain: "jewish-trail.firebaseapp.com",
@@ -47,8 +43,14 @@
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
             }
-            const db = firebase.firestore();  
+
+            // Sets up access to the databases.
+            const db = firebase.firestore();
+
+            // Sets up access to the backend functions.
             const functions = firebase.functions();
+
+            // Sets up access to the authentications functionalities.
             auth = firebase.auth();         
         </script>
 
