@@ -11,8 +11,7 @@ class SignUp extends Component {
       isLoggenIn: false,
       email: '',
       password: '',
-      first_name:'',
-      last_name:''
+      user_name:'',
     };
   }
 
@@ -47,14 +46,10 @@ class SignUp extends Component {
             <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
           </div>
           <div className="for-group">
-            <label >first_name</label>
-            <input  value={this.state.first_name} onChange={this.handleChange} type="text" name="first_name" className="form-control" id="exampleFirstName" placeholder="First Name" />
+            <label >user_name</label>
+            <input  value={this.state.user_name} onChange={this.handleChange} type="text" name="user_name" className="form-control" id="exampleFirstName" placeholder="user Name" />
           </div>
-          <div className="for-group">
-            <label >last_name</label>
-            <input  value={this.state.last_name} onChange={this.handleChange} type="text" name="last_name" className="form-control" id="exampleLastName" placeholder="Last Name" />
-          </div>
-          <button onClick={(e) => signup(e, this.state.email, this.state.password, this.state.first_name, this.state.last_name)} className="btn btn-success">Signup</button>
+          <button onClick={(e) => signup(e, this.state.email, this.state.password, this.state.user_name)} className="btn btn-success">Signup</button>
         </form>
       </div>
     );
