@@ -40,5 +40,20 @@ function addToList(siteList, doc){
         tags: doc.data().tags,
         id: doc.id
     })
+}
 
+export async function findSitesByCountryForMarker(country) {
+    var siteList = []
+    const snapshot = await myDatabase.collection('sites').where("country", '==', country).get()
+    snapshot.docs.forEach(doc => {
+        var data = doc.data()
+        siteList.push({ id: doc.id,
+                        name: data.name,
+                        address: data.address,
+                        partialInfo: data.partialInfo,
+                        latitude: data.latitude,
+                        longitude: data.longitude
+                        })
+    })
+    return siteList
 }
