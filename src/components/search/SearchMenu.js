@@ -4,6 +4,8 @@ import {findSites} from './SearchUtils'
 import SiteComponent from '../sites/siteComponent'
 import {myFirebase} from '../firebase/firebase'
 import {getUserClaims, updateUserFavorites, getFavoritesIDs} from '../firebase/FirebaseUtilities'
+// import ReactPaginate from 'react-paginate'
+import { PaginatedList } from 'react-paginated-list'
 
 const options = [
     { value: 'tags', label: 'Tags'},
@@ -23,7 +25,7 @@ class SearchMenu extends Component {
             searchVal: '',
             topDownValue: 'tags',
             siteList: [],
-            favoriteList: []
+            favoriteList: [],
         }
 
         this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
@@ -78,32 +80,38 @@ class SearchMenu extends Component {
             //get favorites from user and save to this.state.favoriteList
        })
     }
-    
     render() {
+        const { siteList } = this.state;
+        // console.log(siteList);
+        const mapping = (list) => list.map((site, i) => {
+            return  <div key={i} >
+                            <SiteComponent key={i} props={site}/>
+                            {this.renderButton(site.id) && <button onClick={() => this.addSiteToFavorites(site.id)}>Add to favorites</button>}
+                        </div>
+        });
+        //if site-id is not in favoritesList show button to add to favorites
+      
+
         return (
             <div>
+                {/* Search site form */}
                 <form ref={this.form} id="search-form">
                     <div className="search-field">
                         <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
                     </div>
-                    <Select ref={this.dropList} onChange={this.updateTopDownhValue} options = {options} />
+                    <Select ref={this.dropList} defaultValue={options[0]} onChange={this.updateTopDownhValue} options={options} />
                     <div>
                         <button onClick={this.onSearchButtonClicked}>Search</button>
                     </div>
                     <p className="error pink-text center-align"></p>
                 </form>
                 
+                {/* Results */}
                 <div className="container">
-                    {this.state.siteList.map((site, i) => {
-                        if(this.renderButton(site.id)) {
-                            return  <div key={i} >
-                                        <SiteComponent props={site}/>
-                                        <button onClick={() => this.addSiteToFavorites(site.id)}>Add to favorites</button>
-                                    </div>
-                        }
-                        return <SiteComponent key={i} props={site}/>
-                    //if site-id is not in favoritesList show button to add to favorites
-                  })}
+                    {siteList.length != 0 && <PaginatedList
+                        list={siteList}
+                        itemsPerPage={3}
+                        renderList={mapping}/>}
                 </div>
             </div>
         )    
