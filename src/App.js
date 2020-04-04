@@ -8,6 +8,7 @@ import SignUp from './components/login/SignUp'
 import ChangeSite from './components/admin/ChangeSite';
 import CreateSite from './components/admin/CreateSite';
 import DeleteSite from './components/admin/DeleteSite';
+import AdminPage from './components/admin/AdminPage';
 import AuthMenu from './components/admin/AuthMenu';
 import SearchMenu from './components/search/SearchMenu';
 import About from './components/main-menu/about';
@@ -17,6 +18,8 @@ import LogOut from './components/login/LogOut';
 import {myFirebase} from './components/firebase/firebase';
 import Favorites from './components/favorites/Favorites';
 import SitePage from './components/sites/SitePage'
+import RoadForm from './components/road/RoadForm';
+import UpdateForm from './components/sites/UpdateForm'
 
 class App extends Component {
 
@@ -60,7 +63,6 @@ class App extends Component {
             <script src="https://cdn.firebase.com/libs/firebaseui/4.0.0/firebaseui.js"></script>
             <link rel="manifest" href="/manifest.json"></link>
             <link rel="stylesheet" href="styles.css"></link>
-            <h1>Jewish Trail</h1>
           </header>
           <Switch>
             <Route path='/' exact component={Home} />
@@ -71,12 +73,15 @@ class App extends Component {
             <Route path='/adminPage' component={AdminMenu} />
             <Route path='/createSite' component={CreateSite} />
             <Route path='/deleteSite' component={DeleteSite} />
-            <Route path='/updateSite' component={ChangeSite} />
+            <Route exact path='/updateSite' component={ChangeSite} />
+            <Route exact path='/updateSite/:id' component={UpdateForm} />
             <Route path='/auth' component={AuthMenu} />
             <Route path='/searchSite' component={SearchMenu} />
             <Route path='/favorites' component={Favorites} />
             <Route path='/about' component={About} />
             <Route exact path='/site/:id' component={SitePage} />
+            <Route exact path='/RoadForm' component={RoadForm} />
+            <Route exact path='/admin' component={AdminPage} />
           </Switch>
         </div>
       </BrowserRouter>
