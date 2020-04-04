@@ -7,19 +7,33 @@ import { myDatabase } from './firebase'
 
 export async function createNewSite(site){
     await myDatabase.collection('sites').add({
-        city: site.city,
-        country: site.country,
-        name: site.name,
-        tags: site.tags
+      name: site.name,
+      city: site.city,
+      country: site.country,
+      tags: site.tags,
+      adress: site.adress,
+      externalSourceUrl: site.externalSourceUrl,
+      imageUrl: site.imageUrl,
+      fullInfo: site.fullInfo,
+      partialInfo: site.partialInfo,
+      latitude: site.latitude,
+      longitude: site.longitude
     })
 }
 
 export async function UpdateSite(site){
     await myDatabase.collection('sites').doc(site.id).update({
-        city: site.city,
-        country: site.country,
-        name: site.name,
-        tags: site.tags
+      name: site.name,
+      city: site.city,
+      country: site.country,
+      tags: site.tags,
+      adress: site.adress,
+      externalSourceUrl: site.externalSourceUrl,
+      imageUrl: site.imageUrl,
+      fullInfo: site.fullInfo,
+      partialInfo: site.partialInfo,
+      latitude: site.latitude,
+      longitude: site.longitude
     })
 }
 
@@ -82,5 +96,13 @@ export async function updateUserFavorites(userid, newFavorites) {
 }
 
 export async function getSiteByID(siteid) {
-    return await (await myDatabase.collection('sites').doc(siteid).get()).data()
+    return  (await myDatabase.collection('sites').doc(siteid).get()).data()
+}
+
+export async function createNewRoad( {siteListID,roadName,roadDescription} ){
+    await myDatabase.collection('roads').add({
+        roadName: roadName,
+        description: roadDescription,
+        siteList: siteListID,
+    })
 }
