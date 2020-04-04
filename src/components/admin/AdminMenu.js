@@ -18,10 +18,10 @@ class AdminMenu extends Component {
   render() {
     return (
     <div className="container">
-      <h5 className="grey-text text-darken-3">Choose Option:</h5>
-      <button id='create'><Link to="/createSite">Create new Site</Link></button>
-      <button id='delete'><Link to="/deleteSite">Delete Site</Link></button>
-      <button id='change'><Link to="/updateSite">Update Site</Link></button> 
+      <h5 className="black-text text-darken-3" style={{marginLeft:"-210px"}}>Welcome to Site Management. choose an Option:</h5>
+      <button className="btn pink lighten-1" id='create'><Link to="/createSite" className="white-text">Create new Site</Link></button>
+      <button className="btn pink lighten-1" style={{marginLeft:"30px"}} id='delete'><Link className="white-text" to="/deleteSite">Delete Site</Link></button>
+      <button className="btn pink lighten-1" style={{marginLeft:"30px"}} id='change'><Link className="white-text" to="/updateSite">Update Site</Link></button>
     </div>
     )    
   }

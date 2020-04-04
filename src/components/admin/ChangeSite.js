@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import Select from 'react-select'
 import {findSites} from '../search/SearchUtils'
 import SiteComponent from '../sites/siteComponent'
-import UpdateForm from '../sites/UpdateForm'
+// import UpdateForm from '../sites/UpdateForm'
+// import {getSiteByID} from '../firebase/FirebaseUtilities'
 
 const options = [
   { value: 'tags', label: 'Tags'},
@@ -30,17 +31,22 @@ class ChangeSite extends Component {
     this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
 };
 
-UpdateSite(e,index){
-  e.preventDefault();
-  const site = this.state.siteList[index]
-  this.setState({changingFlag: true, chosenSite:site})
-}
+// async UpdateSite(e,index){
+//   e.preventDefault();
+//   const siteID = this.state.siteList[index].id
+//   //let site = await getSiteByID(siteID);
+//   //site.id = siteID;
+//   //setState({changingFlag: true, chosenSite:site})
+//   this.setState({changingFlag: true, chosenSite:siteID})
+// }
 
 
 async onSearchButtonClicked(e) {
     e.preventDefault();
     const result = await findSites(this.state.topDownValue, this.state.searchVal)
-    console.log(result)
+    if(!result.length){
+      alert("no Result")
+    }
     this.setState({siteList: result})
 }
 
@@ -54,9 +60,9 @@ updateTopDownhValue(e) {
 
 
 render() {
-  if(this.state.changingFlag){
-    return <UpdateForm props={this.state.chosenSite}/>
-  }
+  // if(this.state.changingFlag){
+  //   return <UpdateForm props={this.state.chosenSite}/>
+  // }
     return (
         <div>
             <h5 className="grey-text text-darken-3">Search Site to Update</h5>
@@ -64,7 +70,7 @@ render() {
                 <div className="search-field">
                     <textarea ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
                 </div>
-                <Select ref={this.dropList} onChange={this.updateTopDownhValue} options = {options} />
+                <Select ref={this.dropList} defaultValue={options[0]} onChange={this.updateTopDownhValue} options = {options} />
                 <button onClick={this.onSearchButtonClicked}>Search</button>
                 <p className="error pink-text center-align"></p>
             </form>
@@ -73,12 +79,12 @@ render() {
                 {this.state.siteList.map((site, i) => (
                   <li key = {i}>
                   <SiteComponent props={site}/>
-                  <button onClick={(e) => this.UpdateSite(e,i)}>Update Site</button>
+                  <button><Link to={'/updateSite/'+site.id}>update Site</Link></button>
                   </li>
                 ))
                 }
             </ul>
-            <button><Link to="/adminPage">Return to Admin Menu</Link></button>
+            <button className="btn pink lighten-1" type="button"><Link className="white-text" to="/adminPage">Return to Admin Menu</Link></button>
         </div>
     )    
   }

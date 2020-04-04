@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {myFunctions} from '../firebase/firebase'
+import { Link } from 'react-router-dom'
 
 class AdminMenu extends Component {
   state = {
@@ -19,7 +20,8 @@ class AdminMenu extends Component {
       this.setState({email:""})
       const deleteUserByEmails = myFunctions.httpsCallable('deleteUserByEmails');
       deleteUserByEmails({email: email}).then(result => {
-        alert(result)    
+        alert(result.data.message)    
+        this.props.history.push("/admin")    
       })
   }
 
@@ -29,7 +31,9 @@ class AdminMenu extends Component {
     this.setState({email:""})
     const addAdminRole = myFunctions.httpsCallable('addAdminRole');
     addAdminRole({email: email}).then(result => {
-        alert(result)    
+      console.log(result)
+        alert(result.data.message)    
+        this.props.history.push("/admin")
     })
   }
 
@@ -46,25 +50,26 @@ class AdminMenu extends Component {
          return(
             <div className="input-field">
             <input id="email" onChange={this.handleChange}placeholder="Email Address" value={this.state.email}></input>
-            <button id='deleteUser' onClick={this.deleteUser}>Delete User Via Email</button>
-            <button id='' onClick={this.activeAction}>Retrun</button>
+            <button className="btn pink lighten-1" id='deleteUser' onClick={this.deleteUser}>Delete User Via Email</button>
+            <button style={{marginLeft:"50px"}} className="btn pink lighten-1" id='' onClick={this.activeAction}>Retrun</button>
             </div>
          )   
     } else if (action === "createAdmin"){
         return (
             <div className="input-field">
             <input id="email" onChange={this.handleChange} placeholder="Email Address" value={this.state.email}></input>
-            <button id='deleteUser' onClick={this.createAdmin}>Create Admin Via Email</button>
-            <button id='' onClick={this.activeAction}>Retrun</button>
+            <button className="btn pink lighten-1" id='deleteUser' onClick={this.createAdmin}>Create Admin Via Email</button>
+            <button style={{marginLeft:"50px"}} className="btn pink lighten-1" id='' onClick={this.activeAction}>Retrun</button>
             </div>
         )
     }    
     return (
     <div className="container">
-      <h5 className="grey-text text-darken-3">Choose Option:</h5>
-      <button id='createAdmin' onClick={this.activeAction}>Add Admin Via Email</button>
-      <button id='deleteUser' onClick={this.activeAction}>Delete User</button>
+      <h5 className="black-text text-darken-3">Admin Authorities Options:</h5>
+      <button className="btn pink lighten-1" id='createAdmin' onClick={this.activeAction}>Add Admin Via Email</button>
+      <button style={{marginLeft:"30px"}} className="btn pink lighten-1" id='deleteUser' onClick={this.activeAction}>Delete User</button>
       <p>please choose option</p>
+      <Link className="btn blue lighten-1" to='/admin'>Return to Admin Menu</Link>
     </div>
     )    
   }

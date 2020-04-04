@@ -64,7 +64,7 @@ render() {
                 <div className="search-field">
                     <textarea ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
                 </div>
-                <Select ref={this.dropList} onChange={this.updateTopDownhValue} options = {options} />
+                <Select ref={this.dropList} defaultValue={options[0]} onChange={this.updateTopDownhValue} options = {options} />
                 <button onClick={this.onSearchButtonClicked}>Search</button>
                 <p className="error pink-text center-align"></p>
             </form>
@@ -78,7 +78,7 @@ render() {
                 ))
                 }
             </ul>
-            <button><Link to="/adminPage">Return to Admin Menu</Link></button>
+            <button className="btn pink lighten-1"><Link className="white-text" to="/adminPage">Return to Admin Menu</Link></button>
         </div>
     )    
   }
