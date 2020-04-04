@@ -3,19 +3,29 @@ import { Link } from 'react-router-dom';
 import {myFirebase} from '../firebase/firebase';
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
+import {getUserClaims} from '../firebase/FirebaseUtilities'
+import AdminLinks from './AdminLinks';
 
 
 class Navbar extends Component {
   state=({
-    isLoggedIn: false
+    isLoggedIn: false,
+    isAdmin:false
   }) 
   
   async componentDidMount(){
     myFirebase.auth().onAuthStateChanged(async (user) => {
-      if(user){
+      var claim = await getUserClaims(user);
+      if(claim === "admin"){
+        this.setState({isAdmin: true,
+                      isLoggedIn: true}
+      )}
+      else if(user){
         this.setState({isLoggedIn: true})
       }else{
-        this.setState({isLoggedIn: false})
+        this.setState({isLoggedIn: false,
+                      isAdmin: false
+        })
       }      
    })
   }
@@ -27,6 +37,10 @@ class Navbar extends Component {
         <div className="container">
           <Link to='/menu' className="brand-logo">Jewish Trail</Link>
           <SignedInLinks />
+          {this.state.isAdmin
+            ? <AdminLinks />
+            : null
+          }
         </div>
       </nav>
       )
