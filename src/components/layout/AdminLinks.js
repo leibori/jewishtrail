@@ -5,7 +5,7 @@ const AdminLinks = () => {
   return (
     <div>
       <ul className="right">
-        <button><NavLink to='/adminPage'>Admin Page</NavLink></button>
+        <li><NavLink to='/admin'>Admin Page</NavLink></li>
       </ul>
     </div>
   )
