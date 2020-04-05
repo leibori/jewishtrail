@@ -20,8 +20,6 @@ class SiteSearch extends Component {
 
         const { buttonName, onClickMethod, canRenderButton, siteList } = props;
         this.state = {
-            // userid: "",
-            // claim: "guest",
             searchVal: '',
             topDownValue: 'tags',
             siteList: siteList ? siteList : [],
@@ -29,7 +27,9 @@ class SiteSearch extends Component {
             // Button content next to each entry
             buttonName,
         }
+        // onClick event handler for an entry button.
         this.onClickMethod = onClickMethod ? onClickMethod.bind(this) : null;
+        // Boolean function for conditional button rendering.
         this.canRenderButton = canRenderButton ? canRenderButton.bind(this) : null;
         this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
         this.updateSearchValue = this.updateSearchValue.bind(this);
@@ -55,34 +55,6 @@ class SiteSearch extends Component {
       this.setState({topDownValue: e.value})
     }
 
-    // renderButton(sid) {
-    //     if(this.state.claim !== "guest") {
-    //         if(!this.state.favoriteList.includes(sid)) {
-    //             return true
-    //         }
-    //     }
-    //     return false
-    // }
-
-    // async addSiteToFavorites(sid) {
-    //     var favorites = this.state.favoriteList
-    //     favorites.push(sid)
-    //     updateUserFavorites(this.state.userid, favorites)
-
-    //     this.setState({favoriteList: favorites})
-    // }
-
-    // async componentDidMount(){
-    //     //console.log(await getUserClaims())
-    //     //this.setState({claim: await getUserClaims()});
-    //     myFirebase.auth().onAuthStateChanged(async (user) => {
-    //         if(user) {
-    //             var siteList = await getFavoritesIDs(user.uid)
-    //             this.setState({userid: user.uid, claim: await getUserClaims(user), favoriteList: siteList});
-    //         }
-    //         //get favorites from user and save to this.state.favoriteList
-    //    })
-    // }
     render() {
         const { buttonName, siteList } = this.state;
         // console.log(siteList);
