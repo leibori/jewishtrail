@@ -4,6 +4,8 @@ import {findSites} from '../search/SearchUtils'
 import SiteComponent from '../sites/siteComponent'
 import {getSiteByID,createNewRoad}  from '../firebase/FirebaseUtilities'
 import { myDatabase } from '../firebase/firebase'
+import SearchMenu from '../search/SearchMenu';
+import { PaginatedList } from 'react-paginated-list';
 
 const options = [
     { value: 'tags', label: 'Tags'},
@@ -54,10 +56,12 @@ class RoadForm extends Component {
       this.setState({topDownValue: e.value})
     }
     
-    renderButton(sid) {
-        const site = this.state.siteList.find((s)=> s.siteID === sid );
+    renderButton = (sid) => {
+        const { siteList } = this.state;
+        console.log(siteList);
+        const site = siteList.find((s)=> s.id === sid );
+        console.log(`site is : ` +site);
         return !site;
-        
     }
     async createNewRoadSubmit(){
         if(!this.state.siteList.length){
@@ -73,17 +77,18 @@ class RoadForm extends Component {
         await createNewRoad(road);
         //console.log("created new road")
     }
-    async addSiteToRoadList(siteID){
+    addSiteToRoadList = async(e, siteID) => {
         const siteData = await getSiteByID(siteID)
         const siteObject = {
-            id:siteID,
-            ...siteData
+            ...siteData,
+            id:siteID
+            
         }
         var siteList = this.state.siteList
         siteList.push(siteObject)
         this.setState({
             siteList
-        })
+        });
         // console.log(siteList)
     }
     removeSite(index){
@@ -99,61 +104,80 @@ class RoadForm extends Component {
       }
 
     render() {
+        const { siteList } = this.state;
+
+        const mapping = (list) => list.map((site, i) => {
+            return (
+                console.log("BASAD") || <div key={i} >
+                    <li>
+                        <SiteComponent props={site}/>
+                    </li>
+                    <button onClick={() => this.removeSite(i)}>remove Site </button>
+                </div>)
+        });
 
         return (
-            
             <div className="col-md">
                 <form>
                     <div className="input-field">
-                        <input type="text" id='name' onChange={this.handleChange} />
+                        <input required type="text" id='name' onChange={this.handleChange} />
                         <label htmlFor="name">  Road  Name</label>
                         </div>
                     <div className="for-group">
                          <label >Road Description</label>
-                        <textarea value={this.description} onChange={this.handleChange} type="description" className="form-control" name="description" placeholder="Road Description" />
+                        <textarea required value={this.description} onChange={this.handleChange} type="description" className="form-control" name="description" placeholder="Road Description" />
                     </div>
+                    <button type="submit" onClick={this.createNewRoadSubmit} className="btn pink lighten-1">Submit</button>
                  </form>
-                 <button type="submit" onClick={this.createNewRoadSubmit} className="btn pink lighten-1">Submit</button>   
                 <ul className="container">
-                    {this.state.siteList.map((site, i) => {
+                    {siteList.length > 0 && <PaginatedList
+                            list={siteList}
+                            itemsPerPage={3}
+                            renderList={mapping}/>}
+                    {/* {this.state.siteList.map((site, i) => {
                         return (
                             <div key={i} >
                             <li>
                                 <SiteComponent props={site}/>
                             </li>
                             <button onClick={() => this.removeSite(i)}>remove Site </button>
-                            </div>)
-
-                  })}
+                            </div>)})} */}
                 </ul>
-
-
-
-                <form ref={this.form} id="search-form">
-                    <div className="search-field">
-                        <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
-                    </div>
-                    <Select ref={this.dropList} onChange={this.updateTopDownhValue} options = {options} />
-                    <div>
-                        <button onClick={this.onSearchButtonClicked}>Search</button>
-                    </div>
-                    <p className="error pink-text center-align"></p>
-                </form>
-                
-                <div className="container">
-                    {this.state.siteListResult.map((site, i) => {
-                        if(this.renderButton(site.id)) {
-                            return  <div key={i} >
-                                        <SiteComponent props={site}/>
-                                        <button onClick={() => this.addSiteToRoadList(site.id)}>Add to Road</button>
-                                    </div>
-                        }
-                        return <SiteComponent key={i} props={site}/>
-                    //if site-id is not in favoritesList show button to add to favorites
-                  })}
-                </div>
+                <SearchMenu onClickMethod={this.addSiteToRoadList} buttonName={`Add to road`} canRenderButton={this.renderButton}/>
             </div>
-        )    
+        );
+
+    //     return (
+            
+            
+
+
+
+                // <form ref={this.form} id="search-form">
+                //     <div className="search-field">
+                //         <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
+                //     </div>
+                //     <Select ref={this.dropList} onChange={this.updateTopDownhValue} options = {options} />
+                //     <div>
+                //         <button onClick={this.onSearchButtonClicked}>Search</button>
+                //     </div>
+                //     <p className="error pink-text center-align"></p>
+                // </form>
+                
+                // <div className="container">
+                //     {this.state.siteListResult.map((site, i) => {
+                //         if(this.renderButton(site.id)) {
+                //             return  <div key={i} >
+                //                         <SiteComponent props={site}/>
+                //                         <button onClick={() => this.addSiteToRoadList(site.id)}>Add to Road</button>
+                //                     </div>
+                //         }
+                //         return <SiteComponent key={i} props={site}/>
+                //     //if site-id is not in favoritesList show button to add to favorites
+                //   })}
+                // </div>
+    //         </div>
+    //     )    
     }
 }
 

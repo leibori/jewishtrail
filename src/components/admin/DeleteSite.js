@@ -4,6 +4,7 @@ import {findSites} from '../search/SearchUtils'
 import SiteComponent from '../sites/siteComponent'
 import {DeleteSiteFromDB} from '../firebase/FirebaseUtilities'
 import { Link } from 'react-router-dom'
+import SearchMenu from '../search/SearchMenu';
 
 const options = [
   { value: 'tags', label: 'Tags'},
@@ -16,27 +17,28 @@ class DeleteSite extends Component {
 
   constructor(props) {
     super(props);
-
+    this.myRef = React.createRef();
     this.state = {
         searchVal: '',
         topDownValue: 'tags',
-        siteList: []
+        // siteList: []
     }
-
     this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
     this.updateSearchValue = this.updateSearchValue.bind(this);
     this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
 };
 
-async DeleteSite(e,index){
+DeleteSite = async(e, sid) => {
+  const siteList = this.myRef.current.state.siteList;
   e.preventDefault();
-  const site = this.state.siteList[index]
+  console.log(siteList);
+  const site = siteList.find((s)=> s.id === sid );
+  const index = siteList.indexOf(site);
   await DeleteSiteFromDB(site)
   console.log("site" + site.name + "had deleted")
   
-  var siteList = [...this.state.siteList]
   siteList.splice(index,1)
-  this.setState({siteList: siteList});
+  this.setState({siteList});
 }
 
 
@@ -44,7 +46,6 @@ async onSearchButtonClicked(e) {
     e.preventDefault();
 
     const result = await findSites(this.state.topDownValue, this.state.searchVal)
-    console.log(result)
     this.setState({siteList: result})
 }
 
@@ -57,19 +58,26 @@ updateTopDownhValue(e) {
 }
 
 render() {
+    const { siteList } = this.state;
     return (
         <div>
             <h5 className="grey-text text-darken-3">Search Site to Delete</h5>
-            <form ref={this.form} id="search-form">
+            {/* <form ref={this.form} id="search-form">
                 <div className="search-field">
                     <textarea ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
                 </div>
                 <Select ref={this.dropList} defaultValue={options[0]} onChange={this.updateTopDownhValue} options = {options} />
                 <button onClick={this.onSearchButtonClicked}>Search</button>
                 <p className="error pink-text center-align"></p>
-            </form>
+            </form> */}
             
-            <ul className="container" bind={this.state.siteList}>
+            <SearchMenu ref={this.myRef}
+              siteList={this.state.siteList}
+              onClickMethod={this.DeleteSite} 
+              buttonName={`Delete site`}
+              canRenderButton={() => true}/>
+
+            {/* <ul className="container" bind={this.state.siteList}>
                 {this.state.siteList.map((site, i) => (
                   <li key = {i}>
                   <SiteComponent props={site}/>
@@ -77,7 +85,7 @@ render() {
                   </li>
                 ))
                 }
-            </ul>
+              </ul>*/}
             <button className="btn pink lighten-1"><Link className="white-text" to="/adminPage">Return to Admin Menu</Link></button>
         </div>
     )    

@@ -6,7 +6,6 @@ import {myFirebase} from '../firebase/firebase'
 import {getUserClaims, updateUserFavorites, getFavoritesIDs} from '../firebase/FirebaseUtilities'
 // import ReactPaginate from 'react-paginate'
 import { PaginatedList } from 'react-paginated-list'
-
 const options = [
     { value: 'tags', label: 'Tags'},
     { value: 'country', label: 'Country'},
@@ -19,15 +18,19 @@ class SearchMenu extends Component {
     constructor(props) {
         super(props);
 
+        const { buttonName, onClickMethod, canRenderButton, siteList } = props;
         this.state = {
             userid: "",
             claim: "guest",
             searchVal: '',
             topDownValue: 'tags',
-            siteList: [],
+            siteList: siteList ? siteList : [],
             favoriteList: [],
+            //
+            buttonName,
         }
-
+        this.onClickMethod = onClickMethod ? onClickMethod.bind(this) : null;
+        this.canRenderButton = canRenderButton ? canRenderButton.bind(this) : null;
         this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
         this.updateSearchValue = this.updateSearchValue.bind(this);
         this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
@@ -81,12 +84,14 @@ class SearchMenu extends Component {
        })
     }
     render() {
-        const { siteList } = this.state;
+        const { buttonName, siteList } = this.state;
         // console.log(siteList);
         const mapping = (list) => list.map((site, i) => {
+            const id = site.id;
             return  <div key={i} >
                             <SiteComponent key={i} props={site}/>
-                            {this.renderButton(site.id) && <button onClick={() => this.addSiteToFavorites(site.id)}>Add to favorites</button>}
+                            {this.onClickMethod && buttonName && this.canRenderButton(site.id) && 
+                                <button onClick={(e) => this.onClickMethod(e, site.id)}>{buttonName}</button>}
                         </div>
         });
         //if site-id is not in favoritesList show button to add to favorites

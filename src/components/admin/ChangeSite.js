@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Select from 'react-select'
 import {findSites} from '../search/SearchUtils'
 import SiteComponent from '../sites/siteComponent'
+import SearchMenu from '../search/SearchMenu'
 // import UpdateForm from '../sites/UpdateForm'
 // import {getSiteByID} from '../firebase/FirebaseUtilities'
 
@@ -29,6 +30,7 @@ class ChangeSite extends Component {
     this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
     this.updateSearchValue = this.updateSearchValue.bind(this);
     this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
+    this.onSiteButtonClick = this.onSiteButtonClick.bind(this);
 };
 
 // async UpdateSite(e,index){
@@ -54,6 +56,12 @@ updateSearchValue(e) {
   this.setState({searchVal: e.target.value})
 }
 
+
+onSiteButtonClick = (e, id) => {
+  this.props.history.push("/updateSite/" +id);
+  console.log(`Tirkedu`);
+}
+
 updateTopDownhValue(e) {
   this.setState({topDownValue: e.value})
 }
@@ -66,16 +74,18 @@ render() {
     return (
         <div>
             <h5 className="grey-text text-darken-3">Search Site to Update</h5>
-            <form ref={this.form} id="search-form">
+            <SearchMenu onClickMethod={this.onSiteButtonClick} buttonName={`Update site`} canRenderButton={()=>true}/>
+
+            {/* <form ref={this.form} id="search-form">
                 <div className="search-field">
                     <textarea ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
                 </div>
                 <Select ref={this.dropList} defaultValue={options[0]} onChange={this.updateTopDownhValue} options = {options} />
                 <button onClick={this.onSearchButtonClicked}>Search</button>
                 <p className="error pink-text center-align"></p>
-            </form>
+            </form> */}
             
-            <ul className="container" bind={this.state.siteList}>
+            {/* <ul className="container" bind={this.state.siteList}>
                 {this.state.siteList.map((site, i) => (
                   <li key = {i}>
                   <SiteComponent props={site}/>
@@ -83,7 +93,7 @@ render() {
                   </li>
                 ))
                 }
-            </ul>
+            </ul> */}
             <button className="btn pink lighten-1" type="button"><Link className="white-text" to="/adminPage">Return to Admin Menu</Link></button>
         </div>
     )    
