@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Select from 'react-select'
 import {findSites} from '../search/SearchUtils'
 import SiteComponent from '../sites/siteComponent'
-import SearchMenu from '../search/SearchMenu'
+import SiteSearch from '../search/SiteSearch'
 // import UpdateForm from '../sites/UpdateForm'
 // import {getSiteByID} from '../firebase/FirebaseUtilities'
 
@@ -74,7 +74,7 @@ render() {
     return (
         <div>
             <h5 className="grey-text text-darken-3">Search Site to Update</h5>
-            <SearchMenu onClickMethod={this.onSiteButtonClick} buttonName={`Update site`} canRenderButton={()=>true}/>
+            <SiteSearch onClickMethod={this.onSiteButtonClick} buttonName={`Update site`} canRenderButton={()=>true}/>
 
             {/* <form ref={this.form} id="search-form">
                 <div className="search-field">

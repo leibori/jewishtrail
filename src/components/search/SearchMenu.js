@@ -4,59 +4,26 @@ import {findSites} from './SearchUtils'
 import SiteComponent from '../sites/siteComponent'
 import {myFirebase} from '../firebase/firebase'
 import {getUserClaims, updateUserFavorites, getFavoritesIDs} from '../firebase/FirebaseUtilities'
+import SiteSearch from './SiteSearch'
 // import ReactPaginate from 'react-paginate'
-import { PaginatedList } from 'react-paginated-list'
-const options = [
-    { value: 'tags', label: 'Tags'},
-    { value: 'country', label: 'Country'},
-    { value: 'city', label: 'City'},
-    { value: 'name', label: 'Name'}
-]
+// import { PaginatedList } from 'react-paginated-list'
 
 class SearchMenu extends Component {
 
     constructor(props) {
         super(props);
 
-        const { buttonName, onClickMethod, canRenderButton, siteList } = props;
         this.state = {
             userid: "",
             claim: "guest",
-            searchVal: '',
-            topDownValue: 'tags',
-            siteList: siteList ? siteList : [],
             favoriteList: [],
-            //
-            buttonName,
         }
-        this.onClickMethod = onClickMethod ? onClickMethod.bind(this) : null;
-        this.canRenderButton = canRenderButton ? canRenderButton.bind(this) : null;
-        this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
-        this.updateSearchValue = this.updateSearchValue.bind(this);
-        this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
-    };
-
-    async onSearchButtonClicked(e) {
-        e.preventDefault();
-
-        console.log(this.state.searchVal)
-        console.log(this.state.topDownValue)
-
-        const result = await findSites(this.state.topDownValue, this.state.searchVal)
-        console.log(result)
-        this.setState({siteList: result})
+        this.canRenderButton = this.canRenderButton.bind(this);
     }
 
-    updateSearchValue(e) {
-      this.setState({searchVal: e.target.value})
-    }
-
-    updateTopDownhValue(e) {
-      this.setState({topDownValue: e.value})
-    }
-
-    renderButton(sid) {
+    canRenderButton = (sid) => {
         if(this.state.claim !== "guest") {
+            console.log(`tis not a guest`);
             if(!this.state.favoriteList.includes(sid)) {
                 return true
             }
@@ -64,11 +31,11 @@ class SearchMenu extends Component {
         return false
     }
 
-    async addSiteToFavorites(sid) {
+    addSiteToFavorites = async(e, sid) => {
         var favorites = this.state.favoriteList
         favorites.push(sid)
         updateUserFavorites(this.state.userid, favorites)
-
+        
         this.setState({favoriteList: favorites})
     }
 
@@ -84,42 +51,38 @@ class SearchMenu extends Component {
        })
     }
     render() {
+        console.log(`here!`);
         const { buttonName, siteList } = this.state;
-        // console.log(siteList);
-        const mapping = (list) => list.map((site, i) => {
-            const id = site.id;
-            return  <div key={i} >
-                            <SiteComponent key={i} props={site}/>
-                            {this.onClickMethod && buttonName && this.canRenderButton(site.id) && 
-                                <button onClick={(e) => this.onClickMethod(e, site.id)}>{buttonName}</button>}
-                        </div>
-        });
         //if site-id is not in favoritesList show button to add to favorites
       
-
         return (
-            <div>
-                {/* Search site form */}
-                <form ref={this.form} id="search-form">
-                    <div className="search-field">
-                        <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
-                    </div>
-                    <Select ref={this.dropList} defaultValue={options[0]} onChange={this.updateTopDownhValue} options={options} />
-                    <div>
-                        <button onClick={this.onSearchButtonClicked}>Search</button>
-                    </div>
-                    <p className="error pink-text center-align"></p>
-                </form>
+            <SiteSearch
+                onClickMethod={this.addSiteToFavorites}
+                buttonName={`Add to favorites`}
+                canRenderButton={this.canRenderButton}/>
+        );
+            // <div>
+            //     {/* Search site form */}
+            //     <form ref={this.form} id="search-form">
+            //         <div className="search-field">
+            //             <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
+            //         </div>
+            //         <Select ref={this.dropList} defaultValue={options[0]} onChange={this.updateTopDownhValue} options={options} />
+            //         <div>
+            //             <button onClick={this.onSearchButtonClicked}>Search</button>
+            //         </div>
+            //         <p className="error pink-text center-align"></p>
+            //     </form>
                 
-                {/* Results */}
-                <div className="container">
-                    {siteList.length != 0 && <PaginatedList
-                        list={siteList}
-                        itemsPerPage={3}
-                        renderList={mapping}/>}
-                </div>
-            </div>
-        )    
+            //     {/* Results */}
+            //     <div className="container">
+            //         {siteList.length != 0 && <PaginatedList
+            //             list={siteList}
+            //             itemsPerPage={3}
+            //             renderList={mapping}/>}
+            //     </div>
+            // </div>
+        // )    
     }
 }
 

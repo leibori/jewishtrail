@@ -4,7 +4,7 @@ import {findSites} from '../search/SearchUtils'
 import SiteComponent from '../sites/siteComponent'
 import {getSiteByID,createNewRoad}  from '../firebase/FirebaseUtilities'
 import { myDatabase } from '../firebase/firebase'
-import SearchMenu from '../search/SearchMenu';
+import SiteSearch from '../search/SiteSearch';
 import { PaginatedList } from 'react-paginated-list';
 
 const options = [
@@ -143,7 +143,7 @@ class RoadForm extends Component {
                             <button onClick={() => this.removeSite(i)}>remove Site </button>
                             </div>)})} */}
                 </ul>
-                <SearchMenu onClickMethod={this.addSiteToRoadList} buttonName={`Add to road`} canRenderButton={this.renderButton}/>
+                <SiteSearch onClickMethod={this.addSiteToRoadList} buttonName={`Add to road`} canRenderButton={this.renderButton}/>
             </div>
         );
 

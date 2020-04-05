@@ -4,7 +4,7 @@ import {findSites} from '../search/SearchUtils'
 import SiteComponent from '../sites/siteComponent'
 import {DeleteSiteFromDB} from '../firebase/FirebaseUtilities'
 import { Link } from 'react-router-dom'
-import SearchMenu from '../search/SearchMenu';
+import SiteSearch from '../search/SiteSearch';
 
 const options = [
   { value: 'tags', label: 'Tags'},
@@ -71,7 +71,7 @@ render() {
                 <p className="error pink-text center-align"></p>
             </form> */}
             
-            <SearchMenu ref={this.myRef}
+            <SiteSearch ref={this.myRef}
               siteList={this.state.siteList}
               onClickMethod={this.DeleteSite} 
               buttonName={`Delete site`}
