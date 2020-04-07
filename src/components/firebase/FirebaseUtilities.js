@@ -99,10 +99,15 @@ export async function getSiteByID(siteid) {
     return  (await myDatabase.collection('sites').doc(siteid).get()).data()
 }
 
-export async function createNewRoad( {siteListID,roadName,roadDescription} ){
+export async function createNewRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList} ){
+    console.log(TagList)
     await myDatabase.collection('roads').add({
         roadName: roadName,
         description: roadDescription,
         siteList: siteListID,
+        CityList:CityList,
+        CountryList:CountryList,
+        TagList: TagList
+
     })
 }
