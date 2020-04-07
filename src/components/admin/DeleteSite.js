@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import Select from 'react-select'
 import {findSites} from '../search/SearchUtils'
-import SiteComponent from '../sites/siteComponent'
 import {DeleteSiteFromDB} from '../firebase/FirebaseUtilities'
 import { Link } from 'react-router-dom'
-import SiteSearch from '../search/SiteSearch';
+import SiteSearch from '../search/SiteSearch'
 
 const options = [
   { value: 'tags', label: 'Tags'},
@@ -19,7 +17,7 @@ class DeleteSite extends Component {
     super(props);
     this.myRef = React.createRef();
     this.state = {
-        searchVal: '',
+        searchVal: props.match.params.searchVal ? props.match.params.searchVal : '',
         topDownValue: 'tags',
         // siteList: []
     }
@@ -75,7 +73,9 @@ render() {
               siteList={this.state.siteList}
               onClickMethod={this.DeleteSite} 
               buttonName={`Delete site`}
-              canRenderButton={() => true}/>
+              canRenderButton={() => true}
+              searchVal={this.state.searchVal}
+              returnTo='deleteSite'/>
 
             {/* <ul className="container" bind={this.state.siteList}>
                 {this.state.siteList.map((site, i) => (

@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
-import Select from 'react-select'
-import {findSites} from './SearchUtils'
-import SiteComponent from '../sites/siteComponent'
 import {myFirebase} from '../firebase/firebase'
 import {getUserClaims, updateUserFavorites, getFavoritesIDs} from '../firebase/FirebaseUtilities'
 import SiteSearch from './SiteSearch'
-// import ReactPaginate from 'react-paginate'
-// import { PaginatedList } from 'react-paginated-list'
+
 
 class SearchMenu extends Component {
 
@@ -17,7 +13,9 @@ class SearchMenu extends Component {
             userid: "",
             claim: "guest",
             favoriteList: [],
+            searchVal: props.match.params.searchVal ? props.match.params.searchVal : ''
         }
+        console.log(this.state.searchVal)
         this.canRenderButton = this.canRenderButton.bind(this);
     }
 
@@ -51,15 +49,22 @@ class SearchMenu extends Component {
        })
     }
     render() {
-        console.log(`here!`);
+        // console.log(`here!`);
         const { buttonName, siteList } = this.state;
         //if site-id is not in favoritesList show button to add to favorites
       
         return (
+            // <SiteSearch
+            //     onClickMethod={this.addSiteToFavorites}
+            //     buttonName={`Add to favorites`}
+            //     canRenderButton={this.canRenderButton}/>
+
             <SiteSearch
                 onClickMethod={this.addSiteToFavorites}
                 buttonName={`Add to favorites`}
-                canRenderButton={this.canRenderButton}/>
+                canRenderButton={this.canRenderButton}
+                searchVal={this.state.searchVal}
+                returnTo='searchSite'/>
         );
             // <div>
             //     {/* Search site form */}

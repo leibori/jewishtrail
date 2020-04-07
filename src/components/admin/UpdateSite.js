@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Select from 'react-select'
 import {findSites} from '../search/SearchUtils'
-import SiteComponent from '../sites/siteComponent'
 import SiteSearch from '../search/SiteSearch'
-// import UpdateForm from '../sites/UpdateForm'
-// import {getSiteByID} from '../firebase/FirebaseUtilities'
+
 
 const options = [
   { value: 'tags', label: 'Tags'},
@@ -20,8 +17,7 @@ class ChangeSite extends Component {
     super(props);
 
     this.state = {
-        searchVal: '',
-        topDownValue: 'tags',
+        searchVal: props.match.params.searchVal ? props.match.params.searchVal : '',
         siteList: [],
         chosenSite: null,
         changingFlag: false
@@ -58,8 +54,7 @@ updateSearchValue(e) {
 
 
 onSiteButtonClick = (e, id) => {
-  this.props.history.push("/updateSite/" +id);
-  console.log(`Tirkedu`);
+  this.props.history.push("/updateForm/" +id);
 }
 
 updateTopDownhValue(e) {
@@ -74,7 +69,12 @@ render() {
     return (
         <div>
             <h5 className="grey-text text-darken-3">Search Site to Update</h5>
-            <SiteSearch onClickMethod={this.onSiteButtonClick} buttonName={`Update site`} canRenderButton={()=>true}/>
+            <SiteSearch
+              onClickMethod={this.onSiteButtonClick}
+              buttonName={`Update site`}
+              canRenderButton={()=>true}
+              searchVal={this.state.searchVal}
+              returnTo='updateSite'/>/>
 
             {/* <form ref={this.form} id="search-form">
                 <div className="search-field">

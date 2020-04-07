@@ -5,7 +5,7 @@ import Menu from './components/main-menu/Menu'
 import AdminMenu from './components/admin/AdminMenu'
 import LoginPage from './components/login/LoginPage'
 import SignUp from './components/login/SignUp'
-import ChangeSite from './components/admin/ChangeSite';
+import UpdateSite from './components/admin/UpdateSite';
 import CreateSite from './components/admin/CreateSite';
 import DeleteSite from './components/admin/DeleteSite';
 import AdminPage from './components/admin/AdminPage';
@@ -72,15 +72,19 @@ class App extends Component {
             <Route path='/SignUp' component={SignUp} />
             <Route path='/adminPage' component={AdminMenu} />
             <Route path='/createSite' component={CreateSite} />
-            <Route path='/deleteSite' component={DeleteSite} />
-            <Route exact path='/updateSite' component={ChangeSite} />
-            <Route exact path='/updateSite/:id' component={UpdateForm} />
+            <Route exact path='/deleteSite' component={DeleteSite} />
+            <Route exact path='/deleteSite/:searchVal' component={DeleteSite} />
+            <Route exact path='/updateSite' component={UpdateSite} />
+            <Route exact path='/updateSite/:searchVal' component={UpdateSite} />
+            <Route exact path='/updateForm/:id' component={UpdateForm} />
             <Route path='/auth' component={AuthMenu} />
-            <Route path='/searchSite' component={SearchMenu} />
+            <Route exact path='/searchSite' component={SearchMenu} />
+            <Route exact path='/searchSite/:searchVal' component={SearchMenu} />
             <Route path='/favorites' component={Favorites} />
             <Route path='/about' component={About} />
             <Route exact path='/site/:id' component={SitePage} />
             <Route exact path='/RoadForm' component={RoadForm} />
+            <Route exact path='/RoadForm/:searchVal' component={RoadForm} />
             <Route exact path='/admin' component={AdminPage} />
           </Switch>
         </div>
