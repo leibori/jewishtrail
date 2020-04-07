@@ -4,13 +4,6 @@ import {findSites} from '../search/SearchUtils'
 import SiteSearch from '../search/SiteSearch'
 
 
-const options = [
-  { value: 'tags', label: 'Tags'},
-  { value: 'country', label: 'Country'},
-  { value: 'city', label: 'City'},
-  { value: 'name', label: 'Name'}
-]
-
 class ChangeSite extends Component {
 
   constructor(props) {

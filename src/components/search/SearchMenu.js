@@ -50,7 +50,6 @@ class SearchMenu extends Component {
     }
     render() {
         // console.log(`here!`);
-        const { buttonName, siteList } = this.state;
         //if site-id is not in favoritesList show button to add to favorites
       
         return (

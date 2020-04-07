@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Link } from 'react-router-dom'
 import { findSitesByCountryForMarker } from '../search/SearchUtils'
-import { myIcon, getCoordinatesByAddress } from '../map/MapUtilities'
+import { myIcon } from '../map/MapUtilities'
 
 class Menu extends Component {
 

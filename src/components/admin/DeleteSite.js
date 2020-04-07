@@ -4,12 +4,6 @@ import {DeleteSiteFromDB} from '../firebase/FirebaseUtilities'
 import { Link } from 'react-router-dom'
 import SiteSearch from '../search/SiteSearch'
 
-const options = [
-  { value: 'tags', label: 'Tags'},
-  { value: 'country', label: 'Country'},
-  { value: 'city', label: 'City'},
-  { value: 'name', label: 'Name'}
-]
 
 class DeleteSite extends Component {
 
@@ -56,7 +50,6 @@ updateTopDownhValue(e) {
 }
 
 render() {
-    const { siteList } = this.state;
     return (
         <div>
             <h5 className="grey-text text-darken-3">Search Site to Delete</h5>

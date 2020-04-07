@@ -59,7 +59,6 @@ class SiteSearchPrototype extends Component {
         const { buttonName, siteList } = this.state;
         // console.log(siteList);
         const mapping = (list) => list.map((site, i) => {
-            const id = site.id;
             return  <div key={i} >
                         <SiteComponent key={i} props={site}/>
                         {this.onClickMethod && buttonName && this.canRenderButton(site.id) && 
@@ -84,7 +83,7 @@ class SiteSearchPrototype extends Component {
                 
                 {/* Results */}
                 <div className="container">
-                    {siteList.length != 0 && <PaginatedList
+                    {siteList.length !== 0 && <PaginatedList
                         list={siteList}
                         itemsPerPage={3}
                         renderList={mapping}/>}
