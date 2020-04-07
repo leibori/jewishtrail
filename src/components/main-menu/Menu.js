@@ -72,7 +72,7 @@ class Menu extends Component {
                             this.state.haveUsersLocation ? 
                             <Marker position={position} icon={myIcon}>
                                 <Popup>
-                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                    You are here.
                                 </Popup>
                             </Marker> : ''
                         }
@@ -80,6 +80,7 @@ class Menu extends Component {
                             this.state.markers.map((site, i) => (
                                 <Marker key={i} position={[site.latitude, site.longitude]} icon={myIcon}>
                                     <Popup>
+                                        {site.name}<br/>
                                         {site.address}<br/>
                                         {site.partialInfo}<br/>
                                         <Link to={'/site/'+site.id}>More info</Link>
