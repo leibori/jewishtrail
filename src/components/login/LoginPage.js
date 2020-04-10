@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import {myFirebase} from '../firebase/firebase';
 import { signInWithGoogle, login } from '../firebase/FirebaseLoginUtils'
+import LoginPageComp from "views/LoginPage/LoginPage";
 class LoginPage extends Component {
   constructor() {
     super();
@@ -40,6 +41,9 @@ class LoginPage extends Component {
   }
 
   render() {
+    if (true){
+      return <LoginPageComp/>;
+    }
     if(this.state.isLoggedIn){
       return <Redirect to = "/Menu"></Redirect>
     }
