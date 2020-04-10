@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import {myFirebase} from '../firebase/firebase';
 import { signInWithGoogle, login } from '../firebase/FirebaseLoginUtils'
-
-
 class LoginPage extends Component {
   constructor() {
     super();
@@ -60,7 +58,9 @@ class LoginPage extends Component {
           <button type="submit" onClick={(e) => login(e, this.state.email, this.state.password)} className="btn black lighten-2 z-depth-0">Login</button>
           <small id="signitup" className="form-text text-muted">Not a member yet? sign up now</small>
           <button  className="btn white lighten-1 z-depth-0"><Link to="/SignUp">Signup</Link></button>
-          <button onClick={async () => this.googleLogin()} className="googleBtn" type="button">Login With Google</button>
+          <button onClick={async () => this.googleLogin()} className="googleBtn" type="button">
+            Login With Google
+            </button>
         <button  className="btn white lighten-1 z-depth-0 "><Link to="/Menu">Enter as guest</Link></button>
         </form>
       </div>
