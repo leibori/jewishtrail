@@ -1,167 +1,70 @@
-import React from "react";
-import { Link } from 'react-router-dom';
-import {myFirebase} from 'components/firebase/firebase';
-import { signInWithGoogle, login } from 'components/firebase/FirebaseLoginUtils'
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import InputAdornment from "@material-ui/core/InputAdornment";
-// @material-ui/icons
-import Email from "@material-ui/icons/Email";
-// import People from "@material-ui/icons/People";
-// core components
-import Header from "components/Header/Header.js";
-import HeaderLinks from "components/Header/HeaderLinks.js";
-import Footer from "components/Footer/Footer.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Button from "components/CustomButtons/Button.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardFooter from "components/Card/CardFooter.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-// import { Icon as TestIcon } from 'semantic-ui-react';
-import styles from "assets/jss/material-kit-react/views/loginPage.js";
-// import image from "assets/img/bg7.jpg";
-import Icon from "@material-ui/core/Icon";
-import { Icon as TestIcon } from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import {myFirebase} from '../firebase/firebase';
+import { signInWithGoogle, login } from '../firebase/FirebaseLoginUtils'
+class LoginPage extends Component {
+  constructor() {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+ //   this.signup = this.signup.bind(this);
+    this.state = {
+      userInfo: null,
+      email: '',
+      password: '',
+      isLoggedIn: false
+      
+    };
+  }
 
-
-const useStyles = makeStyles(styles);
-
-export default function LoginPage(props) {
-  const emailRef = React.useRef('Default');
-  const passRef = React.useRef('Default');
-
-  const googleLogin = async () => {
+  googleLogin = async () => {
     var userid = await signInWithGoogle()
     console.log(userid)
-    rest.history.push('/Menu');
+    this.setState({
+      isLoggedIn: true,
+      userInfo: userid
+    })
   }
 
-  const login = (e) => {
-    const email = emailRef.current.value;
-    const password = passRef.current.value;
-    e.preventDefault();
-    myFirebase.auth().signInWithEmailAndPassword(email, password)
-    .then((u)=>{
-        console.log("logged in" + myFirebase.auth().currentUser)
-      })
-        .catch((error) => {
-          console.log(error);
-        });
-    rest.history.push('/Menu');
+  async componentDidMount(){
+    myFirebase.auth().onAuthStateChanged(async (user) => {
+      if(user){
+        this.setState({isLoggedIn: true})
+      }else{
+        this.setState({isLoggedIn: false})
+      }  
+     })
   }
-
-  const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
-  setTimeout(function() {
-    setCardAnimation("");
-  }, 700);
-  const classes = useStyles();
-  const rest = {...props};
   
-  return (
-    <div>
-      <Header
-        absolute
-        color="transparent"
-        rightLinks={<HeaderLinks />}
-        {...rest}
-      />
-      <div
-        className={classes.pageHeader}
-        style={{
-          // backgroundImage: "url(" + image + ")",
-          backgroundSize: "cover",
-          backgroundPosition: "top center"
-        }}
-      >
-        <div className={classes.container}>
-          <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={4}>
-              <Card className={classes[cardAnimaton]}>
-                <form className={classes.form}>
-                  <CardHeader color="info" className={classes.cardHeader}>
-                    <h4><b>Login</b></h4>
-                    <div className={classes.socialLine}>
-                      <Button
-                        justIcon
-                        href="#pablo"
-                        target="_blank"
-                        color="transparent"
-                        onClick={googleLogin}
-                      >
-                        <TestIcon name="google"/>
-                        <i className={"fab fa-google-plus-g"} />
-                      </Button>
-                    </div>
-                  </CardHeader>
-                  <p className={classes.divider}>Start Your Trail!</p>
-                  <CardBody>
-                      <CustomInput
-                        ref={emailRef}
-                        labelText="Email..."
-                        id="email"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          required: true,
-                          type: "email",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <Email className={classes.inputIconsColor} />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                      <CustomInput inputRef={passRef}
-                        labelText="Password"
-                        id="pass"
-                        ref={passRef}
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          required: true,
-                          type: "password",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <Icon className={classes.inputIconsColor}>
-                                lock_outline
-                              </Icon>
-                            </InputAdornment>
-                          ),
-                          autoComplete: "off"
-                        }}
-                      />
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button type='submit' onSubmit={(e) => login(e)} simple color="info" size="sm">
-                      Log In
-                    </Button>
-                  </CardFooter>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button simple color="info" size="sm">
-                      <Link to="/SignUp">
-                        Signup
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button simple color="info" size="sm">
-                      <Link to="/Menu">
-                        Enter as guest       
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </form>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
-        <Footer whiteFont />
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  render() {
+    if(this.state.isLoggedIn){
+      return <Redirect to = "/Menu"></Redirect>
+    }
+        return (
+      <div className="col-md-6">
+        <form>
+          <div className="form-group">
+            <label >Email address</label>
+            <input  value={this.state.email} onChange={this.handleChange} type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div className="form-group">
+            <label >Password</label>
+            <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+          </div>
+          <button type="submit" onClick={(e) => login(e, this.state.email, this.state.password)} className="btn black lighten-2 z-depth-0">Login</button>
+          <small id="signitup" className="form-text text-muted">Not a member yet? sign up now</small>
+          <button  className="btn white lighten-1 z-depth-0"><Link to="/SignUp">Signup</Link></button>
+          <button onClick={async () => this.googleLogin()} className="googleBtn" type="button">
+            Login With Google
+            </button>
+        <button  className="btn white lighten-1 z-depth-0 "><Link to="/Menu">Enter as guest</Link></button>
+        </form>
       </div>
-    </div>
-  );
+    );
+  }
 }
+export default LoginPage;
