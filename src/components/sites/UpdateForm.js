@@ -44,6 +44,7 @@ class UpdateForm extends Component {
 
   async handleSubmit(e){  
     e.preventDefault();
+    const searchTokens = Array.from(new Set([...this.state.tags,this.state.city,this.state.city,...this.state.name.split(" ")]))
     var site = {
       id: this.state.id,
       name: this.state.name,
@@ -56,7 +57,8 @@ class UpdateForm extends Component {
       fullInfo: this.state.fullInfo,
       partialInfo: this.state.partialInfo,
       latitude: parseFloat(this.state.latitude),
-      longitude: parseFloat(this.state.longitude)
+      longitude: parseFloat(this.state.longitude),
+      searchTokens:searchTokens,
     }
     
     await UpdateSite(site)
