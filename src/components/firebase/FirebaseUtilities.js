@@ -1,9 +1,5 @@
 import { myDatabase } from './firebase'
 
-// export function login(email,password){
-//     myFirebase.auth().signInWithEmailAndPassword(email,password)
-// }
-
 
 export async function createNewSite(site){
     await myDatabase.collection('sites').add({
@@ -20,6 +16,7 @@ export async function createNewSite(site){
       longitude: site.longitude
     })
 }
+
 
 export async function UpdateSite(site){
     await myDatabase.collection('sites').doc(site.id).update({
@@ -59,10 +56,12 @@ export async function getUserClaims(user){
     return userClaims;
 }
 
+
 export async function getFavoritesIDs(userid) {
     const user = await myDatabase.collection('accounts').doc(userid).get()
     return user.data().favorites
 }
+
 
 export async function getFavorites(userid){
     var resultOfSite = []
@@ -86,6 +85,7 @@ export async function getFavorites(userid){
     return resultOfSite;
 }
 
+
 export async function updateUserFavorites(userid, newFavorites) {
     await myDatabase.collection('accounts').doc(userid).update({
         'favorites': newFavorites
@@ -95,19 +95,37 @@ export async function updateUserFavorites(userid, newFavorites) {
         });
 }
 
+
 export async function getSiteByID(siteid) {
     return  (await myDatabase.collection('sites').doc(siteid).get()).data()
 }
 
-export async function createNewRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList} ){
+
+export async function createNewRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens} ){
     console.log(TagList)
     await myDatabase.collection('roads').add({
-        roadName: roadName,
+        name: roadName,
         description: roadDescription,
         siteList: siteListID,
-        CityList:CityList,
-        CountryList:CountryList,
-        TagList: TagList
+        city:CityList,
+        country:CountryList,
+        tags: TagList,
+        searchTokens:searchTokens
 
     })
+}
+
+
+export async function updateUserRoadsFavorites(userid, newFavorites) {
+    await myDatabase.collection('accounts').doc(userid).update({
+        'RoadsFavorites': newFavorites
+        })
+        .catch(function(error) {
+          console.error("Error removing document: ", error);
+        });
+}
+
+
+export async function deleteRoadFromDB(road){
+    await myDatabase.collection('roads').doc(road.id).delete();
 }
