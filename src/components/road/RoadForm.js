@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import {findSites} from '../search/SearchUtils'
 import SiteComponent from '../sites/siteComponent'
 import {getSiteByID,createNewRoad}  from '../firebase/FirebaseUtilities'
 import { PaginatedList } from 'react-paginated-list';
-import SiteSearchPrototype from '../search/SiteSearch'
+import SiteSearch from '../search/SiteSearch'
 
 // const options = [
 //     { value: 'tags', label: 'Tags'},
@@ -28,23 +27,12 @@ class RoadForm extends Component {
             description: '',
         }
 
-        this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
         this.updateSearchValue = this.updateSearchValue.bind(this);
         this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
         this.createNewRoadSubmit = this.createNewRoadSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     };
 
-    async onSearchButtonClicked(e) {
-        e.preventDefault();
-
-        // console.log(this.state.searchVal)
-        // console.log(this.state.topDownValue)
-
-        const result = await findSites(this.state.topDownValue, this.state.searchVal)
-        // console.log(result)
-        this.setState({siteListResult: result})
-    }
 
     updateSearchValue(e) {
       this.setState({searchVal: e.target.value})
@@ -67,7 +55,7 @@ class RoadForm extends Component {
             alert("no sites where selected")
             return
         }
-
+        let searchTokens = [];
         const roadName = this.state.name;
         const roadDescription = this.state.description;
         const CityList = Array.from(new Set(this.state.siteList.map((site) => site.city)))
@@ -75,12 +63,13 @@ class RoadForm extends Component {
         var TagList = []
         let temp = Array.from(new Set(this.state.siteList.map((site) => site.tags)))
         temp.forEach((tagsArr) => tagsArr.forEach((tag) => TagList.push(tag)));
+        searchTokens = Array.from(new Set([...TagList,...CityList,...CountryList,...roadName.split(" ")]))
 
-        
         let siteListID = []
         this.state.siteList.forEach((site) => siteListID.push(site.id));
         
-        const road = {siteListID,roadName,roadDescription,CityList,CountryList,TagList}
+        const road = {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens}
+        
         await createNewRoad(road);
         console.log("created new road")
     }
@@ -150,7 +139,7 @@ class RoadForm extends Component {
                             <button onClick={() => this.removeSite(i)}>remove Site </button>
                             </div>)})} */}
                 </ul>
-                <SiteSearchPrototype
+                <SiteSearch
                     onClickMethod={this.addSiteToRoadList}
                     buttonName={`Add to road`}
                     canRenderButton={this.renderButton}

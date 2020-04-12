@@ -26,7 +26,6 @@ class RaodPage extends Component {
 
     async componentWillMount() {
         const roadId = this.state.site_id;
-        console.log("9SfGl30GMtjrosWiijmS" + "======" + roadId)
         var all_site_props = await getRoadByID(roadId)
         console.log(all_site_props)
         const siteListID = all_site_props.siteList;
@@ -58,9 +57,9 @@ class RaodPage extends Component {
         });
         return (
             <div>
-                <h1>{this.state.roadName}</h1>
-                <h2>{this.state.CityList.join(", ")}.</h2>
-                <h3>{this.state.CountryList.join(", ")}</h3>
+                <h1>{this.state.name}</h1>
+                <h2>{this.state.city.join(", ")}.</h2>
+                <h3>{this.state.country.join(", ")}</h3>
                 <p>{this.state.description}</p>
                 <ul className="container">
                     {siteList.length > 0 && <PaginatedList
