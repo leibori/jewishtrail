@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import {findSites} from '../search/SearchUtils'
+import {findFromDB} from '../search/SearchUtils'
 import SiteSearch from '../search/SiteSearch'
 
 
@@ -34,7 +34,7 @@ class ChangeSite extends Component {
 
 async onSearchButtonClicked(e) {
     e.preventDefault();
-    const result = await findSites(this.state.topDownValue, this.state.searchVal)
+    const result = await findFromDB(this.state.topDownValue, this.state.searchVal)
     if(!result.length){
       alert("no Result")
     }
@@ -67,7 +67,7 @@ render() {
               buttonName={`Update site`}
               canRenderButton={()=>true}
               searchVal={this.state.searchVal}
-              returnTo='updateSite'/>/>
+              returnTo='updateSite'/>
 
             {/* <form ref={this.form} id="search-form">
                 <div className="search-field">

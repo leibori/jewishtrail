@@ -44,6 +44,8 @@ class CreateSite extends Component {
 
   async handleSubmit(e){
     e.preventDefault();
+    const searchTokens = Array.from(new Set([...this.state.tags,this.state.city,this.state.city,...this.state.name.split(" ")]))
+    console.log(searchTokens)
     var site = {
       name: this.state.name,
       city: this.state.city,
@@ -55,7 +57,8 @@ class CreateSite extends Component {
       fullInfo: this.state.fullInfo,
       partialInfo: this.state.partialInfo,
       latitude: parseFloat(this.state.latitude),
-      longitude: parseFloat(this.state.longitude)
+      longitude: parseFloat(this.state.longitude),
+      searchTokens: searchTokens,
     }
     await createNewSite(site)
     alert("created a new site");

@@ -20,7 +20,9 @@ import Favorites from './components/favorites/Favorites';
 import SitePage from './components/sites/SitePage'
 import RoadForm from './components/road/RoadForm';
 import UpdateForm from './components/sites/UpdateForm'
-
+import RoadMenu from './components/search/RoadMenu';
+import RaodPage from './components/road/roadPage';
+import DeleteRoad from './components/road/DeleteRoad';
 
 class App extends Component {
 
@@ -87,6 +89,13 @@ class App extends Component {
             <Route exact path='/RoadForm' component={RoadForm} />
             <Route exact path='/RoadForm/:searchVal' component={RoadForm} />
             <Route exact path='/admin' component={AdminPage} />
+            <Route exact path='/searchRoad' component={RoadMenu} />
+            <Route exact path='/searchRoad/:searchVal' component={RoadMenu} />
+            <Route exact path='/road/:id' component={RaodPage} />
+            <Route exact path='/deleteRoad' component={DeleteRoad} />
+            <Route exact path='/deleteRoad/:searchVal' component={DeleteRoad} />
+            
+            
           </Switch>
         </div>
       </BrowserRouter>

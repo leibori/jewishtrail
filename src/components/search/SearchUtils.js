@@ -8,7 +8,7 @@ import _ from 'underscore'
  * The returned array is sorted by number of matches between "searchVal" and search tokens in each site.
  * @param {string[]} searchVals 
  */
-export async function findSites(searchVals) {
+export async function findFromDB(searchVals, collectionName) {
 
     // Sets the accuracy to just above 50%. meaning the number of matches need to be atleast half of the words in "searchVal".
     let accuracy = Math.ceil(searchVals.length / 2.0)
@@ -19,8 +19,13 @@ export async function findSites(searchVals) {
     // The returned array at the end.
     var sortedSites = []
 
+    // Convert all of the search values to lower case for case insensitive search.
+    for(var i = 0; i < searchVals.length; ++i) {
+        searchVals[i] = searchVals[i].toLowerCase();
+    }
+
     // Gets the snapshot of all the sites in the database.
-    const snapshot = await myDatabase.collection('sites').get()
+    const snapshot = await myDatabase.collection(collectionName).get()
 
     // The following occurs for each site.
     snapshot.forEach(doc => {
@@ -29,6 +34,7 @@ export async function findSites(searchVals) {
 
         // Pulls the site's search tokens
         var searchTokens = doc.data().searchTokens;
+        // console.log(searchTokens)
 
         // Counts the number of matches.
         searchVals.forEach(value => {
@@ -43,6 +49,10 @@ export async function findSites(searchVals) {
         }
 
     })
+
+    if (sites.length == 0) {
+        return sortedSites
+    }
 
     // Sorts the "sites" array in a decending order by the counter.
     sites = _.sortBy(sites, 'counter').reverse()

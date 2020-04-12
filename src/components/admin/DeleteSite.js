@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {findSites} from '../search/SearchUtils'
+import {findFromDB} from '../search/SearchUtils'
 import {DeleteSiteFromDB} from '../firebase/FirebaseUtilities'
 import { Link } from 'react-router-dom'
 import SiteSearch from '../search/SiteSearch'
@@ -37,7 +37,7 @@ DeleteSite = async(e, sid) => {
 async onSearchButtonClicked(e) {
     e.preventDefault();
 
-    const result = await findSites(this.state.topDownValue, this.state.searchVal)
+    const result = await findFromDB(this.state.topDownValue, this.state.searchVal)
     this.setState({siteList: result})
 }
 

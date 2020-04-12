@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {findSites} from './SearchUtils'
+import {findFromDB} from './SearchUtils'
 import SiteComponent from '../sites/siteComponent'
 import { PaginatedList } from 'react-paginated-list'
 
@@ -17,6 +17,9 @@ class SiteSearchPrototype extends Component {
         const { buttonName, onClickMethod, canRenderButton, searchVal, returnTo } = props;
 
         this.state = {
+            // Is true if a search value is sent, and false otherwise.
+            haveSearched: false,
+
             // The search value as array of strings.
             searchVal: searchVal ? searchVal.split(' ') : [],
 
@@ -41,15 +44,17 @@ class SiteSearchPrototype extends Component {
 
         // console.log(this.state.searchVal)
 
-        // Execute the search if the componenet recieved a search value.
-        if(this.state.searchVal.length >= 1) {
-            this.executeSearch()
-        }
+        // // Execute the search if the componenet recieved a search value.
+        // if(this.state.searchVal.length >= 1) {
+        //     this.executeSearch()
+        // }
     };
 
     // transition to a new page based on the "returnTo" and the search value.
     onSearchButtonClicked(e) {
         e.preventDefault();
+
+        console.log(this.state.searchVal)
 
         window.location.href = '/' + this.state.returnTo + '/' + this.state.searchVal
     }
@@ -57,9 +62,10 @@ class SiteSearchPrototype extends Component {
 
     // The search function that calls for searches in the database.
     async executeSearch() {
-        const result = await findSites(this.state.searchVal)
+        const result = await findFromDB(this.state.searchVal, 'sites')
         // console.log(result)
-        this.setState({siteList: result})
+        this.setState({siteList: result,
+                        haveSearched: true})
     }
 
 
@@ -67,6 +73,13 @@ class SiteSearchPrototype extends Component {
     updateSearchValue(e) {
         // console.log(e.target.value)
         this.setState({searchVal: e.target.value})
+    }
+
+    async componentWillMount() {
+        // Execute the search if the componenet recieved a search value.
+        if(this.state.searchVal.length >= 1) {
+            await this.executeSearch()
+        }
     }
 
 
@@ -78,11 +91,11 @@ class SiteSearchPrototype extends Component {
 
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
         const mapping = (list) => list.map((site, i) => {
-            return  <div key={i} >
+            return (<div key={i} >
                         <SiteComponent key={i} props={site}/>
-                        {this.onClickMethod && buttonName && this.canRenderButton(site.id) && 
+                        {this.onClickMethod && buttonName && this.canRenderButton(site.id) &&
                             <button onClick={(e) => this.onClickMethod(e, site.id)}>{buttonName}</button>}
-                    </div>
+                    </div>)
         });      
 
         return (
@@ -93,7 +106,7 @@ class SiteSearchPrototype extends Component {
                         <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
                     </div>
                     <div>
-                        <button onClick={this.onSearchButtonClicked}>Search</button>
+                        <button onClick={this.onSearchButtonClicked} type="submit">Search</button>
                     </div>
                     <p className="error pink-text center-align"></p>
                 </form>
@@ -105,6 +118,11 @@ class SiteSearchPrototype extends Component {
                         itemsPerPage={3}
                         renderList={mapping}/>}
                 </div>
+
+                {
+                    this.state.searchVal.length != 0 && this.state.siteList.length == 0 && this.state.haveSearched ?
+                        (<h5>No matches found.</h5>) : ''
+                }
             </div>
         )    
     }
