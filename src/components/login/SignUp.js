@@ -39,7 +39,6 @@ class SignUp extends Component {
 
   onSignup = (e) => {
     const { email, password, username } = this.state;
-    alert(email);
     e.preventDefault();
     signup(e, email, password, username);
     this.props.history.push('/Menu');
@@ -51,14 +50,14 @@ class SignUp extends Component {
     const { email, password, username } = this.state;
     return (
         <MDBContainer>
-            <MDBRow>
-                <MDBCol md="5" style={centerStyle}>
+            <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
+                <MDBCol md="4">
                     <MDBCard>
                         <div className="header pt-3 blue-gradient">
                             <MDBRow className="d-flex justify-content-center">
-                                <h3 className="white-text mb-3 pt-3 font-weight-bold">
+                                <h1 className="white-text mb-3 pt-3 font-weight-bold">
                                 Sign Up
-                                </h3>
+                                </h1>
                             </MDBRow>
                             <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
                                 <a onClick={this.googleLogin} className="fa-lg p-2 m-2 gplus-ic">
@@ -67,7 +66,7 @@ class SignUp extends Component {
                             </MDBRow>
                         </div>
                         <MDBCardBody className="mx-4">
-                          <form>
+                          <form onSubmit={this.onSignup}>
                             <div class="md-form mt-3">
                               <input required name="email" onChange={this.handleChange} type="email" id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords"> Email...</label>
@@ -80,15 +79,13 @@ class SignUp extends Component {
                               <input required type="text" name="username" onChange={this.handleChange} id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords">Username...</label>
                             </div>  
-                            <div style={{margin: 'auto', width: '30%'}} className="text-center mb-3">
+                            <div style={{margin: 'auto'}} className="text-center mb-3">
                                 <MDBBtn
                                     type="submit"
                                     gradient="blue"
                                     rounded
-                                    className="btn-block z-depth-1a"
-                                    style={{borderRadius: '18px',}}
-                                    onSubmit={this.onSignup}
-                                    
+                                    className="z-depth-1a"
+                                    style={{borderRadius: '18px',}}                                    
                                 >
                                   Sign up
                                 </MDBBtn>

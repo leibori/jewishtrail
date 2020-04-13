@@ -59,14 +59,14 @@ export default class LoginPage extends Component {
     const { email, password } = this.state;
     return (
         <MDBContainer>
-            <MDBRow>
-                <MDBCol md="5" style={centerStyle}>
+            <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
+                <MDBCol md="4">
                     <MDBCard>
                         <div className="header pt-3 blue-gradient">
                             <MDBRow className="d-flex justify-content-center">
-                                <h3 className="white-text mb-3 pt-3 font-weight-bold">
+                                <h1 className="white-text mb-3 pt-3 font-weight-bold">
                                 Log in
-                                </h3>
+                                </h1>
                             </MDBRow>
                             <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
                                 <a onClick={this.googleLogin} className="fa-lg p-2 m-2 gplus-ic">
@@ -75,7 +75,7 @@ export default class LoginPage extends Component {
                             </MDBRow>
                         </div>
                         <MDBCardBody className="mx-4">
-                          <form>
+                          <form onSubmit={(e)=> login(e, email, password)}>         
                             <div class="md-form mt-3">
                               <input required name="email" onChange={this.onChange} type="email" id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords"> Email...</label>
@@ -84,27 +84,29 @@ export default class LoginPage extends Component {
                               <input required type="password" name="password" onChange={this.onChange} id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords">Password...</label>
                             </div> 
-                            <div style={{margin: 'auto', width: '30%'}} className="text-center mb-3">
+                            <div style={{margin: 'auto'}} className="text-center mb-3">
                                 <MDBBtn
                                     type="submit"
                                     gradient="blue"
                                     rounded
-                                    className="btn-block z-depth-1a"
+                                    className="z-depth-1a"
                                     style={{borderRadius: '18px',}}
-                                    onClick={(e)=> login(e, email, password)}
-                                    
                                 >
                                     LOGIN
                                 </MDBBtn>
                             </div>
                           </form>
                         </MDBCardBody>
-                        <MDBModalFooter className="mx-5 pt-3 mb-1 justify-content-center">
+                        <MDBModalFooter className="mx-auto pt-3 mb-1 justify-content-center">
                             <p align='center' className="font-small grey-text d-flex">
                             Not a member?
                             <a onClick={this.onSignUpClick} className="blue-text ml-1">
                               Sign Up
                             </a>
+                             Or
+                            <a onClick={(e) => this.props.history.push('/Menu')} className="blue-text ml-1">
+                                Enter as a guest
+                              </a>
                             </p>
                         </MDBModalFooter>
                     </MDBCard>
