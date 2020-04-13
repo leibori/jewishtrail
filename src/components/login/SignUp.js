@@ -39,7 +39,6 @@ class SignUp extends Component {
 
   onSignup = (e) => {
     const { email, password, username } = this.state;
-    alert(email);
     e.preventDefault();
     signup(e, email, password, username);
     this.props.history.push('/Menu');
@@ -52,7 +51,7 @@ class SignUp extends Component {
     return (
         <MDBContainer>
             <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
-                <MDBCol md="6">
+                <MDBCol md="4">
                     <MDBCard>
                         <div className="header pt-3 blue-gradient">
                             <MDBRow className="d-flex justify-content-center">
@@ -67,7 +66,7 @@ class SignUp extends Component {
                             </MDBRow>
                         </div>
                         <MDBCardBody className="mx-4">
-                          <form>
+                          <form onSubmit={this.onSignup}>
                             <div class="md-form mt-3">
                               <input required name="email" onChange={this.handleChange} type="email" id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords"> Email...</label>
@@ -86,9 +85,7 @@ class SignUp extends Component {
                                     gradient="blue"
                                     rounded
                                     className="btn-block z-depth-1a"
-                                    style={{borderRadius: '18px',}}
-                                    onSubmit={this.onSignup}
-                                    
+                                    style={{borderRadius: '18px',}}                                    
                                 >
                                   Sign up
                                 </MDBBtn>

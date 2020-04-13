@@ -60,7 +60,7 @@ export default class LoginPage extends Component {
     return (
         <MDBContainer>
             <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
-                <MDBCol md="6">
+                <MDBCol md="4">
                     <MDBCard>
                         <div className="header pt-3 blue-gradient">
                             <MDBRow className="d-flex justify-content-center">
@@ -75,7 +75,7 @@ export default class LoginPage extends Component {
                             </MDBRow>
                         </div>
                         <MDBCardBody className="mx-4">
-                          <form>
+                          <form onSubmit={(e)=> login(e, email, password)}>         
                             <div class="md-form mt-3">
                               <input required name="email" onChange={this.onChange} type="email" id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords"> Email...</label>
@@ -89,17 +89,15 @@ export default class LoginPage extends Component {
                                     type="submit"
                                     gradient="blue"
                                     rounded
-                                    className="btn-block z-depth-1a"
+                                    className="z-depth-1a"
                                     style={{borderRadius: '18px',}}
-                                    onClick={(e)=> login(e, email, password)}
-                                    
                                 >
                                     LOGIN
                                 </MDBBtn>
                             </div>
                           </form>
                         </MDBCardBody>
-                        <MDBModalFooter className="mx-5 pt-3 mb-1 justify-content-center">
+                        <MDBModalFooter className="mx-auto pt-3 mb-1 justify-content-center">
                             <p align='center' className="font-small grey-text d-flex">
                             Not a member?
                             <a onClick={this.onSignUpClick} className="blue-text ml-1">
