@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {findFromDB} from './SearchUtils'
-import RoadComponent from '../road/RoadComponent'
+import RoadComponent from '../road/roadComponent'
 import { PaginatedList } from 'react-paginated-list'
 
 
