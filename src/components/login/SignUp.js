@@ -2,25 +2,33 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import  {myFirebase} from '../firebase/firebase';
 import {signup} from '../firebase/FirebaseLoginUtils'
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
+
+const centerStyle = {
+  margin: 'auto',
+  width: '50%',
+}
 
 class SignUp extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      isLoggenIn: false,
+      online: '',
       email: '',
       password: '',
-      user_name:'',
+      username:'',
     };
+    this.onSignup = this.onSignup.bind(this);
+    this.handleChange = this.handleChange.bind();
   }
 
   async componentDidMount(){
     myFirebase.auth().onAuthStateChanged(async (user) => {
       if(user){
-        this.setState({isLoggedIn: true})
+        this.setState({online: true})
       }else{
-        this.setState({isLoggedIn: false})
+        this.setState({online: false})
       }
       
    })
@@ -29,30 +37,68 @@ class SignUp extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  onSignup = (e) => {
+    const { email, password, username } = this.state;
+    alert(email);
+    e.preventDefault();
+    signup(e, email, password, username);
+    this.props.history.push('/Menu');
+  }
   render() {
-    if(this.state.isLoggedIn){
+    if(this.state.online){
       return <Redirect to = "/Menu"></Redirect>
     }
+    const { email, password, username } = this.state;
     return (
-      <div className="col-md">
-        <form>
-          <div className="for-group">
-            <label >Email address</label>
-            <input  value={this.state.email} onChange={this.handleChange} type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-          </div>
-          <div className="for-group">
-            <label >Password</label>
-            <input  value={this.state.password} onChange={this.handleChange} type="password" name="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
-          </div>
-          <div className="for-group">
-            <label >user_name</label>
-            <input  value={this.state.user_name} onChange={this.handleChange} type="text" name="user_name" className="form-control" id="exampleFirstName" placeholder="user Name" />
-          </div>
-          <button onClick={(e) => signup(e, this.state.email, this.state.password, this.state.user_name)} className="btn btn-success">Signup</button>
-        </form>
-      </div>
-    );
-  }
+        <MDBContainer>
+            <MDBRow>
+                <MDBCol md="5" style={centerStyle}>
+                    <MDBCard>
+                        <div className="header pt-3 blue-gradient">
+                            <MDBRow className="d-flex justify-content-center">
+                                <h3 className="white-text mb-3 pt-3 font-weight-bold">
+                                Sign Up
+                                </h3>
+                            </MDBRow>
+                            <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
+                                <a onClick={this.googleLogin} className="fa-lg p-2 m-2 gplus-ic">
+                                    <MDBIcon fab className="fa-google-plus-g white-text fa-lg" />
+                                </a>
+                            </MDBRow>
+                        </div>
+                        <MDBCardBody className="mx-4">
+                          <form>
+                            <div class="md-form mt-3">
+                              <input required name="email" onChange={this.handleChange} type="email" id="materialSubscriptionFormPasswords" class="form-control"/>
+                              <label for="materialSubscriptionFormPasswords"> Email...</label>
+                            </div>
+                            <div class="md-form mt-3">
+                              <input required type="password" name="password" onChange={this.handleChange} id="materialSubscriptionFormPasswords" class="form-control"/>
+                              <label for="materialSubscriptionFormPasswords">Password...</label>
+                            </div> 
+                            <div class="md-form mt-3">
+                              <input required type="text" name="username" onChange={this.handleChange} id="materialSubscriptionFormPasswords" class="form-control"/>
+                              <label for="materialSubscriptionFormPasswords">Username...</label>
+                            </div>  
+                            <div style={{margin: 'auto', width: '30%'}} className="text-center mb-3">
+                                <MDBBtn
+                                    type="submit"
+                                    gradient="blue"
+                                    rounded
+                                    className="btn-block z-depth-1a"
+                                    style={{borderRadius: '18px',}}
+                                    onSubmit={this.onSignup}
+                                    
+                                >
+                                  Sign up
+                                </MDBBtn>
+                            </div>
+                          </form>
+                        </MDBCardBody>
+                    </MDBCard>
+                </MDBCol>
+            </MDBRow>
+        </MDBContainer>
+    );}
 }
 export default SignUp;

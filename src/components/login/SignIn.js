@@ -1,8 +1,8 @@
 import React, { useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
 import  config  from "../firebase/firebase.js";
-import Menu from '../main-menu/Menu.js'
 import { AuthContext } from "./Auth.js";
+
 
 const SignIn = ({ history }) => {
   const handleLogin = useCallback(

@@ -12,16 +12,15 @@ const centerStyle = {
 export default class LoginPage extends Component {
   constructor() {
     super();
-    this.handleChange = this.handleChange.bind(this);
  //   this.signup = this.signup.bind(this);
     this.state = {
       email: '',
       password: '',
-      online: false
-      
+      online: false,
+      uid: '',
     };
     this.googleLogin = this.googleLogin.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.onChnage = this.onChange.bind(this);
     this.onSignUpClick = this.onSignUpClick.bind(this);
   }
 
@@ -31,7 +30,7 @@ export default class LoginPage extends Component {
     console.log(userid)
     this.setState({
       online: true,
-      userInfo: userid
+      uid: userid
     })
   }
 
@@ -45,7 +44,7 @@ export default class LoginPage extends Component {
      })
   }
   
-  handleChange(e) {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
@@ -76,45 +75,29 @@ export default class LoginPage extends Component {
                             </MDBRow>
                         </div>
                         <MDBCardBody className="mx-4">
-                            <MDBInput
-                                name="email"
-                                label="Your email"
-                                group
-                                type="email"
-                                validate
-                                error="wrong"
-                                success="right"
-                                onChange={this.onChange}
-                            />
-                            <MDBInput
-                                name="password"
-                                label="Your password"
-                                group
-                                type="password"
-                                validate
-                                containerClass="mb-0"
-                                onChange={this.onChange}
-                            />
-                            <p className="font-small blue-text d-flex justify-content-end pb-3">
-                                Forgot
-                                <a href="#!" className="blue-text ml-1">
-    
-                                Password?
-                                </a>
-                            </p>
+                          <form>
+                            <div class="md-form mt-3">
+                              <input required name="email" onChange={this.onChange} type="email" id="materialSubscriptionFormPasswords" class="form-control"/>
+                              <label for="materialSubscriptionFormPasswords"> Email...</label>
+                            </div>
+                            <div class="md-form mt-3">
+                              <input required type="password" name="password" onChange={this.onChange} id="materialSubscriptionFormPasswords" class="form-control"/>
+                              <label for="materialSubscriptionFormPasswords">Password...</label>
+                            </div> 
                             <div style={{margin: 'auto', width: '30%'}} className="text-center mb-3">
                                 <MDBBtn
-                                    type="button"
+                                    type="submit"
                                     gradient="blue"
                                     rounded
                                     className="btn-block z-depth-1a"
                                     style={{borderRadius: '18px',}}
-                                    onClick={(e)=> login(e, email, password)}
+                                    onSubmit={(e)=> login(e, email, password)}
                                     
                                 >
                                     LOGIN
                                 </MDBBtn>
                             </div>
+                          </form>
                         </MDBCardBody>
                         <MDBModalFooter className="mx-5 pt-3 mb-1 justify-content-center">
                             <p align='center' className="font-small grey-text d-flex">
