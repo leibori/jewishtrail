@@ -1,80 +1,37 @@
-import React, { Component, useState } from "react";
+import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import {myFirebase} from 'components/firebase/firebase';
-import { signInWithGoogle, login } from 'components/firebase/FirebaseLoginUtils'
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import InputAdornment from "@material-ui/core/InputAdornment";
-// @material-ui/icons
-import Email from "@material-ui/icons/Email";
-// import People from "@material-ui/icons/People";
-// core components
-import Header from "components/Header/Header.js";
-import HeaderLinks from "components/Header/HeaderLinks.js";
-import Footer from "components/Footer/Footer.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Button from "components/CustomButtons/Button.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardFooter from "components/Card/CardFooter.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import styles from "assets/jss/material-kit-react/views/loginPage.js";
-import Icon from "@material-ui/core/Icon";
-import { Icon as TestIcon } from 'semantic-ui-react';
+import {myFirebase} from '../firebase/firebase';
+import { signInWithGoogle, login } from '../firebase/FirebaseLoginUtils'
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
 
-
-
-export default function LoginWrapper(props) {
-
-const useStyles = makeStyles(styles);
-const classes = useStyles();
-  return (
-      <LoginPage {...props} classes={classes}/>
-  );
+const centerStyle = {
+    margin: 'auto',
+    width: '50%',
 }
 
-class LoginPage extends Component {
-  constructor(props){
-    super(props);
+export default class LoginPage extends Component {
+  constructor() {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+ //   this.signup = this.signup.bind(this);
     this.state = {
-      online: false,
-      uid: '',
       email: '',
-      pass: '',
-      cardAnimaton: "cardHidden",
-      classes: props.classes,
-
-    }
+      password: '',
+      online: false
+      
+    };
     this.googleLogin = this.googleLogin.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.updateAnimation = this.updateAnimation.bind(this);
-    this.timeoutFunc = this.timeoutFunc.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  googleLogin = async () => {
+  googleLogin = async (e) => {
+    e.preventDefault();
     var userid = await signInWithGoogle()
     console.log(userid)
     this.setState({
-            online: true,
-            uid: userid
-          });
-  }
-
-  timeoutFunc = () => {
-    this.setState({cardAnimaton: ""});
-  };
-
-  onChange = (e) => {
-    e.preventDefault();
-    this.setState({ [e.target.id]: e.target.value})
-  }
-
-  updateAnimation = () => setTimeout(this.timeoutFunc);
-
-  componentWillMount() {
-    // this.updateAnimation();
+      online: true,
+      userInfo: userid
+    })
   }
 
   async componentDidMount(){
@@ -86,117 +43,86 @@ class LoginPage extends Component {
       }  
      })
   }
+  
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
 
-  render = () => {
-  console.log(this.state.classes);
-  const classes = this.state.classes;
-  const rest = {...this.props};
-  if(this.state.online){
+  render() {
+    if(this.state.online){
       return <Redirect to = "/Menu"></Redirect>
-        }
-  return (
-    <div>
-      <div
-        className={classes.pageHeader}
-        style={{
-          // backgroundImage: "url(" + image + ")",
-          backgroundSize: "cover",
-          backgroundPosition: "top center"
-        }}
-      >
-        <div className={classes.container}>
-          <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={4}>
-              <Card className={classes[this.state.cardAnimaton]}>
-                <div align='center'>
-                <form className={classes.form}>
-                  <CardHeader align='center' color="info" className={classes.cardHeader}>
-                    <h4><b>Login</b></h4>
-                    <div className={classes.socialLine}>
-                      <Button
-                        justIcon
-                        target="_blank"
-                        color="transparent"
-                        onClick={this.googleLogin}
-                      >
-                        <TestIcon name="google"/>
-                        <i className={"fab fa-google-plus-g"} />
-                      </Button>
-                    </div>
-                  </CardHeader>
-                  <br/>
-                  <p align='center' className={classes.divider}>Start your trail!</p>
-                  <CardBody>
-                      <CustomInput
-                        labelText="Email..."
-                        id="email"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          onChange: this.onChange,
-                          required: true,
-                          type: "email",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <Email className={classes.inputIconsColor} />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                      <CustomInput
-                        labelText="Password"
-                        id="pass"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          onChange: this.onChange,
-                          required: true,
-                          type: "password",
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <Icon className={classes.inputIconsColor}>
-                                lock_outline
-                              </Icon>
-                            </InputAdornment>
-                          ),
-                          autoComplete: "off"
-                        }}
-                      />
-                  </CardBody>
-                    {/* <CardFooter style="makeStyles-cardFooter-8"> */}
-                    {/* <CardFooter className={classes.cardFooter}> */}
-                    <CardFooter>
-
-                        <Button type='submit' onClick={(e) => login(e, this.state.email, this.state.pass)} simple color="info" size="sm">
-                          Log In
-                        </Button>
-                    </CardFooter>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button simple color="info" size="sm">
-                      <Link to="/SignUp" style={{color:'#00ACC1'}}>
-                        Signup
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button simple color="info" size="sm">
-                      <Link to="/Menu" style={{color:'#00ACC1'}}>
-                        Enter as guest       
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </form>
-                </div>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </div>
-        {/* <Footer whiteFont /> */}
-      </div>
-    </div>
-  );}
+    }
+    const { email, password } = this.state;
+    return (
+        <MDBContainer>
+            <MDBRow>
+                <MDBCol md="5" style={centerStyle}>
+                    <MDBCard>
+                        <div className="header pt-3 blue-gradient">
+                            <MDBRow className="d-flex justify-content-center">
+                                <h3 className="white-text mb-3 pt-3 font-weight-bold">
+                                Log in
+                                </h3>
+                            </MDBRow>
+                            <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
+                                <a onClick={this.googleLogin} className="fa-lg p-2 m-2 gplus-ic">
+                                    <MDBIcon fab className="fa-google-plus-g white-text fa-lg" />
+                                </a>
+                            </MDBRow>
+                        </div>
+                        <MDBCardBody className="mx-4">
+                            <MDBInput
+                                name="email"
+                                label="Your email"
+                                group
+                                type="email"
+                                validate
+                                error="wrong"
+                                success="right"
+                                onChange={this.onChange}
+                            />
+                            <MDBInput
+                                name="password"
+                                label="Your password"
+                                group
+                                type="password"
+                                validate
+                                containerClass="mb-0"
+                                onChange={this.onChange}
+                            />
+                            <p className="font-small blue-text d-flex justify-content-end pb-3">
+                                Forgot
+                                <a href="#!" className="blue-text ml-1">
+    
+                                Password?
+                                </a>
+                            </p>
+                            <div style={{margin: 'auto', width: '30%'}} className="text-center mb-3">
+                                <MDBBtn
+                                    type="button"
+                                    gradient="blue"
+                                    rounded
+                                    className="btn-block z-depth-1a"
+                                    style={{borderRadius: '13px',}}
+                                    onClick={(e)=> login(e, email, password)}
+                                    
+                                >
+                                    LOGIN
+                                </MDBBtn>
+                            </div>
+                        </MDBCardBody>
+                        <MDBModalFooter className="mx-5 pt-3 mb-1 justify-content-center">
+                            <p align='center' className="font-small grey-text d-flex">
+                            Not a member?
+                            <a href="#!" className="blue-text ml-1">
+    
+                            Sign Up
+                            </a>
+                            </p>
+                        </MDBModalFooter>
+                    </MDBCard>
+                </MDBCol>
+            </MDBRow>
+        </MDBContainer>
+    );}
 }
-
-// C:\Users\Joker\Desktop\X Files\Personal Projects\Project\Ziv\jewishtrail\src\components\login\LoginPage.js
