@@ -63,6 +63,12 @@ export async function getFavoritesIDs(userid) {
 }
 
 
+export async function getRoadFavoritesIDs(userid) {
+    const user = await myDatabase.collection('accounts').doc(userid).get()
+    return user.data().RoadsFavorites
+}
+
+
 export async function getFavorites(userid){
     var resultOfSite = []
     var siteList = await getFavoritesIDs(userid)

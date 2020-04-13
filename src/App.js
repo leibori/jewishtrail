@@ -81,8 +81,8 @@ class App extends Component {
             <Route exact path='/updateSite/:searchVal' component={UpdateSite} />
             <Route exact path='/updateForm/:id' component={UpdateForm} />
             <Route path='/auth' component={AuthMenu} />
-            <Route exact path='/searchSite' component={SearchMenu} />
-            <Route exact path='/searchSite/:searchVal' component={SearchMenu} />
+            <Route exact path='/search' component={SearchMenu} />
+            <Route exact path='/search/:searchVal' component={SearchMenu} />
             <Route path='/favorites' component={Favorites} />
             <Route path='/about' component={About} />
             <Route exact path='/site/:id' component={SitePage} />

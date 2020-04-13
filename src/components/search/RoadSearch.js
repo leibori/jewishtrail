@@ -40,7 +40,7 @@ class RoadSearch extends Component {
     // search for roads
     async executeSearch() {
         console.log("searching road")
-        const result = await findFromDB(this.state.searchVal,'roads')
+        const result = await findFromDB(this.state.searchVal,['roads'])
         this.setState({siteList: result})
     }
 

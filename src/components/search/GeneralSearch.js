@@ -2,19 +2,20 @@ import React, { Component } from 'react'
 import {findFromDB} from './SearchUtils'
 import SiteComponent from '../sites/siteComponent'
 import { PaginatedList } from 'react-paginated-list'
+import RoadComponent from 'components/road/RoadComponent';
 
 
 /**
  * This component is holds the all of th elements of a search page and calls functions that execute searches.
  */
-class SiteSearchPrototype extends Component {
+class GeneralSearch extends Component {
 
     // A constructor that sets the values of this component's state.
     constructor(props) {
         super(props);
 
         // Extracting the props that the constructor recieves.
-        const { buttonName, onClickMethod, canRenderButton, searchVal, returnTo } = props;
+        const { buttonName, onRoadClickMethod, onSiteClickMethod, canRenderButtonSite, canRenderButtonRoad, searchVal, returnTo } = props;
 
         this.state = {
             // Is true if a search value is sent, and false otherwise.
@@ -24,7 +25,7 @@ class SiteSearchPrototype extends Component {
             searchVal: searchVal ? searchVal.split(' ') : [],
 
             // The array of search results.
-            siteList: [],
+            searchResult: [],
 
             // Button content next to each entry
             buttonName,
@@ -34,20 +35,19 @@ class SiteSearchPrototype extends Component {
         }
 
         // onClick event handler for an entry button.
-        this.onClickMethod = onClickMethod ? onClickMethod.bind(this) : null;
+        this.onSiteClickMethod = onSiteClickMethod ? onSiteClickMethod.bind(this) : null;
+
+        // onClick event handler for an entry button.
+        this.onRoadClickMethod = onRoadClickMethod ? onRoadClickMethod.bind(this) : null;
 
         // Boolean function for conditional button rendering.
-        this.canRenderButton = canRenderButton ? canRenderButton.bind(this) : null;
+        this.canRenderButtonSite = canRenderButtonSite ? canRenderButtonSite.bind(this) : null;
+
+        this.canRenderButtonRoad = canRenderButtonRoad ? canRenderButtonRoad.bind(this) : null;
 
         this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
+
         this.updateSearchValue = this.updateSearchValue.bind(this);
-
-        // console.log(this.state.searchVal)
-
-        // // Execute the search if the componenet recieved a search value.
-        // if(this.state.searchVal.length >= 1) {
-        //     this.executeSearch()
-        // }
     };
 
     // transition to a new page based on the "returnTo" and the search value.
@@ -62,9 +62,9 @@ class SiteSearchPrototype extends Component {
 
     // The search function that calls for searches in the database.
     async executeSearch() {
-        const result = await findFromDB(this.state.searchVal, ['sites'])
+        const result = await findFromDB(this.state.searchVal, ['sites', 'roads'])
         // console.log(result)
-        this.setState({siteList: result,
+        this.setState({searchResult: result,
                         haveSearched: true})
     }
 
@@ -86,16 +86,29 @@ class SiteSearchPrototype extends Component {
     // Renders the component.
     render() {
 
-        // Extract "buttonName" and "siteList" variable for ease of use.
-        const { buttonName, siteList } = this.state;
+        // Extract "buttonName" and "searchResult" variable for ease of use.
+        const { buttonName, searchResult } = this.state;
+
 
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
         const mapping = (list) => list.map((site, i) => {
-            return (<div key={i} >
-                        <SiteComponent key={i} props={site}/>
-                        {this.onClickMethod && buttonName && this.canRenderButton(site.id) &&
-                            <button onClick={(e) => this.onClickMethod(e, site.id)}>{buttonName}</button>}
-                    </div>)
+            return  (
+                        <div key={i}>
+                        {site.type === 'sites' ? 
+                            (<div>  
+                                <SiteComponent key={i} props={site}/>
+                                {this.onSiteClickMethod && buttonName && this.canRenderButtonSite(site.id) &&
+                                    <button onClick={(e) => this.onSiteClickMethod(e, site.id)}>{buttonName}</button>}
+                            </div>) :
+                            (<div>  
+                                <RoadComponent key={i} props={site}/>
+                                {this.onRoadClickMethod && buttonName && this.canRenderButtonRoad(site.id) &&
+                                    <button onClick={(e) => this.onRoadClickMethod(e, site.id)}>{buttonName}</button>}
+                            </div>)
+                        }
+                        </div>
+
+                    );
         });      
 
         return (
@@ -103,7 +116,7 @@ class SiteSearchPrototype extends Component {
                 {/* Search site form */}
                 <form ref={this.form} id="search-form">
                     <div className="search-field">
-                        <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
+                        <input value={this.state.searchVal.join(" ")} ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
                     </div>
                     <div>
                         <button onClick={this.onSearchButtonClicked} type="submit">Search</button>
@@ -113,14 +126,14 @@ class SiteSearchPrototype extends Component {
                 
                 {/* Results */}
                 <div className="container">
-                    {siteList.length !== 0 && <PaginatedList
-                        list={siteList}
+                    {searchResult.length !== 0 && <PaginatedList
+                        list={searchResult}
                         itemsPerPage={3}
                         renderList={mapping}/>}
                 </div>
 
                 {
-                    this.state.searchVal.length != 0 && this.state.siteList.length == 0 && this.state.haveSearched ?
+                    this.state.searchVal.length != 0 && this.state.searchResult.length == 0 && this.state.haveSearched ?
                         (<h5>No matches found.</h5>) : ''
                 }
             </div>
@@ -128,4 +141,4 @@ class SiteSearchPrototype extends Component {
     }
 }
 
-export default SiteSearchPrototype
+export default GeneralSearch
