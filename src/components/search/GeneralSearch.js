@@ -31,7 +31,11 @@ class GeneralSearch extends Component {
             buttonName,
 
             // The beginning of the address that is set after the search button is pressed.
-            returnTo: returnTo
+            returnTo: returnTo,
+
+            siteFilter: true,
+
+            roadFilter: true
         }
 
         // onClick event handler for an entry button.
@@ -75,36 +79,75 @@ class GeneralSearch extends Component {
         this.setState({searchVal: e.target.value})
     }
 
+    // Execute the search if the componenet recieved a search value.
     async componentWillMount() {
-        // Execute the search if the componenet recieved a search value.
         if(this.state.searchVal.length >= 1) {
             await this.executeSearch()
         }
     }
 
 
+    /**
+     * This function executes when the user clicks on the site filter button, and it sets boolean values in order to filter the results.
+     */
+    siteFilterClicked = () => {
+        if (!this.state.roadFilter) {
+            this.setState({roadFilter: true})
+        } else {
+            this.setState({siteFilter: true, roadFilter: false})
+        }
+    }
+
+
+    /**
+     * This function executes when the user clicks on the road filter button, and it sets boolean values in order to filter the results.
+     */
+    roadFilterClicked = () => {
+        if (!this.state.siteFilter) {
+            this.setState({siteFilter: true})
+        } else {
+            this.setState({siteFilter: false, roadFilter: true}) 
+        }
+    }
+
+
+    /**
+     * This function is used to filter (by site or by road) the results based on boolean values.
+     */
+    resultsFilter = (result) => {
+        return (this.state.siteFilter && result.type == 'sites') ||
+            (this.state.roadFilter && result.type == 'roads')
+    }
+
+
     // Renders the component.
     render() {
 
+        // Predicate that decides the color of the button of the site filter.
+        const siteColorPredicate = !this.state.roadFilter ? 'yellow' : 'white'
+
+        // Predicate that decides the color of the button of the road filter.
+        const roadColorPredicate = !this.state.siteFilter ? 'yellow' : 'white'
+
         // Extract "buttonName" and "searchResult" variable for ease of use.
         const { buttonName, searchResult } = this.state;
-
 
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
         const mapping = (list) => list.map((site, i) => {
             return  (
                         <div key={i}>
-                        {site.type === 'sites' ? 
+                        {site.type === 'sites' && this.state.siteFilter ?
                             (<div>  
                                 <SiteComponent key={i} props={site}/>
                                 {this.onSiteClickMethod && buttonName && this.canRenderButtonSite(site.id) &&
                                     <button onClick={(e) => this.onSiteClickMethod(e, site.id)}>{buttonName}</button>}
-                            </div>) :
+                            </div>)
+                            : site.type === 'roads' && this.state.roadFilter ?
                             (<div>  
                                 <RoadComponent key={i} props={site}/>
                                 {this.onRoadClickMethod && buttonName && this.canRenderButtonRoad(site.id) &&
                                     <button onClick={(e) => this.onRoadClickMethod(e, site.id)}>{buttonName}</button>}
-                            </div>)
+                            </div>) : ''
                         }
                         </div>
 
@@ -123,11 +166,16 @@ class GeneralSearch extends Component {
                     </div>
                     <p className="error pink-text center-align"></p>
                 </form>
+
+                <div>
+                    <button onClick={this.siteFilterClicked} style={{backgroundColor: siteColorPredicate}}>Sites</button>
+                    <button onClick={this.roadFilterClicked} style={{backgroundColor: roadColorPredicate}}>Roads</button>
+                </div>
                 
                 {/* Results */}
                 <div className="container">
                     {searchResult.length !== 0 && <PaginatedList
-                        list={searchResult}
+                        list={searchResult.filter(this.resultsFilter)}
                         itemsPerPage={3}
                         renderList={mapping}/>}
                 </div>
