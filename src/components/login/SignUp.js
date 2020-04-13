@@ -84,7 +84,7 @@ class SignUp extends Component {
                                     type="submit"
                                     gradient="blue"
                                     rounded
-                                    className="btn-block z-depth-1a"
+                                    className="z-depth-1a"
                                     style={{borderRadius: '18px',}}                                    
                                 >
                                   Sign up
