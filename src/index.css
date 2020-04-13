@@ -8,7 +8,6 @@ body {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-  min-height: 100%;
 }
 
 form{
@@ -19,6 +18,22 @@ form{
 form button, form h5{
   margin: 20px 0;
 }
+@media (min-width: 768px) {
+  .navbar .navbar-nav {
+      float:none;
+      margin:0 auto;
+      text-align: center ;
+      font-size: x-large;
+
+  }
+
+  .navbar .navbar-collapse {
+    vertical-align: center;
+    text-align: center;
+    display: inline-block;
+  }
+}
+
 
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]),
@@ -28,12 +43,7 @@ textarea.materialize-textarea:focus:not([readonly]){
   box-shadow: none;
 }
 
-nav.center {
-  margin: auto;
-  width: 50%;
-  border: 3px solid green;
-  padding: 10px;
-}
+
 input[type=text]:not(.browser-default):focus:not([readonly]) + label,
 textarea.materialize-textarea:focus:not([readonly]) + label,
 input[type=email]:not(.browser-default):focus:not([readonly]) + label,
