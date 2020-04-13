@@ -22,6 +22,7 @@ export default class LoginPage extends Component {
     };
     this.googleLogin = this.googleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onSignUpClick = this.onSignUpClick.bind(this);
   }
 
   googleLogin = async (e) => {
@@ -48,6 +49,10 @@ export default class LoginPage extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  onSignUpClick = (e) => {
+    e.preventDefault();
+    this.props.history.push('/SignUp');
+  }
   render() {
     if(this.state.online){
       return <Redirect to = "/Menu"></Redirect>
@@ -103,7 +108,7 @@ export default class LoginPage extends Component {
                                     gradient="blue"
                                     rounded
                                     className="btn-block z-depth-1a"
-                                    style={{borderRadius: '13px',}}
+                                    style={{borderRadius: '18px',}}
                                     onClick={(e)=> login(e, email, password)}
                                     
                                 >
@@ -114,9 +119,8 @@ export default class LoginPage extends Component {
                         <MDBModalFooter className="mx-5 pt-3 mb-1 justify-content-center">
                             <p align='center' className="font-small grey-text d-flex">
                             Not a member?
-                            <a href="#!" className="blue-text ml-1">
-    
-                            Sign Up
+                            <a onClick={this.onSignUpClick} className="blue-text ml-1">
+                              Sign Up
                             </a>
                             </p>
                         </MDBModalFooter>
