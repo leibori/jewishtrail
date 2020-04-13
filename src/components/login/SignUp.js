@@ -51,8 +51,8 @@ class SignUp extends Component {
     const { email, password, username } = this.state;
     return (
         <MDBContainer>
-            <MDBRow>
-                <MDBCol md="5" style={centerStyle}>
+            <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
+                <MDBCol md="6">
                     <MDBCard>
                         <div className="header pt-3 blue-gradient">
                             <MDBRow className="d-flex justify-content-center">
@@ -80,7 +80,7 @@ class SignUp extends Component {
                               <input required type="text" name="username" onChange={this.handleChange} id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords">Username...</label>
                             </div>  
-                            <div style={{margin: 'auto', width: '30%'}} className="text-center mb-3">
+                            <div style={{margin: 'auto'}} className="text-center mb-3">
                                 <MDBBtn
                                     type="submit"
                                     gradient="blue"
