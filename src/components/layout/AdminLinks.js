@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom'
 
 const AdminLinks = () => {
   return (
+    
     <div>
-      <ul className="right">
+      <ul className="container">
         <li><NavLink to='/admin'>Admin Page</NavLink></li>
       </ul>
     </div>
