@@ -3,38 +3,28 @@ import _ from 'underscore'
 
 
 /**
- * This function recieves a string array "searchVal" and uses it to searche through the "sites" database for the sites that has similar search tokens.
- * It returns a array of site-like objects that contains the neccessary info for a search result.
- * The returned array is sorted by number of matches between "searchVal" and search tokens in each site.
+ * This function recieves a string array "searchVal" and uses it to search through a database collection for the sites that has similar search tokens.
+ * It returns a array that contains the documents that passed the "accuracy" value given.
  * @param {string[]} searchVals 
+ * @param {double} accuracy 
+ * @param {string} collection 
  */
-export async function findFromDB(searchVals, collectionName) {
+async function findPerCollection(searchVals, accuracy, collection) {
 
-    // Sets the accuracy to just above 50%. meaning the number of matches need to be atleast half of the words in "searchVal".
-    let accuracy = Math.ceil(searchVals.length / 2.0)
+    // Array of result and their counter by number of matches.
+    let results = []
 
-    // Array of sites and their counter by number of matches.
-    let sites = []
+    // Gets the snapshot of all the results in the database by collection.
+    const snapshot = await myDatabase.collection(collection).get()
 
-    // The returned array at the end.
-    var sortedSites = []
-
-    // Convert all of the search values to lower case for case insensitive search.
-    for(var i = 0; i < searchVals.length; ++i) {
-        searchVals[i] = searchVals[i].toLowerCase();
-    }
-
-    // Gets the snapshot of all the sites in the database.
-    const snapshot = await myDatabase.collection(collectionName).get()
-
-    // The following occurs for each site.
+    // Exectues for each document in snapshot.
     snapshot.forEach(doc => {
+
         // A counter for the number of matches.
         var counter = 0
 
-        // Pulls the site's search tokens
+        // Pulls the result's search tokens
         var searchTokens = doc.data().searchTokens;
-        // console.log(searchTokens)
 
         // Counts the number of matches.
         searchVals.forEach(value => {
@@ -43,33 +33,66 @@ export async function findFromDB(searchVals, collectionName) {
             }
         })
 
-        // Push site and counter to "sites" array if the counter is greater or equal to the accuracy variable.
+        // Push result and counter to "results" array if the counter is greater or equal to the accuracy variable.
         if (counter >= accuracy) {
-            sites.push({counter: counter, document: doc})
+            results.push({counter: counter, document: doc, type: collection })
         }
 
     })
 
-    if (sites.length == 0) {
-        return sortedSites
+    return results
+}
+
+
+/**
+ * This function recieves a string array "searchVal" and uses it to searche through the database collections for documents that has similar search tokens.
+ * It returns a array of objects that contains the neccessary info for a search result.
+ * The returned array is sorted by number of matches between "searchVal" and search tokens in each site.
+ * @param {string[]} searchVals 
+ * @param {string[]} collectionName 
+ */
+export async function findFromDB(searchVals, collectionName) {
+
+    // Sets the accuracy to just above 50%. meaning the number of matches need to be atleast half of the words in "searchVal".
+    let accuracy = Math.ceil(searchVals.length / 2.0)
+
+    // Array of sites and their counter by number of matches.
+    let results = []
+
+    // The returned array at the end.
+    var sortedResults = []
+
+    // Convert all of the search values to lower case for case insensitive search.
+    for(var i = 0; i < searchVals.length; ++i) {
+        searchVals[i] = searchVals[i].toLowerCase();
     }
 
-    // Sorts the "sites" array in a decending order by the counter.
-    sites = _.sortBy(sites, 'counter').reverse()
+    // Goes through each collection that has it's name in "collectionName".
+    for(var i = 0; i < collectionName.length; ++i) {
+        results = results.concat(await findPerCollection(searchVals, accuracy, collectionName[i]))
+    }
+    
+    // Returns early if search result is empty.
+    if (results.length == 0) {
+        return sortedResults
+    }
 
-    // Takes the sites from the "sites" array and push it to the "sortedSites" array.
-    sites.forEach(site => {
-        // addToList(sortedSites, site.document)
-        sortedSites.push({
+    // Sorts the "results" array in a decending order by the counter.
+    results = _.sortBy(results, 'counter').reverse()
+
+    // Takes the sites from the "sites" array and push it to the "sortedResults" array.
+    results.forEach(site => {
+        sortedResults.push({
             name: site.document.data().name,
             city: site.document.data().city,
             country: site.document.data().country,
             tags: site.document.data().tags,
-            id: site.document.id
+            id: site.document.id,
+            type: site.type
         })
     })
 
-    return sortedSites;
+    return sortedResults;
 }
 
 
