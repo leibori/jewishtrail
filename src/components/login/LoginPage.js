@@ -81,9 +81,9 @@ export default class LoginPage extends Component {
                               <input required name="email" onChange={this.onChange} type="email" id="materialSubscriptionFormPasswords" className="form-control"/>
                               <label for="materialSubscriptionFormPasswords"> Email...</label>
                             </div>
-                            <div class="md-form mt-3">
-                              <i class="fa fa-lock prefix grey-text"></i>
-                              <input required type="password" name="password" onChange={this.onChange} id="materialSubscriptionFormPasswords" class="form-control"/>
+                            <div className="md-form mt-3">
+                              <i className="fa fa-lock prefix grey-text"></i>
+                              <input required type="password" name="password" onChange={this.onChange} id="materialSubscriptionFormPasswords" className="form-control"/>
                               <label for="materialSubscriptionFormPasswords">Password...</label>
                             </div> 
                             <div style={{margin: 'auto'}} className="text-center mb-3">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import  {myFirebase} from '../firebase/firebase';
-import {signup} from '../firebase/FirebaseLoginUtils'
+import {signup, signInWithGoogle} from '../firebase/FirebaseLoginUtils'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
 
 const centerStyle = {
@@ -21,7 +21,20 @@ class SignUp extends Component {
     };
     this.onSignup = this.onSignup.bind(this);
     this.handleChange = this.handleChange.bind();
+    this.googleLogin = this.googleLogin.bind(this);
+
   }
+
+  googleLogin = async (e) => {
+    e.preventDefault();
+    var userid = await signInWithGoogle()
+    console.log(userid)
+    this.setState({
+      online: true,
+      uid: userid
+    })
+  }
+
 
   async componentDidMount(){
     myFirebase.auth().onAuthStateChanged(async (user) => {
@@ -70,19 +83,19 @@ class SignUp extends Component {
                                 Start your trail today!
                                 </h3>
                           <form onSubmit={this.onSignup}>
-                            <div class="md-form mt-3">
-                              <i class="fa fa-envelope prefix grey-text"></i>
-                              <input required name="email" onChange={this.handleChange} type="email" id="materialSubscriptionFormPasswords" class="form-control"/>
+                            <div className="md-form mt-3">
+                              <i className="fa fa-envelope prefix grey-text"></i>
+                              <input required name="email" onChange={this.handleChange} type="email" id="materialSubscriptionFormPasswords" className="form-control"/>
                               <label for="materialSubscriptionFormPasswords"> Email...</label>
                             </div>
-                            <div class="md-form mt-3">
-                              <i class="fa fa-lock prefix grey-text"></i>
-                              <input required type="password" name="password" onChange={this.handleChange} id="materialSubscriptionFormPasswords" class="form-control"/>
+                            <div className="md-form mt-3">
+                              <i className="fa fa-lock prefix grey-text"></i>
+                              <input required type="password" name="password" onChange={this.handleChange} id="materialSubscriptionFormPasswords" className="form-control"/>
                               <label for="materialSubscriptionFormPasswords">Password...</label>
                             </div> 
-                            <div class="md-form mt-3">
-                              <i class="fa fa-user prefix grey-text"></i>
-                              <input required type="text" name="username" onChange={this.handleChange} id="materialSubscriptionFormPasswords" class="form-control"/>
+                            <div className="md-form mt-3">
+                              <i className="fa fa-user prefix grey-text"></i>
+                              <input required type="text" name="username" onChange={this.handleChange} id="materialSubscriptionFormPasswords" className="form-control"/>
                               <label for="materialSubscriptionFormPasswords">Username...</label>
                             </div>  
                             <div style={{margin: 'auto'}} className="text-center mb-3">
