@@ -105,10 +105,11 @@ export default class LoginPage extends Component {
                             <a onClick={this.onSignUpClick} className="blue-text ml-1">
                               Sign Up
                             </a>
-                            </p>
+                             Or
                             <a onClick={(e) => this.props.history.push('/Menu')} className="blue-text ml-1">
-                              Enter as a guest
-                            </a>
+                                Enter as a guest
+                              </a>
+                            </p>
                         </MDBModalFooter>
                     </MDBCard>
                 </MDBCol>
