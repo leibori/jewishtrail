@@ -11,7 +11,7 @@ export async function signInWithGoogle() {
     return user.uid
   }
   var displayName = user.displayName;
-  await CreateNewAccount(user.uid, displayName);
+  CreateNewAccount(user.uid, displayName).then((u)=>(console.log(u)));
   return user.uid
 }
 

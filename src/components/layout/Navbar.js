@@ -25,7 +25,7 @@ class Navbar extends Component {
                       isLoggedIn: true}
       )}
       else if(user){
-        this.setState({isLoggedIn: true})
+        this.setState({isLoggedIn: true, isAdmin: false})
       }else{
         this.setState({isLoggedIn: false,
                       isAdmin: false
@@ -49,7 +49,7 @@ class Navbar extends Component {
             
               <ReactBootStrap.Nav.Link href="/LogOut">Log Out</ReactBootStrap.Nav.Link>
               <ReactBootStrap.Nav.Link href="/about">About</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link href="/searchSite">Search Site</ReactBootStrap.Nav.Link>
+              <ReactBootStrap.Nav.Link href="/search">Search</ReactBootStrap.Nav.Link>
               <ReactBootStrap.Nav.Link href="/favorites">Favorites</ReactBootStrap.Nav.Link>
                 {
                   this.state.isAdmin && (<ReactBootStrap.Nav.Link href="/admin">Admin Page</ReactBootStrap.Nav.Link>)

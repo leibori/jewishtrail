@@ -3,7 +3,10 @@ import React from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 // react components for routing our app without refresh
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import Facebook from '@material-ui/icons/Facebook';
+import ImportContacts from '@material-ui/icons/ImportContacts';
+
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,7 +29,7 @@ export default function HeaderLinks(props) {
   const classes = useStyles();
   return (
     <List className={classes.list}>
-      <ListItem className={classes.listItem}>
+      {/* <ListItem className={classes.listItem}>
         <CustomDropdown
           noLiPadding
           buttonText="Components"
@@ -48,9 +51,10 @@ export default function HeaderLinks(props) {
             </a>
           ]}
         />
-      </ListItem>
-      <ListItem className={classes.listItem}>
+      </ListItem> */}
+      {/* <ListItem className={classes.listItem}>
         <Button
+          size='lg'
           href="https://www.creative-tim.com/product/material-kit-react?ref=mkr-navbar"
           color="transparent"
           target="_blank"
@@ -58,14 +62,33 @@ export default function HeaderLinks(props) {
         >
           <CloudDownload className={classes.icons} /> Download
         </Button>
-      </ListItem>
+      </ListItem> */}
       <ListItem className={classes.listItem}>
+        <Tooltip
+          id="about"
+          title="Our vision"
+          placement={window.innerWidth > 959 ? "top" : "left"}
+          classes={{ tooltip: classes.tooltip }}
+        >
+          <Button 
+            size='sm'
+            color="transparent"
+            target="_blank"
+            className={classes.navLink}
+          >
+            <Link to='/about'>
+              <ImportContacts/>About
+            </Link>
+          </Button>         
+        </Tooltip>
+      </ListItem>
+      {/* <ListItem className={classes.listItem}> */}
         {/*<Tooltip title="Delete">
           <IconButton aria-label="Delete">
             <DeleteIcon />
           </IconButton>
         </Tooltip>*/}
-        <Tooltip
+        {/* <Tooltip
           id="instagram-twitter"
           title="Follow us on twitter"
           placement={window.innerWidth > 959 ? "top" : "left"}
@@ -80,7 +103,7 @@ export default function HeaderLinks(props) {
             <i className={classes.socialIcons + " fab fa-twitter"} />
           </Button>
         </Tooltip>
-      </ListItem>
+      </ListItem> */}
       <ListItem className={classes.listItem}>
         <Tooltip
           id="instagram-facebook"
@@ -89,16 +112,19 @@ export default function HeaderLinks(props) {
           classes={{ tooltip: classes.tooltip }}
         >
           <Button
+            size='lg'
             color="transparent"
-            href="https://www.facebook.com/CreativeTim?ref=creativetim"
+            href="https://www.facebook.com/codaproject/"
             target="_blank"
             className={classes.navLink}
           >
+            <Facebook/>
+            Facebook
             <i className={classes.socialIcons + " fab fa-facebook"} />
           </Button>
         </Tooltip>
       </ListItem>
-      <ListItem className={classes.listItem}>
+      {/* <ListItem className={classes.listItem}>
         <Tooltip
           id="instagram-tooltip"
           title="Follow us on instagram"
@@ -114,7 +140,7 @@ export default function HeaderLinks(props) {
             <i className={classes.socialIcons + " fab fa-instagram"} />
           </Button>
         </Tooltip>
-      </ListItem>
+      </ListItem> */}
     </List>
   );
 }

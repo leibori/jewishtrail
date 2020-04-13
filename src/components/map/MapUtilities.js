@@ -54,5 +54,4 @@ export function getMenuMap(mapId, latitude, longitude, zoom, markers) {
             "Sattelite and streets": satelliteStreets };
     var overlays = { "Sites": sites };
     L.control.layers(baseLayers, overlays).addTo(map);
-
 }

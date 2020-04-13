@@ -56,7 +56,7 @@ class App extends Component {
     //   claims:"admin" 
     // }
     return (
-      <BrowserRouter>
+      <BrowserRouter forceRefresh={true}>
         <div className="App">
         <Navbar />
           <header className="App-header">
@@ -95,7 +95,7 @@ class App extends Component {
             <Route exact path='/deleteRoad' component={DeleteRoad} />
             <Route exact path='/deleteRoad/:searchVal' component={DeleteRoad} />
             
-        
+            
           </Switch>
         </div>
       </BrowserRouter>
