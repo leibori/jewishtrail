@@ -9,7 +9,7 @@ const SignedOutLinks = () => {
       <Navbar expand="lg" variant="dark" bg="dark" size="lg">
           <NavLink to='/LoginPage'>Log In</NavLink>
           <NavLink to='/about'>About</NavLink>
-          <NavLink to='/searchSite'>Search Site</NavLink>
+          <NavLink to='/search'>Search</NavLink>
       </Navbar>
     </div>
   )

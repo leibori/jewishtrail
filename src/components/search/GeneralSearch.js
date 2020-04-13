@@ -159,7 +159,7 @@ class GeneralSearch extends Component {
                 {/* Search site form */}
                 <form ref={this.form} id="search-form">
                     <div className="search-field">
-                        <input value={this.state.searchVal.join(" ")} ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
+                        <input value={this.state.haveSearched ? this.state.searchVal.join(" ") : this.state.searchVal} ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
                     </div>
                     <div>
                         <button onClick={this.onSearchButtonClicked} type="submit">Search</button>
