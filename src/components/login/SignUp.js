@@ -66,16 +66,22 @@ class SignUp extends Component {
                             </MDBRow>
                         </div>
                         <MDBCardBody className="mx-4">
+                        <h3 align='center' className="blue-text mb-3 pt-3 font-weight-bold">
+                                Start your trail today!
+                                </h3>
                           <form onSubmit={this.onSignup}>
                             <div class="md-form mt-3">
+                              <i class="fa fa-envelope prefix grey-text"></i>
                               <input required name="email" onChange={this.handleChange} type="email" id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords"> Email...</label>
                             </div>
                             <div class="md-form mt-3">
+                              <i class="fa fa-lock prefix grey-text"></i>
                               <input required type="password" name="password" onChange={this.handleChange} id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords">Password...</label>
                             </div> 
                             <div class="md-form mt-3">
+                              <i class="fa fa-user prefix grey-text"></i>
                               <input required type="text" name="username" onChange={this.handleChange} id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords">Username...</label>
                             </div>  

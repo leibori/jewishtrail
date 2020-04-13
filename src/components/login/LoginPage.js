@@ -76,11 +76,13 @@ export default class LoginPage extends Component {
                         </div>
                         <MDBCardBody className="mx-4">
                           <form onSubmit={(e)=> login(e, email, password)}>         
-                            <div class="md-form mt-3">
-                              <input required name="email" onChange={this.onChange} type="email" id="materialSubscriptionFormPasswords" class="form-control"/>
+                            <div className="md-form mt-3">
+                              <i className="fa fa-envelope prefix grey-text"></i>
+                              <input required name="email" onChange={this.onChange} type="email" id="materialSubscriptionFormPasswords" className="form-control"/>
                               <label for="materialSubscriptionFormPasswords"> Email...</label>
                             </div>
                             <div class="md-form mt-3">
+                              <i class="fa fa-lock prefix grey-text"></i>
                               <input required type="password" name="password" onChange={this.onChange} id="materialSubscriptionFormPasswords" class="form-control"/>
                               <label for="materialSubscriptionFormPasswords">Password...</label>
                             </div> 
