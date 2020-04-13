@@ -73,7 +73,7 @@ class Navbar extends Component {
     <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
       <ReactBootStrap.Nav className="mr-auto">
       
-        <ReactBootStrap.Nav.Link href="/LoginPage">Log In</ReactBootStrap.Nav.Link>
+        <ReactBootStrap.Nav.Link href="/LoginPage">Log In </ReactBootStrap.Nav.Link>
         <ReactBootStrap.Nav.Link href="/about">About</ReactBootStrap.Nav.Link>
         <ReactBootStrap.Nav.Link href="/searchSite">Search Site</ReactBootStrap.Nav.Link>
       </ReactBootStrap.Nav>
