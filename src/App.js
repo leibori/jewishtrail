@@ -95,7 +95,7 @@ class App extends Component {
             <Route exact path='/deleteRoad' component={DeleteRoad} />
             <Route exact path='/deleteRoad/:searchVal' component={DeleteRoad} />
             
-            
+        
           </Switch>
         </div>
       </BrowserRouter>
