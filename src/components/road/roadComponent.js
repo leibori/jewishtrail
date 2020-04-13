@@ -6,9 +6,9 @@ const RoadComponent = ({props}) => {
   return (
     <div className="card z-depth-0 project-summary">
     <div className="card-content grey-text text-darken-3">
-      <div className="site-name ">Name: {props.name}</div>
-      <div className="site-city ">Citys: {props.city.join(", ")}.</div>
-      <div className="site-country ">Country: {props.country.join(", ")}.</div>
+      <div className="site-name ">Road name: {props.name}</div>
+      <div className="site-city ">Cities: {props.city.join(", ")}.</div>
+      <div className="site-country ">Countries: {props.country.join(", ")}.</div>
       {
         <div className="container">
             {props.tags.map((tag, i) => {
