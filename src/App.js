@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route} from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
 import Menu from './components/main-menu/Menu'
 import AdminMenu from './components/admin/AdminMenu'
@@ -68,7 +68,10 @@ class App extends Component {
             <link rel="stylesheet" href="styles.css"></link>
           </header>
           <Switch>
-            <Route path='/' exact component={Home} />
+            <Route exact path='/' >
+              <Redirect to='/LoginPage'/>
+            </Route>
+            {/* <Route exact path='/' component={LoginPage}/> */}
             <Route path='/Menu'  component={Menu} />
             <Route path='/LoginPage' component={LoginPage} />
             <Route path='/LogOut' component={LogOut} />
