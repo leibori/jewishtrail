@@ -64,9 +64,9 @@ export default class LoginPage extends Component {
                     <MDBCard>
                         <div className="header pt-3 blue-gradient">
                             <MDBRow className="d-flex justify-content-center">
-                                <h3 className="white-text mb-3 pt-3 font-weight-bold">
+                                <h1 className="white-text mb-3 pt-3 font-weight-bold">
                                 Log in
-                                </h3>
+                                </h1>
                             </MDBRow>
                             <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
                                 <a onClick={this.googleLogin} className="fa-lg p-2 m-2 gplus-ic">
