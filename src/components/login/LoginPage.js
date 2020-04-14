@@ -70,21 +70,21 @@ export default class LoginPage extends Component {
                             </MDBRow>
                             <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
                                 <a onClick={this.googleLogin} className="fa-lg p-2 m-2 gplus-ic">
-                                    <MDBIcon fab className="fa-google-plus-g white-text fa-lg" />
+                                    <MDBIcon fab icon="fa-google-plus-g" className="fa-google-plus-g white-text fa-lg" />
                                 </a>
                             </MDBRow>
                         </div>
                         <MDBCardBody className="mx-4">
                           <form onSubmit={(e)=> login(e, email, password)}>         
                             <div className="md-form mt-3">
-                              <i className="fa fa-envelope prefix grey-text"></i>
+                              <i className="fa fas-envelope prefix grey-text"></i>
                               <input required name="email" onChange={this.onChange} type="email" id="materialSubscriptionFormPasswords" className="form-control"/>
-                              <label for="materialSubscriptionFormPasswords"> Email...</label>
+                              <label htmlFor="materialSubscriptionFormPasswords"> Email...</label>
                             </div>
                             <div className="md-form mt-3">
                               <i className="fa fa-lock prefix grey-text"></i>
                               <input required type="password" name="password" onChange={this.onChange} id="materialSubscriptionFormPasswords" className="form-control"/>
-                              <label for="materialSubscriptionFormPasswords">Password...</label>
+                              <label htmlFor="materialSubscriptionFormPasswords">Password...</label>
                             </div> 
                             <div style={{margin: 'auto'}} className="text-center mb-3">
                                 <MDBBtn

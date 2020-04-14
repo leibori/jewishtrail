@@ -86,17 +86,17 @@ class SignUp extends Component {
                             <div className="md-form mt-3">
                               <i className="fa fa-envelope prefix grey-text"></i>
                               <input required name="email" onChange={this.handleChange} type="email" id="materialSubscriptionFormPasswords" className="form-control"/>
-                              <label for="materialSubscriptionFormPasswords"> Email...</label>
+                              <label htmlFor="materialSubscriptionFormPasswords"> Email...</label>
                             </div>
                             <div className="md-form mt-3">
                               <i className="fa fa-lock prefix grey-text"></i>
                               <input required type="password" name="password" onChange={this.handleChange} id="materialSubscriptionFormPasswords" className="form-control"/>
-                              <label for="materialSubscriptionFormPasswords">Password...</label>
+                              <label htmlFor="materialSubscriptionFormPasswords">Password...</label>
                             </div> 
                             <div className="md-form mt-3">
                               <i className="fa fa-user prefix grey-text"></i>
                               <input required type="text" name="username" onChange={this.handleChange} id="materialSubscriptionFormPasswords" className="form-control"/>
-                              <label for="materialSubscriptionFormPasswords">Username...</label>
+                              <label htmlFor="materialSubscriptionFormPasswords">Username...</label>
                             </div>  
                             <div style={{margin: 'auto'}} className="text-center mb-3">
                                 <MDBBtn
