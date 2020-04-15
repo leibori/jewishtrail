@@ -92,9 +92,10 @@ class SiteSearchPrototype extends Component {
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
         const mapping = (list) => list.map((site, i) => {
             return (<div key={i} >
-                        <SiteComponent key={i} props={site}/>
-                        {this.onClickMethod && buttonName && this.canRenderButton(site.id) &&
-                            <button onClick={(e) => this.onClickMethod(e, site.id)}>{buttonName}</button>}
+                        <SiteComponent props={{site: site,
+                                                    buttonName: buttonName,
+                                                    condition: this.onClickMethod && buttonName && this.canRenderButton(site.id),
+                                                    buttonFunction: this.onClickMethod}}/>
                     </div>)
         });      
 
