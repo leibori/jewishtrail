@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getSiteByID } from '../firebase/FirebaseUtilities'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import { myIcon } from '../map/MapUtilities'
+import { Card } from 'react-bootstrap'
 
 class SitePage extends Component {
 
@@ -25,23 +26,29 @@ class SitePage extends Component {
     async componentWillMount() {
         var all_site_props = await getSiteByID(this.state.site_id)
         console.log(all_site_props)
-        this.setState({ name: all_site_props.name,
-                        city: all_site_props.city,
-                        country: all_site_props.country,
-                        address: all_site_props.address,
-                        fullInfo: all_site_props.fullInfo,
-                        imageUrl: all_site_props.imageUrl,
-                        externalSourceUrl: all_site_props.externalSourceUrl,
-                        latitude: all_site_props.latitude,
-                        longitude: all_site_props.longitude})
+        this.setState({ ...all_site_props})
     }
 
     render() {
         const position = [this.state.latitude, this.state.longitude]
         const zoom = 17
+        const imageUrl = this.state.imageUrl
         return (
             <div>
-                <h1>{this.state.name}</h1>
+                <Card style={{ width: '100%', height: '100%' }}>
+                    <Card.Img variant="top" src={imageUrl} />
+                    <Card.Body>
+                        <Card.Title>{this.state.name}</Card.Title>
+                        <Card.Title>{this.state.address}</Card.Title>
+                        <Card.Text>
+                        {this.state.fullInfo}
+                        </Card.Text>
+                    </Card.Body>
+                    <Card.Body>
+                        <Card.Link href={this.state.externalSourceUrl}>Source</Card.Link>
+                    </Card.Body>
+                    </Card>
+                {/* <h1>{this.state.name}</h1>
                 <h2>{this.state.city}</h2>
                 <h3>{this.state.country}</h3>
                 <h4>{this.state.address}</h4>
@@ -65,7 +72,7 @@ class SitePage extends Component {
                         }
                         <Marker position={position} icon={myIcon} />
                     </Map>
-                </div>
+                </div> */}
             </div>
         )
     }

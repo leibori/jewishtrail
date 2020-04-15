@@ -6,6 +6,10 @@ import { getSiteByID } from "../firebase/FirebaseUtilities";
 import { PaginatedList } from 'react-paginated-list';
 import SiteComponent from '../sites/siteComponent'
 import { Link } from 'react-router-dom'
+import { Grid, Box } from "@material-ui/core";
+import { sizing } from "@material-ui/system"
+import { Card, ListGroupItem, ListGroup } from 'react-bootstrap'
+
 
 class RaodPage extends Component {
 
@@ -20,7 +24,8 @@ class RaodPage extends Component {
             description: "",
             siteList:[],
             haveUsersLocation: false,
-            markers: []
+            markers: [],
+            imageUrl: ''
         }
     };
 
@@ -43,6 +48,7 @@ class RaodPage extends Component {
             return <span>Loading...</span>
         }
         const position = [siteList[0].latitude, siteList[0].longitude]
+        const imageUrl = this.state.imageUrl
         console.log(position)
         const zoom = 10
         console.log(this.state)
@@ -51,13 +57,40 @@ class RaodPage extends Component {
             return (
                 <div key={i} >
                     <li>
-                        <SiteComponent props={site}/>
+                        <SiteComponent props={{site: site,
+                                                    buttonName: null,
+                                                    condition: false,
+                                                    buttonFunction: null}}/>
                     </li>
                 </div>)
         });
         return (
             <div>
-                <h1>{this.state.name}</h1>
+                <Card style={{ width: '100%', height: '100%' }}>
+                    <Card.Img variant="top" src={imageUrl} />
+                    <Card.Body>
+                        <Card.Title>{this.state.name}</Card.Title>
+                        <Card.Text>
+                        {this.state.description}
+                        </Card.Text>
+                    </Card.Body>
+                    <ListGroup className="list-group-flush">
+                        <ListGroupItem className="container">
+                            {siteList.length > 0 && <PaginatedList
+                                    list={siteList}
+                                    itemsPerPage={3}
+                                    renderList={mapping}/>}
+                        </ListGroupItem>
+                    </ListGroup>
+                    </Card>
+                {/* <Grid container spacing={2} direction='column'>
+                    <Grid item xs={12} alignContent="stretch" style={{backgroundImage: 'url('+imageUrl+')', backgroundSize: 'cover', overflow: 'hidden', backgroundRepeat: 'no-repeat'}} height='50%' width='50%'>
+                        <div className="container" >
+                            <img src={imageUrl}></img>
+                        </div>
+                    </Grid>
+                </Grid> */}
+                {/* <h1>{this.state.name}</h1>
                 <h2>{this.state.city.join(", ")}.</h2>
                 <h3>{this.state.country.join(", ")}</h3>
                 <p>{this.state.description}</p>
@@ -96,7 +129,7 @@ class RaodPage extends Component {
                             )
                         )}
                     </Map>
-                </div>
+                </div> */}
             </div>
         )
     }
