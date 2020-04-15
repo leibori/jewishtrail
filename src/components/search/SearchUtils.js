@@ -81,14 +81,15 @@ export async function findFromDB(searchVals, collectionName) {
     results = _.sortBy(results, 'counter').reverse()
 
     // Takes the sites from the "sites" array and push it to the "sortedResults" array.
-    results.forEach(site => {
+    results.forEach(result => {
         sortedResults.push({
-            name: site.document.data().name,
-            city: site.document.data().city,
-            country: site.document.data().country,
-            tags: site.document.data().tags,
-            id: site.document.id,
-            type: site.type
+            name: result.document.data().name,
+            city: result.document.data().city,
+            country: result.document.data().country,
+            tags: result.document.data().tags,
+            imageUrl: result.document.data().imageUrl,
+            id: result.document.id,
+            type: result.type
         })
     })
 
