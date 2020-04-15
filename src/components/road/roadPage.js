@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getRoadByID } from '../search/SearchUtils'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
-import { myIcon } from '../map/MapUtilities'
+import { myIcon, getMenuMap } from '../map/MapUtilities'
 import { getSiteByID } from "../firebase/FirebaseUtilities";
 import { PaginatedList } from 'react-paginated-list';
 import SiteComponent from '../sites/siteComponent'
@@ -24,22 +24,32 @@ class RaodPage extends Component {
             description: "",
             siteList:[],
             haveUsersLocation: false,
-            markers: [],
-            imageUrl: ''
+            imageUrl: '',
+            zoom: 6
         }
     };
 
     async componentWillMount() {
         const roadId = this.state.site_id;
-        var all_site_props = await getRoadByID(roadId)
-        console.log(all_site_props)
-        const siteListID = all_site_props.siteList;
+        var all_road_props = await getRoadByID(roadId)
+        console.log(all_road_props)
+        const siteListID = all_road_props.siteList;
         const siteList = await Promise.all(siteListID.map((async (sid) => ({ id:sid, ...(await getSiteByID(sid))}))))
         this.setState({
-                        ...all_site_props,
+                        ...all_road_props,
                         siteList
+        })
 
-         })
+        const maxLat = Math.max.apply(Math, siteList.map(function(site) { return site.latitude }))
+        const minLat = Math.min.apply(Math, siteList.map(function(site) { return site.latitude }))
+
+        const maxLng = Math.max.apply(Math, siteList.map(function(site) { return site.longitude }))
+        const minLng = Math.min.apply(Math, siteList.map(function(site) { return site.longitude }))
+
+        const avgLat = (maxLat + minLat) / 2
+        const avgLng = (maxLng + minLng) / 2
+
+        getMenuMap('map', avgLat, avgLng, this.state.zoom, siteList)
     }
 
     render() {
@@ -82,7 +92,10 @@ class RaodPage extends Component {
                                     renderList={mapping}/>}
                         </ListGroupItem>
                     </ListGroup>
-                    </Card>
+                    <Card.Body>
+                        <div style={{height: '400px', width: '100%'}} id='map' />
+                    </Card.Body>
+                </Card>
                 {/* <Grid container spacing={2} direction='column'>
                     <Grid item xs={12} alignContent="stretch" style={{backgroundImage: 'url('+imageUrl+')', backgroundSize: 'cover', overflow: 'hidden', backgroundRepeat: 'no-repeat'}} height='50%' width='50%'>
                         <div className="container" >
