@@ -67,7 +67,7 @@ class Menu extends Component {
                     <p>Welcome to the "Jewish Trail" project.</p>
                     <p>Our goal is to strenghen the bond between the jewish people around the world by improving access to our shared history and heritage.</p>
                     <p>Feel free to go on a journey and rediscover the marks the we left on the world and in the history books.</p>
-                    <div style={{height: '400px', width: '60%', position: "absolute", left: '50%', top: '50%', transform: 'translate(-50%, -10%)'}} id='map' />
+                    <div style={{height: '400px', width: '90%', position: "absolute", left: '50%', top: '50%', transform: 'translate(-50%, -10%)'}} id='map' />
                 </div>
         )
     }
