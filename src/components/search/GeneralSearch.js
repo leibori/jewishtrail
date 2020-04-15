@@ -5,6 +5,17 @@ import { PaginatedList } from 'react-paginated-list'
 import RoadComponent from 'components/road/RoadComponent';
 
 
+const style = {backgroundColor: 'white',
+    backgroundImage: "url(" + "https://image0.flaticon.com/icons/png/128/49/49116.png" + ")",
+    backgroundPosition: '2px 3px',
+    backgroundRepeat: 'no-repeat',
+    paddingLeft: '25px',
+    borderRadius: '8px',
+    backgroundSize: '20px 20px',
+    width: '100%'
+}
+
+
 /**
  * This component is holds the all of th elements of a search page and calls functions that execute searches.
  */
@@ -15,7 +26,7 @@ class GeneralSearch extends Component {
         super(props);
 
         // Extracting the props that the constructor recieves.
-        const { buttonName, onRoadClickMethod, onSiteClickMethod, canRenderButtonSite, canRenderButtonRoad, searchVal, returnTo } = props;
+        const { buttonName, onRoadClickMethod, onSiteClickMethod, canRenderButtonSite, canRenderButtonRoad, searchVal, returnTo, classes } = props;
 
         this.state = {
             // Is true if a search value is sent, and false otherwise.
@@ -35,7 +46,9 @@ class GeneralSearch extends Component {
 
             siteFilter: true,
 
-            roadFilter: true
+            roadFilter: true,
+
+            classes
         }
 
         // onClick event handler for an entry button.
@@ -76,7 +89,7 @@ class GeneralSearch extends Component {
     // Updates the value of "searchVal" based on the content of the input box.
     updateSearchValue(e) {
         // console.log(e.target.value)
-        this.setState({searchVal: e.target.value})
+        this.setState({searchVal: e.target.value.split(' ')})
     }
 
     // Execute the search if the componenet recieved a search value.
@@ -123,11 +136,13 @@ class GeneralSearch extends Component {
     // Renders the component.
     render() {
 
+        const classes = this.state.classes
+
         // Predicate that decides the color of the button of the site filter.
-        const siteColorPredicate = !this.state.roadFilter ? 'yellow' : 'white'
+        const siteColorPredicate = !this.state.roadFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
 
         // Predicate that decides the color of the button of the road filter.
-        const roadColorPredicate = !this.state.siteFilter ? 'yellow' : 'white'
+        const roadColorPredicate = !this.state.siteFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
 
         // Extract "buttonName" and "searchResult" variable for ease of use.
         const { buttonName, searchResult } = this.state;
@@ -138,15 +153,17 @@ class GeneralSearch extends Component {
                         <div key={i}>
                         {site.type === 'sites' && this.state.siteFilter ?
                             (<div>  
-                                <SiteComponent key={i} props={site}/>
-                                {this.onSiteClickMethod && buttonName && this.canRenderButtonSite(site.id) &&
-                                    <button onClick={(e) => this.onSiteClickMethod(e, site.id)}>{buttonName}</button>}
+                                <SiteComponent props={{site: site,
+                                                    buttonName: buttonName,
+                                                    condition: this.onSiteClickMethod && buttonName && this.canRenderButtonSite(site.id),
+                                                    buttonFunction: this.onSiteClickMethod}}/>
                             </div>)
                             : site.type === 'roads' && this.state.roadFilter ?
                             (<div>  
-                                <RoadComponent key={i} props={site}/>
-                                {this.onRoadClickMethod && buttonName && this.canRenderButtonRoad(site.id) &&
-                                    <button onClick={(e) => this.onRoadClickMethod(e, site.id)}>{buttonName}</button>}
+                                <RoadComponent props={{road: site,
+                                                    buttonName: buttonName,
+                                                    condition: this.onRoadClickMethod && buttonName && this.canRenderButtonRoad(site.id),
+                                                    buttonFunction: this.onRoadClickMethod}}/>
                             </div>) : ''
                         }
                         </div>
@@ -156,20 +173,35 @@ class GeneralSearch extends Component {
 
         return (
             <div>
-                {/* Search site form */}
-                <form ref={this.form} id="search-form">
-                    <div className="search-field">
-                        <input value={this.state.haveSearched ? this.state.searchVal.join(" ") : this.state.searchVal} ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
-                    </div>
-                    <div>
-                        <button onClick={this.onSearchButtonClicked} type="submit">Search</button>
-                    </div>
-                    <p className="error pink-text center-align"></p>
-                </form>
+                <div className="search-field">
+                    <form style={{ margin: '0px'}}>
+                        <h4 style={{ color: 'rgba(225,202,159,1)' }}>Find a trail</h4>
+
+                        <input
+                            style={style}
+                            value={this.state.haveSearched ? this.state.searchVal.join(" ") : this.state.searchVal}
+                            ref={this.searchVal}
+                            onChange={this.updateSearchValue}
+                            type="text"
+                            placeholder='Search by trail name or location'
+                            required />
+
+                        <button
+                            onClick={this.onSearchButtonClicked}
+                            type="submit"
+                            style={{backgroundColor: 'rgba(255,255,255,0.4)', border: '1px solid black', borderRadius: '4px', display: 'none'}}>Search</button>
+                    
+                        <p className="error pink-text center-align"></p>
+                    </form>
+                </div>
 
                 <div>
-                    <button onClick={this.siteFilterClicked} style={{backgroundColor: siteColorPredicate}}>Sites</button>
-                    <button onClick={this.roadFilterClicked} style={{backgroundColor: roadColorPredicate}}>Roads</button>
+                    <button
+                        onClick={this.siteFilterClicked}
+                        style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Sites</button>
+                    <button
+                        onClick={this.roadFilterClicked}
+                        style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Roads</button>
                 </div>
                 
                 {/* Results */}
@@ -182,7 +214,7 @@ class GeneralSearch extends Component {
 
                 {
                     this.state.searchVal.length != 0 && this.state.searchResult.length == 0 && this.state.haveSearched ?
-                        (<h5>No matches found.</h5>) : ''
+                        (<h5 style={{ marginLeft: '5%' , color: 'rgba(223,30,38,0.9)'}}><b>No matches found!</b></h5>) : ''
                 }
             </div>
         )    
