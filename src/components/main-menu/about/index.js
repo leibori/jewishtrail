@@ -35,10 +35,10 @@ export default function About(props) {
         //     <div className="centered">Centered</div>
         // </div>
     // );
-    <div style={{ positin: 'relative', width: '100%', height: '100%' }}>
+    <div style={{width: '100%', height: '100%' }}>
 
-        <div style={{ positin: 'relative', width: '100%', height: '100%' }}>
-            <img style={{maxWidth: '100%', width: '100%', height:'400px', objectFit: 'cover',}} variant="top" src={pic}/>
+        <div style={{width: '100%', height:'300px', }}>
+            <img src={pic}/>
             <text className="bottomHeader">{name}</text>
         </div>
         <div className={"bottomcard"}>

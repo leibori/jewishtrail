@@ -15,19 +15,19 @@
  /* Bottom left text */
 .bottomcard {
     position: absolute; 
-    top: 60%;
-    left: 0px;
+    top: 345px;
+    /* left: 0px; */
     bottom: 0px;
-    margin: auto;
     background-color: white;
-    width: 100%;
+    width: 100%; 
+    height: 75%;   
   }
 
 .bottomHeader {
     font-weight: bold;
     position: absolute;
     left: 16px;
-    top: 50%;
+    top: 300px;
     color: white;
     font-size: 35px;
 }
@@ -60,4 +60,19 @@ p {
     margin-right: auto;
     width: 75%;
     /*whatever width you want*/
+  }
+
+  .avatar {
+    float: left;
+    width: 100%;
+    height: 20%;
+    border: 1px solid black;
+  }
+  img {
+  height: 100%;
+  width: 100%;  
+  max-width: 100%;
+  display: block;
+  margin: auto;
+  object-fit: cover;
   }
