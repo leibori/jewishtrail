@@ -75,7 +75,7 @@ class Navbar extends Component {
       
         <ReactBootStrap.Nav.Link href="/LoginPage">Log In </ReactBootStrap.Nav.Link>
         <ReactBootStrap.Nav.Link href="/about">About</ReactBootStrap.Nav.Link>
-        <ReactBootStrap.Nav.Link href="/searchSite">Search Site</ReactBootStrap.Nav.Link>
+        <ReactBootStrap.Nav.Link href="/search">Search</ReactBootStrap.Nav.Link>
       </ReactBootStrap.Nav>
   </ReactBootStrap.Navbar.Collapse>    
 </ReactBootStrap.Navbar>
