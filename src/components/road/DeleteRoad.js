@@ -43,9 +43,11 @@ render() {
             <h5 className="grey-text text-darken-3">Search Road to Delete</h5>            
             <RoadSearch ref={this.myRef}
               roadList={this.state.roadList}
-              onClickMethod={this.DeleteRoad} 
-              buttonName={`Delete road`}
-              canRenderButton={() => true}
+              roadButtonsProps= {[{
+                buttonName: `Delete road`,
+                canRender: () => true,
+                buttonFunction: this.DeleteRoad,
+              }]}
               searchVal={this.state.searchVal}
               returnTo='deleteRoad'/>
 

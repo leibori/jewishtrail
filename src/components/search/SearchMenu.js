@@ -110,6 +110,10 @@ class SearchMenu extends Component {
      * This function renders the components by calling the "SiteSearch" component.
      */
     render() {
+        const buttonName = `Add to favorites`;
+        const siteButtonsProps = [{buttonFunction: this.addSiteToFavorites, buttonName, canRender: this.canRenderButtonSite}];
+        const roadButtonsProps = [{buttonFunction: this.addRoadToFavorites, buttonName, canRender: this.canRenderButtonRoad}];
+
         return (
             /**
              * The string in this component's searchVal is used has the value by which the search is executed.
@@ -121,11 +125,12 @@ class SearchMenu extends Component {
              * The string "searchSite" is used as to transition to this component's address when the search button is pressed.
              */ 
             <GeneralSearch
-                onSiteClickMethod={this.addSiteToFavorites}
-                onRoadClickMethod={this.addRoadToFavorites}
-                buttonName={`Add to favorites`}
-                canRenderButtonSite={this.canRenderButtonSite}
-                canRenderButtonRoad={this.canRenderButtonRoad}
+                // onSiteClickMethod={this.addSiteToFavorites}
+                // onRoadClickMethod={this.addRoadToFavorites}
+                // buttonName={`Add to favorites`}
+                // canRenderButtonSite={this.canRenderButtonSite}
+                // canRenderButtonRoad={this.canRenderButtonRoad}
+                {...{siteButtonsProps, roadButtonsProps}}
                 searchVal={this.state.searchVal}
                 returnTo='search'/>
         );

@@ -63,9 +63,11 @@ render() {
         <div>
             <h5 className="grey-text text-darken-3">Search Site to Update</h5>
             <SiteSearch
-              onClickMethod={this.onSiteButtonClick}
-              buttonName={`Update site`}
-              canRenderButton={()=>true}
+             siteButtonsProps= {[{
+              buttonName: `Update site`,
+              canRender: () => true,
+              buttonFunction: this.onSiteButtonClick
+          }]}
               searchVal={this.state.searchVal}
               returnTo='updateSite'/>
 

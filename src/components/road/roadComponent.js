@@ -37,14 +37,20 @@ const buttonStyles = makeStyles({
 
 const RoadComponent = (props) => {
   
-  const road = props.props.road
-  const buttonName = props.props.buttonName
-  const condition = props.props.condition
-  const buttonFunction = props.props.buttonFunction
+  const { road, roadButtonsProps } = props;
+  // const buttonName = props.props.buttonName
+  // const condition = props.props.condition
+  // const buttonFunction = props.props.buttonFunction
 
   var info_url = '/road/'+road.id
   const classes = useStyles()
   const buttonClasses = buttonStyles()
+
+  const pickRoadButton = () => {
+    return roadButtonsProps.find((buttonProps) => buttonProps.canRender(road.id));
+  }
+
+  const buttonInfo = pickRoadButton();
 
   return (
     <div className={classes.root}>
@@ -70,10 +76,10 @@ const RoadComponent = (props) => {
                   <Grid item xs={6}>
                     <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" href={info_url}>View Trail</Button>
                   </Grid>
-                  {condition ?
+                  { buttonInfo &&
                     <Grid item xs={6}>
-                      <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" onClick={(e) => buttonFunction(e, road.id)}>{buttonName}</Button>
-                    </Grid> : ''
+                      <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" onClick={(e) => buttonInfo.buttonFunction(e, road.id)}>{buttonInfo.buttonName}</Button>
+                    </Grid>
                   }
                 </Grid>
               </Grid>

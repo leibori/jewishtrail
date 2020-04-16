@@ -51,9 +51,11 @@ class RoadMenu extends Component {
       
         return (
             <RoadSearch
-                onClickMethod={this.addRoadsToFavorites}
-                buttonName={`Add to favorites`}
-                canRenderButton={this.canRenderButton}
+                roadButtonsProps= {[{
+                    buttonName: `Add to favorites`,
+                    canRender: this.canRenderButton,
+                    buttonFunction: this.addRoadsToFavorites
+                }]}
                 searchVal={this.state.searchVal}
                 returnTo='searchRoad'/>
         );

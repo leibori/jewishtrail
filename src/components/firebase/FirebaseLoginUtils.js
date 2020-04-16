@@ -43,9 +43,9 @@ export async function signup(e, email, password, user_name){
 }
 
 async function CreateNewAccount(uid, UserName){
-  console.log(uid)
   await myDatabase.collection("accounts").doc(uid).set({
       user_name: UserName,
-      favorites: []
+      favorites: [],
+      RoadsFavorites: [],
   })
 }

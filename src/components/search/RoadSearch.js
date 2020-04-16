@@ -9,19 +9,19 @@ class RoadSearch extends Component {
     constructor(props) {
         super(props);
 
-        const { buttonName, onClickMethod, canRenderButton, searchVal, returnTo } = props;
+        const { roadButtonsProps, searchVal, returnTo } = props;
         this.state = {
             searchVal: searchVal ? searchVal.split(' ') : [],
             siteList: [],
             favoriteList: [],
             // Button content next to each entry
-            buttonName,
+            roadButtonsProps,
             returnTo: returnTo
         }
         // onClick event handler for an entry button.
-        this.onClickMethod = onClickMethod ? onClickMethod.bind(this) : null;
-        // Boolean function for conditional button rendering.
-        this.canRenderButton = canRenderButton ? canRenderButton.bind(this) : null;
+        // this.onClickMethod = onClickMethod ? onClickMethod.bind(this) : null;
+        // // Boolean function for conditional button rendering.
+        // this.canRenderButton = canRenderButton ? canRenderButton.bind(this) : null;
         this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
         this.updateSearchValue = this.updateSearchValue.bind(this);
 
@@ -49,13 +49,11 @@ class RoadSearch extends Component {
     }
 
     render() {
-        const { buttonName, siteList } = this.state;
+        const { siteList, roadButtonsProps } = this.state;
         // console.log(siteList);
         const mapping = (list) => list.map((road, i) => {
             return  <div key={i} >
-                        <RoadComponent key={i} props={road}/>
-                        {this.onClickMethod && buttonName && this.canRenderButton(road.id) && 
-                            <button onClick={(e) => this.onClickMethod(e, road.id)}>{buttonName}</button>}
+                        <RoadComponent key={i} road={road} {...{roadButtonsProps}}/>
                     </div>
         });
         //if site-id is not in favoritesList show button to add to favorites

@@ -36,14 +36,21 @@ const buttonStyles = makeStyles({
 })
 
 const SiteComponent = (props) => {
-  const site = props.props.site
-  const buttonName = props.props.buttonName
-  const condition = props.props.condition
-  const buttonFunction = props.props.buttonFunction
+  const { site, siteButtonsProps} = props;
+
+  // const buttonName = props.props.buttonName
+  // const condition = props.props.condition
+  // const buttonFunction = props.props.buttonFunction
 
   const info_url = '/site/'+site.id
   const classes = useStyles()
   const buttonClasses = buttonStyles()
+
+  const pickSiteButton = () => {
+    return siteButtonsProps.find((buttonProps) => buttonProps.canRender(site.id));
+  }
+
+  const buttonProps = pickSiteButton();
 
   return (
     <div className={classes.root}>
@@ -56,9 +63,7 @@ const SiteComponent = (props) => {
               <img className={classes.img} alt="complex" src={site.imageUrl} />
             </ButtonBase>
           </Grid>
-
           <Grid item xs={6} sm container>
-
             <Grid item xs container direction="column" spacing={2}>
               
               <Grid item xs>
@@ -69,16 +74,14 @@ const SiteComponent = (props) => {
                   <Grid item xs={6}>
                     <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" href={info_url}>View Site</Button>
                   </Grid>
-                  {condition ?
+                  { buttonProps &&
                     (<Grid item xs={6}>
-                      <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" onClick={(e) => buttonFunction(e, site.id)}>{buttonName}</Button>
-                    </Grid>) : ''
+                      <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" onClick={(e) => buttonProps.buttonFunction(e, site.id)}>{buttonProps.buttonName}</Button>
+                    </Grid>)
                   }
                 </Grid>
               </Grid>
-
             </Grid>
-
           </Grid>
         </Grid>
       </Paper>

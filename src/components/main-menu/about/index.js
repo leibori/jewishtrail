@@ -6,20 +6,20 @@ import pic from 'assets/img/about.jpg';
 
 const url = 'url(assets/img/about.jpg)'
 
-const h1Style = {
-    display:"block",
-    color:"darkblue",
-    fontWEIGHT:"bold"
-}
-const buttonStyle = {
-    backgroundColor:"lightBlue",
-    color:"white",
-    padding:"8px",
-    border:"black",
-    textAlight:"center",
-    margin:"4px 2px",
-    borderRadius:"12px"
-}
+// const h1Style = {
+//     display:"block",
+//     color:"darkblue",
+//     fontWEIGHT:"bold"
+// }
+// const buttonStyle = {
+//     backgroundColor:"lightBlue",
+//     color:"white",
+//     padding:"8px",
+//     border:"black",
+//     textAlight:"center",
+//     margin:"4px 2px",
+//     borderRadius:"12px"
+// }
 
 export default function About(props) {
     const name = 'About Us';
@@ -35,7 +35,7 @@ export default function About(props) {
         //     <div className="centered">Centered</div>
         // </div>
     // );
-    <div style={{width: '100%', height: '100%' }}>
+    <div>
 
         <div style={{width: '100%', height:'300px', }}>
             <img src={pic}/>

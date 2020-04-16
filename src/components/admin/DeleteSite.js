@@ -64,9 +64,11 @@ render() {
             
             <SiteSearch ref={this.myRef}
               siteList={this.state.siteList}
-              onClickMethod={this.DeleteSite} 
-              buttonName={`Delete site`}
-              canRenderButton={() => true}
+              siteButtonsProps= {[{
+                buttonName: `Delete site`,
+                canRender: () => true,
+                buttonFunction: this.DeleteSite
+            }]}
               searchVal={this.state.searchVal}
               returnTo='deleteSite'/>
 

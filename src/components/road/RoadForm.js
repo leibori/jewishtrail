@@ -140,9 +140,11 @@ class RoadForm extends Component {
                             </div>)})} */}
                 </ul>
                 <SiteSearch
-                    onClickMethod={this.addSiteToRoadList}
-                    buttonName={`Add to road`}
-                    canRenderButton={this.renderButton}
+                    siteButtonsProps= {[{
+                        buttonName: `Add to road`,
+                        canRender: this.renderButton,
+                        buttonFunction: this.addSiteToRoadList
+                    }]}
                     searchVal={this.state.searchVal}
                     returnTo='roadForm'/>
             </div>

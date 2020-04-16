@@ -26,7 +26,8 @@ class GeneralSearch extends Component {
         super(props);
 
         // Extracting the props that the constructor recieves.
-        const { buttonName, onRoadClickMethod, onSiteClickMethod, canRenderButtonSite, canRenderButtonRoad, searchVal, returnTo, classes } = props;
+        const { siteButtonsProps, roadButtonsProps, searchVal, returnTo, classes } = props;
+        // const { buttonName, onRoadClickMethod, onSiteClickMethod, canRenderButtonSite, canRenderButtonRoad, searchVal, returnTo, classes } = props;
 
         this.state = {
             // Is true if a search value is sent, and false otherwise.
@@ -39,7 +40,9 @@ class GeneralSearch extends Component {
             searchResult: [],
 
             // Button content next to each entry
-            buttonName,
+            siteButtonsProps,
+
+            roadButtonsProps,
 
             // The beginning of the address that is set after the search button is pressed.
             returnTo: returnTo,
@@ -51,16 +54,16 @@ class GeneralSearch extends Component {
             classes
         }
 
-        // onClick event handler for an entry button.
-        this.onSiteClickMethod = onSiteClickMethod ? onSiteClickMethod.bind(this) : null;
+        // // onClick event handler for an entry button.
+        // this.onSiteClickMethod = onSiteClickMethod ? onSiteClickMethod.bind(this) : null;
 
-        // onClick event handler for an entry button.
-        this.onRoadClickMethod = onRoadClickMethod ? onRoadClickMethod.bind(this) : null;
+        // // onClick event handler for an entry button.
+        // this.onRoadClickMethod = onRoadClickMethod ? onRoadClickMethod.bind(this) : null;
 
-        // Boolean function for conditional button rendering.
-        this.canRenderButtonSite = canRenderButtonSite ? canRenderButtonSite.bind(this) : null;
+        // // Boolean function for conditional button rendering.
+        // this.canRenderButtonSite = canRenderButtonSite ? canRenderButtonSite.bind(this) : null;
 
-        this.canRenderButtonRoad = canRenderButtonRoad ? canRenderButtonRoad.bind(this) : null;
+        // this.canRenderButtonRoad = canRenderButtonRoad ? canRenderButtonRoad.bind(this) : null;
 
         this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
 
@@ -75,7 +78,6 @@ class GeneralSearch extends Component {
 
         window.location.href = '/' + this.state.returnTo + '/' + this.state.searchVal
     }
-
 
     // The search function that calls for searches in the database.
     async executeSearch() {
@@ -138,6 +140,8 @@ class GeneralSearch extends Component {
     // Renders the component.
     render() {
 
+        const { siteButtonsProps, roadButtonsProps } = this.state;
+
         const classes = this.state.classes
 
         // Predicate that decides the color of the button of the site filter.
@@ -147,7 +151,7 @@ class GeneralSearch extends Component {
         const roadColorPredicate = !this.state.siteFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
 
         // Extract "buttonName" and "searchResult" variable for ease of use.
-        const { buttonName, searchResult } = this.state;
+        const { searchResult } = this.state;
 
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
         const mapping = (list) => list.map((site, i) => {
@@ -155,17 +159,19 @@ class GeneralSearch extends Component {
                         <div key={i}>
                         {site.type === 'sites' && this.state.siteFilter ?
                             (<div>  
-                                <SiteComponent props={{site: site,
+                                <SiteComponent {...{siteButtonsProps}} site={site} />
+                                {/* <SiteComponent props={{site: site,
                                                     buttonName: buttonName,
                                                     condition: this.onSiteClickMethod && buttonName && this.canRenderButtonSite(site.id),
-                                                    buttonFunction: this.onSiteClickMethod}}/>
+                                                    buttonFunction: this.onSiteClickMethod}}/> */}
                             </div>)
                             : site.type === 'roads' && this.state.roadFilter ?
                             (<div>  
-                                <RoadComponent props={{road: site,
+                                 <RoadComponent {...{roadButtonsProps}} road={site}/>
+                                {/* <RoadComponent props={{road: site,
                                                     buttonName: buttonName,
                                                     condition: this.onRoadClickMethod && buttonName && this.canRenderButtonRoad(site.id),
-                                                    buttonFunction: this.onRoadClickMethod}}/>
+                                                    buttonFunction: this.onRoadClickMethod}}/> */}
                             </div>) : ''
                         }
                         </div>

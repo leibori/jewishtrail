@@ -58,7 +58,7 @@ class App extends Component {
     return (
       <BrowserRouter forceRefresh={true}>
         <div className="App">
-        <Navbar />
+          <Navbar/>
           <header className="App-header">
             <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
             <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
@@ -90,15 +90,13 @@ class App extends Component {
             <Route path='/about' component={About} />
             <Route exact path='/site/:id' component={SitePage} />
             <Route exact path='/roadform' component={RoadForm} />
-            <Route exact path='/foadform/:searchVal' component={RoadForm} />
+            <Route exact path='/roadform/:searchVal' component={RoadForm} />
             <Route exact path='/admin' component={AdminPage} />
             <Route exact path='/searchroad' component={RoadMenu} />
             <Route exact path='/searchroad/:searchVal' component={RoadMenu} />
             <Route exact path='/road/:id' component={RaodPage} />
             <Route exact path='/deleteroad' component={DeleteRoad} />
-            <Route exact path='/deleteroad/:searchVal' component={DeleteRoad} />
-            
-            
+            <Route exact path='/deleteroad/:searchVal' component={DeleteRoad} />          
           </Switch>
         </div>
       </BrowserRouter>

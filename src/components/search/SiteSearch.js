@@ -7,14 +7,14 @@ import { PaginatedList } from 'react-paginated-list'
 /**
  * This component is holds the all of th elements of a search page and calls functions that execute searches.
  */
-class SiteSearchPrototype extends Component {
+export default class SiteSearch extends Component {
 
     // A constructor that sets the values of this component's state.
     constructor(props) {
         super(props);
 
         // Extracting the props that the constructor recieves.
-        const { buttonName, onClickMethod, canRenderButton, searchVal, returnTo } = props;
+        const { siteButtonsProps, searchVal, returnTo } = props;
 
         this.state = {
             // Is true if a search value is sent, and false otherwise.
@@ -27,17 +27,17 @@ class SiteSearchPrototype extends Component {
             siteList: [],
 
             // Button content next to each entry
-            buttonName,
+            siteButtonsProps,
 
             // The beginning of the address that is set after the search button is pressed.
             returnTo: returnTo
         }
 
         // onClick event handler for an entry button.
-        this.onClickMethod = onClickMethod ? onClickMethod.bind(this) : null;
+        // this.onClickMethod = onClickMethod ? onClickMethod.bind(this) : null;
 
         // Boolean function for conditional button rendering.
-        this.canRenderButton = canRenderButton ? canRenderButton.bind(this) : null;
+        // this.canRenderButton = canRenderButton ? canRenderButton.bind(this) : null;
 
         this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
         this.updateSearchValue = this.updateSearchValue.bind(this);
@@ -49,7 +49,7 @@ class SiteSearchPrototype extends Component {
         //     this.executeSearch()
         // }
     };
-
+    
     // transition to a new page based on the "returnTo" and the search value.
     onSearchButtonClicked(e) {
         e.preventDefault();
@@ -87,15 +87,12 @@ class SiteSearchPrototype extends Component {
     render() {
 
         // Extract "buttonName" and "siteList" variable for ease of use.
-        const { buttonName, siteList } = this.state;
+        const { siteList, siteButtonsProps } = this.state;
 
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
         const mapping = (list) => list.map((site, i) => {
             return (<div key={i} >
-                        <SiteComponent props={{site: site,
-                                                    buttonName: buttonName,
-                                                    condition: this.onClickMethod && buttonName && this.canRenderButton(site.id),
-                                                    buttonFunction: this.onClickMethod}}/>
+                        <SiteComponent site={site} {...{siteButtonsProps}}/>
                     </div>)
         });      
 
@@ -128,5 +125,3 @@ class SiteSearchPrototype extends Component {
         )    
     }
 }
-
-export default SiteSearchPrototype
