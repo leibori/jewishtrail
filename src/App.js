@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
 import Menu from './components/main-menu/Menu'
 import AdminMenu from './components/admin/AdminMenu'
-import LoginPage from './components/login/LoginPage'
+import LoginPage from './components/login/LoginPage/index'
 import SignUp from './components/login/SignUp'
 import UpdateSite from './components/admin/UpdateSite';
 import CreateSite from './components/admin/CreateSite';

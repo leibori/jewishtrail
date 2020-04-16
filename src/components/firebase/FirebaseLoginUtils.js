@@ -28,7 +28,7 @@ export function login(e, email, password) {
     myFirebase.auth().signInWithEmailAndPassword(email, password).then((u)=>{
       console.log("logged in" + myFirebase.auth().currentUser)
     }).catch((error) => {
-        console.log(error);
+        alert("Invalid email or password. Please try again.");
       });
 }
 
@@ -38,7 +38,7 @@ export async function signup(e, email, password, user_name){
     CreateNewAccount(u.user.uid, user_name)
   }).then((u)=>{console.log(u)})
   .catch((error) => {
-      console.log(error);
+    alert(error);
   })
 }
 

@@ -1,0 +1,139 @@
+.bg-img {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-img:after {
+    position: absolute;
+    content: '';
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+}
+
+.content {
+    width: 100%;
+    position: absolute;
+    top: 55%;   
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 999;
+    width: 370px;
+    text-align: center;
+    padding: 60px 32px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
+}
+
+.content header {
+    color: white;
+    font-size: 33px;
+    font-weight: 600;
+    margin: 0 0 35px 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.field {
+    position: relative;
+    height: 45px;
+    width: 100%;
+    display: flex;
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 5px;
+}
+.field span {
+    color: #222;
+    width: 40px;
+    line-height: 45px;
+}
+
+.field input {
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.space {
+    margin-top: 16px;
+
+}
+.pass {
+    text-align: center;
+    margin: 10px, 0;
+    margin-top: 25px;
+    font-family: 'Poppins', sans-serif;
+    color: #c3c8cd; 
+
+    
+}
+
+.pass a{
+    color: white;
+    text-decoration: none;
+    
+}
+
+.pass:hover a{
+    text-decoration: underline;
+}
+
+input[type="submit"]{
+    background: #111e6c;
+    /* border: 1px solid #111e6c; */
+    color: white;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+input[type="submit"]:hover{
+    background: #003152;
+}
+
+.login {
+    color: #cbd1d4;
+    margin: 20px 0;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+.link {
+    display: flex;
+    cursor: pointer;
+    color: white;
+    margin: 0 0 20px 0;
+}
+
+.google {
+    width: 100%;
+    height: 42px;
+    line-height: 45px;
+    margin-top: 10px;
+    background: white;
+    border-radius: 5px;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    /* border: 1px solid #3e61a8; */
+}
+
+.fa-google {
+    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;    
+    -webkit-text-fill-color: transparent;
+    /* position: absolute;
+    left: 0px; */
+  }
