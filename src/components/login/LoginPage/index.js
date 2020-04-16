@@ -94,7 +94,7 @@ export default class LoginPage extends Component {
               </div>
               <div className='pass'>
                 Don't have an account?  
-                <a onClick={this.onSignUpClick}>Sign up</a>
+                <a href="/signup">Sign up</a>
               </div>
             </form>
           </div>
