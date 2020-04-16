@@ -11,7 +11,7 @@ import DeleteSite from './components/admin/DeleteSite';
 import AdminPage from './components/admin/AdminPage';
 import AuthMenu from './components/admin/AuthMenu';
 import SearchMenu from './components/search/SearchMenu';
-import About from './components/main-menu/about';
+import About from './components/main-menu/about/index';
 import Navbar from './components/layout/Navbar'
 import Home from './components/login/Home';
 import LogOut from './components/login/LogOut';
