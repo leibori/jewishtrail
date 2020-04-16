@@ -1,0 +1,63 @@
+.container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    }
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+ /* Bottom left text */
+.bottomcard {
+    position: absolute; 
+    top: 60%;
+    left: 0px;
+    bottom: 0px;
+    margin: auto;
+    background-color: white;
+    width: 100%;
+  }
+
+.bottomHeader {
+    font-weight: bold;
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    color: white;
+    font-size: 35px;
+}
+
+p {
+    position: relative;
+    /* bottom: -5%; This will move it 20px up */
+    /* left: 5%; This will move it 20px to the right */
+    text-align: left;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    /* width: 100%; */
+  }
+  
+  .middle {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  .inner {
+    margin-left: auto;
+    margin-right: auto;
+    /* width: 75%; */
+    /*whatever width you want*/
+  }
