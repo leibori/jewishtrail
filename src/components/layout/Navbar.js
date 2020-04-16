@@ -38,11 +38,11 @@ class Navbar extends Component {
     
     if(this.state.isLoggedIn){
       return (
-        <nav className="nav-wrapper dark">
-            <div className="App" >
+        <nav className="nav-wrapper">
+            <div className="App transparent" >
           {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
-            <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="dark" variant="dark">
-          <ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>
+            <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
+          {/*<ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
           <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
             <ReactBootStrap.Nav className="mr-auto">
@@ -64,11 +64,11 @@ class Navbar extends Component {
     }
     return (
 
-      <nav className="nav-wrapper dark">
-      <div className="App" >
+      <nav className="nav-wrapper">
+      <div className="App transparent " >
     {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
-      <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="dark" variant="dark">
-    <ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>
+      <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
+    {/* <ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
     <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
       <ReactBootStrap.Nav className="mr-auto">
