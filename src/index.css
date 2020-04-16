@@ -21,11 +21,14 @@ form button, form h5{
 
 @media (min-width: 768px) {
   .navbar .navbar-nav {
+      background-color: transparent;
       float:none;
       margin:0 auto;
       text-align: center ;
       font-size: larger;
       font-family: Arial, Helvetica, sans-serif;
+      justify-content:space-between;
+
   }
 
   .navbar .navbar-collapse {
@@ -33,6 +36,7 @@ form button, form h5{
     text-align: center;
     display: inline-block;
   }
+
 }
 
 
