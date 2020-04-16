@@ -58,11 +58,11 @@ export default class LoginPage extends Component {
     }
     const { email, password } = this.state;
     return (
-        <MDBContainer>
-            <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
+        <MDBContainer className="mx-auto">
+            <MDBRow className="mt-2 mb-3 d-flex mx-auto justify-content-center">
                 <MDBCol md="4">
-                    <MDBCard>
-                        <div className="header pt-3 blue-gradient">
+                    <MDBCard style={{borderRadius: '20px',}}>
+                        <div className="header pt-3 blue-gradient" >
                             <MDBRow className="d-flex justify-content-center">
                                 <h1 className="white-text mb-3 pt-3 font-weight-bold">
                                 Log in
@@ -77,7 +77,7 @@ export default class LoginPage extends Component {
                         <MDBCardBody className="mx-4">
                           <form onSubmit={(e)=> login(e, email, password)}>         
                             <div className="md-form mt-3">
-                              <i className="fa fas-envelope prefix grey-text"></i>
+                              <i className="fa fa-envelope prefix grey-text"></i>
                               <input required name="email" onChange={this.onChange} type="email" id="materialSubscriptionFormPasswords" className="form-control"/>
                               <label htmlFor="materialSubscriptionFormPasswords"> Email...</label>
                             </div>
