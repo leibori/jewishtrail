@@ -33,7 +33,7 @@ class GeneralSearch extends Component {
             haveSearched: false,
 
             // The search value as array of strings.
-            searchVal: searchVal ? searchVal.split(' ') : [],
+            searchVal: searchVal,
 
             // The array of search results.
             searchResult: [],
@@ -79,7 +79,9 @@ class GeneralSearch extends Component {
 
     // The search function that calls for searches in the database.
     async executeSearch() {
-        const result = await findFromDB(this.state.searchVal, ['sites', 'roads'])
+        var searchValues = this.state.searchVal.split(" ")
+        console.log(searchValues)
+        const result = await findFromDB(searchValues, ['sites', 'roads'])
         // console.log(result)
         this.setState({searchResult: result,
                         haveSearched: true})
@@ -89,7 +91,7 @@ class GeneralSearch extends Component {
     // Updates the value of "searchVal" based on the content of the input box.
     updateSearchValue(e) {
         // console.log(e.target.value)
-        this.setState({searchVal: e.target.value.split(' ')})
+        this.setState({searchVal: e.target.value})
     }
 
     // Execute the search if the componenet recieved a search value.
@@ -179,7 +181,8 @@ class GeneralSearch extends Component {
 
                         <input
                             style={style}
-                            value={this.state.haveSearched ? this.state.searchVal.join(" ") : this.state.searchVal}
+                            value={this.state.searchVal}
+                            // value={this.state.searchVal.join(" ")}
                             ref={this.searchVal}
                             onChange={this.updateSearchValue}
                             type="text"
