@@ -12,6 +12,8 @@
     height: 100%;
     width: 100%;
     background: rgba(0,0,0,0.7);
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
 }
 
 .content {
@@ -32,10 +34,10 @@
 
 .content header {
     color: white;
-    font-size: 33px;
+    font-size: 50px;
     font-weight: 600;
     margin: 0 0 35px 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Cambay', sans-serif;
 }
 
 .field {

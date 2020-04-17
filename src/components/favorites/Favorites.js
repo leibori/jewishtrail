@@ -18,7 +18,7 @@ class Favorites extends Component {
       // this.setState({claim: await getUserClaims(user)});
     })
   }
-  async deleteFromFirebase(id,uid){
+  deleteFromFirebase = async(uid) => {
     var userid = this.state.userid;
     var uidList =[]
     this.state.favoritesArr.forEach(site=>{
@@ -42,7 +42,7 @@ class Favorites extends Component {
     this.setState({
       favoritesArr: favorites
     })
-    this.deleteFromFirebase(id,uid);
+    this.deleteFromFirebase(uid);
   }
 
 

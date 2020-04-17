@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
 import Menu from './components/main-menu/Menu'
 import AdminMenu from './components/admin/AdminMenu'
-import LoginPage from './components/login/LoginPage/index'
+import LoginPage from './components/login/LoginPage'
 import SignUp from './components/login/SignUp'
 import UpdateSite from './components/admin/UpdateSite';
 import CreateSite from './components/admin/CreateSite';
@@ -11,7 +11,7 @@ import DeleteSite from './components/admin/DeleteSite';
 import AdminPage from './components/admin/AdminPage';
 import AuthMenu from './components/admin/AuthMenu';
 import SearchMenu from './components/search/SearchMenu';
-import About from './components/main-menu/about/index';
+import About from './components/main-menu/about';
 import Navbar from './components/layout/Navbar'
 import Home from './components/login/Home';
 import LogOut from './components/login/LogOut';

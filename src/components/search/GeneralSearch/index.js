@@ -1,19 +1,27 @@
 import React, { Component } from 'react'
-import {findFromDB} from './SearchUtils'
-import SiteComponent from '../sites/siteComponent'
+import {findFromDB} from '../SearchUtils'
+import SiteComponent from 'components/sites/siteComponent'
 import { PaginatedList } from 'react-paginated-list'
 import RoadComponent from 'components/road/RoadComponent';
+import 'index.css';         
 
-
-const style = {backgroundColor: 'white',
-    backgroundImage: "url(" + "https://image0.flaticon.com/icons/png/128/49/49116.png" + ")",
-    backgroundPosition: '2px 3px',
-    backgroundRepeat: 'no-repeat',
-    paddingLeft: '25px',
-    borderRadius: '8px',
-    backgroundSize: '20px 20px',
-    width: '100%'
+const headerStyle = {
+    color: 'white',
+    fontWeight: '800',
+    fontSize: '22px',
+    fontFamily: "\'Cambay\', sans-serif",
 }
+
+// const style = {backgroundColor: 'white',
+//     backgroundImage: "url(" + "https://image0.flaticon.com/icons/png/128/49/49116.png" + ")",
+//     backgroundPosition: '2px 3px',
+//     backgroundRepeat: 'no-repeat',
+//     paddingLeft: '25px',
+//     borderRadius: '8px',
+//     backgroundSize: '20px 20px',
+//     width: '100%',
+//     height: '45px'
+// }
 
 
 /**
@@ -181,29 +189,19 @@ class GeneralSearch extends Component {
 
         return (
             <div>
-                <div className="search-field">
-                    <form style={{ margin: '0px'}}>
-                        <h4 style={{ color: 'rgba(225,202,159,1)' }}>Find a trail</h4>
-
-                        <input
-                            style={style}
-                            value={this.state.searchVal}
-                            // value={this.state.searchVal.join(" ")}
-                            ref={this.searchVal}
-                            onChange={this.updateSearchValue}
-                            type="text"
-                            placeholder='Search by trail name or location'
-                            required />
-
-                        <button
-                            onClick={this.onSearchButtonClicked}
-                            type="submit"
-                            style={{backgroundColor: 'rgba(255,255,255,0.4)', border: '1px solid black', borderRadius: '4px', display: 'none'}}>Search</button>
-                    
-                        <p className="error pink-text center-align"></p>
-                    </form>
-                </div>
-
+                <form style={{ margin: '0px'}}>
+                    <header style={headerStyle}>Find a trail</header>
+                    <div className='field'>
+                        <span><i className="fas fa-search" style={{marginLeft: '12px'}}></i></span>
+                        <input style={{fontSize: '16px'}} required  placeholder='Search by trail name or location...' type="text" onChange={this.updateSearchValue} ref={this.searchVal} value={this.state.searchVal}></input>
+                    </div>                        
+                    <button
+                        onClick={this.onSearchButtonClicked}
+                        type="submit"
+                        style={{backgroundColor: 'rgba(255,255,255,0.4)', border: '1px solid black', borderRadius: '4px', display: 'none'}}>Search</button>
+                
+                    <p className="error pink-text center-align"></p>
+                </form>
                 <div>
                     <button
                         onClick={this.siteFilterClicked}

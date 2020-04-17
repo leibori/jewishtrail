@@ -47,7 +47,7 @@ const SiteComponent = (props) => {
   const buttonClasses = buttonStyles()
 
   const pickSiteButton = () => {
-    return siteButtonsProps.find((buttonProps) => buttonProps.canRender(site.id));
+    return siteButtonsProps ? siteButtonsProps.find((buttonProps) => buttonProps.canRender(site.id)) : undefined;
   }
 
   const buttonProps = pickSiteButton();
@@ -76,7 +76,7 @@ const SiteComponent = (props) => {
                   </Grid>
                   { buttonProps &&
                     (<Grid item xs={6}>
-                      <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" onClick={(e) => buttonProps.buttonFunction(e, site.id)}>{buttonProps.buttonName}</Button>
+                      <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" onClick={(e) => buttonProps.buttonFunction(e, site)}>{buttonProps.buttonName}</Button>
                     </Grid>)
                   }
                 </Grid>

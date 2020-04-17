@@ -13,7 +13,8 @@ export async function createNewSite(site){
       fullInfo: site.fullInfo,
       partialInfo: site.partialInfo,
       latitude: site.latitude,
-      longitude: site.longitude
+      longitude: site.longitude,
+      searchTokens: site.searchTokens,
     })
 }
 

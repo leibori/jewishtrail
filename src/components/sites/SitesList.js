@@ -6,7 +6,7 @@ const GetSitesList = ({props}) => {
     return (
       <div className="container">
         {props.map((site, i) => {
-           return (<SiteComponent key={i} props={site}/>) 
+           return (<SiteComponent key={i} site={site}/>) 
         })}
       </div>
     )

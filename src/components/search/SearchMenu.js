@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import {myFirebase} from '../firebase/firebase'
+import {getFavorites} from '../firebase/FirebaseUtilities'
 import {getUserClaims, updateUserFavorites, getFavoritesIDs, getRoadFavoritesIDs, updateUserRoadsFavorites} from '../firebase/FirebaseUtilities'
-import GeneralSearch from './GeneralSearch';
-
+import GeneralSearch from './GeneralSearch/index';
+import {myFirebase, myDatabase} from 'components/firebase/firebase'
 
 /**
  * This component is the search menu.
@@ -12,7 +12,7 @@ class SearchMenu extends Component {
     // A constructor that sets the values of this component's state.
     constructor(props) {
         super(props);
-
+        console.log(props.location);
         this.state = {
             // Holds the registered user's id in order to get it's favorites list.
             userid: "",
@@ -27,11 +27,15 @@ class SearchMenu extends Component {
             roadFavoriteList: [],
 
             // Pulls a string in the address' parameters into "searchVal", otherwise sets empty string.
-            searchVal: props.match.params.searchVal ? props.match.params.searchVal : ''
+            searchVal: props.match.params.searchVal ? props.match.params.searchVal : '',
+
         }
         // console.log(this.state.searchVal)
-        this.canRenderButtonSite = this.canRenderButtonSite.bind(this);
-        this.canRenderButtonRoad = this.canRenderButtonRoad.bind(this);
+        this.canRenderAddSite = this.canRenderAddSite.bind(this);
+        this.canRenderAddRoad = this.canRenderAddRoad.bind(this);
+        this.canRenderDeleteSite = this.canRenderDeleteSite.bind(this);
+        this.canRenderDeleteRoad = this.canRenderDeleteRoad.bind(this);
+        this.deleteFromFirebase = this.deleteFromFirebase.bind(this);
     }
 
 
@@ -40,23 +44,43 @@ class SearchMenu extends Component {
      * Otherwise, it returns false.
      * This function is used to decide whether or not to show the "add to favorites" button.
      */
-    canRenderButtonSite = (sid) => {
+    canRenderAddSite = (sid) => {
         if(this.state.claim !== "guest") {
             // console.log(`tis not a guest`);
-            if(!this.state.siteFavoriteList.includes(sid)) {
+            if(!this.state.siteFavoriteList.find(s=> s.uid==sid)) {
                 return true
             }
         }
         return false
     }
 
+    canRenderDeleteSite = (sid) => {
+        console.log(sid);
+        console.log(this.state.siteFavoriteList)
+        if(this.state.claim !== "guest") {
+            if (this.state.siteFavoriteList.find(s=> s.uid===sid)){
+                return true;
+            }
+        }
+        return false;
+    }
 
-    /**
-     * This function returns true if the user is not a guest and the road id (sid) is not in the user's favorites list.
-     * Otherwise, it returns false.
-     * This function is used to decide whether or not to show the "add to favorites" button.
-     */
-    canRenderButtonRoad = (sid) => {
+    deleteFromFirebase = async(e, site) => {
+        const sid = site.id;
+        let { siteFavoriteList, userid } = this.state;
+        var uidList = siteFavoriteList.filter(s => s.uid != site.id).map(s=>s.uid);
+        console.log(uidList);
+        await myDatabase.collection('accounts').doc(userid).update({'favorites': uidList})
+        .catch(function(error) {
+            console.error("Error removing document: ", error);
+        console.log(siteFavoriteList)
+        });
+        siteFavoriteList = siteFavoriteList.filter(s => s.uid != site.id);
+        console.log(siteFavoriteList)
+        this.setState({siteFavoriteList});
+    }
+   
+    canRenderAddRoad = (sid) => {
         if(this.state.claim !== "guest") {
             // console.log(`user is not a guest`);
             if(!this.state.roadFavoriteList.includes(sid)) {
@@ -66,16 +90,26 @@ class SearchMenu extends Component {
         return false
     }
 
+    canRenderDeleteRoad = (rid) => {
+        if(this.state.claim !== "guest") {
+            // console.log(`user is not a guest`);
+            return (this.state.roadFavoriteList.includes(rid));
+        }
+        return false
+    }
 
     /**
      * This function recieves an id and adds it to the user's favorite sites list in the database and in this component.
      */
-    addSiteToFavorites = async(e, sid) => {
-        var favorites = this.state.siteFavoriteList
-        favorites.push(sid)
-        updateUserFavorites(this.state.userid, favorites)
-        
-        this.setState({siteFavoriteList: favorites})
+    addSiteToFavorites = async(e, site) => {
+        const newFavorites = this.state.siteFavoriteList;
+        site.uid = site.id;
+        newFavorites.push(site);
+        const newFavoritesUID = newFavorites.map(s=>s.uid);
+        console.log(newFavoritesUID);        
+        console.log(newFavorites);        
+        updateUserFavorites(this.state.userid, newFavoritesUID);
+        this.setState({siteFavoriteList: newFavorites})
     }
 
 
@@ -99,10 +133,11 @@ class SearchMenu extends Component {
             if(user) {
                 this.setState({ userid: user.uid,
                                 claim: await getUserClaims(user),
-                                siteFavoriteList: await getFavoritesIDs(user.uid),
+                                siteFavoriteList: await getFavorites(user.uid),
                                 roadFavoriteList: await getRoadFavoritesIDs(user.uid) });
             }
        })
+
     }
 
 
@@ -110,10 +145,15 @@ class SearchMenu extends Component {
      * This function renders the components by calling the "SiteSearch" component.
      */
     render() {
-        const buttonName = `Add to favorites`;
-        const siteButtonsProps = [{buttonFunction: this.addSiteToFavorites, buttonName, canRender: this.canRenderButtonSite}];
-        const roadButtonsProps = [{buttonFunction: this.addRoadToFavorites, buttonName, canRender: this.canRenderButtonRoad}];
-
+        const buttonName1 = 
+        // <span style={{  background: '#fda50f', width: '100%', height: '100%'}}>
+         <span style={{  background: '#fda50f', padding: '10px', borderRadius: '50%'}}>
+            <i style={{color: 'white', textShadow: '0 0 4px #000',}} className="fas fa-star fa-2x"></i>
+        </span>;
+        const buttonName2 = `Delete from favorites`;
+        const siteButtonsProps = [{buttonFunction: this.addSiteToFavorites, buttonName: buttonName1, canRender: this.canRenderAddSite}, 
+            {buttonFunction: this.deleteFromFirebase, buttonName: buttonName2, canRender: this.canRenderDeleteSite}];
+        const roadButtonsProps = [{buttonFunction: this.addRoadToFavorites, buttonName: buttonName1, canRender: this.canRenderAddRoad}];
         return (
             /**
              * The string in this component's searchVal is used has the value by which the search is executed.

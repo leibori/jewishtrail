@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {findFromDB} from './SearchUtils'
 import SiteComponent from '../sites/siteComponent'
 import { PaginatedList } from 'react-paginated-list'
+import { Link } from 'react-router-dom';
 
 
 /**
@@ -14,7 +15,8 @@ export default class SiteSearch extends Component {
         super(props);
 
         // Extracting the props that the constructor recieves.
-        const { siteButtonsProps, searchVal, returnTo } = props;
+        const { siteButtonsProps, searchVal, returnTo, getParentState } = props;
+        
 
         this.state = {
             // Is true if a search value is sent, and false otherwise.
@@ -30,7 +32,10 @@ export default class SiteSearch extends Component {
             siteButtonsProps,
 
             // The beginning of the address that is set after the search button is pressed.
-            returnTo: returnTo
+            returnTo: returnTo,
+
+            getParentState : getParentState ? getParentState : ()=>{},
+
         }
 
         // onClick event handler for an entry button.
@@ -53,8 +58,6 @@ export default class SiteSearch extends Component {
     // transition to a new page based on the "returnTo" and the search value.
     onSearchButtonClicked(e) {
         e.preventDefault();
-
-        console.log(this.state.searchVal)
 
         window.location.href = '/' + this.state.returnTo + '/' + this.state.searchVal
     }
@@ -85,6 +88,9 @@ export default class SiteSearch extends Component {
 
     // Renders the component.
     render() {
+        const url = '/' + this.state.returnTo + '/' + this.state.searchVal;
+
+        console.log(url);
 
         // Extract "buttonName" and "siteList" variable for ease of use.
         const { siteList, siteButtonsProps } = this.state;
@@ -99,12 +105,18 @@ export default class SiteSearch extends Component {
         return (
             <div>
                 {/* Search site form */}
-                <form ref={this.form} id="search-form">
+                <form onSubmit={e=>e.preventDefault()} id="search-form">
                     <div className="search-field">
                         <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
                     </div>
                     <div>
-                        <button onClick={this.onSearchButtonClicked} type="submit">Search</button>
+                        { <button type="button">
+                            <Link to={{
+                                pathname: url,
+                                state: this.state.getParentState(),
+                            }}>Search</Link>
+                        </button>}
+                        {/* <button onClick={this.onSearchButtonClicked} type="submit">Search</button> */}
                     </div>
                     <p className="error pink-text center-align"></p>
                 </form>

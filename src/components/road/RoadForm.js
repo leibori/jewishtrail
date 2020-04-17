@@ -15,24 +15,33 @@ class RoadForm extends Component {
 
     constructor(props) {
         super(props);
-
+        let formerState;
+        if (props.location && props.location.state){
+            formerState =  props.location.state
+            console.log(formerState);
+        }
+        else {
+            console.log('Didnt get anything');
+        }
         this.state = {
             userid: "",
             claim: "guest",
             searchVal: props.match.params.searchVal ? props.match.params.searchVal : '',
             topDownValue: 'tags',
             siteListResult: [],
-            siteList:[],
-            name: '',
-            description: '',
+            siteList: formerState ? formerState.siteList : [],
+            name: formerState ? formerState.name : '',
+            description: formerState ? formerState.description : '',
         }
 
         this.updateSearchValue = this.updateSearchValue.bind(this);
         this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
         this.createNewRoadSubmit = this.createNewRoadSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.getState = this.getState.bind(this);
     };
 
+    getState = () => this.state;
 
     updateSearchValue(e) {
       this.setState({searchVal: e.target.value})
@@ -106,7 +115,7 @@ class RoadForm extends Component {
             return (
                 <div key={i} >
                     <li>
-                        <SiteComponent props={site}/>
+                        <SiteComponent {...{site}}/>
                     </li>
                     <button onClick={() => this.removeSite(i)}>remove Site </button>
                 </div>)
@@ -114,14 +123,14 @@ class RoadForm extends Component {
 
         return (
             <div className="col-md">
-                <form>
+                <form onSubmit={()=>alert(2)}>
                     <div className="input-field">
-                        <input required name="name" type="text" id='name' onChange={this.handleChange} />
+                        <input required name="name" type="text" id='name' onChange={this.handleChange} value={this.state.name}/>
                         <label htmlFor="name">  Road  Name</label>
                     </div>
                     <div className="for-group">
                          <label >Road Description</label>
-                        <textarea required value={this.description} onChange={this.handleChange} type="description" className="form-control" name="description" placeholder="Road Description" />
+                        <textarea required value={this.state.description} onChange={this.handleChange} type="description" className="form-control" name="description" placeholder="Road Description" />
                     </div>
                     <button type="submit" onClick={(e) =>this.createNewRoadSubmit(e)} className="btn pink lighten-1">Submit</button>
                  </form>
@@ -140,6 +149,7 @@ class RoadForm extends Component {
                             </div>)})} */}
                 </ul>
                 <SiteSearch
+                    getParentState={this.getState}
                     siteButtonsProps= {[{
                         buttonName: `Add to road`,
                         canRender: this.renderButton,

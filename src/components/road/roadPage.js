@@ -67,10 +67,7 @@ class RaodPage extends Component {
             return (
                 <div key={i} >
                     <li>
-                        <SiteComponent props={{site: site,
-                                                    buttonName: null,
-                                                    condition: false,
-                                                    buttonFunction: null}}/>
+                        <SiteComponent site={site} siteButtonsProps={[{buttonName: null, canRender: ()=>false, buttonFunction: null}]}/>
                     </li>
                 </div>)
         });

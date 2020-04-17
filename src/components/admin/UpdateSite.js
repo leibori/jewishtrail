@@ -46,8 +46,8 @@ updateSearchValue(e) {
 }
 
 
-onSiteButtonClick = (e, id) => {
-  this.props.history.push("/updateForm/" +id);
+onSiteButtonClick = (e, site) => {
+  this.props.history.push("/updateForm/" + site.id);
 }
 
 updateTopDownhValue(e) {

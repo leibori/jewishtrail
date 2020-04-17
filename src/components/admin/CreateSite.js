@@ -60,6 +60,7 @@ class CreateSite extends Component {
       longitude: parseFloat(this.state.longitude),
       searchTokens: searchTokens,
     }
+    console.log(site);
     await createNewSite(site)
     alert("created a new site");
     this.props.history.push('/adminPage');
