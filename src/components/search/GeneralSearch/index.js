@@ -215,7 +215,7 @@ class GeneralSearch extends Component {
                 <div className="container">
                     {searchResult.length !== 0 && <PaginatedList
                         list={searchResult.filter(this.resultsFilter)}
-                        itemsPerPage={3}
+                        itemsPerPage={20}
                         renderList={mapping}/>}
                 </div>
 

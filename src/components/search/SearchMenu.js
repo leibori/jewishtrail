@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {getFavorites} from '../firebase/FirebaseUtilities'
 import {getUserClaims, updateUserFavorites, getFavoritesIDs, getRoadFavoritesIDs, updateUserRoadsFavorites} from '../firebase/FirebaseUtilities'
-import GeneralSearch from './GeneralSearch/index';
+import GeneralSearch from './GeneralSearch';
 import {myFirebase, myDatabase} from 'components/firebase/firebase'
 
 /**
@@ -116,11 +116,11 @@ class SearchMenu extends Component {
     /**
      * This function recieves an id and adds it to the user's favorite roads list in the database and in this component.
      */
-    addRoadToFavorites = async(e, sid) => {
+    addRoadToFavorites = async(e, road) => {
+        const rid = road.id;
         var favorites = this.state.roadFavoriteList
-        favorites.push(sid)
+        favorites.push(rid)
         updateUserRoadsFavorites(this.state.userid, favorites)
-        
         this.setState({roadFavoriteList: favorites})
     }
 

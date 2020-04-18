@@ -16,15 +16,13 @@ class DeleteRoad extends Component {
     this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
 };
 
-DeleteRoad = async(e, sid) => {
-  const roadList = this.myRef.current.state.roadList;
+DeleteRoad = async(e, road) => {
   e.preventDefault();
-  console.log(roadList);
-  const road = roadList.find((s)=> s.id === sid );
-  const index = roadList.indexOf(road);
-  await deleteRoadFromDB(road)
-  console.log("road" + road.name + "had deleted")
-  
+  const rid = road.id;
+  const roadList = this.myRef.current.state.roadList;
+  const index = roadList.indexOf( r => r.id === rid );
+  await deleteRoadFromDB(roadList[index])
+  console.log("road" + roadList[index].name + "has been deleted")
   roadList.splice(index,1)
   this.setState({roadList});
 }

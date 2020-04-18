@@ -82,7 +82,8 @@ class RoadForm extends Component {
         await createNewRoad(road);
         console.log("created new road")
     }
-    addSiteToRoadList = async(e, siteID) => {
+    addSiteToRoadList = async(e, site) => {
+        const siteID = site.id;
         const siteData = await getSiteByID(siteID)
         const siteObject = {
             ...siteData,

@@ -30,9 +30,10 @@ class RoadMenu extends Component {
         return false
     }
 
-    addRoadsToFavorites = async(e, sid) => {
+    addRoadsToFavorites = async(e, road) => {
+        const rid = road.id;
         var favorites = this.state.favoriteList
-        favorites.push(sid)
+        favorites.push(rid)
         updateUserRoadsFavorites(this.state.userid, favorites)
         
         this.setState({favoriteList: favorites})

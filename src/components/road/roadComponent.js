@@ -78,7 +78,7 @@ const RoadComponent = (props) => {
                   </Grid>
                   { buttonInfo &&
                     <Grid item xs={6}>
-                      <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" onClick={(e) => buttonInfo.buttonFunction(e, road.id)}>{buttonInfo.buttonName}</Button>
+                      <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" onClick={(e) => buttonInfo.buttonFunction(e, road)}>{buttonInfo.buttonName}</Button>
                     </Grid>
                   }
                 </Grid>
