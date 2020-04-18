@@ -58,7 +58,7 @@ class App extends Component {
     return (
       <BrowserRouter forceRefresh={true}>
         <div className="App">
-          <Navbar/>
+          {/* <Navbar/> */}
           <header className="App-header">
             <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
             <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
@@ -67,23 +67,21 @@ class App extends Component {
             <link rel="manifest" href="/manifest.json"></link>
             <link rel="stylesheet" href="styles.css"></link>
           </header>
-          <Switch>
-            <Route exact path='/' >
-              <Redirect to='/LoginPage'/>
-            </Route>
+              {/* <Redirect to='/LoginPage'/>
+            </Route> */}
             {/* <Route exact path='/' component={LoginPage}/> */}
-            <Route path='/menu'  component={Menu} />
-            <Route path='/loginpage' component={LoginPage} />
-            <Route path='/logout' component={LogOut} />
-            <Route path='/signup' component={SignUp} />
-            <Route path='/adminpage' component={AdminMenu} />
-            <Route path='/createsite' component={CreateSite} />
+            <Route exact path='/menu'  component={Menu} />
+            <Route exact path='/loginpage' component={LoginPage} />
+            <Route exact path='/logout' component={LogOut} />
+            <Route exact path='/signup' component={SignUp} />
+            <Route exact path='/adminpage' component={AdminMenu} />
+            <Route exact path='/createsite' component={CreateSite} />
             <Route exact path='/deletesite' component={DeleteSite} />
             <Route exact path='/deletesite/:searchVal' component={DeleteSite} />
             <Route exact path='/updatesite' component={UpdateSite} />
             <Route exact path='/updatesite/:searchVal' component={UpdateSite} />
             <Route exact path='/updateform/:id' component={UpdateForm} />
-            <Route path='/auth' component={AuthMenu} />
+            <Route exact path='/auth' component={AuthMenu} />
             <Route exact path='/search' component={SearchMenu} />
             <Route exact path='/search/:searchVal' component={SearchMenu} />
             <Route path='/favorites' component={Favorites} />
@@ -97,7 +95,7 @@ class App extends Component {
             <Route exact path='/road/:id' component={RaodPage} />
             <Route exact path='/deleteroad' component={DeleteRoad} />
             <Route exact path='/deleteroad/:searchVal' component={DeleteRoad} />          
-          </Switch>
+          <Route path='/' render={()=><Navbar style={{zIndex: '999'}}/>}/>
         </div>
       </BrowserRouter>
     );
