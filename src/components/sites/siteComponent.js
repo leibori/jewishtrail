@@ -70,9 +70,8 @@ const SiteComponent = (props) => {
             <Grid item xs container direction="column" spacing={2}>
               
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1"><b>Site name:</b> {site.name}</Typography>
-                <Typography variant="body2" gutterBottom><b>City:</b> {site.city}.</Typography>
-                <Typography variant="body2" ><b>Country:</b> {site.country}.</Typography>
+                <Typography gutterBottom variant="subtitle1">{site.name}</Typography>
+                <Typography variant="body2" gutterBottom>{site.city}, {site.country}</Typography>
                 <Grid item container direction='row' spacing={2}>
                   <Grid item xs={6}>
                     <button variant="outlined" style={{...buttonStyles, border: '1px solid rgba(0, 0, 0, 0.23)'}}>

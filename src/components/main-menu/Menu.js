@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { findSitesByCountryForMarker } from '../search/SearchUtils'
 import { getMenuMap } from '../map/MapUtilities'
-
+import { Card } from 'react-bootstrap'
 import L, { icon } from 'leaflet';
 
 
@@ -64,10 +64,15 @@ class Menu extends Component {
     render() {
         return(
                 <div>
-                    <p>Welcome to the "Jewish Trail" project.</p>
-                    <p>Our goal is to strenghen the bond between the jewish people around the world by improving access to our shared history and heritage.</p>
-                    <p>Feel free to go on a journey and rediscover the marks the we left on the world and in the history books.</p>
-                    <div style={{height: '400px', width: '90%', position: "absolute", left: '50%', top: '50%', transform: 'translate(-50%, -10%)'}} id='map' />
+                    <Card style={{ width: '100%', height: '100%' }}>
+                        <Card.Body style={{ paddingLeft: '0px', paddingTop: '0px', paddingRight: '0px', height: '300px', backgroundImage: "url(" + "https://www.aecom.com/wp-content/uploads/2015/10/CityCenter-without-Harmon.jpg" + ")", backgroundPosition: '0px 0px', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%' }}>
+                            {/* <Card.Img variant="top" src='https://www.aecom.com/wp-content/uploads/2015/10/CityCenter-without-Harmon.jpg' /> */}
+                            <Card.Title style={{ fontFamily: 'cambey', color: 'white', marginTop: '50%', marginLeft: '3%' }}>Discover places near you</Card.Title>
+                        </Card.Body>
+                        <Card.Body style={{ height: '350px'}}>
+                            <div style={{height: '100%', width: '100%', position: "absolute", left: '50%', top: '50%', transform: 'translate(-50%, -10%)'}} id='map' />
+                        </Card.Body>
+                    </Card>
                 </div>
         )
     }
