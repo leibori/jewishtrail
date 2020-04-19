@@ -67,12 +67,11 @@ const SiteComponent = (props) => {
             <Grid item xs container direction="column" spacing={2}>
               
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1"><b>Site name:</b> {site.name}</Typography>
-                <Typography variant="body2" gutterBottom><b>City:</b> {site.city}.</Typography>
-                <Typography variant="body2" ><b>Country:</b> {site.country}.</Typography>
+                <Typography gutterBottom variant="subtitle1">{site.name}</Typography>
+                <Typography variant="body2" gutterBottom>{site.city}, {site.country}</Typography>
                 <Grid item container direction='row' spacing={2}>
                   <Grid item xs={6}>
-                    <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" href={info_url}>View Site</Button>
+                    <Button className={buttonClasses.button} variant="outlined"style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" href={info_url}>View Site</Button>
                   </Grid>
                   { buttonProps &&
                     (<Grid item xs={6}>
