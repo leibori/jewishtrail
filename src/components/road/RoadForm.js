@@ -32,6 +32,7 @@ class RoadForm extends Component {
             siteList: formerState ? formerState.siteList : [],
             name: formerState ? formerState.name : '',
             description: formerState ? formerState.description : '',
+            imgUrl: formerState ? formerState.formerState : '',
         }
 
         this.updateSearchValue = this.updateSearchValue.bind(this);
@@ -67,6 +68,7 @@ class RoadForm extends Component {
         let searchTokens = [];
         const roadName = this.state.name;
         const roadDescription = this.state.description;
+        const { imgUrl } = this.state;
         const CityList = Array.from(new Set(this.state.siteList.map((site) => site.city)))
         const CountryList = Array.from(new Set(this.state.siteList.map((site) => site.country)))
         var TagList = []
@@ -77,7 +79,7 @@ class RoadForm extends Component {
         let siteListID = []
         this.state.siteList.forEach((site) => siteListID.push(site.id));
         
-        const road = {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens}
+        const road = {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imgUrl};
         
         await createNewRoad(road);
         console.log("created new road")
@@ -97,12 +99,11 @@ class RoadForm extends Component {
         });
         // console.log(siteList)
     }
-    removeSite(index){
-        var siteList = [...this.state.siteList]
+    removeSite = (e, site)=>{
+        const siteList = [...this.state.siteList]
+        const index = siteList.findIndex(s=> s.id==site.id )
         siteList.splice(index,1);
         this.setState({siteList});
-        // console.log(index)
-        // this.setState({ siteList: this.state.siteList.splice(index, 1)});
     }
 
     handleChange(e) {
@@ -116,9 +117,13 @@ class RoadForm extends Component {
             return (
                 <div key={i} >
                     <li>
-                        <SiteComponent {...{site}}/>
+                        <SiteComponent site={site} siteButtonsProps={[{
+                            buttonName: `Remove Site`,
+                            canRender: ()=>true,
+                            buttonFunction: this.removeSite
+                        }]}/>
                     </li>
-                    <button onClick={() => this.removeSite(i)}>remove Site </button>
+                    {/* <button onClick={() => this.removeSite(i)}>remove Site </button> */}
                 </div>)
         });
 
@@ -126,8 +131,12 @@ class RoadForm extends Component {
             <div className="col-md">
                 <form onSubmit={()=>alert(2)}>
                     <div className="input-field">
-                        <input required name="name" type="text" id='name' onChange={this.handleChange} value={this.state.name}/>
-                        <label htmlFor="name">  Road  Name</label>
+                        <label htmlFor="name">  Road Name:</label>
+                        <input style={{marginLeft: '10px', width: '20%'}} required name="name" type="text" id='name' onChange={this.handleChange} value={this.state.name}/>                        
+                    </div>
+                    <div className="input-field">
+                        <label htmlFor="imgUrl">Image URL:</label>
+                        <input style={{marginLeft: '10px', width: '20%'}} required name="imgUrl" type="text" id='imgUrl' onChange={this.handleChange} value={this.state.name}/>
                     </div>
                     <div className="for-group">
                          <label >Road Description</label>

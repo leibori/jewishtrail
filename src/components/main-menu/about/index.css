@@ -14,20 +14,22 @@
 
  /* Bottom left text */
 .bottomcard {
-    position: absolute; 
-    top: 345px;
-    /* left: 0px; */
-    bottom: 0px;
+    position: relative;
+    bottom: 0%;
+    height: 60%;
     background-color: white;
-    width: 100%; 
-    height: 75%;   
+    width: 100%;
+    /* bottom: 0px; */
+    /* word-wrap: break-word;    */
+    padding: 4%;
+    /* text-overflow: ellipsis; */
   }
 
 .bottomHeader {
     font-weight: bold;
     position: absolute;
     left: 16px;
-    top: 300px;
+    top: 32%;
     color: white;
     font-size: 35px;
 }
@@ -37,8 +39,9 @@ p {
     /* bottom: -5%; This will move it 20px up */
     /* left: 5%; This will move it 20px to the right */
     text-align: left;
-    font-weight: bold;
-    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
 }
 
 .outer {
@@ -47,27 +50,27 @@ p {
     top: 0;
     left: 0;
     height: 100%;
+    word-wrap: break-word;
+    
+
     /* width: 100%; */
   }
   
   .middle {
     display: table-cell;
     vertical-align: middle;
+    word-wrap: break-word;
+
   }
   
   .inner {
     margin-left: auto;
     margin-right: auto;
     width: 75%;
-    /*whatever width you want*/
-  }
+    height: 82%;
+    word-wrap: break-word;
+    }
 
-  .avatar {
-    float: left;
-    width: 100%;
-    height: 20%;
-    border: 1px solid black;
-  }
   img {
   height: 100%;
   width: 100%;  
@@ -76,10 +79,3 @@ p {
   margin: auto;
   object-fit: cover;
   }
-
-  /* body {
-    background: url(/assets/img/signs.jpg) no-repeat;
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-  } */

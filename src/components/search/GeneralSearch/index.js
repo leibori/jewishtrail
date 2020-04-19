@@ -189,7 +189,7 @@ class GeneralSearch extends Component {
 
         return (
             <div style={{width: '100%'}}>
-                <form style={{ margin: '0px', width: '100%'}}>
+                <form style={{ width: '100%'}}>
                     <header style={headerStyle}>Find a trail</header>
                     <div className='field'>
                         <span><i className="fas fa-search" style={{marginLeft: '12px'}}></i></span>
@@ -202,14 +202,14 @@ class GeneralSearch extends Component {
                 
                     <p className="error pink-text center-align"></p>
                 </form>
-                <div>
+                {searchResult.length > 0 && <div style={{marginBottom: '5%'}}>
                     <button
                         onClick={this.siteFilterClicked}
                         style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Sites</button>
                     <button
                         onClick={this.roadFilterClicked}
                         style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Roads</button>
-                </div>
+                </div>}
                 
                 {/* Results */}
                 <div className="container">
@@ -221,7 +221,7 @@ class GeneralSearch extends Component {
 
                 {
                     this.state.searchVal.length != 0 && this.state.searchResult.length == 0 && this.state.haveSearched ?
-                        (<h5 style={{ marginLeft: '5%' , color: 'rgba(223,30,38,0.9)'}}><b>No matches found!</b></h5>) : ''
+                        (<h4 style={{ fontWeight: '650', marginLeft: '5%' , color: 'rgba(223,30,38,0.9)'}}>No matches found!</h4>) : ''
                 }
             </div>
         )    

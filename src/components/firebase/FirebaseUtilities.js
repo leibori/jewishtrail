@@ -108,8 +108,7 @@ export async function getSiteByID(siteid) {
 }
 
 
-export async function createNewRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens} ){
-    console.log(TagList)
+export async function createNewRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imgUrl} ){
     await myDatabase.collection('roads').add({
         name: roadName,
         description: roadDescription,
@@ -117,8 +116,8 @@ export async function createNewRoad( {siteListID,roadName,roadDescription,CityLi
         city:CityList,
         country:CountryList,
         tags: TagList,
-        searchTokens:searchTokens
-
+        searchTokens:searchTokens,
+        imageUrl: imgUrl,
     })
 }
 

@@ -12,7 +12,7 @@ class RoadSearch extends Component {
         const { roadButtonsProps, searchVal, returnTo } = props;
         this.state = {
             searchVal: searchVal ? searchVal.split(' ') : [],
-            siteList: [],
+            roadList: [],
             favoriteList: [],
             // Button content next to each entry
             roadButtonsProps,
@@ -41,7 +41,7 @@ class RoadSearch extends Component {
     async executeSearch() {
         console.log("searching road")
         const result = await findFromDB(this.state.searchVal,['roads'])
-        this.setState({siteList: result})
+        this.setState({roadList: result})
     }
 
     updateSearchValue(e) {
@@ -49,8 +49,7 @@ class RoadSearch extends Component {
     }
 
     render() {
-        const { siteList, roadButtonsProps } = this.state;
-        // console.log(siteList);
+        const { roadList, roadButtonsProps } = this.state;
         const mapping = (list) => list.map((road, i) => {
             return  <div key={i} >
                         <RoadComponent key={i} road={road} {...{roadButtonsProps}}/>
@@ -74,8 +73,8 @@ class RoadSearch extends Component {
                 
                 {/* Results */}
                 <div className="container">
-                    {siteList.length !== 0 && <PaginatedList
-                        list={siteList}
+                    {roadList.length !== 0 && <PaginatedList
+                        list={roadList}
                         itemsPerPage={3}
                         renderList={mapping}/>}
                 </div>

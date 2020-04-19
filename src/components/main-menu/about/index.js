@@ -35,16 +35,16 @@ export default function About(props) {
         //     <div className="centered">Centered</div>
         // </div>
     // );
-    <div>
+    <div style={{width: '100%', height: '100%',}}>
 
-        <div style={{zIndex: '0', width: '100%', height:'300px', }}>
+        <div style={{zIndex: '0', width: '100%', height:'40%', }}>
             <img src={pic}/>
             <text className="bottomHeader">{name}</text>
         </div>
         <div className={"bottomcard"}>
-            <div className="outer">
+            {/* <div className="outer">
                 <div className="middle">
-                    <div className="inner">
+                    <div className="inner"> */}
                         <p>
                             {description1}
                         </p>
@@ -55,9 +55,9 @@ export default function About(props) {
                             {description3}
                         </p>
                         <p>Visit <a style={{color: '#48AAAB'}} href='http://sonshine.org.il/about-us/' >Our Website</a> for more information.</p>
-                    </div>
+                    {/* </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     </div>);
 

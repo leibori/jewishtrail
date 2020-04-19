@@ -56,9 +56,11 @@ class App extends Component {
     //   claims:"admin" 
     // }
     return (
+    <div className="App" style={{height:'100%', width:'100%'}}>
       <BrowserRouter forceRefresh={true}>
-        <div className="App">
-          <Navbar/>
+          <div style={{position: 'absolute', zIndex: '20', width: '100%'}}>
+            <Navbar/>
+          </div>
           <header className="App-header">
             <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
             <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
@@ -67,6 +69,7 @@ class App extends Component {
             <link rel="manifest" href="/manifest.json"></link>
             <link rel="stylesheet" href="styles.css"></link>
           </header>
+          <div style={{zIndex: '0', width: '100%', height: '100%', position:'absolute', left: '0px', top: '0px'}}>
             <Route exact path='/' component={LoginPage}>
               <Redirect to='/LoginPage'/>
             </Route>
@@ -95,8 +98,9 @@ class App extends Component {
             <Route exact path='/road/:id' component={RaodPage} />
             <Route exact path='/deleteroad' component={DeleteRoad} />
             <Route exact path='/deleteroad/:searchVal' component={DeleteRoad} />          
-        </div>
-      </BrowserRouter>
+          </div>
+        </BrowserRouter>
+      </div>
     );
   }
 }

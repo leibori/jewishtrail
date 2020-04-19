@@ -20,7 +20,9 @@ DeleteRoad = async(e, road) => {
   e.preventDefault();
   const rid = road.id;
   const roadList = this.myRef.current.state.roadList;
-  const index = roadList.indexOf( r => r.id === rid );
+  console.log(roadList);
+  const index = roadList.findIndex(r => r.id === rid);
+  console.log(index);
   await deleteRoadFromDB(roadList[index])
   console.log("road" + roadList[index].name + "has been deleted")
   roadList.splice(index,1)

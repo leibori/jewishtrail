@@ -60,7 +60,7 @@ const RoadComponent = (props) => {
 }
 
   const pickRoadButton = () => {
-    return roadButtonsProps.find((buttonProps) => buttonProps.canRender(road.id));
+    return roadButtonsProps.find(buttonProps => buttonProps.canRender(road.id));
   }
 
   const buttonInfo = pickRoadButton();
