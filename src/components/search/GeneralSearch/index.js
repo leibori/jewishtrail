@@ -188,8 +188,8 @@ class GeneralSearch extends Component {
         });      
 
         return (
-            <div>
-                <form style={{ margin: '0px'}}>
+            <div style={{width: '100%'}}>
+                <form style={{ margin: '0px', width: '100%'}}>
                     <header style={headerStyle}>Find a trail</header>
                     <div className='field'>
                         <span><i className="fas fa-search" style={{marginLeft: '12px'}}></i></span>

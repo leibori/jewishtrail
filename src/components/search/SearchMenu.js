@@ -160,7 +160,7 @@ class SearchMenu extends Component {
              * The function "addRoadToFavorites" for execution in case the button was pressed for a road.
              * The string "searchSite" is used as to transition to this component's address when the search button is pressed.
              */ 
-            <GeneralSearch
+            <GeneralSearch style={{width: '100%'}}
                 // onSiteClickMethod={this.addSiteToFavorites}
                 // onRoadClickMethod={this.addRoadToFavorites}
                 // buttonName={`Add to favorites`}

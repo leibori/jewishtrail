@@ -37,7 +37,7 @@ export default function About(props) {
     // );
     <div>
 
-        <div style={{width: '100%', height:'300px', }}>
+        <div style={{zIndex: '0', width: '100%', height:'300px', }}>
             <img src={pic}/>
             <text className="bottomHeader">{name}</text>
         </div>
