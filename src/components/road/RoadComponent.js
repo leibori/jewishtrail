@@ -6,7 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -29,22 +28,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const buttonStyles = makeStyles({
-  button: {
-    textTransform: "none"
-  }
-})
+const buttonStyles = {  
+  marginTop: '10px',
+  color: '#b5d7c7',
+  borderColor: '#b5d7c7',
+  textAlign: 'center',
+  borderRadius: '4px',
+  background: 'transparent',
+  border: 'none',
+
+}
 
 const RoadComponent = (props) => {
-  
+  const classes = useStyles()
   const { road, roadButtonsProps } = props;
   // const buttonName = props.props.buttonName
   // const condition = props.props.condition
   // const buttonFunction = props.props.buttonFunction
 
   var info_url = '/road/'+road.id
-  const classes = useStyles()
-  const buttonClasses = buttonStyles()
+  
+  const buttonStyles = {  
+    marginTop: '10px',
+    color: '#b5d7c7',
+    borderColor: '#b5d7c7',
+    textAlign: 'center',
+    borderRadius: '4px',
+    background: 'transparent',
+    border: 'none',
+
+}
 
   const pickRoadButton = () => {
     return roadButtonsProps.find((buttonProps) => buttonProps.canRender(road.id));
@@ -74,11 +87,13 @@ const RoadComponent = (props) => {
                 <Typography variant="body2" ><b>Countries:</b> {road.country.join(", ")}.</Typography>
                 <Grid item container direction='row' spacing={2}>
                   <Grid item xs={6}>
-                    <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" href={info_url}>View Trail</Button>
+                    <button variant="outlined" style={{...buttonStyles, border: '1px solid rgba(0, 0, 0, 0.23)'}}>
+                      <a style={{color: 'inherit'}} href={info_url}>View Trail</a>
+                    </button>
                   </Grid>
                   { buttonInfo &&
-                    <Grid item xs={6}>
-                      <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" onClick={(e) => buttonInfo.buttonFunction(e, road)}>{buttonInfo.buttonName}</Button>
+                    <Grid item>
+                      <button  variant="outlined" style={buttonStyles} onClick={(e) => buttonInfo.buttonFunction(e, road)}>{buttonInfo.buttonName}</button>
                     </Grid>
                   }
                 </Grid>

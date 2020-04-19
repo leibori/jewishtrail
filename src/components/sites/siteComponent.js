@@ -24,16 +24,19 @@ const useStyles = makeStyles((theme) => ({
     outline: 'none',
     margin: 'auto',
     display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
   },
 }));
 
-const buttonStyles = makeStyles({
-  button: {
-    textTransform: "none"
-  }
-})
+const buttonStyles = {  
+  marginTop: '10px',
+  color: '#b5d7c7',
+  borderColor: '#b5d7c7',
+  textAlign: 'center',
+  borderRadius: '4px',
+  background: 'transparent',
+  border: 'none',
+
+}
 
 const SiteComponent = (props) => {
   const { site, siteButtonsProps} = props;
@@ -44,7 +47,7 @@ const SiteComponent = (props) => {
 
   const info_url = '/site/'+site.id
   const classes = useStyles()
-  const buttonClasses = buttonStyles()
+  // const buttonClasses = buttonStyles()
 
   const pickSiteButton = () => {
     return siteButtonsProps ? siteButtonsProps.find((buttonProps) => buttonProps.canRender(site.id)) : undefined;
@@ -72,11 +75,13 @@ const SiteComponent = (props) => {
                 <Typography variant="body2" ><b>Country:</b> {site.country}.</Typography>
                 <Grid item container direction='row' spacing={2}>
                   <Grid item xs={6}>
-                    <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" href={info_url}>View Site</Button>
+                    <button variant="outlined" style={{...buttonStyles, border: '1px solid rgba(0, 0, 0, 0.23)'}}>
+                      <a style={{color: 'inherit'}} href={info_url}>View Site</a>
+                    </button>
                   </Grid>
                   { buttonProps &&
-                    (<Grid item xs={6}>
-                      <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', marginTop: '10px'}} size="small" onClick={(e) => buttonProps.buttonFunction(e, site)}>{buttonProps.buttonName}</Button>
+                    (<Grid item>
+                      <button variant="outlined" style={buttonStyles} onClick={(e) => buttonProps.buttonFunction(e, site)}>{buttonProps.buttonName}</button>
                     </Grid>)
                   }
                 </Grid>

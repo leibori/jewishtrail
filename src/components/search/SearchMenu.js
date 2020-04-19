@@ -145,12 +145,8 @@ class SearchMenu extends Component {
      * This function renders the components by calling the "SiteSearch" component.
      */
     render() {
-        const buttonName1 = 
-        // <span style={{  background: '#fda50f', width: '100%', height: '100%'}}>
-         <span style={{  background: '#fda50f', padding: '10px', borderRadius: '50%'}}>
-            <i style={{color: 'white', textShadow: '0 0 4px #000',}} className="fas fa-star fa-2x"></i>
-        </span>;
-        const buttonName2 = `Delete from favorites`;
+        const buttonName1 = <img style={{width: '40px', height:'40px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-add-icon.png"/>
+        const buttonName2 = <img style={{width: '40px', height:'40px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-remove-icon.png"/>
         const siteButtonsProps = [{buttonFunction: this.addSiteToFavorites, buttonName: buttonName1, canRender: this.canRenderAddSite}, 
             {buttonFunction: this.deleteFromFirebase, buttonName: buttonName2, canRender: this.canRenderDeleteSite}];
         const roadButtonsProps = [{buttonFunction: this.addRoadToFavorites, buttonName: buttonName1, canRender: this.canRenderAddRoad}];
