@@ -1,5 +1,7 @@
-html{
+body, html{
+  min-width: 100%;
   min-height: 100%;
+  position: fixed;
 }
 
 body {
