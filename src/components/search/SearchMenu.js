@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {getFavorites} from '../firebase/FirebaseUtilities'
 import {getUserClaims, updateUserFavorites, getFavoritesIDs, getRoadFavoritesIDs, updateUserRoadsFavorites} from '../firebase/FirebaseUtilities'
-import GeneralSearch from './GeneralSearch';
+import GeneralSearch from './GeneralSearch/';
 import {myFirebase, myDatabase} from 'components/firebase/firebase'
 
 /**
