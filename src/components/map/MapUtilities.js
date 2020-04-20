@@ -89,11 +89,10 @@ export function getSitePageMap(mapId, site, zoom) {
 
     var markerLayer = L.layerGroup();
     var marker = L.marker([site.latitude, site.longitude], {icon: myIcon}).addTo(markerLayer)
-    var link = "<a href='/site/" + site.id + "'>More info</a>"
-    marker.bindPopup("<b>"+site.name+"</b><br/>"+
-                    site.address+"<br/>"+
-                    site.partialInfo+"<br/>"+
-                    link)
+    var link = "https://www.google.com/maps/dir/?api=1&destination="+site.latitude+"%2C"+site.longitude+"&dir_action=navigate"
+    var linkElement = "<a href="+link+">Navigate to site</a>"
+
+    marker.bindPopup(linkElement)
 
     var map = L.map(mapId, {
         center: [site.latitude, site.longitude],
@@ -108,5 +107,5 @@ export function getSitePageMap(mapId, site, zoom) {
             "Sattelite and streets": satelliteStreets };
     var overlays = { "Marker": markerLayer };
     L.control.layers(baseLayers, overlays).addTo(map);
-
+    
 }
