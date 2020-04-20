@@ -10,7 +10,7 @@ let iconUrl = 'http://www.clker.com/cliparts/k/a/2/B/c/u/map-marker-red-th.png'
 let mapUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
 
 // Map attributes
-let mbAttr = 'Map data © OpenStreetMap contributors, ' + 'CC-BY-SA, ' + 'Imagery © Mapbox'
+let mbAttr = 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox'
 
 // Layer of map named "streets" to see streets and places of interest clearly.
 const streets = L.tileLayer(mapUrl, {id: 'mapbox/streets-v11', maxZoom: maxZoom,
@@ -88,11 +88,7 @@ export function getAroundYouMap(mapId, latitude, longitude, zoom, sites) {
 export function getSitePageMap(mapId, site, zoom) {
 
     var markerLayer = L.layerGroup();
-    var marker = L.marker([site.latitude, site.longitude], {icon: myIcon}).addTo(markerLayer)
-    var link = "https://www.google.com/maps/dir/?api=1&destination="+site.latitude+"%2C"+site.longitude+"&dir_action=navigate"
-    var linkElement = "<a href="+link+">Navigate to site</a>"
-
-    marker.bindPopup(linkElement)
+    L.marker([site.latitude, site.longitude], {icon: myIcon}).addTo(markerLayer)
 
     var map = L.map(mapId, {
         center: [site.latitude, site.longitude],

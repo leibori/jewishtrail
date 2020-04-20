@@ -101,7 +101,7 @@ class RoadForm extends Component {
     }
     removeSite = (e, site)=>{
         const siteList = [...this.state.siteList]
-        const index = siteList.findIndex(s=> s.id==site.id )
+        const index = siteList.findIndex(s=> s.id===site.id )
         siteList.splice(index,1);
         this.setState({siteList});
     }

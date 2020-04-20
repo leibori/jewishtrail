@@ -1,10 +1,10 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,16 +28,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const buttonStyles = {  
-  marginTop: '10px',
-  color: '#b5d7c7',
-  borderColor: '#b5d7c7',
-  textAlign: 'center',
-  borderRadius: '4px',
-  background: 'transparent',
-  border: 'none',
-
-}
 
 const RoadComponent = (props) => {
   const classes = useStyles()

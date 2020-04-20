@@ -68,12 +68,12 @@ export async function findFromDB(searchVals, collectionName) {
     }
 
     // Goes through each collection that has it's name in "collectionName".
-    for(var i = 0; i < collectionName.length; ++i) {
+    for(i = 0; i < collectionName.length; ++i) {
         results = results.concat(await findPerCollection(searchVals, accuracy, collectionName[i]))
     }
     
     // Returns early if search result is empty.
-    if (results.length == 0) {
+    if (results.length === 0) {
         return sortedResults
     }
 

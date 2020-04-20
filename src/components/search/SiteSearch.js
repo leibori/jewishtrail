@@ -130,7 +130,7 @@ export default class SiteSearch extends Component {
                 </div>
 
                 {
-                    this.state.searchVal.length != 0 && this.state.siteList.length == 0 && this.state.haveSearched ?
+                    this.state.searchVal.length !== 0 && this.state.siteList.length === 0 && this.state.haveSearched ?
                         (<h5>No matches found.</h5>) : ''
                 }
             </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { findSitesByCountryForMarker } from '../search/SearchUtils'
-import { getAroundYouMap, getCurrentLocation } from '../map/MapUtilities'
+import { getAroundYouMap } from '../map/MapUtilities'
 import { Card } from 'react-bootstrap'
 
 
@@ -64,7 +64,7 @@ class AroundYou extends Component {
         return(
                 <div>
                     <Card style={{ width: '100%', height: '100%' }}>
-                        <Card.Body style={{ paddingLeft: '0px', paddingTop: '0px', paddingRight: '0px', height: '300px', backgroundImage: "url(" + "https://www.aecom.com/wp-content/uploads/2015/10/CityCenter-without-Harmon.jpg" + ")", backgroundPosition: '0px 0px', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%' }}>
+                        <Card.Body style={{ paddingLeft: '0px', paddingTop: '0px', paddingRight: '0px', height: '300px', backgroundImage: "url(https://www.aecom.com/wp-content/uploads/2015/10/CityCenter-without-Harmon.jpg)", backgroundPosition: '0px 0px', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%' }}>
                             {/* <Card.Img variant="top" src='https://www.aecom.com/wp-content/uploads/2015/10/CityCenter-without-Harmon.jpg' /> */}
                             <Card.Title style={{ fontFamily: 'cambey', color: 'white', marginTop: '50%', marginLeft: '3%' }}>Discover places near you</Card.Title>
                         </Card.Body>

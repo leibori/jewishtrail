@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import { getRoadByID } from '../search/SearchUtils'
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
-import { myIcon, getAroundYouMap } from '../map/MapUtilities'
+import { getAroundYouMap } from '../map/MapUtilities'
 import { getSiteByID } from "../firebase/FirebaseUtilities";
 import { PaginatedList } from 'react-paginated-list';
 import SiteComponent from '../sites/siteComponent'
-import { Link } from 'react-router-dom'
-import { Grid, Box } from "@material-ui/core";
-import { sizing } from "@material-ui/system"
 import { Card, ListGroupItem, ListGroup } from 'react-bootstrap'
 
 
@@ -48,7 +44,7 @@ class RaodPage extends Component {
             fetch('https://ipapi.co/json')
             .then(res => res.json())
             .then(location => {
-                console.log(location)
+                // console.log(location)
                 this.setState({
                     location: {
                         lat: location.latitude,
@@ -91,7 +87,7 @@ class RaodPage extends Component {
             navLink += "&destination=" + lastSite.latitude + "%2C" + lastSite.longitude
         } else {
             navLink += lastSite.latitude + "%2C" + lastSite.longitude
-            for(var i = siteList.length - 2; i > 0; --i) {
+            for(i = siteList.length - 2; i > 0; --i) {
                 navLink += "%7C" + siteList[i].latitude + "%2C" + siteList[i].longitude
             }
             navLink += "&destination=" + firstSite.latitude + "%2C" + firstSite.longitude
@@ -109,7 +105,7 @@ class RaodPage extends Component {
 
         const roadId = this.state.site_id;
         var all_road_props = await getRoadByID(roadId)
-        console.log(all_road_props)
+        // console.log(all_road_props)
         const siteListID = all_road_props.siteList;
         const siteList = await Promise.all(siteListID.map((async (sid) => ({ id:sid, ...(await getSiteByID(sid))}))))
         this.setState({
@@ -129,9 +125,8 @@ class RaodPage extends Component {
         }
         const position = [siteList[0].latitude, siteList[0].longitude]
         const imageUrl = this.state.imageUrl
-        console.log(position)
-        const zoom = 10
-        console.log(this.state)
+        // console.log(position)
+        // console.log(this.state)
        
         const mapping = (list) => list.map((site, i) => {
             return (

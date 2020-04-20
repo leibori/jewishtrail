@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {getFavorites} from '../firebase/FirebaseUtilities'
-import {getUserClaims, updateUserFavorites, getFavoritesIDs, getRoadFavoritesIDs, updateUserRoadsFavorites} from '../firebase/FirebaseUtilities'
+import {getUserClaims, updateUserFavorites, getRoadFavoritesIDs, updateUserRoadsFavorites} from '../firebase/FirebaseUtilities'
 import GeneralSearch from './GeneralSearch/';
 import {myFirebase, myDatabase} from 'components/firebase/firebase'
 
@@ -47,7 +47,7 @@ class SearchMenu extends Component {
     canRenderAddSite = (sid) => {
         if(this.state.claim !== "guest") {
             // console.log(`tis not a guest`);
-            if(!this.state.siteFavoriteList.find(s=> s.uid==sid)) {
+            if(!this.state.siteFavoriteList.find(s=> s.uid===sid)) {
                 return true
             }
         }
@@ -66,16 +66,15 @@ class SearchMenu extends Component {
     }
 
     deleteFromFirebase = async(e, site) => {
-        const sid = site.id;
         let { siteFavoriteList, userid } = this.state;
-        var uidList = siteFavoriteList.filter(s => s.uid != site.id).map(s=>s.uid);
+        var uidList = siteFavoriteList.filter(s => s.uid !== site.id).map(s=>s.uid);
         console.log(uidList);
         await myDatabase.collection('accounts').doc(userid).update({'favorites': uidList})
         .catch(function(error) {
             console.error("Error removing document: ", error);
         console.log(siteFavoriteList)
         });
-        siteFavoriteList = siteFavoriteList.filter(s => s.uid != site.id);
+        siteFavoriteList = siteFavoriteList.filter(s => s.uid !== site.id);
         console.log(siteFavoriteList)
         this.setState({siteFavoriteList});
     }

@@ -9,23 +9,10 @@ const headerStyle = {
     color: 'white',
     fontWeight: '800',
     fontSize: '32px',
-    fontFamily: "\'Cambay\', sans-serif",
-    color: 'rgba(255,255,255,1)',
+    fontFamily: "Cambay, sans-serif",
     WebkitTextStrokeWidth: '1px',
     WebkitTextStrokeColor: 'black',
-    fontWeight: '500'
 }
-
-// const style = {backgroundColor: 'white',
-//     backgroundImage: "url(" + "https://image0.flaticon.com/icons/png/128/49/49116.png" + ")",
-//     backgroundPosition: '2px 3px',
-//     backgroundRepeat: 'no-repeat',
-//     paddingLeft: '25px',
-//     borderRadius: '8px',
-//     backgroundSize: '20px 20px',
-//     width: '100%',
-//     height: '45px'
-// }
 
 
 /**
@@ -38,7 +25,7 @@ class GeneralSearch extends Component {
         super(props);
 
         // Extracting the props that the constructor recieves.
-        const { siteButtonsProps, roadButtonsProps, searchVal, returnTo, classes } = props;
+        const { siteButtonsProps, roadButtonsProps, searchVal, returnTo } = props;
         // const { buttonName, onRoadClickMethod, onSiteClickMethod, canRenderButtonSite, canRenderButtonRoad, searchVal, returnTo, classes } = props;
 
         this.state = {
@@ -63,19 +50,7 @@ class GeneralSearch extends Component {
 
             roadFilter: true,
 
-            classes
         }
-
-        // // onClick event handler for an entry button.
-        // this.onSiteClickMethod = onSiteClickMethod ? onSiteClickMethod.bind(this) : null;
-
-        // // onClick event handler for an entry button.
-        // this.onRoadClickMethod = onRoadClickMethod ? onRoadClickMethod.bind(this) : null;
-
-        // // Boolean function for conditional button rendering.
-        // this.canRenderButtonSite = canRenderButtonSite ? canRenderButtonSite.bind(this) : null;
-
-        // this.canRenderButtonRoad = canRenderButtonRoad ? canRenderButtonRoad.bind(this) : null;
 
         this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
 
@@ -144,8 +119,8 @@ class GeneralSearch extends Component {
      * This function is used to filter (by site or by road) the results based on boolean values.
      */
     resultsFilter = (result) => {
-        return (this.state.siteFilter && result.type == 'sites') ||
-            (this.state.roadFilter && result.type == 'roads')
+        return (this.state.siteFilter && result.type === 'sites') ||
+            (this.state.roadFilter && result.type === 'roads')
     }
 
 
@@ -153,8 +128,6 @@ class GeneralSearch extends Component {
     render() {
 
         const { siteButtonsProps, roadButtonsProps } = this.state;
-
-        const classes = this.state.classes
 
         // Predicate that decides the color of the button of the site filter.
         const siteColorPredicate = !this.state.roadFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
@@ -172,18 +145,10 @@ class GeneralSearch extends Component {
                         {site.type === 'sites' && this.state.siteFilter ?
                             (<div>  
                                 <SiteComponent {...{siteButtonsProps}} site={site} />
-                                {/* <SiteComponent props={{site: site,
-                                                    buttonName: buttonName,
-                                                    condition: this.onSiteClickMethod && buttonName && this.canRenderButtonSite(site.id),
-                                                    buttonFunction: this.onSiteClickMethod}}/> */}
                             </div>)
                             : site.type === 'roads' && this.state.roadFilter ?
                             (<div>  
                                  <RoadComponent {...{roadButtonsProps}} road={site}/>
-                                {/* <RoadComponent props={{road: site,
-                                                    buttonName: buttonName,
-                                                    condition: this.onRoadClickMethod && buttonName && this.canRenderButtonRoad(site.id),
-                                                    buttonFunction: this.onRoadClickMethod}}/> */}
                             </div>) : ''
                         }
                         </div>
@@ -209,10 +174,10 @@ class GeneralSearch extends Component {
                 {searchResult.length > 0 && <div style={{marginBottom: '5%'}}>
                     <button
                         onClick={this.siteFilterClicked}
-                        style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Sites</button>
+                        style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
                     <button
                         onClick={this.roadFilterClicked}
-                        style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Roads</button>
+                        style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
                 </div>}
                 
                 {/* Results */}
@@ -224,7 +189,7 @@ class GeneralSearch extends Component {
                 </div>
 
                 {
-                    this.state.searchVal.length != 0 && this.state.searchResult.length == 0 && this.state.haveSearched ?
+                    this.state.searchVal.length !== 0 && this.state.searchResult.length === 0 && this.state.haveSearched ?
                         (<h4 style={{ fontWeight: '650', marginLeft: '5%' , color: 'rgba(223,30,38,0.9)'}}>No matches found!</h4>) : ''
                 }
             </div>
