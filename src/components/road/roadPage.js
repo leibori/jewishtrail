@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getRoadByID } from '../search/SearchUtils'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
-import { myIcon, getMenuMap } from '../map/MapUtilities'
+import { myIcon, getAroundYouMap } from '../map/MapUtilities'
 import { getSiteByID } from "../firebase/FirebaseUtilities";
 import { PaginatedList } from 'react-paginated-list';
 import SiteComponent from '../sites/siteComponent'
@@ -49,7 +49,7 @@ class RaodPage extends Component {
         const avgLat = (maxLat + minLat) / 2
         const avgLng = (maxLng + minLng) / 2
 
-        getMenuMap('map', avgLat, avgLng, this.state.zoom, siteList)
+        getAroundYouMap('map', avgLat, avgLng, this.state.zoom, siteList)
     }
 
     render() {
