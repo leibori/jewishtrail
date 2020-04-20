@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
+import { BrowserRouter, Route, Redirect} from 'react-router-dom'
 
 import AroundYou from './components/around_you/AroundYou'
 import AdminMenu from './components/admin/AdminMenu'
@@ -13,7 +13,6 @@ import AuthMenu from './components/admin/AuthMenu';
 import SearchMenu from './components/search/SearchMenu';
 import About from './components/around_you/about';
 import Navbar from './components/layout/Navbar'
-import Home from './components/login/Home';
 import LogOut from './components/login/LogOut';
 import {myFirebase} from './components/firebase/firebase';
 import Favorites from './components/favorites/Favorites';
