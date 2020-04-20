@@ -8,8 +8,12 @@ import 'index.css';
 const headerStyle = {
     color: 'white',
     fontWeight: '800',
-    fontSize: '22px',
+    fontSize: '32px',
     fontFamily: "\'Cambay\', sans-serif",
+    color: 'rgba(255,255,255,1)',
+    WebkitTextStrokeWidth: '1px',
+    WebkitTextStrokeColor: 'black',
+    fontWeight: '500'
 }
 
 // const style = {backgroundColor: 'white',
@@ -212,7 +216,7 @@ class GeneralSearch extends Component {
                 </div>}
                 
                 {/* Results */}
-                <div className="container">
+                <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px' }}>
                     {searchResult.length !== 0 && <PaginatedList
                         list={searchResult.filter(this.resultsFilter)}
                         itemsPerPage={20}
