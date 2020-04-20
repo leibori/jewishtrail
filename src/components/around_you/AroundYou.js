@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { findSitesByCountryForMarker } from '../search/SearchUtils'
-import { getAroundYouMap } from '../map/MapUtilities'
+import { getAroundYouMap, getCurrentLocation } from '../map/MapUtilities'
 import { Card } from 'react-bootstrap'
-import L, { icon } from 'leaflet';
 
 
-class Menu extends Component {
+class AroundYou extends Component {
 
     state = {
         location: {
@@ -33,8 +32,8 @@ class Menu extends Component {
                 location: {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude},
-                    haveUsersLocation: true,
-                    zoom: 13
+                haveUsersLocation: true,
+                zoom: 13
             })
         }, () => {
             console.log('access denied')
@@ -78,4 +77,4 @@ class Menu extends Component {
     }
 }
 
-export default Menu
+export default AroundYou
