@@ -66,3 +66,5 @@ node_modules/
 
 .idea/
 build/
+dist/
+src/components/firebase/firebase.js
