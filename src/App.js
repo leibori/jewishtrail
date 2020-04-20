@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
-import Menu from './components/main-menu/Menu'
+import AroundYou from './components/around_you/AroundYou'
 import AdminMenu from './components/admin/AdminMenu'
 import LoginPage from './components/login/LoginPage'
 import SignUp from './components/login/SignUp'
@@ -11,7 +11,7 @@ import DeleteSite from './components/admin/DeleteSite';
 import AdminPage from './components/admin/AdminPage';
 import AuthMenu from './components/admin/AuthMenu';
 import SearchMenu from './components/search/SearchMenu';
-import About from './components/main-menu/about';
+import About from './components/around_you/about';
 import Navbar from './components/layout/Navbar'
 import Home from './components/login/Home';
 import LogOut from './components/login/LogOut';
@@ -73,7 +73,7 @@ class App extends Component {
             <Route exact path='/' component={LoginPage}>
               <Redirect to='/LoginPage'/>
             </Route>
-            <Route exact path='/menu'  component={Menu} />
+            <Route exact path='/aroundyou'  component={AroundYou} />
             <Route exact path='/loginpage' component={LoginPage} />
             <Route exact path='/logout' component={LogOut} />
             <Route exact path='/signup' component={SignUp} />

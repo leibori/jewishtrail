@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { findSitesByCountryForMarker } from '../search/SearchUtils'
-import { getMenuMap } from '../map/MapUtilities'
+import { getAroundYouMap } from '../map/MapUtilities'
 import { Card } from 'react-bootstrap'
 import L, { icon } from 'leaflet';
 
@@ -57,7 +57,7 @@ class Menu extends Component {
         // console.log(markers)
         this.setState({ markers: markers })
 
-        getMenuMap('map', this.state.location.lat, this.state.location.lng, this.state.zoom, markers)
+        getAroundYouMap('map', this.state.location.lat, this.state.location.lng, this.state.zoom, markers)
     }
 
 

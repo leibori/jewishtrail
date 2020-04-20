@@ -28,6 +28,7 @@ export default function About(props) {
     const description3 = 'Feel free to go on a journy and rediscover the marks that we left on the world and in the history books';
 
     // const linkDesc = 'Visit our Website for more information';
+    console.log(pic)
     
     return (
         // <div className="container">
