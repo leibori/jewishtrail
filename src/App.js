@@ -57,7 +57,7 @@ class App extends Component {
     return (
     <div className="App" style={{height:'100%', width:'100%'}}>
       <BrowserRouter forceRefresh={true}>
-          <div style={{position: 'absolute', zIndex: '20', width: '100%'}}>
+      <div style={{position: 'absolute', zIndex: '20', width: '100%',backgroundColor: 'rgba(255,255,255,0.3)', }}>
             <Navbar/>
           </div>
           <header className="App-header">

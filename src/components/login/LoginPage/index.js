@@ -57,7 +57,7 @@ export default class LoginPage extends Component {
   render() {
     const { email, password } = this.state;
     if(this.state.online){
-      return <Redirect to = "/Menu"></Redirect>
+      return <Redirect to = "/about"></Redirect>
     }
     return (
       <div>
@@ -90,7 +90,7 @@ export default class LoginPage extends Component {
                 </div>
               </div>
               <div className='pass'>
-                <a href='/menu'>Continue as a guest</a>
+                <a href='/about'>Continue as a guest</a>
               </div>
               <div className='pass'>
                 Don't have an account?  

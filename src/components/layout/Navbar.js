@@ -11,6 +11,14 @@ import {
     NavLink
   } from "react-router-dom";
 
+const fontStyle = {
+  color:"white",
+  fontWeight:'bolder',
+  textShadow:'1px 1px black'
+
+}
+
+
 class Navbar extends Component {
   state=({
     isLoggedIn: false,
@@ -39,20 +47,22 @@ class Navbar extends Component {
     if(this.state.isLoggedIn){
       return (
         <nav className="nav-wrapper">
-            <div className="App transparent" >
+            <div className="App transparent">
           {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
             <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
           {/*<ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
-          <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" />
           <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
             <ReactBootStrap.Nav className="mr-auto">
             
-              <ReactBootStrap.Nav.Link href="/LogOut">Log Out</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link href="/about">About</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link href="/search">Search</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link href="/favorites">Favorites</ReactBootStrap.Nav.Link>
+              <ReactBootStrap.Nav.Link style={fontStyle} onClick={() => {if(window.confirm("are you sure?")){myFirebase.auth().signOut();}}} href="/loginPage">Log Out</ReactBootStrap.Nav.Link>
+              <ReactBootStrap.Nav.Link style={fontStyle} href="/about">About</ReactBootStrap.Nav.Link>
+              <ReactBootStrap.Nav.Link style={fontStyle} href="/search">Search</ReactBootStrap.Nav.Link>
+              <ReactBootStrap.Nav.Link style={fontStyle} href="/favorites">Favorites</ReactBootStrap.Nav.Link>
+              <ReactBootStrap.Nav.Link style={fontStyle} href="/aroundyou">Around You </ReactBootStrap.Nav.Link>
+
                 {
-                  this.state.isAdmin && (<ReactBootStrap.Nav.Link href="/admin">Admin Page</ReactBootStrap.Nav.Link>)
+                  this.state.isAdmin && (<ReactBootStrap.Nav.Link style={fontStyle} href="/admin">Admin Page</ReactBootStrap.Nav.Link>)
                 }          
             </ReactBootStrap.Nav>
         </ReactBootStrap.Navbar.Collapse>    
@@ -73,9 +83,11 @@ class Navbar extends Component {
     <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
       <ReactBootStrap.Nav className="mr-auto">
       
-        <ReactBootStrap.Nav.Link href="/LoginPage">Log In </ReactBootStrap.Nav.Link>
-        <ReactBootStrap.Nav.Link href="/about">About</ReactBootStrap.Nav.Link>
-        <ReactBootStrap.Nav.Link href="/search">Search</ReactBootStrap.Nav.Link>
+        <ReactBootStrap.Nav.Link style={fontStyle} href="/LoginPage">Log In </ReactBootStrap.Nav.Link>
+        <ReactBootStrap.Nav.Link style={fontStyle} href="/about">About</ReactBootStrap.Nav.Link>
+        <ReactBootStrap.Nav.Link style={fontStyle} href="/search">Search</ReactBootStrap.Nav.Link>
+        <ReactBootStrap.Nav.Link style={fontStyle} href="/aroundyou">Around You </ReactBootStrap.Nav.Link>
+
       </ReactBootStrap.Nav>
   </ReactBootStrap.Navbar.Collapse>    
 </ReactBootStrap.Navbar>
