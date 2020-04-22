@@ -69,25 +69,36 @@ export async function getRoadFavoritesIDs(userid) {
     return user.data().RoadsFavorites
 }
 
-
-export async function getFavorites(userid){
+export async function extarctData(kind,arrayList,id){
     var resultOfSite = []
-    var siteList = await getFavoritesIDs(userid)
-    var id = 0
-    // console.log(siteList);
-    for (const site of siteList){
-        const siteFromFireStore = await myDatabase.collection('sites').doc(site).get();
+    for (const site of arrayList){
+        const siteFromFireStore = await myDatabase.collection(kind).doc(site).get();
         var getData = siteFromFireStore.data();
-        // console.log(getData);
         resultOfSite.push({
             tags: getData.tags,
             name: getData.name,
+            imageUrl: getData.imageUrl,
             city: getData.city,
             country: getData.country,
             id: id,
-            uid: site
+            uid: site,
+            type: kind
         })
         id +=1;
+    }
+    return resultOfSite
+}
+export async function getFavorites(userid){
+    var collectionName = ['sites','roads']
+    var resultOfSite = []
+    var siteList = await getFavoritesIDs(userid)
+    var roadList = await getRoadFavoritesIDs(userid)
+    for(var i = 0; i < collectionName.length; ++i) {
+        if(collectionName[i] == 'sites')
+            resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],siteList,resultOfSite.length))
+        else{
+            resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],roadList,resultOfSite.length))
+        }
     }
     return resultOfSite;
 }

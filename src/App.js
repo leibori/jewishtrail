@@ -67,6 +67,7 @@ class App extends Component {
             <script src="https://cdn.firebase.com/libs/firebaseui/4.0.0/firebaseui.js"></script>
             <link rel="manifest" href="/manifest.json"></link>
             <link rel="stylesheet" href="styles.css"></link>
+            <link rel="apple-touch-icon" href="/icon.png"></link>
           </header>
           <div style={{zIndex: '0', width: '100%', height: '100%', position:'absolute', left: '0px', top: '0px'}}>
             <Route exact path='/' component={LoginPage}>
