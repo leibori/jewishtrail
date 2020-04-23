@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import SiteComponent from '../sites/siteComponent'
-import {getSiteByID,createNewRoad}  from '../firebase/FirebaseUtilities'
+import {getSiteByID,createNewRoad, updateRoad}  from '../firebase/FirebaseUtilities'
 import { PaginatedList } from 'react-paginated-list';
-import SiteSearch from '../search/SiteSearch'
+import SiteSearch from '../search/SiteSearch';
+import {Link} from 'react-router-dom'
 
 // const options = [
 //     { value: 'tags', label: 'Tags'},
@@ -11,6 +12,29 @@ import SiteSearch from '../search/SiteSearch'
 //     { value: 'name', label: 'Name'}
 // ]
 
+const buttonStyle = {
+    marginLeft:"30px",
+    padding:"10px 24px",
+    borderRadius:'8px', 
+    backgroundColor:'#5dbb63',
+    opacity:'0.8',
+    marginTop:'20px'
+}
+  
+const LabelStyle = {
+  color:'white',
+  marginRight:'1%',
+  fontWeight:'400',
+  fontFamily: 'Cambay, sans-serif',
+  textShadow:'1px 1px black'
+}
+
+const inputStyle = {
+    width:'80%',
+    borderRadius:'6px',
+    marginBottom:'2%',
+}
+  
 class RoadForm extends Component {
 
     constructor(props) {
@@ -18,7 +42,7 @@ class RoadForm extends Component {
         let formerState;
         if (props.location && props.location.state){
             formerState =  props.location.state
-            console.log(formerState);
+            
         }
         else {
             console.log('Didnt get anything');
@@ -32,7 +56,8 @@ class RoadForm extends Component {
             siteList: formerState ? formerState.siteList : [],
             name: formerState ? formerState.name : '',
             description: formerState ? formerState.description : '',
-            imgUrl: formerState ? formerState.formerState : '',
+            imgUrl: formerState ? formerState.imgUrl : '',
+            id: formerState && formerState.id ? formerState.id : null
         }
 
         this.updateSearchValue = this.updateSearchValue.bind(this);
@@ -67,6 +92,7 @@ class RoadForm extends Component {
         }
         let searchTokens = [];
         const roadName = this.state.name;
+        const roadId = this.state.id
         const roadDescription = this.state.description;
         const { imgUrl } = this.state;
         const CityList = Array.from(new Set(this.state.siteList.map((site) => site.city)))
@@ -75,14 +101,21 @@ class RoadForm extends Component {
         let temp = Array.from(new Set(this.state.siteList.map((site) => site.tags)))
         temp.forEach((tagsArr) => tagsArr.forEach((tag) => TagList.push(tag)));
         searchTokens = Array.from(new Set([...TagList,...CityList,...CountryList,...roadName.split(" ")]))
-
+        searchTokens = searchTokens.map((i) => {return i.toLowerCase()});
         let siteListID = []
         this.state.siteList.forEach((site) => siteListID.push(site.id));
         
         const road = {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imgUrl};
-        
-        await createNewRoad(road);
-        console.log("created new road")
+        if(roadId){
+            await updateRoad(road,roadId)
+            console.log("update Road")
+        }
+        else{
+            await createNewRoad(road);
+            console.log("created new road")    
+        }
+        alert("Submittion Complete")
+        this.props.history.push('/adminRoadPage')
     }
     addSiteToRoadList = async(e, site) => {
         const siteID = site.id;
@@ -101,7 +134,7 @@ class RoadForm extends Component {
     }
     removeSite = (e, site)=>{
         const siteList = [...this.state.siteList]
-        const index = siteList.findIndex(s=> s.id===site.id )
+        const index = siteList.findIndex(s=> s.id==site.id )
         siteList.splice(index,1);
         this.setState({siteList});
     }
@@ -131,18 +164,19 @@ class RoadForm extends Component {
             <div className="col-md">
                 <form onSubmit={()=>alert(2)}>
                     <div className="input-field">
-                        <label htmlFor="name">  Road Name:</label>
-                        <input style={{marginLeft: '10px', width: '20%'}} required name="name" type="text" id='name' onChange={this.handleChange} value={this.state.name}/>                        
+                        <label style={LabelStyle} htmlFor="name">  Road Name:</label>
+                        <input style={inputStyle} required name="name" type="text" id='name' onChange={this.handleChange} value={this.state.name}/>                        
                     </div>
                     <div className="input-field">
-                        <label htmlFor="imgUrl">Image URL:</label>
-                        <input style={{marginLeft: '10px', width: '20%'}} required name="imgUrl" type="text" id='imgUrl' onChange={this.handleChange} value={this.state.name}/>
+                        <label style={LabelStyle} htmlFor="imgUrl">Image URL:</label>
+                        <input style={inputStyle} required name="imgUrl" type="text" id='imgUrl' onChange={this.handleChange} value={this.state.imgUrl}/>
                     </div>
                     <div className="for-group">
-                         <label >Road Description</label>
-                        <textarea required value={this.state.description} onChange={this.handleChange} type="description" className="form-control" name="description" placeholder="Road Description" />
+                         <label style={LabelStyle}> Road Description :</label>
+                        <textarea style={inputStyle} required value={this.state.description} onChange={this.handleChange} type="description" className="form-control" name="description" placeholder="Road Description" />
                     </div>
-                    <button type="submit" onClick={(e) =>this.createNewRoadSubmit(e)} className="btn pink lighten-1">Submit</button>
+                    <button style={buttonStyle} type="submit" onClick={(e) =>this.createNewRoadSubmit(e)} className="btn text-white">Submit</button>
+                    <button style={buttonStyle} type="button" className="btn text-white"><Link to="/adminRoadPage" className="text-white">Return</Link></button>
                  </form>
                 <ul className="container">
                     {siteList.length > 0 && <PaginatedList

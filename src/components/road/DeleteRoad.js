@@ -1,7 +1,24 @@
 import React, { Component } from 'react'
 import {deleteRoadFromDB} from '../firebase/FirebaseUtilities'
 import RoadSearch from '../search/RoadSearch'
+import {Link} from 'react-router-dom'
 
+const buttonStyle = {
+  marginLeft:"30px",
+  padding:"10px 24px",
+  borderRadius:'8px', 
+  backgroundColor:'#5dbb63',
+  opacity:'0.8',
+  marginTop:'20px'
+}
+
+const LabelStyle = {
+color:'white',
+marginLeft:'3%',
+fontWeight:'400',
+fontFamily: 'Cambay, sans-serif',
+textShadow:'1px 1px black'
+}
 
 class DeleteRoad extends Component {
 
@@ -17,12 +34,15 @@ class DeleteRoad extends Component {
 };
 
 DeleteRoad = async(e, road) => {
+  if(!(window.confirm("Are you sure you want to Delete?"))){
+    return 
+  }
   e.preventDefault();
   const rid = road.id;
   const roadList = this.myRef.current.state.roadList;
-  console.log(roadList);
+  
   const index = roadList.findIndex(r => r.id === rid);
-  console.log(index);
+  
   await deleteRoadFromDB(roadList[index])
   console.log("road" + roadList[index].name + "has been deleted")
   roadList.splice(index,1)
@@ -39,8 +59,8 @@ updateTopDownhValue(e) {
 
 render() {
     return (
-        <div>
-            <h5 className="grey-text text-darken-3">Search Road to Delete</h5>            
+        <div style={{position:"absolute",margin:'auto', width:"75%",textAlign:'center',top:'10%',height:'35%'}}>
+            <h5 style={LabelStyle}>Search Road to Delete: </h5>            
             <RoadSearch ref={this.myRef}
               roadList={this.state.roadList}
               roadButtonsProps= {[{
@@ -50,7 +70,7 @@ render() {
               }]}
               searchVal={this.state.searchVal}
               returnTo='deleteRoad'/>
-
+        <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/adminRoadPage">Return</Link></button>
         </div>
     )    
   }

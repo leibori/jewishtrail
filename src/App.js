@@ -22,6 +22,8 @@ import UpdateForm from './components/sites/UpdateForm'
 import RoadMenu from './components/search/RoadMenu';
 import RaodPage from './components/road/roadPage';
 import DeleteRoad from './components/road/DeleteRoad';
+import AdminSitePage from './components/admin/AdminSitePage'
+import AdminRoadPage from './components/admin/AdminRoadPage'
 
 class App extends Component {
 
@@ -71,14 +73,12 @@ class App extends Component {
           </header>
           <div style={{zIndex: '0', width: '100%', height: '100%', position:'absolute', left: '0px', top: '0px'}}>
             <Route exact path='/' component={LoginPage}>
-              <Redirect to='/LoginPage'/>
-            </Route>
+              <Redirect to='/LoginPage'/> </Route>
             <Route exact path='/aroundyou'  component={AroundYou} />
             <Route exact path='/loginpage' component={LoginPage} />
             <Route exact path='/logout' component={LogOut} />
             <Route exact path='/signup' component={SignUp} />
-            <Route exact path='/adminpage' component={AdminMenu} />
-            <Route exact path='/createsite' component={CreateSite} />
+           <Route exact path='/createsite' component={CreateSite} />
             <Route exact path='/deletesite' component={DeleteSite} />
             <Route exact path='/deletesite/:searchVal' component={DeleteSite} />
             <Route exact path='/updatesite' component={UpdateSite} />
@@ -92,12 +92,14 @@ class App extends Component {
             <Route exact path='/site/:id' component={SitePage} />
             <Route exact path='/roadform' component={RoadForm} />
             <Route exact path='/roadform/:searchVal' component={RoadForm} />
-            <Route exact path='/admin' component={AdminPage} />
             <Route exact path='/searchroad' component={RoadMenu} />
             <Route exact path='/searchroad/:searchVal' component={RoadMenu} />
             <Route exact path='/road/:id' component={RaodPage} />
             <Route exact path='/deleteroad' component={DeleteRoad} />
             <Route exact path='/deleteroad/:searchVal' component={DeleteRoad} />          
+            <Route exact path='/adminRoadPage' component={AdminRoadPage} /> 
+            <Route exact path='/adminSitePage' component={AdminSitePage} />       
+            <Route exact path='/admin' component={AdminMenu} />
           </div>
         </BrowserRouter>
       </div>

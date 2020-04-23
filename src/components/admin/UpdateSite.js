@@ -3,6 +3,23 @@ import { Link } from 'react-router-dom'
 import {findFromDB} from '../search/SearchUtils'
 import SiteSearch from '../search/SiteSearch'
 
+const buttonStyle = {
+  marginLeft:"30px",
+  padding:"10px 24px",
+  borderRadius:'8px', 
+  backgroundColor:'#5dbb63',
+  opacity:'0.8',
+  marginTop:'20px'
+}
+
+const LabelStyle = {
+  color:'white',
+  marginLeft:'3%',
+  fontWeight:'400',
+  fontFamily: 'Cambay, sans-serif',
+  textShadow:'1px 1px black'
+
+}
 
 class ChangeSite extends Component {
 
@@ -60,8 +77,8 @@ render() {
   //   return <UpdateForm props={this.state.chosenSite}/>
   // }
     return (
-        <div>
-            <h5 className="grey-text text-darken-3">Search Site to Update</h5>
+        <div style={{position:"absolute", width:"75%",top:'12%'}}>
+            <h5 style={LabelStyle}>Search Site to Update</h5>
             <SiteSearch
              siteButtonsProps= {[{
               buttonName: `Update site`,
@@ -89,7 +106,7 @@ render() {
                 ))
                 }
             </ul> */}
-            <button className="btn pink lighten-1" type="button"><Link className="white-text" to="/adminPage">Return to Admin Menu</Link></button>
+            <button style={buttonStyle} className="btn" type="button"><Link className="white-text" to="/adminSitePage">Return to Admin Menu</Link></button>
         </div>
     )    
   }

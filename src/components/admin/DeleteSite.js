@@ -4,6 +4,25 @@ import {DeleteSiteFromDB} from '../firebase/FirebaseUtilities'
 import { Link } from 'react-router-dom'
 import SiteSearch from '../search/SiteSearch'
 
+const buttonStyle = {
+  marginLeft:"30px",
+  padding:"10px 24px",
+  borderRadius:'8px', 
+  backgroundColor:'#5dbb63',
+  opacity:'0.8',
+  marginTop:'20px'
+}
+
+
+const LabelStyle = {
+  color:'white',
+  marginLeft:'3%',
+  fontWeight:'400',
+  fontFamily: 'Cambay, sans-serif',
+  textShadow:'1px 1px black'
+
+}
+
 
 class DeleteSite extends Component {
 
@@ -23,6 +42,9 @@ class DeleteSite extends Component {
 DeleteSite = async(e, site) => {
   const siteList = this.myRef.current.state.siteList;
   e.preventDefault();
+  if(!(window.confirm("Are you sure you want to delete this site?"))){
+    return
+  }
   const index = siteList.findIndex(s=> s.id === site.id );
   await DeleteSiteFromDB(siteList[index]);
   console.log("site" + siteList[index].name + "had deleted")
@@ -49,8 +71,8 @@ updateTopDownhValue(e) {
 
 render() {
     return (
-        <div>
-            <h5 className="grey-text text-darken-3">Search Site to Delete</h5>
+        <div style={{position:"absolute", width:"75%",top:'12%'}}>
+            <h5 style={LabelStyle}>Search Site to Delete</h5>
             {/* <form ref={this.form} id="search-form">
                 <div className="search-field">
                     <textarea ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
@@ -79,7 +101,7 @@ render() {
                 ))
                 }
               </ul>*/}
-            <button className="btn pink lighten-1"><Link className="white-text" to="/adminPage">Return to Admin Menu</Link></button>
+            <button style={buttonStyle} className="btn"><Link className="white-text" to="/adminSitePage">Return to Admin Menu</Link></button>
         </div>
     )    
   }

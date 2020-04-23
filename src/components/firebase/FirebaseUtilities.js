@@ -146,3 +146,16 @@ export async function updateUserRoadsFavorites(userid, newFavorites) {
 export async function deleteRoadFromDB(road){
     await myDatabase.collection('roads').doc(road.id).delete();
 }
+
+export async function updateRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imgUrl}, roadId){
+    await myDatabase.collection('roads').doc(roadId).update({
+        name: roadName,
+        description: roadDescription,
+        siteList: siteListID,
+        city:CityList,
+        country:CountryList,
+        tags: TagList,
+        searchTokens:searchTokens,
+        imageUrl: imgUrl,
+    })
+}

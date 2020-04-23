@@ -1,29 +1,35 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-class AdminMenu extends Component {
-  state = {
-    action: ''
-  }
-  activeAction = (e) => {
-    this.setState({
-      action: e.target.id
-      
-    })
-  }
-  //<button id='create' onClick={this.activeAction}>Create new Site</button>
-  //<button id='delete' onClick={this.activeAction}>Delete Site</button>
-  //<button id='change' onClick={this.activeAction}>Change Site</button>
+const buttonStyle = {
+  marginLeft:"30px",
+  padding:"10px 24px",
+  borderRadius:'8px', 
+  backgroundColor:'#5dbb63',
+  opacity:'0.8',
+  marginTop:'20px'
+}
 
+const LabelStyle = {
+  color:'white',
+  marginLeft:'3%',
+  fontWeight:'400',
+  fontFamily: 'Cambay, sans-serif',
+  textShadow:'1px 1px black'
+}
+
+class AdminMenu extends Component {
   render() {
     return (
-    <div className="container">
-      <h5 className="black-text text-darken-3" style={{marginLeft:"-210px"}}>Welcome to Site Management. choose an Option:</h5>
-      <button className="btn pink lighten-1" id='create'><Link to="/createSite" className="white-text">Create new Site</Link></button>
-      <button className="btn pink lighten-1" style={{marginLeft:"30px"}} id='delete'><Link className="white-text" to="/deleteSite">Delete Site</Link></button>
-      <button className="btn pink lighten-1" style={{marginLeft:"30px"}} id='change'><Link className="white-text" to="/updateSite">Update Site</Link></button>
-    </div>
-    )    
+      <div className="container" style={{position:"absolute",margin:'auto', width:"75%",textAlign:'center',top:'10%',height:'35%'}}>
+          <p style={LabelStyle}> Welcome to Admin Menu, Please select a Option:</p>
+          <div className="container">
+            <button style={buttonStyle} className="btn"><Link className="white-text" to="/adminSitePage">Site Management</Link></button>
+            <button style={buttonStyle} className="btn"><Link className="white-text" to="/adminRoadPage">Road Management</Link></button>
+            <button style={buttonStyle} className="btn"><Link className="white-text" to="/auth">Users Management</Link></button>
+        </div>
+      </div>
+    )
   }
 }
 
