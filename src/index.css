@@ -28,7 +28,7 @@ form button, form h5{
 @media (min-width: 768px) {
   .navbar .navbar-nav {
       font-weight: 600;
-      
+    
       background-color: transparent;
       float:none;
       margin:0 auto;

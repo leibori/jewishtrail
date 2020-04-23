@@ -17,6 +17,10 @@ const fontStyle = {
   textShadow:'1px 1px black'
 
 }
+const backStyle = {
+  background:"rgba(255,255,255,0.3)'" 
+}
+
 
 
 class Navbar extends Component {
@@ -74,8 +78,8 @@ class Navbar extends Component {
     }
     return (
 
-      <nav className="nav-wrapper">
-      <div className="App transparent " >
+      <nav className="fixed-top">
+      <div className="App " >
     {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
       <ReactBootStrap.Navbar collapseOnSelect expand="xl" variant="light">
     {/* <ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
