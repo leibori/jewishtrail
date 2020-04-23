@@ -42,6 +42,7 @@ const buttonStyles = {
 const RoadComponent = (props) => {
   const classes = useStyles()
   const { road, roadButtonsProps } = props;
+  // console.log(road)
   // const buttonName = props.props.buttonName
   // const condition = props.props.condition
   // const buttonFunction = props.props.buttonFunction
@@ -57,13 +58,13 @@ const RoadComponent = (props) => {
     background: 'transparent',
     border: 'none',
 
-}
+  }
 
   const pickRoadButton = () => {
     return roadButtonsProps.find(buttonProps => buttonProps.canRender(road.id));
   }
 
-  const buttonInfo = pickRoadButton();
+  const buttonProps = pickRoadButton();
 
   return (
     <div className={classes.root}>
@@ -91,9 +92,9 @@ const RoadComponent = (props) => {
                       <a style={{color: 'inherit'}} href={info_url}>View Trail</a>
                     </button>
                   </Grid>
-                  { buttonInfo &&
+                  { buttonProps &&
                     <Grid item>
-                      <button  variant="outlined" style={buttonStyles} onClick={(e) => buttonInfo.buttonFunction(e, road)}>{buttonInfo.buttonName}</button>
+                      <button  variant="outlined" style={buttonStyles} onClick={(e) => buttonProps.buttonFunction(e, road.id)}>{buttonProps.buttonName}</button>
                     </Grid>
                   }
                 </Grid>
