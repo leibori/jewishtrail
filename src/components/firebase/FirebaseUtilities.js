@@ -74,17 +74,21 @@ export async function extarctData(kind,arrayList,id){
     for (const site of arrayList){
         const siteFromFireStore = await myDatabase.collection(kind).doc(site).get();
         var getData = siteFromFireStore.data();
-        resultOfSite.push({
-            tags: getData.tags,
-            name: getData.name,
-            imageUrl: getData.imageUrl,
-            city: getData.city,
-            country: getData.country,
-            id: id,
-            uid: site,
-            type: kind
-        })
-        id +=1;
+        if (!getData) {
+            deleteDocumentFromDB(kind, site)
+        } else {
+            resultOfSite.push({
+                tags: getData.tags,
+                name: getData.name,
+                imageUrl: getData.imageUrl,
+                city: getData.city,
+                country: getData.country,
+                id: id,
+                uid: site,
+                type: kind
+            })
+            id +=1;
+        }
     }
     return resultOfSite
 }
@@ -158,4 +162,8 @@ export async function updateRoad( {siteListID,roadName,roadDescription,CityList,
         searchTokens:searchTokens,
         imageUrl: imgUrl,
     })
+}
+
+async function deleteDocumentFromDB(collectionName, documentID) {
+    await myDatabase.collection(collectionName).doc(documentID).delete();
 }
