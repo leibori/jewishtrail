@@ -1,14 +1,16 @@
 .bg-img {
-    height: 100%;
+    height: 85%;
     width: 100%;
+    bottom: 0px;
     background-size: cover;
     background-position: center;
 }
 
 .bg-img:after {
-    position: absolute;
+    position: fixed;
     content: '';
     left: 0px;
+    bottom: 0px;
     height: 100%;
     width: 100%;
     background: rgba(0,0,0,0.7);
@@ -26,7 +28,7 @@
     z-index: 999;
     width: 370px;
     text-align: center;
-    padding: 60px 32px;
+    /* padding: 60px 32px; */
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.04);
     box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
@@ -36,7 +38,7 @@
     color: white;
     font-size: 50px;
     font-weight: 600;
-    margin: 0 0 35px 0;
+    margin: 40px 0 35px 0;
     font-family: 'Cambay', sans-serif;
 }
 
@@ -138,4 +140,10 @@ input[type="submit"]:hover{
     -webkit-text-fill-color: transparent;
     /* position: absolute;
     left: 0px; */
+  }
+
+  @media only screen and (max-width: 400px) {
+    .content {
+      width: 100%;
+    }
   }

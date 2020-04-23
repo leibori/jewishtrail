@@ -77,7 +77,7 @@ class Navbar extends Component {
       <nav className="nav-wrapper">
       <div className="App transparent " >
     {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
-      <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
+      <ReactBootStrap.Navbar collapseOnSelect expand="xl" variant="light">
     {/* <ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
     <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 

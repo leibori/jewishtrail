@@ -60,7 +60,7 @@ export default class LoginPage extends Component {
       return <Redirect to = "/about"></Redirect>
     }
     return (
-      <div>
+      <div style={{height: '100%'}}>
         <title>Login</title>
         <div className='bg-img'>
           <div className='content'>
