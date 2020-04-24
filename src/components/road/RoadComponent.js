@@ -83,7 +83,7 @@ const RoadComponent = (props) => {
             <Grid item xs container direction="column" spacing={2}>
               
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1"><b>Trail name:</b> {road.name}</Typography>
+                <Typography gutterBottom variant="subtitle1"><b>{road.name}</b></Typography>
                 <Typography variant="body2" gutterBottom><b>Cities:</b> {road.city.join(", ")}.</Typography>
                 <Typography variant="body2" ><b>Countries:</b> {road.country.join(", ")}.</Typography>
                 <Grid item container direction='row' spacing={2}>

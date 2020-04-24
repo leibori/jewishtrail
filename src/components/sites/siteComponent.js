@@ -69,7 +69,7 @@ const SiteComponent = (props) => {
             <Grid item xs container direction="column" spacing={2}>
               
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1">{site.name}</Typography>
+                <Typography gutterBottom variant="subtitle1"><b>{site.name}</b></Typography>
                 <Typography variant="body2" gutterBottom>{site.city}, {site.country}</Typography>
                 <Grid item container direction='row' spacing={2}>
                   <Grid item xs={6}>

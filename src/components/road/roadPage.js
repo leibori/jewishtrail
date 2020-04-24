@@ -131,9 +131,7 @@ class RaodPage extends Component {
         const mapping = (list) => list.map((site, i) => {
             return (
                 <div key={i} >
-                    <li>
-                        <SiteComponent site={site} siteButtonsProps={[{buttonName: null, canRender: ()=>false, buttonFunction: null}]}/>
-                    </li>
+                    <SiteComponent site={site} siteButtonsProps={[{buttonName: null, canRender: ()=>false, buttonFunction: null}]}/>
                 </div>)
         });
         return (
