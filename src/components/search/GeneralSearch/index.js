@@ -3,6 +3,8 @@ import {findFromDB} from '../SearchUtils'
 import SiteComponent from 'components/sites/siteComponent'
 import { PaginatedList } from 'react-paginated-list'
 import RoadComponent from 'components/road/RoadComponent';
+import ReactLoading from "react-loading";
+// import Select from 'react-select'
 import 'index.css';         
 
 const headerStyle = {
@@ -13,6 +15,12 @@ const headerStyle = {
     WebkitTextStrokeWidth: '1px',
     WebkitTextStrokeColor: 'black',
 }
+
+
+// const options = [
+//     { label: "Relevance", value: 'relevance' },
+//     { label: "distance", value: 'distance' }
+// ]
 
 
 /**
@@ -30,7 +38,9 @@ class GeneralSearch extends Component {
 
         this.state = {
             // Is true if a search value is sent, and false otherwise.
-            haveSearched: false,
+            startedSearch: false,
+
+            finishedSearch: false,
 
             // The search value as array of strings.
             searchVal: searchVal,
@@ -68,12 +78,13 @@ class GeneralSearch extends Component {
 
     // The search function that calls for searches in the database.
     async executeSearch() {
+        this.setState({ startedSearch: true })
         var searchValues = this.state.searchVal.split(" ")
-        console.log(searchValues)
+        // console.log(searchValues)
         const result = await findFromDB(searchValues, ['sites', 'roads'])
         // console.log(result)
         this.setState({searchResult: result,
-                        haveSearched: true})
+                        finishedSearch: true})
     }
 
 
@@ -82,6 +93,12 @@ class GeneralSearch extends Component {
         // console.log(e.target.value)
         this.setState({searchVal: e.target.value})
     }
+
+
+    // sortResults(e) {
+    //     console.log(e.label)
+    // }
+
 
     // Execute the search if the componenet recieved a search value.
     async componentWillMount() {
@@ -127,7 +144,7 @@ class GeneralSearch extends Component {
     // Renders the component.
     render() {
 
-        const { siteButtonsProps, roadButtonsProps } = this.state;
+        const { siteButtonsProps, roadButtonsProps, startedSearch, finishedSearch } = this.state;
 
         // Predicate that decides the color of the button of the site filter.
         const siteColorPredicate = !this.state.roadFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
@@ -171,27 +188,33 @@ class GeneralSearch extends Component {
                 
                     <p className="error pink-text center-align"></p>
                 </form>
-                {searchResult.length > 0 && <div style={{marginBottom: '5%'}}>
-                    <button
-                        onClick={this.siteFilterClicked}
-                        style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
-                    <button
-                        onClick={this.roadFilterClicked}
-                        style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
-                </div>}
                 
-                {/* Results */}
-                <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px' }}>
-                    {searchResult.length !== 0 && <PaginatedList
-                        list={searchResult.filter(this.resultsFilter)}
-                        itemsPerPage={20}
-                        renderList={mapping}/>}
-                </div>
-
-                {
-                    this.state.searchVal.length !== 0 && this.state.searchResult.length === 0 && this.state.haveSearched ?
-                        (<h4 style={{ fontWeight: '650', marginLeft: '5%' , color: 'rgba(223,30,38,0.9)'}}>No matches found!</h4>) : ''
+                { startedSearch && ! finishedSearch ? (
+                    <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
+                        <ReactLoading type={"bars"} color={"white"} />
+                    </div>
+                    ) : finishedSearch && searchResult.length !== 0 ? (
+                    <div>
+                        <div style={{marginBottom: '5%'}}>
+                            <button
+                                onClick={this.siteFilterClicked}
+                                style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
+                            <button
+                                onClick={this.roadFilterClicked}
+                                style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
+                        </div>
+                        <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px' }}>
+                            {searchResult.length !== 0 && < PaginatedList
+                                list={searchResult.filter(this.resultsFilter)}
+                                itemsPerPage={20}
+                                renderList={mapping}/>}
+                        </div>
+                    </div>
+                    ) : finishedSearch && searchResult.length === 0 ? (
+                        <h4 style={{ fontWeight: '650', marginLeft: '5%' , color: 'rgba(223,30,38,0.9)'}}>No matches found!</h4>
+                    ) : ''
                 }
+                
             </div>
         )    
     }
