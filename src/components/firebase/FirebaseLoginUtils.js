@@ -49,3 +49,17 @@ async function CreateNewAccount(uid, UserName){
       RoadsFavorites: [],
   })
 }
+
+export const forgotPassword = async(email) => {
+  if(email != ""){
+        myFirebase.auth().sendPasswordResetEmail(email).then(() => alert("Email has been sent"));
+    };
+}
+
+export const emailAuthentication = async() => {
+  firebase.auth().onAuthStateChanged(function(user) { 
+    if (!user.emailVerified) {
+        user.sendEmailVerification();
+    }
+ });
+}

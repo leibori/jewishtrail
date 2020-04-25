@@ -24,6 +24,7 @@ import RaodPage from './components/road/roadPage';
 import DeleteRoad from './components/road/DeleteRoad';
 import AdminSitePage from './components/admin/AdminSitePage'
 import AdminRoadPage from './components/admin/AdminRoadPage'
+import ForgotPassword from './components/login/ForgotPassword'
 
 class App extends Component {
 
@@ -100,6 +101,7 @@ class App extends Component {
             <Route exact path='/adminRoadPage' component={AdminRoadPage} /> 
             <Route exact path='/adminSitePage' component={AdminSitePage} />       
             <Route exact path='/admin' component={AdminMenu} />
+            <Route exact path='/forgotpassword' component={ForgotPassword} />
           </div>
         </BrowserRouter>
       </div>

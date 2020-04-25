@@ -75,7 +75,7 @@ export default class LoginPage extends Component {
                 <input required name="password" onChange={this.onChange} type='password' placeholder='Pasword...'></input>
               </div>
               <div className='pass'>
-                <a href='#'>Forgot Password?</a>
+                <a href='/forgotpassword'>Forgot Password?</a>
               </div>
               <div className='field space'>
                 <input type='submit' value='Log In'></input>
