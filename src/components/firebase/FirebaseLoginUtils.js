@@ -34,9 +34,9 @@ export function login(e, email, password) {
 
 export async function signup(e, email, password, user_name){
   e.preventDefault();
-  myFirebase.auth().createUserWithEmailAndPassword(email, password).then((u)=>{
-    CreateNewAccount(u.user.uid, user_name)
-  }).then((u)=>{console.log(u)})
+  myFirebase.auth().createUserWithEmailAndPassword(email, password).then(u=>emailAuthentication(u))
+  .then((u)=>CreateNewAccount(u.user.uid, user_name))
+  .then((u)=>{console.log(u)})
   .catch((error) => {
     alert(error);
   })
@@ -49,3 +49,24 @@ async function CreateNewAccount(uid, UserName){
       RoadsFavorites: [],
   })
 }
+
+export const forgotPassword = async(email) => {
+  if(email != ""){
+        myFirebase.auth().sendPasswordResetEmail(email).then(() => alert("Email has been sent"));
+    };
+}
+
+export const emailAuthentication = async(u) => {
+  const user = firebase.auth().currentUser;
+  console.log(user)
+  if (!user){
+    alert(user)
+    return;
+  }
+  user.sendEmailVerification().then(function() {
+        alert("Verification email was successfully sent.")
+      }).catch(function(error) {
+        alert("An error has occured, please try again.")
+      });
+  return u;
+  }
