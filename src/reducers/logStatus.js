@@ -1,0 +1,10 @@
+const statusReducer = (status = { claims: 'guest', uid: '' }, action) => {
+    switch(action.type) {
+        case 'SET_STATUS':
+            return action.status
+        default:
+            return status
+    }
+};
+
+export default statusReducer;

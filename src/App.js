@@ -28,35 +28,7 @@ import ForgotPassword from './components/login/ForgotPassword'
 
 class App extends Component {
 
-  constructor() {
-    super();
-    this.state = ({
-      user: null,
-    });
-    this.authListener = this.authListener.bind(this);
-  }
-
-  componentDidMount() {
-    this.authListener();
-  }
-
-  authListener() {
-    myFirebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
-      if (user) {
-        this.setState({ user });
-        localStorage.setItem('user', user.uid);
-      } else {
-        this.setState({ user: null });
-        localStorage.removeItem('user');
-      }
-    });
-  }
-
   render() {
-    // const user = {
-    //   claims:"admin" 
-    // }
     return (
     <div className="App" style={{height:'100%', width:'100%'}}>
       <BrowserRouter forceRefresh={true}>

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import {getFavoritesIDs} from '../firebase/FirebaseUtilities'
-import {getUserClaims, updateUserFavorites, getRoadFavoritesIDs, updateUserRoadsFavorites} from '../firebase/FirebaseUtilities'
+import {updateUserFavorites, getRoadFavoritesIDs, updateUserRoadsFavorites} from '../firebase/FirebaseUtilities'
 import GeneralSearch from './GeneralSearch/';
-import {myFirebase, myDatabase} from 'components/firebase/firebase'
+import {myDatabase} from 'components/firebase/firebase'
+import { connect } from 'react-redux'
+
 
 /**
  * This component is the search menu.
@@ -12,14 +14,9 @@ class SearchMenu extends Component {
     // A constructor that sets the values of this component's state.
     constructor(props) {
         super(props);
-        console.log(props.location);
+
         this.state = {
-            // Holds the registered user's id in order to get it's favorites list.
-            userid: "",
-
-            // Holds the user's claim (guest/registered/admin), used to decide whether a "add to favorites" button appears.
-            claim: "guest",
-
+           
             // In case a user is registered this hold the site id's of it's favorite sites.
             siteFavoriteList: [],
 
@@ -47,7 +44,8 @@ class SearchMenu extends Component {
      * This function is used to decide whether or not to show the "add to favorites" button.
      */
     canRenderAddSite = (sid) => {
-        if(this.state.claim !== "guest") {
+        const { claims } = this.props.logStatus
+        if(claims !== "guest") {
             if(!this.state.siteFavoriteList.includes(sid)) {
                 return true
             }
@@ -57,7 +55,8 @@ class SearchMenu extends Component {
 
 
     canRenderDeleteSite = (sid) => {
-        if(this.state.claim !== "guest") {
+        const { claims } = this.props.logStatus
+        if(claims !== "guest") {
             if (this.state.siteFavoriteList.includes(sid)){
                 return true;
             }
@@ -67,9 +66,11 @@ class SearchMenu extends Component {
 
 
     deleteSiteInFavorites = async(e, sid) => {
-        let { siteFavoriteList, userid } = this.state;
+        const { uid } = this.props.logStatus
+        let { siteFavoriteList } = this.state;
+
         var newSiteFavorites = siteFavoriteList.filter(s => s !== sid).map(s=>s);
-        await myDatabase.collection('accounts').doc(userid).update({'favorites': newSiteFavorites})
+        await myDatabase.collection('accounts').doc(uid).update({'favorites': newSiteFavorites})
         .catch(function(error) {
             console.error("Error removing document: ", error);
         });
@@ -77,9 +78,11 @@ class SearchMenu extends Component {
     }
 
     deleteRoadInFavorites = async(e, trailId) => {
-        let { roadFavoriteList, userid } = this.state;
+        const { uid } = this.props.logStatus
+        let { roadFavoriteList } = this.state;
+
         var newRoadFavorites = roadFavoriteList.filter(r => r !== trailId).map(r=>r);
-        await myDatabase.collection('accounts').doc(userid).update({'RoadsFavorites': newRoadFavorites})
+        await myDatabase.collection('accounts').doc(uid).update({'RoadsFavorites': newRoadFavorites})
         .catch(function(error) {
             console.error("Error removing document: ", error);
         });
@@ -87,7 +90,8 @@ class SearchMenu extends Component {
     }
    
     canRenderAddRoad = (sid) => {
-        if(this.state.claim !== "guest") {
+        const { claims } = this.props.logStatus
+        if(claims !== "guest") {
             if(!this.state.roadFavoriteList.includes(sid)) {
                 return true
             }
@@ -96,7 +100,8 @@ class SearchMenu extends Component {
     }
 
     canRenderDeleteRoad = (rid) => {
-        if(this.state.claim !== "guest") {
+        const { claims } = this.props.logStatus
+        if(claims !== "guest") {
             return (this.state.roadFavoriteList.includes(rid));
         }
         return false
@@ -106,9 +111,10 @@ class SearchMenu extends Component {
      * This function recieves an id and adds it to the user's favorite sites list in the database and in this component.
      */
     addSiteToFavorites = async(e, sid) => {
+        const { uid } = this.props.logStatus
         const favorites = this.state.siteFavoriteList;
         favorites.push(sid);
-        updateUserFavorites(this.state.userid, favorites);
+        updateUserFavorites(uid, favorites);
         this.setState({siteFavoriteList: favorites})
         console.log(favorites)
     }
@@ -118,9 +124,10 @@ class SearchMenu extends Component {
      * This function recieves an id and adds it to the user's favorite roads list in the database and in this component.
      */
     addRoadToFavorites = async(e, trailId) => {
+        const { uid } = this.props.logStatus
         var favorites = this.state.roadFavoriteList
         favorites.push(trailId)
-        updateUserRoadsFavorites(this.state.userid, favorites)
+        updateUserRoadsFavorites(uid, favorites)
         this.setState({roadFavoriteList: favorites})
     }
 
@@ -129,14 +136,14 @@ class SearchMenu extends Component {
      * This function is used in case the user has changed to get it's current claim, favorites and id.
      */
     async componentDidMount() {
-        myFirebase.auth().onAuthStateChanged(async (user) => {
-            if(user) {
-                this.setState({ userid: user.uid,
-                                claim: await getUserClaims(user),
-                                siteFavoriteList: await getFavoritesIDs(user.uid),
-                                roadFavoriteList: await getRoadFavoritesIDs(user.uid) });
-            }
-       })
+        console.log(this.props.logStatus)
+        const { claims, uid } = this.props.logStatus
+        if (claims != 'guest') {
+            this.setState({
+                siteFavoriteList: await getFavoritesIDs(uid),
+                roadFavoriteList: await getRoadFavoritesIDs(uid)
+            });
+        }
     }
 
 
@@ -160,4 +167,14 @@ class SearchMenu extends Component {
     }
 }
 
-export default SearchMenu
+const mapStateToProps = (state) => {
+    return {
+        logStatus: state.status,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchMenu);

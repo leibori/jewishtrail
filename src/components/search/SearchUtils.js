@@ -20,22 +20,24 @@ async function findPerCollection(searchVals, accuracy, collection) {
     // Exectues for each document in snapshot.
     snapshot.forEach(doc => {
 
-        // A counter for the number of matches.
-        var counter = 0
+        // A relevance counter for the number of matches.
+        var relevanceCounter = 0
 
         // Pulls the result's search tokens
         var searchTokens = doc.data().searchTokens;
 
-        // Counts the number of matches.
-        searchVals.forEach(value => {
-            if(searchTokens.includes(value)) {
-                ++counter
-            }
-        })
+        if (searchTokens) {
+            // Counts the number of matches.
+            searchVals.forEach(value => {
+                if(searchTokens.includes(value)) {
+                    ++relevanceCounter
+                }
+            })
+        }
 
-        // Push result and counter to "results" array if the counter is greater or equal to the accuracy variable.
-        if (counter >= accuracy) {
-            results.push({counter: counter, document: doc, type: collection })
+        // Push result and relevance counter to "results" array if the counter is greater or equal to the accuracy variable.
+        if (relevanceCounter >= accuracy) {
+            results.push({relevance: relevanceCounter, document: doc, type: collection })
         }
 
     })
@@ -78,7 +80,7 @@ export async function findFromDB(searchVals, collectionName) {
     }
 
     // Sorts the "results" array in a decending order by the counter.
-    results = _.sortBy(results, 'counter').reverse()
+    results = _.sortBy(results, 'relevance').reverse()
 
     // Takes the sites from the "sites" array and push it to the "sortedResults" array.
     results.forEach(result => {
