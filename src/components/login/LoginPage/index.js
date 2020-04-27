@@ -1,49 +1,55 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-// import { signInWithGoogle, login } from 'compo/firebase/FirebaseLoginUtils'
+import { Redirect } from 'react-router-dom';
 import { signInWithGoogle, login } from "components/firebase/FirebaseLoginUtils";
-import { myFirebase} from "components/firebase/firebase";
 import './index.css';
-
-// const centerStyle = {
-//     margin: 'auto',
-//     width: '50%',
-// }
+import { getUserClaims } from '../../firebase/FirebaseUtilities'
+import { setLogStatus } from '../../../actions'
+import { connect } from 'react-redux'
 
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
   constructor() {
     super();
- //   this.signup = this.signup.bind(this);
+
     this.state = {
       email: '',
       password: '',
       online: false,
-      uid: '',
     };
+
     this.googleLogin = this.googleLogin.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSignUpClick = this.onSignUpClick.bind(this);
   }
 
-  googleLogin = async (e) => {
-    e.preventDefault();
-    var userid = await signInWithGoogle()
-    console.log(userid)
+  async componentWillReceiveProps() {
     this.setState({
       online: true,
-      uid: userid
     })
   }
 
-  async componentDidMount(){
-    myFirebase.auth().onAuthStateChanged(async (user) => {
-      if(user){
-        this.setState({online: true})
-      }else{
-        this.setState({online: false})
-      }  
-     })
+  googleLogin = async (e) => {
+    e.preventDefault();
+
+    const user = await signInWithGoogle()
+
+    if (!user) { return }
+
+    this.props.set(user)
+    
+  }
+
+  normalLogin = async (e) => {
+    e.preventDefault();
+
+    const { email, password } = this.state
+
+    const user = await login(e, email, password)
+
+    if (!user) { return }
+
+    this.props.set(user)
+
   }
   
   onChange = (e) => {
@@ -55,8 +61,8 @@ export default class LoginPage extends Component {
     this.props.history.push('/SignUp');
   }
   render() {
-    const { email, password } = this.state;
     if(this.state.online){
+      console.log("in redirect")
       return <Redirect to = "/about"></Redirect>
     }
     return (
@@ -65,7 +71,7 @@ export default class LoginPage extends Component {
         <div className='bg-img'>
           <div className='content'>
             <header>Jewish Trail</header>
-            <form onSubmit={(e)=>login(e, email, password)}>
+            <form onSubmit={this.normalLogin}>
               <div className='field'>
                 <span  className="far fa-envelope"></span>
                 <input required name="email" onChange={this.onChange} type='email' placeholder='Email...'></input>
@@ -103,3 +109,22 @@ export default class LoginPage extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    status: state.status,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    set: async (user) => { 
+      await dispatch(setLogStatus({
+        claims: await getUserClaims(user),
+        uid: user.uid
+      }))
+    }
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
