@@ -2,32 +2,35 @@ import React, { Component } from 'react'
 import {getFavorites} from '../firebase/FirebaseUtilities'
 import SiteFavComponents from './siteFavComponents'
 import RoadFavComponent from './roadFavComponent'
-import {myDatabase, myFirebase} from '../firebase/firebase'
+import { myDatabase } from '../firebase/firebase'
 import { PaginatedList } from 'react-paginated-list'
 import ReactLoading from "react-loading";
 import "bootstrap/dist/css/bootstrap.css";
+import { connect } from 'react-redux'
+
 
 class Favorites extends Component {
+
   state = {
     favoritesArr: [],
-    userid: "",
     siteFilter: true,
     roadFilter: true,
     done: false
   }
+
+
   async componentDidMount(){
-    var siteList = []
-    myFirebase.auth().onAuthStateChanged(async (user) => {
-      siteList = await getFavorites(user.uid);
-      if(siteList.length == 0){
-        this.setState({done: true})
-      }
-      this.setState({
-        favoritesArr: siteList, userid: user.uid
-      });
-      // this.setState({claim: await getUserClaims(user)});
-    })
+    const uid = this.props.uid
+    var siteList = await getFavorites(uid);
+    if(siteList.length == 0){
+      this.setState({done: true})
+    }
+    this.setState({
+      favoritesArr: siteList
+    });
   }
+
+
   /**
      * This function executes when the user clicks on the site filter button, and it sets boolean values in order to filter the results.
      */
@@ -38,6 +41,8 @@ class Favorites extends Component {
         this.setState({siteFilter: true, roadFilter: false})
     }
   }
+
+
   /**
    * This function executes when the user clicks on the road filter button, and it sets boolean values in order to filter the results.
    */
@@ -48,10 +53,14 @@ class Favorites extends Component {
           this.setState({siteFilter: false, roadFilter: true}) 
       }
   }
-  loadAnnimation = () =>{
 
+
+  loadAnnimation = () =>{
   }
+
+
   async deleteFromFirebase(type,uid){
+    const userid = this.props.uid
     var uidList =[]
     console.log(this.state.favoritesArr);
     this.state.favoritesArr.forEach(site=>{
@@ -63,7 +72,7 @@ class Favorites extends Component {
       }
     })
     if(type == 'sites'){
-      await myDatabase.collection('accounts').doc(this.state.userid).update({
+      await myDatabase.collection('accounts').doc(userid).update({
       'favorites': uidList
       })
       .catch(function(error) {
@@ -71,7 +80,7 @@ class Favorites extends Component {
       });
     }
     else{
-      await myDatabase.collection('accounts').doc(this.state.userid).update({
+      await myDatabase.collection('accounts').doc(userid).update({
         'RoadsFavorites': uidList
         })
         .catch(function(error) {
@@ -79,6 +88,8 @@ class Favorites extends Component {
         });
     }
   }
+
+
   /**
   * This function is used to filter (by site or by road) the results based on boolean values.
   */
@@ -86,6 +97,8 @@ class Favorites extends Component {
       return (this.state.siteFilter && result.type == 'sites') ||
           (this.state.roadFilter && result.type == 'roads')
   }
+
+
   deleteSite = (id,uid,type) =>  {
      let favorites = this.state.favoritesArr.filter(site =>{
       return site.id !== id
@@ -114,7 +127,7 @@ class Favorites extends Component {
     // Predicate that decides the color of the button of the road filter.
     const roadColorPredicate = !this.state.siteFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
     const mapping = (list) => list.map((site, i) => {
-      console.log(site);
+      // console.log(site);
       return  (
                   <div key={i}>
                   {site.type === 'sites' && this.state.siteFilter ?
@@ -158,4 +171,14 @@ class Favorites extends Component {
   }
 }
 
-export default Favorites
+const mapStateToProps = (state) => {
+  return {
+      uid: state.status.uid,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
