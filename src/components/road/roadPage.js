@@ -5,6 +5,8 @@ import { getSiteByID } from "../firebase/FirebaseUtilities";
 import { PaginatedList } from 'react-paginated-list';
 import SiteComponent from '../sites/siteComponent'
 import { Card, ListGroupItem, ListGroup } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { findPosition } from '../../actions'
 
 
 class RaodPage extends Component {
@@ -29,34 +31,11 @@ class RaodPage extends Component {
         }
     };
 
-    async handleUserLocation() {
-        navigator.geolocation.getCurrentPosition((position) => {
-            fetch('https://ipapi.co/json')
-            .then(res => res.json())
-            this.setState({
-                location: {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude},
-                haveUsersLocation: true,
-            })
-        }, () => {
-            console.log('access denied')
-            fetch('https://ipapi.co/json')
-            .then(res => res.json())
-            .then(location => {
-                // console.log(location)
-                this.setState({
-                    location: {
-                        lat: location.latitude,
-                        lng: location.longitude },
-                    haveUsersLocation: true,
-                })
-            })
-        })
-    }
 
     async handleMap() {
         const { siteList } = this.state;
+
+        console.log(siteList)
 
         const maxLat = Math.max.apply(Math, siteList.map(function(site) { return site.latitude }))
         const minLat = Math.min.apply(Math, siteList.map(function(site) { return site.latitude }))
@@ -72,12 +51,29 @@ class RaodPage extends Component {
         getAroundYouMap('map', avgLat, avgLng, zoom, siteList)
     }
 
-    async handleNavigationLink() {
+    async handleSiteList() {
+        const roadId = this.state.site_id;
+        var all_road_props = await getRoadByID(roadId)
+
+        const siteListID = all_road_props.siteList;
+        const siteList = await Promise.all(siteListID.map((async (sid) => ({ id:sid, ...(await getSiteByID(sid))}))))
+
+        this.setState({
+            ...all_road_props,
+            siteList
+        })
+    }
+
+    async handleNavigationLink(position) {
+
         const { siteList } = this.state;
+
+        console.log(siteList)
+
         var navLink = this.state.navigationLink + "&waypoints="
         const firstSite = siteList[0], lastSite = siteList[siteList.length - 1]
-        var firstDistance = Math.sqrt(Math.pow(this.state.location.lat - firstSite.latitude, 2) + Math.pow(this.state.location.lng - firstSite.longitude, 2))
-        var lastDistance = Math.sqrt(Math.pow(this.state.location.lat - lastSite.latitude, 2) + Math.pow(this.state.location.lng - lastSite.longitude, 2))
+        var firstDistance = Math.sqrt(Math.pow(position.lat - firstSite.latitude, 2) + Math.pow(position.lng - firstSite.longitude, 2))
+        var lastDistance = Math.sqrt(Math.pow(position.lat - lastSite.latitude, 2) + Math.pow(position.lng - lastSite.longitude, 2))
 
         if(firstDistance < lastDistance) {
             navLink += firstSite.latitude + "%2C" + firstSite.longitude
@@ -99,24 +95,28 @@ class RaodPage extends Component {
         })
     }
 
+
+    async componentWillReceiveProps(nextProps) {
+
+        if (this.props.position != nextProps.position) {
+            this.handleNavigationLink(nextProps.position)
+        }
+    }
+
+
     async componentWillMount() {
 
-        this.handleUserLocation()
+        await this.handleSiteList()
 
-        const roadId = this.state.site_id;
-        var all_road_props = await getRoadByID(roadId)
-        // console.log(all_road_props)
-        const siteListID = all_road_props.siteList;
-        const siteList = await Promise.all(siteListID.map((async (sid) => ({ id:sid, ...(await getSiteByID(sid))}))))
-        this.setState({
-            ...all_road_props,
-            siteList
-        })
+        if (this.props.position.country == '') {
+            await this.props.find()
+        } else {
+            this.handleNavigationLink(this.props.position)
+        }
 
         this.handleMap()
-
-        this.handleNavigationLink()
     }
+
 
     render() {
         const { siteList, navigationLink } = this.state;
@@ -155,56 +155,46 @@ class RaodPage extends Component {
                         <div style={{height: '400px', width: '100%'}} id='map' />
                     </Card.Body>
                 </Card>
-                {/* <Grid container spacing={2} direction='column'>
-                    <Grid item xs={12} alignContent="stretch" style={{backgroundImage: 'url('+imageUrl+')', backgroundSize: 'cover', overflow: 'hidden', backgroundRepeat: 'no-repeat'}} height='50%' width='50%'>
-                        <div className="container" >
-                            <img src={imageUrl}></img>
-                        </div>
-                    </Grid>
-                </Grid> */}
-                {/* <h1>{this.state.name}</h1>
-                <h2>{this.state.city.join(", ")}.</h2>
-                <h3>{this.state.country.join(", ")}</h3>
-                <p>{this.state.description}</p>
-                <ul className="container">
-                    {siteList.length > 0 && <PaginatedList
-                            list={siteList}
-                            itemsPerPage={3}
-                            renderList={mapping}/>}
-                </ul>
-
-                <div style={{height: '400px', width: '60%'}} >
-                    <Map style={{height: '400px', width: '60%', marginLeft:"450px"}}
-                        center={position} zoom={zoom} >
-                        <TileLayer
-                        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        { 
-                            this.state.haveUsersLocation ? 
-                            <Marker position={position} icon={myIcon}>
-                                <Popup>
-                                    A pretty CSS3 popup. <br /> Easily customizable.
-                                </Popup>
-                            </Marker> : ''
-                        }
-                        <Marker position={position} icon={myIcon} />
-                        {
-                            this.state.siteList.map((site, i) => (
-                                <Marker key={i} position={[site.latitude, site.longitude]} icon={myIcon}>
-                                    <Popup>
-                                        {site.address}<br/>
-                                        {site.partialInfo}<br/>
-                                        <Link to={'/site/'+site.id}>More info</Link>
-                                    </Popup>
-                                </Marker>
-                            )
-                        )}
-                    </Map>
-                </div> */}
             </div>
         )
     }
 }
 
-export default RaodPage
+// export default RaodPage
+
+const mapStateToProps = (state) => {
+    return {
+        position: state.position,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        find: async () => {
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const location = await fetch('https://ipapi.co/json').then(res => res.json())
+                dispatch(findPosition({
+                    type: 'FIND_POSITION',
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    country: location.country_name
+                }));
+            },
+            () => {
+                fetch('https://ipapi.co/json')
+                .then(res => res.json())
+                .then(location => {
+                    dispatch(findPosition({
+                        type: 'FIND_POSITION',
+                        lat: location.latitude,
+                        lng: location.longitude,
+                        country: location.country_name
+                    }))
+                })
+            },
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RaodPage);
