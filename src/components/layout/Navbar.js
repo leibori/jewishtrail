@@ -10,6 +10,8 @@ import {
     Link,
     NavLink
   } from "react-router-dom";
+import { setLogStatus } from 'actions';
+import { connect } from 'react-redux'
 
 const fontStyle = {
   color:"white",
@@ -26,74 +28,82 @@ class Navbar extends Component {
   }) 
   
   async componentDidMount(){
-    myFirebase.auth().onAuthStateChanged(async (user) => {
-      var claim = await getUserClaims(user);
-      if(claim === "admin"){
-        this.setState({isAdmin: true,
-                      isLoggedIn: true}
-      )}
-      else if(user){
-        this.setState({isLoggedIn: true, isAdmin: false})
-      }else{
-        this.setState({isLoggedIn: false,
-                      isAdmin: false
-        })
-      }      
-   })
+    const { claims } = this.props.status
+    if(claims === "admin"){
+      this.setState({isAdmin: true,
+                    isLoggedIn: true}
+    )}
+    else if(claims == "registered"){
+      this.setState({isLoggedIn: true, isAdmin: false})
+    }else{
+      this.setState({isLoggedIn: false,
+                    isAdmin: false
+      })
+    }      
+  }
+
+  logOut = () => {
+    if(window.confirm("are you sure?")) {
+      this.props.logOut()
+      myFirebase.auth().signOut();
+      window.location.href = '/loginPage'
+    }
   }
 
   render() {
-    
-    if(this.state.isLoggedIn){
-      return (
-        <nav className="nav-wrapper">
-            <div className="App transparent">
-          {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
-            <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
-          {/*<ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
-          <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" />
-          <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
-            <ReactBootStrap.Nav className="mr-auto">
-            
-              <ReactBootStrap.Nav.Link style={fontStyle} onClick={() => {if(window.confirm("are you sure?")){myFirebase.auth().signOut();}}} href="/loginPage">Log Out</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link style={fontStyle} href="/about">About</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link style={fontStyle} href="/search">Search</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link style={fontStyle} href="/favorites">Favorites</ReactBootStrap.Nav.Link>
-              <ReactBootStrap.Nav.Link style={fontStyle} href="/aroundyou">Around You </ReactBootStrap.Nav.Link>
-
-                {
-                  this.state.isAdmin && (<ReactBootStrap.Nav.Link style={fontStyle} href="/admin">Admin Page</ReactBootStrap.Nav.Link>)
-                }          
-            </ReactBootStrap.Nav>
-        </ReactBootStrap.Navbar.Collapse>    
-      </ReactBootStrap.Navbar>
-      </div>
-      </nav>
-
-      )
-    }
     return (
-
       <nav className="nav-wrapper">
-      <div className="App transparent " >
-    {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
-      <ReactBootStrap.Navbar collapseOnSelect expand="xl" variant="light">
-    {/* <ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
-    <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
-    <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
-      <ReactBootStrap.Nav className="mr-auto">
-      
-        <ReactBootStrap.Nav.Link style={fontStyle} href="/LoginPage">Log In </ReactBootStrap.Nav.Link>
-        <ReactBootStrap.Nav.Link style={fontStyle} href="/about">About</ReactBootStrap.Nav.Link>
-        <ReactBootStrap.Nav.Link style={fontStyle} href="/search">Search</ReactBootStrap.Nav.Link>
-        <ReactBootStrap.Nav.Link style={fontStyle} href="/aroundyou">Around You </ReactBootStrap.Nav.Link>
+          <div className="App transparent">
+        {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
+          <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
+        {/*<ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
+        <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" />
+        <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
+          <ReactBootStrap.Nav className="mr-auto">
+          
+            { this.state.isLoggedIn ? (
+              <ReactBootStrap.Nav.Link style={fontStyle} onClick={this.logOut}>Log Out</ReactBootStrap.Nav.Link>
+              ) : (
+              <ReactBootStrap.Nav.Link style={fontStyle} href="/LoginPage">Log In </ReactBootStrap.Nav.Link>
+              )
+            }
+            
+            <ReactBootStrap.Nav.Link style={fontStyle} href="/about">About</ReactBootStrap.Nav.Link>
+            <ReactBootStrap.Nav.Link style={fontStyle} href="/search">Search</ReactBootStrap.Nav.Link>
+            {
+              this.state.isLoggedIn && (<ReactBootStrap.Nav.Link style={fontStyle} href="/favorites">Favorites</ReactBootStrap.Nav.Link>)
+            }
 
-      </ReactBootStrap.Nav>
-  </ReactBootStrap.Navbar.Collapse>    
-</ReactBootStrap.Navbar>
-</div>
-</nav>
+            <ReactBootStrap.Nav.Link style={fontStyle} href="/aroundyou">Around You </ReactBootStrap.Nav.Link>
+
+            {
+              this.state.isAdmin && (<ReactBootStrap.Nav.Link style={fontStyle} href="/admin">Admin Page</ReactBootStrap.Nav.Link>)
+            }          
+          </ReactBootStrap.Nav>
+      </ReactBootStrap.Navbar.Collapse>    
+    </ReactBootStrap.Navbar>
+    </div>
+    </nav>
+
     )
   }
 }
-export default Navbar
+
+const mapStateToProps = (state) => {
+  return {
+    status: state.status,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logOut: async () => { 
+      await dispatch(setLogStatus({
+        claims: 'guest',
+        uid: ''
+      }))
+    }
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
