@@ -211,7 +211,8 @@ class GeneralSearch extends Component {
                         </div>
                     </div>
                     ) : finishedSearch && searchResult.length === 0 ? (
-                        <h4 style={{ fontWeight: '650', marginLeft: '5%' , color: 'rgba(223,30,38,0.9)'}}>No matches found!</h4>
+                        <img src="https://premieregyptonline.com/images/no-results.png"/>
+                        // <h4 style={{ fontWeight: '650', marginLeft: '5%' , color: 'rgba(223,30,38,0.9)'}}>No matches found!</h4>
                     ) : ''
                 }
                 
