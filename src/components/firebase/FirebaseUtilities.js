@@ -108,7 +108,7 @@ export async function getFavorites(userid){
 }
 
 
-export async function updateUserFavorites(userid, newFavorites) {
+export async function updateUserFavoriteSites(userid, newFavorites) {
     await myDatabase.collection('accounts').doc(userid).update({
         'favorites': newFavorites
         })
@@ -137,13 +137,13 @@ export async function createNewRoad( {siteListID,roadName,roadDescription,CityLi
 }
 
 
-export async function updateUserRoadsFavorites(userid, newFavorites) {
-    await myDatabase.collection('accounts').doc(userid).update({
+export async function updateUserFavoriteRoads(userid, newFavorites) {
+    myDatabase.collection('accounts').doc(userid).update({
         'RoadsFavorites': newFavorites
-        })
-        .catch(function(error) {
-          console.error("Error removing document: ", error);
-        });
+    })
+    .catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
 }
 
 

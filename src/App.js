@@ -14,13 +14,11 @@ import SearchMenu from './components/search/SearchMenu';
 import About from './components/around_you/about';
 import Navbar from './components/layout/Navbar'
 import LogOut from './components/login/LogOut';
-import {myFirebase} from './components/firebase/firebase';
 import Favorites from './components/favorites/Favorites';
 import SitePage from './components/sites/SitePage'
 import RoadForm from './components/road/RoadForm';
 import UpdateForm from './components/sites/UpdateForm'
-import RoadMenu from './components/search/RoadMenu';
-import RaodPage from './components/road/roadPage';
+import RoadPage from './components/road/roadPage';
 import DeleteRoad from './components/road/DeleteRoad';
 import AdminSitePage from './components/admin/AdminSitePage'
 import AdminRoadPage from './components/admin/AdminRoadPage'
@@ -65,9 +63,7 @@ class App extends Component {
             <Route exact path='/site/:id' component={SitePage} />
             <Route exact path='/roadform' component={RoadForm} />
             <Route exact path='/roadform/:searchVal' component={RoadForm} />
-            <Route exact path='/searchroad' component={RoadMenu} />
-            <Route exact path='/searchroad/:searchVal' component={RoadMenu} />
-            <Route exact path='/road/:id' component={RaodPage} />
+            <Route exact path='/road/:id' component={RoadPage} />
             <Route exact path='/deleteroad' component={DeleteRoad} />
             <Route exact path='/deleteroad/:searchVal' component={DeleteRoad} />          
             <Route exact path='/adminRoadPage' component={AdminRoadPage} /> 

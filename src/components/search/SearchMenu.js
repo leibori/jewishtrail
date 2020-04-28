@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import {getFavoritesIDs} from '../firebase/FirebaseUtilities'
-import {updateUserFavorites, getRoadFavoritesIDs, updateUserRoadsFavorites} from '../firebase/FirebaseUtilities'
+import {updateUserFavoriteSites, getRoadFavoritesIDs, updateUserFavoriteRoads} from '../firebase/FirebaseUtilities'
 import GeneralSearch from './GeneralSearch/';
-import {myDatabase} from 'components/firebase/firebase'
 import { connect } from 'react-redux'
 
 
@@ -70,10 +69,9 @@ class SearchMenu extends Component {
         let { siteFavoriteList } = this.state;
 
         var newSiteFavorites = siteFavoriteList.filter(s => s !== sid).map(s=>s);
-        await myDatabase.collection('accounts').doc(uid).update({'favorites': newSiteFavorites})
-        .catch(function(error) {
-            console.error("Error removing document: ", error);
-        });
+
+        updateUserFavoriteSites(uid, newSiteFavorites)
+
         this.setState({siteFavoriteList: newSiteFavorites});
     }
 
@@ -82,10 +80,9 @@ class SearchMenu extends Component {
         let { roadFavoriteList } = this.state;
 
         var newRoadFavorites = roadFavoriteList.filter(r => r !== trailId).map(r=>r);
-        await myDatabase.collection('accounts').doc(uid).update({'RoadsFavorites': newRoadFavorites})
-        .catch(function(error) {
-            console.error("Error removing document: ", error);
-        });
+
+        updateUserFavoriteRoads(uid, newRoadFavorites)
+
         this.setState({roadFavoriteList: newRoadFavorites});
     }
    
@@ -114,7 +111,7 @@ class SearchMenu extends Component {
         const { uid } = this.props.logStatus
         const favorites = this.state.siteFavoriteList;
         favorites.push(sid);
-        updateUserFavorites(uid, favorites);
+        updateUserFavoriteSites(uid, favorites);
         this.setState({siteFavoriteList: favorites})
         console.log(favorites)
     }
@@ -127,7 +124,7 @@ class SearchMenu extends Component {
         const { uid } = this.props.logStatus
         var favorites = this.state.roadFavoriteList
         favorites.push(trailId)
-        updateUserRoadsFavorites(uid, favorites)
+        updateUserFavoriteRoads(uid, favorites)
         this.setState({roadFavoriteList: favorites})
     }
 

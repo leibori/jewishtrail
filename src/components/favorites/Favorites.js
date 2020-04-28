@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import {getFavorites} from '../firebase/FirebaseUtilities'
+import { getFavorites, updateUserFavoriteSites, updateUserFavoriteRoads } from '../firebase/FirebaseUtilities'
 import SiteFavComponents from './siteFavComponents'
 import RoadFavComponent from './roadFavComponent'
-import { myDatabase } from '../firebase/firebase'
 import { PaginatedList } from 'react-paginated-list'
 import ReactLoading from "react-loading";
 import "bootstrap/dist/css/bootstrap.css";
@@ -72,20 +71,10 @@ class Favorites extends Component {
       }
     })
     if(type == 'sites'){
-      await myDatabase.collection('accounts').doc(userid).update({
-      'favorites': uidList
-      })
-      .catch(function(error) {
-        console.error("Error removing document: ", error);
-      });
+      updateUserFavoriteSites(userid, uidList)
     }
     else{
-      await myDatabase.collection('accounts').doc(userid).update({
-        'RoadsFavorites': uidList
-        })
-        .catch(function(error) {
-          console.error("Error removing document: ", error);
-        });
+      updateUserFavoriteRoads(userid, uidList)
     }
   }
 
