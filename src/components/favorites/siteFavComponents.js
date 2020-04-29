@@ -34,7 +34,16 @@ const buttonStyles = makeStyles({
   }
 })
 
+const buttonStyle = {  
+  marginTop: '10px',
+  color: '#b5d7c7',
+  borderColor: '#b5d7c7',
+  textAlign: 'center',
+  borderRadius: '4px',
+  background: 'transparent',
+  border: 'none',
 
+}
 const SiteHandle = ({props,deleteSite}) => {
   const info_url = '/site/'+props.uid
   const classes = useStyles()
@@ -57,14 +66,16 @@ const SiteHandle = ({props,deleteSite}) => {
             <Grid item xs container direction="column" spacing={2}>
               
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1">{props.name}</Typography>
-                <Typography variant="body2" gutterBottom>{props.city}<b>,</b> {props.country}</Typography>
+                <Typography gutterBottom variant="subtitle1"><b>{props.name}</b></Typography>
+                <Typography variant="body2" gutterBottom>{props.city}, {props.country}</Typography>
                 <Grid item container direction='row' spacing={2}>
                   <Grid item xs={6}>
-                    <Button className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', width: '79px',marginTop: '10px'}} size="small" href={info_url}>View Site</Button>
+                    <Button className={buttonClasses.button} variant="outlined" style={{...buttonStyle, border: '1px solid rgba(0, 0, 0, 0.23)'}} size="small" href={info_url}>View Site</Button>
                   </Grid>
                   <Grid item xs={6}>
-                    <Button onClick={()=>{deleteSite(props.id,props.uid,props.type)}} className={buttonClasses.button} variant="outlined" style={{color: '#b5d7c7', borderColor: '#b5d7c7', textAlign: 'center', height: '50px', width: '79px',marginTop: '10px'}} size="small">Delete Site</Button>
+                    <Button onClick={()=>{if (window.confirm('Are you sure you wish to delete this item?')) deleteSite(props.id,props.uid,props.type)}} className={buttonClasses.button} variant="outlined" style={{border: 'none',background: 'none',width: '40px',height:'40px',maxHeight: '40px',maxWidth: '40px',backgroundColor: 'tranparent'}} size="small">
+                    <img src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-remove-icon.png"></img>
+                    </Button>
                   </Grid>
                 </Grid>
               </Grid>
