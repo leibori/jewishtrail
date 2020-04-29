@@ -21,14 +21,13 @@ class UpdateRoad extends Component {
 };
 
 
-async onRoadButtonClick(e, road){
-    var all_road_props = await getRoadByID(road.id)
+async onRoadButtonClick(e, roadId){
+    var all_road_props = await getRoadByID(roadId)
     const siteListID = all_road_props.siteList;
     const siteList = await Promise.all(siteListID.map((async (sid) => ({ id:sid, ...(await getSiteByID(sid))}))))
-    const id = road.id
     this.props.history.push({
       pathname: '/roadForm',
-      state: {...all_road_props, siteList,id}
+      state: {...all_road_props, siteList, roadId}
     });
 }
 
