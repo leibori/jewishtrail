@@ -204,10 +204,14 @@ class GeneralSearch extends Component {
                                 style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
                         </div>
                         <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px' }}>
-                            {searchResult.length !== 0 && < PaginatedList
+                            {
+                                searchResult.filter(this.resultsFilter).length == 0 ?
+                                <img src="https://premieregyptonline.com/images/no-results.png"/> :
+                                searchResult.filter(this.resultsFilter).length > 9 ?
+                                < PaginatedList
                                 list={searchResult.filter(this.resultsFilter)}
-                                itemsPerPage={20}
-                                renderList={mapping}/>}
+                                itemsPerPage={9}
+                                renderList={mapping}/> : mapping(searchResult.filter(this.resultsFilter))}
                         </div>
                     </div>
                     ) : finishedSearch && searchResult.length === 0 ? (
