@@ -23,6 +23,8 @@ import DeleteRoad from './components/road/DeleteRoad';
 import AdminSitePage from './components/admin/AdminSitePage'
 import AdminRoadPage from './components/admin/AdminRoadPage'
 import ForgotPassword from './components/login/ForgotPassword'
+import updateRoad from './components/road/updateRoad'
+
 
 class App extends Component {
 
@@ -70,6 +72,8 @@ class App extends Component {
             <Route exact path='/adminSitePage' component={AdminSitePage} />       
             <Route exact path='/admin' component={AdminMenu} />
             <Route exact path='/forgotpassword' component={ForgotPassword} />
+            <Route exact path='/updateRoad' component={updateRoad} />  
+            <Route exact path='/updateRoad/:searchVal' component={updateRoad} />
           </div>
         </BrowserRouter>
       </div>
