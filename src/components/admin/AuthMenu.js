@@ -59,7 +59,6 @@ class AdminMenu extends Component {
 
   createAdmin = (e) => {
     const email = this.state.email
-    console.log(email)
     this.setState({email:""})
     const addAdminRole = myFunctions.httpsCallable('addAdminRole');
     addAdminRole({email: email}).then(result => {

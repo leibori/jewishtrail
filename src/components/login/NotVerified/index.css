@@ -1,0 +1,84 @@
+* {
+	padding: 0;
+	margin: 0;
+	font-family: sans-serif;
+}
+
+/* body {
+	background: #ddd;
+} */
+
+div.container {
+	background-color: #fff;
+    /* width: 700px; */
+    width: 55%;
+    height: 180px;
+    /* height: auto; */
+    overflow: hidden;
+    /* margin: 18% auto; */
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 5px 5px 10px #0000007d;
+    position: fixed;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.container::before {
+	content: "";
+	height: 220px;
+    /* width: 300px; */
+    width: 30%;
+	background-color: #446e73;
+	position: absolute;
+	right: -20%;
+	transform: skew(40deg);
+}
+
+div.container::after {
+	content: 'Jewish Trail Team';
+	position: absolute;
+    top: 78px;
+    right: -20px;
+    transform: rotate(-78deg);
+    width: 220px;
+    height: 50px;
+    background-color: #e67f3b;
+    text-align: center;
+    font-size: 17px;
+    line-height: 50px;
+    color: #e6e6e6;
+
+}
+
+p.info {
+	/* width: 410px;
+    height: 100px; */
+    width: 50%;
+    color: #797979;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    /* margin-top: 8%; */
+    margin-left: -10%;
+}
+
+p.info::before {
+	content: '';
+    /* width: 60px; */
+    width: 10%;
+    font-size: 18px;
+    color: #404040;
+    /* position: absolute; */
+    /* top: 43%; */
+    /* left: 3%; */
+}
+
+@media only screen and (max-width: 600px) {
+    div.container {
+        width: 100%;
+        /* justify-content: center; */
+    }
+  }
