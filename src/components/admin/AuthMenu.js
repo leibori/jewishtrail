@@ -52,6 +52,7 @@ class AdminMenu extends Component {
     this.setState({email:""})
     const deleteUserByEmails = myFunctions.httpsCallable('deleteUserByEmails');
     deleteUserByEmails({email: email}).then(result => {
+      
       alert(result.data.message)    
       this.props.history.push("/auth")    
     })

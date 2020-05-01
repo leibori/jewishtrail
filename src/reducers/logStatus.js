@@ -1,4 +1,4 @@
-const statusReducer = (status = { claims: 'guest', uid: '' }, action) => {
+const statusReducer = (status = { claims: 'guest', uid: '', isVerified: false }, action) => {
     switch(action.type) {
         case 'SET_STATUS':
             return action.status

@@ -44,15 +44,16 @@ exports.deleteUserByEmails = functions.https.onCall((data, context) => {
   }
   // find user id by email
   return admin.auth().getUserByEmail(data.email).then(user => {
-      console.log(user)
-      admin.auth().deleteUser(user.uid).then(() => {
-        console.log(data.email + "has been deleted")
-        return {
-          message: `${data.email} has been deleted`
-        }       
-      }).catch(err =>{
-          return err
-      })
+    admin.firestore().collection('accounts').doc(user.uid).delete();
+    console.log(user)
+    admin.auth().deleteUser(user.uid).then(() => {
+      console.log(data.email + "has been deleted")
+      return {
+        message: `${data.email} has been deleted`
+      }       
+    }).catch(err =>{
+        return err
+    })
   }).then(() => {
     return {
       message: `Success! ${data.email} has been delete.`
