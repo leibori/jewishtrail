@@ -43,9 +43,9 @@ class Navbar extends Component {
     }      
   }
 
-  logOut = () => {
+  logOut = async() => {
     if(window.confirm("are you sure?")) {
-      this.props.logOut()
+      await this.props.logOut()
       myFirebase.auth().signOut();
       window.location.href = '/loginPage'
     }
@@ -101,7 +101,8 @@ const mapDispatchToProps = (dispatch) => {
     logOut: async () => { 
       await dispatch(setLogStatus({
         claims: 'guest',
-        uid: ''
+        uid: '',
+        isVerified: false,
       }))
     }
   }

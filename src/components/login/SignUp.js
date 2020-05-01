@@ -61,9 +61,6 @@ class SignUp extends Component {
     // this.props.history.push('/Menu');
   }
   render() {
-    if(this.state.online){
-      return <Redirect to = "/Menu"></Redirect>
-    }
     const { email, password, username } = this.state;
     return (
     <div>

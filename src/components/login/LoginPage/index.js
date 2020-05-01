@@ -61,17 +61,17 @@ class LoginPage extends Component {
     this.props.history.push('/SignUp');
   }
   render() {
-    if(this.state.online){
-      console.log("in redirect")
-      return <Redirect to = "/about"></Redirect>
-    }
+    // if(this.state.online){
+    //   console.log("in redirect")
+    //   return <Redirect to = "/about"></Redirect>
+    // }
     return (
       <div style={{height: '100%'}}>
         <title>Login</title>
         <div className='bg-img'>
           <div className='content'>
             <header>Jewish Trail</header>
-            <form onSubmit={this.normalLogin}>
+            <form style={{marginTop: '0px'}} onSubmit={this.normalLogin}>
               <div className='field'>
                 <span  className="far fa-envelope"></span>
                 <input required name="email" onChange={this.onChange} type='email' placeholder='Email...'></input>

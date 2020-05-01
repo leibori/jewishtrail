@@ -27,7 +27,6 @@ async function isUserExists(uid){
 
 export async function login(e, email, password) {
     e.preventDefault();
-    
     const user = await myFirebase.auth().signInWithEmailAndPassword(email, password).then((u) => {
       console.log(u.user)
       return u.user
@@ -35,7 +34,6 @@ export async function login(e, email, password) {
       alert("Invalid email or password. Please try again.");
       return null
     });
-
     return user
 }
 

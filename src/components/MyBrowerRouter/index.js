@@ -30,8 +30,7 @@ import { connect } from 'react-redux'
 class MyBrowserRouter extends Component{
   render() {
     let admin = this.props.claims === 'admin';
-    let online = ((this.props.claims === 'registered') || admin)
-  && (this.props.id !== '');
+    let online = ((this.props.claims === 'registered') || admin) && (this.props.id !== '');
   let verified = ((this.props.isVerified) && online);
   return (
       <BrowserRouter forceRefresh={true}>
@@ -52,7 +51,7 @@ class MyBrowserRouter extends Component{
               <Redirect to='/LoginPage'/> </MyRoute>
             <MyRoute exact path='/aroundyou'  component={AroundYou} />
             <MyRoute exact path='/loginpage' component={LoginPage} condition={online} />
-            <MyRoute exact path='/logout' component={LogOut} condition={!online}/>
+            <MyRoute exact path='/logout' component={LogOut}/>
             <MyRoute exact path='/signup' component={SignUp} condition={online}/>
             <MyRoute exact path='/createsite' component={CreateSite} condition={!admin}/>
             <MyRoute exact path='/deletesite' component={DeleteSite} condition={!admin}/>

@@ -13,6 +13,7 @@ const headerStyle = {
     fontSize: '32px',
     fontFamily: "Cambay, sans-serif",
     textShadow: "2px 2px black",
+    // WebkitTextStroke: 'px black',
     // WebkitTextStrokeWidth: '1px',
     // WebkitTextStrokeColor: 'black',
 }

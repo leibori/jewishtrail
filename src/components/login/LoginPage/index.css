@@ -13,7 +13,7 @@
     bottom: 0px;
     height: 100%;
     width: 100%;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.1);
     filter: blur(8px);
     -webkit-filter: blur(8px);
 }
@@ -36,10 +36,12 @@
 
 .content header {
     color: white;
-    font-size: 50px;
+    font-size: 60px;
     font-weight: 600;
-    margin: 40px 0 35px 0;
+    margin: 50px 0 0px 0;
     font-family: 'Cambay', sans-serif;
+    text-shadow: 1px 1px black; 
+
 }
 
 .field {
@@ -75,7 +77,8 @@
     margin: 10px, 0;
     margin-top: 25px;
     font-family: 'Poppins', sans-serif;
-    color: #c3c8cd; 
+    /* color: #c3c8cd;  */
+    color: whitesmoke;
 
     
 }
