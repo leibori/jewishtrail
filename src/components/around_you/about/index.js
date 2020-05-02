@@ -55,7 +55,7 @@ export default function About(props) {
                         <p>
                             {description3}
                         </p>
-                        <p>Visit <a style={{color: '#48AAAB'}} href='http://sonshine.org.il/about-us/' >Our Website</a> for more information.</p>
+                        <p>Visit <a style={{color: '#48AAAB'}} href='http://sonshine.org.il/' >Our Website</a> for more information.</p>
                     {/* </div>
                 </div>
             </div> */}

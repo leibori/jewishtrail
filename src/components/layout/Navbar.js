@@ -14,9 +14,10 @@ import { setLogStatus } from 'actions';
 import { connect } from 'react-redux'
 
 const fontStyle = {
+  fontSize: '17px',
   color:"white",
-  fontWeight:'bolder',
-  textShadow:'1px 1px black'
+  fontWeight:'1000',
+  textShadow:'2px 2px #202020'
 
 }
 const backStyle = {
@@ -37,7 +38,7 @@ class Navbar extends Component {
       this.setState({isAdmin: true,
                     isLoggedIn: true}
     )}
-    else if(claims == "registered"){
+    else if(claims === "registered"){
       this.setState({isLoggedIn: true, isAdmin: false})
     }else{
       this.setState({isLoggedIn: false,
@@ -46,9 +47,9 @@ class Navbar extends Component {
     }      
   }
 
-  logOut = () => {
+  logOut = async() => {
     if(window.confirm("are you sure?")) {
-      this.props.logOut()
+      await this.props.logOut()
       myFirebase.auth().signOut();
       window.location.href = '/loginPage'
     }
@@ -104,7 +105,8 @@ const mapDispatchToProps = (dispatch) => {
     logOut: async () => { 
       await dispatch(setLogStatus({
         claims: 'guest',
-        uid: ''
+        uid: '',
+        isVerified: false,
       }))
     }
   }

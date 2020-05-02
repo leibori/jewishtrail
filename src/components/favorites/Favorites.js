@@ -9,18 +9,19 @@ import "bootstrap/dist/css/bootstrap.css";
 import { connect } from 'react-redux'
 
 class Favorites extends Component {
-
-  state = {
-    favoritesArr: [],
-    siteCount: 0,
-    roadCount: 0,
-    userid: "",
-    siteFilter: true,
-    roadFilter: true,
-    done: false,
-    empty: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      favoritesArr: [],
+      siteCount: 0,
+      roadCount: 0,
+      userid: "",
+      siteFilter: true,
+      roadFilter: true,
+      done: false,
+      empty: false,
+    }
   }
-
 
   async componentDidMount(){
     const uid = this.props.uid
@@ -138,7 +139,7 @@ class Favorites extends Component {
                   </div>
 
               );
-  });
+    });
     return (
       <div style ={{width: '100%'}}>
         {this.state.favoritesArr.length === 0 && <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
@@ -179,7 +180,7 @@ class Favorites extends Component {
                             }
                             </div>
                         );
-                        })}}
+                        })}
         </div>
       </div>
       )
@@ -189,6 +190,7 @@ class Favorites extends Component {
 const mapStateToProps = (state) => {
   return {
       uid: state.status.uid,
+      claims: state.status.claims,
   };
 };
 

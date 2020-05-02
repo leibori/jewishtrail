@@ -8,7 +8,7 @@
 	background: #ddd;
 } */
 
-div.container {
+div.container1 {
 	background-color: #fff;
     /* width: 700px; */
     width: 55%;
@@ -26,7 +26,7 @@ div.container {
     justify-content: center;
 }
 
-div.container::before {
+div.container1::before {
 	content: "";
 	height: 220px;
     /* width: 300px; */
@@ -37,7 +37,7 @@ div.container::before {
 	transform: skew(40deg);
 }
 
-div.container::after {
+div.container1::after {
 	content: 'Jewish Trail Team';
 	position: absolute;
     top: 78px;
@@ -77,7 +77,7 @@ p.info::before {
 }
 
 @media only screen and (max-width: 600px) {
-    div.container {
+    div.container1 {
         width: 100%;
         /* justify-content: center; */
     }

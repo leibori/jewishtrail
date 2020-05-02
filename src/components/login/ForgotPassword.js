@@ -14,6 +14,8 @@ export default class ForgotPassword extends Component{
     onSubmit = () => {
         const { email } = this.state;
         forgotPassword(email)
+        alert("A password reset email was sent to " + email )
+        this.props.history.push("/loginpage")
     }
 
     onChange = (e) => {
@@ -38,7 +40,7 @@ export default class ForgotPassword extends Component{
                     <input required name="email" onChange={this.onChange} type='email' placeholder='Email...'></input>
                   </div>
                   <div className='field space'>
-                    <input type='submit' value='Log In'></input>
+                    <input type='submit' value='Reset Password'></input>
                   </div>
                   <div className='pass'>
                     <a href='/about'>Continue as a guest</a>
