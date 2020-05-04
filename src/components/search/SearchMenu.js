@@ -14,6 +14,14 @@ class SearchMenu extends Component {
     constructor(props) {
         super(props);
 
+        // let formerState;
+        // if (props.location && props.location.state){
+        //     formerState =  props.location.state
+        // }
+        // else {
+        //     console.log('Didnt get anything');
+        // }
+
         this.state = {
            
             // In case a user is registered this hold the site id's of it's favorite sites.
@@ -24,6 +32,8 @@ class SearchMenu extends Component {
 
             // Pulls a string in the address' parameters into "searchVal", otherwise sets empty string.
             searchVal: props.match.params.searchVal ? props.match.params.searchVal : '',
+
+            // formerState: formerState ? formerState : '',
 
         }
         // console.log(this.state.searchVal)
@@ -73,6 +83,7 @@ class SearchMenu extends Component {
         updateUserFavoriteSites(uid, newSiteFavorites)
 
         this.setState({siteFavoriteList: newSiteFavorites});
+        alert("The road was removed from your favorites.");
     }
 
     deleteRoadInFavorites = async(e, trailId) => {
@@ -84,6 +95,7 @@ class SearchMenu extends Component {
         updateUserFavoriteRoads(uid, newRoadFavorites)
 
         this.setState({roadFavoriteList: newRoadFavorites});
+        alert("The trail was removed from your favorites.");
     }
    
     canRenderAddRoad = (sid) => {
@@ -113,7 +125,7 @@ class SearchMenu extends Component {
         favorites.push(sid);
         updateUserFavoriteSites(uid, favorites);
         this.setState({siteFavoriteList: favorites})
-        console.log(favorites)
+        alert("The site was added to your favorites.");
     }
 
 
@@ -126,6 +138,7 @@ class SearchMenu extends Component {
         favorites.push(trailId)
         updateUserFavoriteRoads(uid, favorites)
         this.setState({roadFavoriteList: favorites})
+        alert("The trail was added to your favorites.");
     }
 
 
@@ -159,6 +172,7 @@ class SearchMenu extends Component {
             <GeneralSearch style={{width: '100%'}}
                 {...{siteButtonsProps, roadButtonsProps}}
                 searchVal={this.state.searchVal}
+                // formerState={this.state.formerState}
                 returnTo='search'/>
         );
     }
