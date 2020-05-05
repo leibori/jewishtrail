@@ -1,4 +1,4 @@
-const siteFavoritesReducer = (state = {siteFavorites: []}, action) => {
+const siteFavoritesReducer = (state = [], action) => {
     switch(action.type) {
         case 'SET_SITE_FAVORITES':
             return action.siteFavorites
