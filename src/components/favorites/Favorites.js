@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import {getFavorites, updateUserFavoriteSites, updateUserFavoriteRoads } from '../firebase/FirebaseUtilities'
 import SiteFavComponents from './siteFavComponents'
 import RoadFavComponent from './roadFavComponent'
-import { myDatabase } from '../firebase/firebase'
 import { PaginatedList } from 'react-paginated-list'
 import ReactLoading from "react-loading";
 import "bootstrap/dist/css/bootstrap.css";
+import { setSiteFavorites, setTrailFavorites} from '../../actions/index'
 import { connect } from 'react-redux'
 
 class Favorites extends Component {
@@ -26,6 +26,7 @@ class Favorites extends Component {
   async componentDidMount(){
     const uid = this.props.uid
     var siteList = await getFavorites(uid);
+    // this.props.setFavorites(siteList.filter((currentValue) => {}))
     if(siteList.length === 0){
       this.setState({empty: true})
     }
@@ -191,11 +192,20 @@ const mapStateToProps = (state) => {
   return {
       uid: state.status.uid,
       claims: state.status.claims,
+      siteFavorites: state.siteFavorites,
+      trailFavorites: state.trailFavorites,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    setSiteFavorites: (siteFavorites) => {
+      dispatch(setSiteFavorites(siteFavorites))
+  },
+    setTrailFavorites: (trailFavorites) => {
+        dispatch(setTrailFavorites(trailFavorites))
+    }
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

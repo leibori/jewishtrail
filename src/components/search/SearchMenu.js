@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {getFavoritesIDs} from '../firebase/FirebaseUtilities'
 import {updateUserFavoriteSites, getRoadFavoritesIDs, updateUserFavoriteRoads} from '../firebase/FirebaseUtilities'
 import GeneralSearch from './GeneralSearch/';
+import { setSiteFavorites, setTrailFavorites } from '../../actions/index'
 import { connect } from 'react-redux'
 
 
@@ -80,9 +81,10 @@ class SearchMenu extends Component {
 
         var newSiteFavorites = siteFavoriteList.filter(s => s !== sid).map(s=>s);
 
+        this.props.setSiteFavorites(newSiteFavorites)
         updateUserFavoriteSites(uid, newSiteFavorites)
-
         this.setState({siteFavoriteList: newSiteFavorites});
+
         alert("The road was removed from your favorites.");
     }
 
@@ -93,8 +95,9 @@ class SearchMenu extends Component {
         var newRoadFavorites = roadFavoriteList.filter(r => r !== trailId).map(r=>r);
 
         updateUserFavoriteRoads(uid, newRoadFavorites)
-
+        this.props.setTrailFavorites(newRoadFavorites)
         this.setState({roadFavoriteList: newRoadFavorites});
+
         alert("The trail was removed from your favorites.");
     }
    
@@ -122,9 +125,13 @@ class SearchMenu extends Component {
     addSiteToFavorites = async(e, sid) => {
         const { uid } = this.props.logStatus
         const favorites = this.state.siteFavoriteList;
+
         favorites.push(sid);
+
+        this.props.setSiteFavorites(favorites)
         updateUserFavoriteSites(uid, favorites);
         this.setState({siteFavoriteList: favorites})
+        
         alert("The site was added to your favorites.");
     }
 
@@ -135,9 +142,13 @@ class SearchMenu extends Component {
     addRoadToFavorites = async(e, trailId) => {
         const { uid } = this.props.logStatus
         var favorites = this.state.roadFavoriteList
+
         favorites.push(trailId)
+
+        this.props.setTrailFavorites(favorites)
         updateUserFavoriteRoads(uid, favorites)
         this.setState({roadFavoriteList: favorites})
+        
         alert("The trail was added to your favorites.");
     }
 
@@ -149,9 +160,19 @@ class SearchMenu extends Component {
         console.log(this.props.logStatus)
         const { claims, uid } = this.props.logStatus
         if (claims != 'guest') {
+            const siteFavorites = this.props.siteFavorites
+            const trailFavorites = this.props.trailFavorites
+            if (siteFavorites == []) {
+                siteFavorites = await getFavoritesIDs(uid)
+                this.props.setSiteFavorites(siteFavorites)
+            } 
+            if (trailFavorites == []) {
+                trailFavorites = await getRoadFavoritesIDs(uid)
+                this.props.setTrailFavorites(trailFavorites)
+            }
             this.setState({
-                siteFavoriteList: await getFavoritesIDs(uid),
-                roadFavoriteList: await getRoadFavoritesIDs(uid)
+                siteFavoriteList: siteFavorites,
+                roadFavoriteList: trailFavorites
             });
         }
     }
@@ -181,11 +202,20 @@ class SearchMenu extends Component {
 const mapStateToProps = (state) => {
     return {
         logStatus: state.status,
+        siteFavorites: state.siteFavorites,
+        trailFavorites: state.trailFavorites,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {}
+    return {
+        setSiteFavorites: (siteFavorites) => {
+            dispatch(setSiteFavorites(siteFavorites))
+        },
+        setTrailFavorites: (trailFavorites) => {
+            dispatch(setTrailFavorites(trailFavorites))
+        }
+    }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchMenu);
