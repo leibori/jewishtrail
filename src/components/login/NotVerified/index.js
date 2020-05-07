@@ -1,6 +1,6 @@
 import React from 'react';
 import './NotVerified.css';
-
+//
 export default function NotVerified(props) {
     const text = "Please check your email to verify your account."
     return (
