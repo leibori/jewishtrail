@@ -207,13 +207,13 @@ class GeneralSearch extends Component {
                         <ReactLoading type={"bars"} color={"white"} />
                     </div>
                     ) : finishedSearch && searchResult.length !== 0 ? (
-                    <div>
-                        <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px' }}>
+                    <div style={{width: '100%'}}>
+                        <div className="container" style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px' }}>
                             {
                                 searchResult.filter(this.resultsFilter).length == 0 ?
                                 <img src="https://premieregyptonline.com/images/no-results.png"/> :
                                 searchResult.filter(this.resultsFilter).length > 9 ?
-                                < PaginatedList
+                                < PaginatedList style={{width:'100%'}}
                                 list={searchResult.filter(this.resultsFilter)}
                                 itemsPerPage={9}
                                 renderList={mapping}/> : mapping(searchResult.filter(this.resultsFilter))}

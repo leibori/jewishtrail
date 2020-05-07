@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-
+import './index.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,16 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const buttonStyles = {  
-  marginTop: '10px',
-  color: '#b5d7c7',
-  borderColor: '#b5d7c7',
-  textAlign: 'center',
-  borderRadius: '4px',
-  background: 'transparent',
-  border: 'none',
 
-}
 
 const SiteComponent = (props) => {
   const { site, siteButtonsProps} = props;
@@ -73,13 +64,13 @@ const SiteComponent = (props) => {
                 <Typography variant="body2" gutterBottom>{site.city}, {site.country}</Typography>
                 <Grid item container direction='row' spacing={2}>
                   <Grid item xs={6}>
-                    <button variant="outlined" style={{...buttonStyles, border: '1px solid rgba(0, 0, 0, 0.23)'}}>
-                      <a style={{color: 'inherit'}} href={info_url}>View Site</a>
+                    <button className='view-button' variant="outlined">
+                      <a href={info_url}>View Site</a>
                     </button>
                   </Grid>
                   { buttonProps &&
                     (<Grid item>
-                      <button variant="outlined" style={buttonStyles} onClick={(e) => buttonProps.buttonFunction(e, site.id)}>{buttonProps.buttonName}</button>
+                      <button variant="outlined" onClick={(e) => buttonProps.buttonFunction(e, site.id)}>{buttonProps.buttonName}</button>
                     </Grid>)
                   }
                 </Grid>
