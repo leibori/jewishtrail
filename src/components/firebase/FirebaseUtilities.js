@@ -83,6 +83,7 @@ export async function extarctData(kind,arrayList,id){
                 imageUrl: getData.imageUrl,
                 city: getData.city,
                 country: getData.country,
+                vote: getData.vote,
                 id: id,
                 uid: site,
                 type: kind
