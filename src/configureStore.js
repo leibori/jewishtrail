@@ -1,5 +1,4 @@
 import { createStore } from 'redux'
-import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import allReducers from './reducers'
 
@@ -32,12 +31,9 @@ export const persistConfig = {
 
 const persistedState = loadFromLocalStorage()
 
-const persistedReducer = persistReducer(persistConfig, allReducers)
-
-export var store = createStore(persistedReducer,
+export var store = createStore(
+    allReducers,
     persistedState,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 store.subscribe(() => saveTolLocalStorage(store.getState()))
-
-export var persistor = persistStore(store)
