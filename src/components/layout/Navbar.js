@@ -53,7 +53,7 @@ class Navbar extends Component {
 
   render() {
     const user_name = this.props.status.user_name;
-    const firstName = user_name.split(' ')[0];
+    const firstName = user_name ? user_name.split(' ')[0] : undefined;
     return (
       <nav className="nav-wrapper">
           <div className="App transparent">
