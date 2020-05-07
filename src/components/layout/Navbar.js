@@ -10,7 +10,7 @@ import {
     Link,
     NavLink
   } from "react-router-dom";
-import { setLogStatus, setSiteFavorites, setTrailFavorites } from '../../actions/index';
+import { setLogStatus, setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../../actions/index';
 import { connect } from 'react-redux'
 
 const fontStyle = {
@@ -108,6 +108,8 @@ const mapDispatchToProps = (dispatch) => {
         uid: '',
         isVerified: false,
       }))
+      dispatch(setLikes([]))
+      dispatch(setDislikes([]))
       dispatch(setSiteFavorites([]))
       dispatch(setTrailFavorites([]))
     }

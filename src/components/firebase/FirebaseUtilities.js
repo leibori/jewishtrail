@@ -92,16 +92,16 @@ export async function extarctData(kind,arrayList,id){
     }
     return resultOfSite
 }
-export async function getFavorites(userid){
+export async function getFavorites(siteIdArray,roadsIdArray){
     var collectionName = ['sites','roads']
     var resultOfSite = []
-    var siteList = await getFavoritesIDs(userid)
-    var roadList = await getRoadFavoritesIDs(userid)
+    // var siteList = await getFavoritesIDs(userid)
+    // var roadList = await getRoadFavoritesIDs(userid)
     for(var i = 0; i < collectionName.length; ++i) {
         if(collectionName[i] == 'sites')
-            resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],siteList,resultOfSite.length))
+            resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],siteIdArray,resultOfSite.length))
         else{
-            resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],roadList,resultOfSite.length))
+            resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],roadsIdArray,resultOfSite.length))
         }
     }
     return resultOfSite;
