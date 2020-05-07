@@ -5,7 +5,7 @@ import { PaginatedList } from 'react-paginated-list'
 import RoadComponent from 'components/road/RoadComponent';
 import ReactLoading from "react-loading";
 // import Select from 'react-select'
-import 'index.css';         
+import './index.css';         
 
 const headerStyle = {
     color: 'white',
@@ -160,13 +160,13 @@ class GeneralSearch extends Component {
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
         const mapping = (list) => list.map((site, i) => {
             return  (
-                        <div key={i}>
+                        <div style={{width: '100%'}} key={i}>
                         {site.type === 'sites' && this.state.siteFilter ?
-                            (<div>  
+                            (<div style={{width: '100%'}}>  
                                 <SiteComponent {...{siteButtonsProps}} site={site} />
                             </div>)
                             : site.type === 'roads' && this.state.roadFilter ?
-                            (<div>  
+                            (<div style={{width: '100%'}}>
                                  <RoadComponent {...{roadButtonsProps}} road={site}/>
                             </div>) : ''
                         }
@@ -176,41 +176,44 @@ class GeneralSearch extends Component {
         });      
 
         return (
-            <div style={{width: '100%'}}>
-                <form style={{ width: '100%'}}>
-                    <header style={headerStyle}>Find a trail</header>
-                    <div className='field'>
-                        <span><i className="fas fa-search" style={{marginLeft: '12px'}}></i></span>
-                        <input style={{fontSize: '16px'}} required  placeholder='Search by trail name or location...' type="text" onChange={this.updateSearchValue} ref={this.searchVal} value={this.state.searchVal}></input>
-                    </div>                        
-                    <button
-                        onClick={this.onSearchButtonClicked}
-                        type="submit"
-                        style={{backgroundColor: 'rgba(255,255,255,0.4)', border: '1px solid black', borderRadius: '4px', display: 'none'}}>Search</button>
-                
-                    <p className="error pink-text center-align"></p>
-                </form>
-                
+            <div style={{height: '100%', width: '100%'}}>
+                <div className="searchbar">
+                    <form style={{paddingBottom: '0%', marginTop: '0%', width: '100%'}}>
+                        <header style={headerStyle}>Find a trail</header>
+                        <div className='field'>
+                            <span><i className="fas fa-search" style={{marginLeft: '12px'}}></i></span>
+                            <input style={{fontSize: '16px'}} required  placeholder='Search by trail name or location...' type="text" onChange={this.updateSearchValue} ref={this.searchVal} value={this.state.searchVal}></input>
+                        </div>                        
+                        <button
+                            onClick={this.onSearchButtonClicked}
+                            type="submit"
+                            style={{backgroundColor: 'rgba(255,255,255,0.4)', border: '1px solid black', borderRadius: '4px', display: 'none'}}>Search</button>
+                    
+                        <p className="error pink-text center-align"></p>
+                    </form>
+                    {finishedSearch && searchResult.length !== 0 && 
+                        <div>
+                                <button
+                                    onClick={this.siteFilterClicked}
+                                    style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
+                                <button
+                                    onClick={this.roadFilterClicked}
+                                    style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
+                            </div>}
+                </div>
+                <div className="results" style={{zIndex:'0'}}>
                 { startedSearch && ! finishedSearch ? (
                     <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
                         <ReactLoading type={"bars"} color={"white"} />
                     </div>
                     ) : finishedSearch && searchResult.length !== 0 ? (
-                    <div>
-                        <div style={{marginBottom: '5%'}}>
-                            <button
-                                onClick={this.siteFilterClicked}
-                                style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
-                            <button
-                                onClick={this.roadFilterClicked}
-                                style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
-                        </div>
-                        <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px' }}>
+                    <div style={{width: '100%'}}>
+                        <div className="container" style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px' }}>
                             {
                                 searchResult.filter(this.resultsFilter).length == 0 ?
                                 <img src="https://premieregyptonline.com/images/no-results.png"/> :
                                 searchResult.filter(this.resultsFilter).length > 9 ?
-                                < PaginatedList
+                                < PaginatedList style={{width:'100%'}}
                                 list={searchResult.filter(this.resultsFilter)}
                                 itemsPerPage={9}
                                 renderList={mapping}/> : mapping(searchResult.filter(this.resultsFilter))}
@@ -221,6 +224,7 @@ class GeneralSearch extends Component {
                         // <h4 style={{ fontWeight: '650', marginLeft: '5%' , color: 'rgba(223,30,38,0.9)'}}>No matches found!</h4>
                     ) : ''
                 }
+                </div>
                 
             </div>
         )    

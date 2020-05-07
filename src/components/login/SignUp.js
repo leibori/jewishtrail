@@ -3,6 +3,9 @@ import { Redirect } from 'react-router-dom';
 import  {myFirebase} from '../firebase/firebase';
 import {signup, signInWithGoogle} from '../firebase/FirebaseLoginUtils'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
+import ReCAPTCHA from "react-google-recaptcha";
+import { recaptchaKey } from 'keys'
+
 
 const centerStyle = {
   margin: 'auto',
@@ -19,6 +22,7 @@ class SignUp extends Component {
       password: '',
       confpassword: '',
       username:'',
+      recaptchaRef: React.createRef(),
     };
     this.onSignup = this.onSignup.bind(this);
     this.handleChange = this.handleChange.bind();
@@ -52,7 +56,11 @@ class SignUp extends Component {
 
   onSignup = (e) => {
     e.preventDefault();
-    const { email, password, username, confpassword } = this.state;
+    const { email, password, username, confpassword, recaptchaRef } = this.state;
+    if (!recaptchaRef.current.getValue()){
+      alert("Please fill reCaptcha box.")
+      return
+    }
     if ( confpassword !== password ){
       alert("Passwords does not match.")
       return;
@@ -61,7 +69,7 @@ class SignUp extends Component {
     // this.props.history.push('/Menu');
   }
   render() {
-    const { email, password, username } = this.state;
+    const { email, password, username, recaptchaRef } = this.state;
     return (
     <div>
         <title>Login</title>
@@ -86,18 +94,13 @@ class SignUp extends Component {
                 <span className="fas fa-lock"></span>
                 <input required name="confpassword" onChange={this.handleChange} type='password' placeholder='Confirm Pasword...'></input>
               </div>
+              <div className='space'>
+                <ReCAPTCHA ref={recaptchaRef} sitekey={recaptchaKey}/>
+              </div>
               <div className='field space'>
                 <input type='submit' value='Sign Up'></input>
               </div>
               <div className='login'>———————— or ————————</div>
-                <div className='link'>
-                {/* <div onClick={this.googleLogin} className='google'>
-                  <span>
-                    <i className='fab fa-google'></i>
-                  </span>
-                    Login with Google
-                </div> */}
-              </div>
               <div className='pass'>
                 <a href='/menu'>Continue as a guest</a>
               </div>
