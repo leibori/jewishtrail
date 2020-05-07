@@ -14,7 +14,7 @@ import { setLogStatus, setSiteFavorites, setTrailFavorites, setLikes, setDislike
 import { connect } from 'react-redux'
 
 const fontStyle = {
-  // fontFamily: 'Cambay',
+  // fontFamily: 'Cambay, sans-sarif',
   fontSize: '17px',
   color:"white",
   fontWeight:'1000',
@@ -61,7 +61,8 @@ class Navbar extends Component {
       <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
         {/*<ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
       <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" />
-        { user_name && <text style={{...fontStyle, WebkitTextStroke: '1px 1px black', fontFamily: 'Cambay', color: 'white', textShadow: 'none'}}><span style={{fontWeight: '600'}} className="far fa-user">{" " + firstName}</span></text>}
+        { user_name && <div><span style={{color: 'white',}} className="far fa-user"></span>
+          <span style={{fontSize: '17px', WebkitTextStroke: '1px 1px black', fontFamily: 'Cambay', color: 'white', fontWeight: '1000',}}>{" " + firstName}</span></div>}
         <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
           <ReactBootStrap.Nav className="mr-auto">
             { this.state.isLoggedIn ? (
