@@ -167,7 +167,7 @@ class GeneralSearch extends Component {
                             </div>)
                             : site.type === 'roads' && this.state.roadFilter ?
                             (<div style={{width: '100%'}}>
-                                 <RoadComponent {...{roadButtonsProps}} road={site}/>
+                                 <RoadComponent {...{roadButtonsProps,voteButtonsProps}} road={site}/>
                             </div>) : ''
                         }
                         </div>
