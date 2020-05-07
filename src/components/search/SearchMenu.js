@@ -292,7 +292,6 @@ class SearchMenu extends Component {
         const roadButtonsProps = [{buttonFunction: this.addRoadToFavorites, buttonName: buttonName1, canRender: this.canRenderAddRoad},
             {buttonFunction: this.deleteRoadInFavorites, buttonName: buttonName2, canRender: this.canRenderDeleteRoad}];
         return (
-            
             <GeneralSearch style={{width: '100%'}}
                 {...{siteButtonsProps, roadButtonsProps,voteButtonsProps}}
                 searchVal={this.state.searchVal}

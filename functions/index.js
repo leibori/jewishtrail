@@ -64,7 +64,7 @@ exports.deleteUserByEmails = functions.https.onCall((data, context) => {
 });
 
 exports.updateVotes = functions.https.onRequest(async (request,response)=>{
-    let map = {}
+  try {let map = {}
     const snapshot = await db.collection('votes').get()
     snapshot.docs.forEach(doc => {
        var data = doc.data()
@@ -87,5 +87,9 @@ exports.updateVotes = functions.https.onRequest(async (request,response)=>{
          db.collection('sites').doc(key).update({ 
           vote: ratio,
         })    
+    }
+    response.status(200).json({message: 'success'});}
+    catch(e) {
+      response.status(500).json({message: 'fail'});
     }
 })
