@@ -14,11 +14,11 @@ import { setLogStatus, setSiteFavorites, setTrailFavorites, setLikes, setDislike
 import { connect } from 'react-redux'
 
 const fontStyle = {
+  // fontFamily: 'Cambay',
   fontSize: '17px',
   color:"white",
   fontWeight:'1000',
   textShadow:'2px 2px #202020'
-
 }
 
 
@@ -52,16 +52,18 @@ class Navbar extends Component {
   }
 
   render() {
+    const user_name = this.props.status.user_name;
+    const firstName = user_name.split(' ')[0];
     return (
       <nav className="nav-wrapper">
           <div className="App transparent">
         {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
-          <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
+      <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
         {/*<ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
-        <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" />
+      <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" />
+        { user_name && <text style={{...fontStyle, WebkitTextStroke: '1px 1px black', fontFamily: 'Cambay', color: 'white', textShadow: 'none'}}><span style={{fontWeight: '600'}} className="far fa-user">{" " + firstName}</span></text>}
         <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
           <ReactBootStrap.Nav className="mr-auto">
-          
             { this.state.isLoggedIn ? (
               <ReactBootStrap.Nav.Link style={fontStyle} onClick={this.logOut}>Log Out</ReactBootStrap.Nav.Link>
               ) : (
@@ -101,6 +103,7 @@ const mapDispatchToProps = (dispatch) => {
     logOut: async () => { 
       await dispatch(setLogStatus({
         claims: 'guest',
+        user_name: '', 
         uid: '',
         isVerified: false,
       }))
