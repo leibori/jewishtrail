@@ -64,7 +64,6 @@ exports.deleteUserByEmails = functions.https.onCall((data, context) => {
 });
 
 exports.updateVotes = functions.https.onRequest(async (request,response)=>{
-    const timestamp = db.FieldValue.serverTimestamp()
     let map = {}
     const snapshot = await db.collection('votes').get()
     snapshot.docs.forEach(doc => {
@@ -84,9 +83,9 @@ exports.updateVotes = functions.https.onRequest(async (request,response)=>{
     for(var key  in map) {
          const count = map[key]
          const ratio = (count.positive / (count.positive + count.negative)) * 100
+         console.log(ratio + " " + key)
          db.collection('sites').doc(siteID).update({ 
           vote: ratio,
-          timestamp: timestamp,
         })    
     }
 })
