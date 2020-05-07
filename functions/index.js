@@ -84,7 +84,7 @@ exports.updateVotes = functions.https.onRequest(async (request,response)=>{
          const count = map[key]
          const ratio = (count.positive / (count.positive + count.negative)) * 100
          console.log(ratio + " " + key)
-         db.collection('sites').doc(siteID).update({ 
+         db.collection('sites').doc(key).update({ 
           vote: ratio,
         })    
     }
