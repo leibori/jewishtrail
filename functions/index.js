@@ -62,3 +62,31 @@ exports.deleteUserByEmails = functions.https.onCall((data, context) => {
     return err;
   });
 });
+
+exports.updateVotes = functions.https.onRequest(async (request,response)=>{
+    const timestamp = db.FieldValue.serverTimestamp()
+    let map = {}
+    const snapshot = await db.collection('votes').get()
+    snapshot.docs.forEach(doc => {
+       var data = doc.data()
+       const {siteID, vote} = data
+       if(!(siteID in map)){
+         map[siteID] = {"positive": 0, "negative": 0}
+       }
+       const count  = map[siteID]
+       if(vote){
+        map[siteID] = {"positive": count.positive += 1, "negative": count.negative}
+       }
+       else{
+        map[siteID] = {"positive": count.positive, "negative": count.negative += 1}         
+       }
+    })
+    for(var key  in map) {
+         const count = map[key]
+         const ratio = (count.positive / (count.positive + count.negative)) * 100
+         db.collection('sites').doc(siteID).update({ 
+          vote: ratio,
+          timestamp: timestamp,
+        })    
+    }
+})
