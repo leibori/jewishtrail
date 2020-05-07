@@ -2,8 +2,9 @@ import React, { useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
 import  config  from "../firebase/firebase.js";
 import { AuthContext } from "./Auth.js";
+import { useAlert } from 'react-alert'
 
-
+const alert = useAlert()
 const SignIn = ({ history }) => {
   const handleLogin = useCallback(
     async event => {
@@ -15,7 +16,7 @@ const SignIn = ({ history }) => {
           .signInWithEmailAndPassword(email.value, password.value);
         history.push("/");
       } catch (error) {
-        alert(error);
+        alert.show(error)
       }
     },
     [history]

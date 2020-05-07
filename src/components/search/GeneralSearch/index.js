@@ -35,9 +35,8 @@ class GeneralSearch extends Component {
         super(props);
 
         // Extracting the props that the constructor recieves.
-        const { siteButtonsProps, roadButtonsProps, searchVal, returnTo } = props;
+        const { siteButtonsProps, roadButtonsProps, voteButtonsProps ,searchVal, returnTo } = props;
         // const { buttonName, onRoadClickMethod, onSiteClickMethod, canRenderButtonSite, canRenderButtonRoad, searchVal, returnTo, classes } = props;
-
         this.state = {
             // Is true if a search value is sent, and false otherwise.
             startedSearch: false,
@@ -49,7 +48,8 @@ class GeneralSearch extends Component {
 
             // The array of search results.
             searchResult: [],
-
+            // Button content for voting
+            voteButtonsProps,
             // Button content next to each entry
             siteButtonsProps,
 
@@ -63,7 +63,7 @@ class GeneralSearch extends Component {
             roadFilter: true,
 
         }
-
+        
         this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
 
         this.updateSearchValue = this.updateSearchValue.bind(this);
@@ -146,8 +146,8 @@ class GeneralSearch extends Component {
     // Renders the component.
     render() {
 
-        const { siteButtonsProps, roadButtonsProps, startedSearch, finishedSearch } = this.state;
-
+        const { siteButtonsProps, roadButtonsProps, voteButtonsProps,startedSearch, finishedSearch } = this.state;
+        
         // Predicate that decides the color of the button of the site filter.
         const siteColorPredicate = !this.state.roadFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
 
@@ -162,8 +162,8 @@ class GeneralSearch extends Component {
             return  (
                         <div style={{width: '100%'}} key={i}>
                         {site.type === 'sites' && this.state.siteFilter ?
-                            (<div style={{width: '100%'}}>  
-                                <SiteComponent {...{siteButtonsProps}} site={site} />
+                            (<div>  
+                                <SiteComponent {...{siteButtonsProps,voteButtonsProps}} site={site} />
                             </div>)
                             : site.type === 'roads' && this.state.roadFilter ?
                             (<div style={{width: '100%'}}>

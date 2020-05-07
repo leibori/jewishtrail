@@ -70,7 +70,7 @@ const SiteHandle = ({props,deleteSite}) => {
                 <Typography variant="body2" gutterBottom>{props.city}, {props.country}</Typography>
                 <Grid item container direction='row' spacing={2}>
                   <Grid item xs={6}>
-                    <Button className={buttonClasses.button} variant="outlined" style={{...buttonStyle, border: '1px solid rgba(0, 0, 0, 0.23)'}} size="small" href={info_url}>View Site</Button>
+                    <Button className={buttonClasses.button} variant="outlined" style={{...buttonStyle, border: '1px solid rgba(0, 0, 0, 0.23)'}} href={info_url}>View Site</Button>
                   </Grid>
                   <Grid item xs={6}>
                     <Button onClick={()=>{if (window.confirm('Are you sure you wish to delete this item?')) deleteSite(props.id,props.uid,props.type)}} className={buttonClasses.button} variant="outlined" style={{border: 'none',background: 'none',width: '40px',height:'40px',maxHeight: '40px',maxWidth: '40px',backgroundColor: 'tranparent'}} size="small">
