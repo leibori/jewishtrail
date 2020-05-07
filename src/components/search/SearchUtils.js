@@ -91,7 +91,8 @@ export async function findFromDB(searchVals, collectionName) {
             tags: result.document.data().tags,
             imageUrl: result.document.data().imageUrl,
             id: result.document.id,
-            type: result.type
+            type: result.type,
+            vote: result.document.data().vote,
         })
     })
 

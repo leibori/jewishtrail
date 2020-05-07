@@ -48,6 +48,7 @@ const buttonVote = {
 }
 const SiteComponent = (props) => {
   const { site, siteButtonsProps,voteButtonsProps} = props;
+  console.log(site);
   console.log(voteButtonsProps)
   const [likeFlag,setLike] = useState(voteButtonsProps[0].colorLike(site.id,voteButtonsProps[0].buttonName))
   const [dislikeFlag,setDislike] = useState(voteButtonsProps[1].colorDislike(site.id,voteButtonsProps[1].buttonName))
@@ -79,6 +80,7 @@ const SiteComponent = (props) => {
   const dislike = voteButtonsProps[1] ? voteButtonsProps[1] : undefined
   
   return (
+    console.log(site.vote) ||
     <div className={classes.root}>
       <Paper className={classes.paper}>
         {/* <Link to={info_url} className="black-text"> */}
@@ -108,7 +110,7 @@ const SiteComponent = (props) => {
                   }
                   {true &&
                   (<Grid item style ={{marginLeft:'20%'}}>
-                    <Circle progress={35} progressColor="#50c878" size={80} bgColor="#ff0000" lineWidth={20} textColor="#3f704d"></Circle>
+                    <Circle progress={site.vote} progressColor="#50c878" size={80} bgColor="#ff0000" lineWidth={20} textColor="#3f704d"></Circle>
                   </Grid>)
                   }
                   {like && like.canRender(site.id) &&
