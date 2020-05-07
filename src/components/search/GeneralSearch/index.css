@@ -1,27 +1,21 @@
-
-
-.field span {
-    color: #222;
-    width: 10px;
-    line-height: 200px;
-    margin-left: 15px;
-}
-
-.field {
-    position: relative;
-    height: 45px;
+.searchbar {
+    background-color: #4ee44e;
+    padding-top: 30px;
+    /* position:-webkit-sticky;
+    position:sticky;  */
+    position: fixed;
+    z-index: 1;
+    margin-top: 0px;
+    top: 0%;
     width: 100%;
-    display: flex;
-    background: rgba(255, 255, 255, 0.94);
-    border-radius: 5px;
 }
 
-.field input {
-    height: 100%;
-    width: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
+.searchbar button {
+    margin: 10px;
+    padding: 3px;
 }
+
+.results {
+    width: 100%;
+    margin-top: 190px;
+  }
