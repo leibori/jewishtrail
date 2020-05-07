@@ -5,6 +5,7 @@ import RoadFavComponent from './roadFavComponent'
 import { PaginatedList } from 'react-paginated-list'
 import ReactLoading from "react-loading";
 import "bootstrap/dist/css/bootstrap.css";
+import {getFavoritesIDs,getRoadFavoritesIDs} from '../firebase/FirebaseUtilities'
 import { setSiteFavorites, setTrailFavorites} from '../../actions/index'
 import { connect } from 'react-redux'
 
@@ -25,8 +26,20 @@ class Favorites extends Component {
 
   async componentDidMount(){
     const uid = this.props.uid
-    var siteList = await getFavorites(uid);
-    // this.props.setFavorites(siteList.filter((currentValue) => {}))
+    // console.log(this.props.siteFavorites)
+    // console.log(this.props.trailFavorites)
+    // var siteList = await getFavorites(uid);
+    let siteFavorites = this.props.siteFavorites
+    let trailFavorites = this.props.trailFavorites
+    if (siteFavorites.length === 0) {
+      siteFavorites = await getFavoritesIDs(uid)
+      this.props.setSiteFavorites(siteFavorites)
+    }
+    if (trailFavorites.length === 0) {
+      trailFavorites = await getRoadFavoritesIDs(uid)
+      this.props.setTrailFavorites(trailFavorites)
+    } 
+    var siteList = await getFavorites(siteFavorites,trailFavorites)
     if(siteList.length === 0){
       this.setState({empty: true})
     }
@@ -71,9 +84,11 @@ class Favorites extends Component {
       }
     })
     if(type == 'sites'){
+      this.props.setSiteFavorites(uidList)
       updateUserFavoriteSites(userid, uidList)
     }
     else{
+      this.props.setTrailFavorites(uidList)
       updateUserFavoriteRoads(userid, uidList)
     }
   }
