@@ -81,12 +81,14 @@ exports.updateVotes = functions.https.onRequest(async (request,response)=>{
        }
     })
     for(var key  in map) {
-         const count = map[key]
-         const ratio = (count.positive / (count.positive + count.negative)) * 100
-         console.log(ratio + " " + key)
-         db.collection('sites').doc(key).update({ 
-          vote: ratio,
-        })    
+      const count = map[key]
+      let collectionName = 'sites'
+      const ratio = (count.positive / (count.positive + count.negative)) * 100
+      const element = await myDatabase.collection('sites').doc(key).get()
+      collectionName =  element.exists ? 'sites' : 'roads'
+      db.collection(collectionName).doc(key).update({ 
+        vote: ratio,
+      })    
     }
     response.status(200).json({message: 'success'});}
     catch(e) {
