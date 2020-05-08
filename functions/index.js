@@ -84,14 +84,16 @@ exports.updateVotes = functions.https.onRequest(async (request,response)=>{
       const count = map[key]
       let collectionName = 'sites'
       const ratio = (count.positive / (count.positive + count.negative)) * 100
-      const element = await myDatabase.collection('sites').doc(key).get()
-      collectionName =  element.exists ? 'sites' : 'roads'
-      db.collection(collectionName).doc(key).update({ 
-        vote: ratio,
+      await db.collection('sites').doc(key).get().then((doc) => {
+        collectionName =  doc.exists ? 'sites' : 'roads'
+        db.collection(collectionName).doc(key).update({ 
+          vote: ratio,
+        })
       })    
     }
     response.status(200).json({message: 'success'});}
     catch(e) {
+      console.log(e)
       response.status(500).json({message: 'fail'});
     }
 })
