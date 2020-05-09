@@ -1,5 +1,4 @@
 import { createStore } from 'redux'
-import storage from 'redux-persist/lib/storage'
 import allReducers from './reducers'
 
 
@@ -25,7 +24,6 @@ function loadFromLocalStorage() {
 
 export const persistConfig = {
     key: 'root',
-    storage,
     version: 0,
 }
 
