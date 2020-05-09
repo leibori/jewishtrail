@@ -6,9 +6,24 @@ import { PaginatedList } from 'react-paginated-list'
 import ReactLoading from "react-loading";
 import "bootstrap/dist/css/bootstrap.css";
 import {getFavoritesIDs,getRoadFavoritesIDs} from '../firebase/FirebaseUtilities'
-import { setSiteFavorites, setTrailFavorites} from '../../actions/index'
+import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../../actions/index'
 import { connect } from 'react-redux'
+import {updateVote,getVoteByUserID,deleteVote} from '../firebase/FirebaseVotingUtils'
 
+let buttonVote = {
+  width: '40px',
+  height:'40px', 
+  maxHeight: '40px', 
+  maxWidth: '40px'
+}
+
+let likeStyle ={
+  ...buttonVote,
+
+}
+let dislikeStyle={
+  ...buttonVote,
+}
 class Favorites extends Component {
   constructor(props) {
     super(props);
@@ -26,11 +41,18 @@ class Favorites extends Component {
 
   async componentDidMount(){
     const uid = this.props.uid
-    // console.log(this.props.siteFavorites)
-    // console.log(this.props.trailFavorites)
-    // var siteList = await getFavorites(uid);
+    let likes = this.props.likes
+    let dislikes = this.props.dislikes
+    let allVotes = []
     let siteFavorites = this.props.siteFavorites
     let trailFavorites = this.props.trailFavorites
+    if(likes.length === 0 && dislikes.length === 0){
+      allVotes = await getVoteByUserID(uid)
+      likes =  allVotes.filter(x=>x.vote === 1).map(x=>x.siteID)
+      dislikes = allVotes.filter(x=>x.vote === 0).map(x=>x.siteID)
+      this.props.setLikes(likes)
+      this.props.setDislikes(dislikes) 
+  }
     if (siteFavorites.length === 0) {
       siteFavorites = await getFavoritesIDs(uid)
       this.props.setSiteFavorites(siteFavorites)
@@ -48,7 +70,76 @@ class Favorites extends Component {
       favoritesArr: siteList
     });
   }
-  
+  deleteElementFromRedux(type,elementId){
+    switch (type){
+        case 'likes':
+            let updatedLikes = this.props.likes
+            const IndexLike = updatedLikes.findIndex(element=>element === elementId)
+            updatedLikes.splice(IndexLike,1)
+            this.props.setLikes(updatedLikes)  
+            break
+        case 'dislikes':
+            let updateDislikes = this.props.dislikes
+            const IndexDisLikes = updateDislikes.findIndex(element=>element === elementId)
+            updateDislikes.splice(IndexDisLikes,1)
+            this.props.setDislikes(updateDislikes)
+            break
+        default:
+    }
+}
+  voteSite = (e,vote,siteId) => {
+    const { uid } = this.props.logStatus
+    if(vote){
+        if(this.props.likes.includes(siteId)){
+            this.deleteElementFromRedux('likes',siteId)
+            deleteVote(uid,siteId)
+        }
+        else{
+            if(this.props.dislikes.includes(siteId)){
+                this.deleteElementFromRedux('dislikes',siteId)    
+            }
+            let updatedLikes = this.props.likes
+            updatedLikes.push(siteId)
+            this.props.setLikes(updatedLikes)
+            updateVote(uid,siteId,vote)
+        }
+    }else{
+        if(this.props.dislikes.includes(siteId)){
+            this.deleteElementFromRedux('dislikes',siteId)
+            deleteVote(uid,siteId)
+        }   
+        else{
+            if(this.props.likes.includes(siteId)){
+                this.deleteElementFromRedux('likes',siteId)
+            }
+            let updateDislikes = this.props.dislikes
+            updateDislikes.push(siteId)
+            this.props.setDislikes(updateDislikes)
+            updateVote(uid,siteId,vote)
+        }
+    }
+}
+
+  canRenderVoteID = (siteId) => {
+      const { claims } = this.props.logStatus
+      if(claims !== "guest") {
+          return true
+      }
+      return false
+  }
+  colorLike = (siteId,buttonName) => {
+      if(this.props.likes.includes(siteId)){
+          return <span style={{color:'green'}}>{buttonName}</span>
+      }
+      return buttonName
+  }
+
+  colorDislike = (siteId,buttonName) => {
+      if(this.props.dislikes.includes(siteId)){
+          return <span style={{color:'red'}}>{buttonName}</span>
+      }
+      return buttonName
+  }
   /**
      * This function executes when the user clicks on the site filter button, and it sets boolean values in order to filter the results.
      */
@@ -103,10 +194,8 @@ class Favorites extends Component {
   }
   checkCondition() {
     if(this.state.favoritesArr.filter(this.resultsFilter).length === 0 && this.state.done){
-      console.log("true");
       return true;
     }
-    console.log("false");
     return false;
   }
   deleteSite = (id,uid,type) =>  {
@@ -126,6 +215,15 @@ class Favorites extends Component {
   }
   
   render() {
+    const buttonName2 = <img style={{width: '40px', height:'40px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-remove-icon.png"/>
+    const voteLikeButtonName = <span className="fas fa-thumbs-up fa-2x" style={likeStyle}/>
+    const voteDislikeButtonName = <span className="fas fa-thumbs-down fa-2x" style={dislikeStyle}/>
+    const siteButtonsProps = [{buttonFunction: this.deleteSite, buttonName: buttonName2}, 
+          {buttonFunction: this.deleteSiteInFavorites, buttonName: buttonName2}];
+    const voteButtonsProps = [{buttonFunction: this.voteSite, buttonName:voteLikeButtonName,colorLike:this.colorLike,canRender:this.canRenderVoteID},
+                            {buttonFunction: this.voteSite, buttonName:voteDislikeButtonName,colorDislike:this.colorDislike,canRender:this.canRenderVoteID}]
+    const roadButtonsProps = [{buttonFunction: this.addRoadToFavorites, buttonName: buttonName2},
+          {buttonFunction: this.deleteRoadInFavorites, buttonName: buttonName2}];
     const field = {
       position: "relative",
       height: "45px",
@@ -142,14 +240,14 @@ class Favorites extends Component {
     const mapping = (list) => list.map((site, i) => {
       // console.log(site);
       return  (
-                  <div key={i}>
+                  <div tyle={{width: '100%'}} key={i}>
                   {site.type === 'sites' && this.state.siteFilter ?
                       (<div>  
-                          <SiteFavComponents deleteSite ={this.deleteSite} key={i} props={site}/>
+                          <SiteFavComponents {...{siteButtonsProps,voteButtonsProps}} site={site} />
                       </div>)
                       : site.type === 'roads' && this.state.roadFilter ?
-                      (<div>  
-                          <RoadFavComponent deleteSite ={this.deleteSite} key={i} props={site}/>
+                      (<div style={{width: '100%'}}>  
+                          <RoadFavComponent {...{siteButtonsProps,voteButtonsProps}} road={site}/>
                       </div>) : ''
                   }
                   </div>
@@ -187,11 +285,11 @@ class Favorites extends Component {
                             <div key={i} style={{paddingBottom:'0px'}}>
                             {site.type === 'sites' && this.state.siteFilter ?
                                 (<div>  
-                                    <SiteFavComponents deleteSite ={this.deleteSite} key={i} props={site}/>
+                                    <SiteFavComponents {...{siteButtonsProps,voteButtonsProps}} site={site} />
                                 </div>)
                                 : site.type === 'roads' && this.state.roadFilter ?
                                 (<div>  
-                                    <RoadFavComponent deleteSite ={this.deleteSite} key={i} props={site}/>
+                                    <RoadFavComponent {...{siteButtonsProps,voteButtonsProps}} road={site}/>
                                 </div>) : ' '
                             }
                             </div>
@@ -206,9 +304,12 @@ class Favorites extends Component {
 const mapStateToProps = (state) => {
   return {
       uid: state.status.uid,
+      logStatus: state.status,
       claims: state.status.claims,
       siteFavorites: state.siteFavorites,
       trailFavorites: state.trailFavorites,
+      likes: state.likes,
+      dislikes: state.dislikes
   };
 };
 
@@ -216,9 +317,15 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setSiteFavorites: (siteFavorites) => {
       dispatch(setSiteFavorites(siteFavorites))
-  },
+    },
     setTrailFavorites: (trailFavorites) => {
         dispatch(setTrailFavorites(trailFavorites))
+    },
+    setLikes: (likes) =>{
+      dispatch(setLikes(likes))
+    },
+    setDislikes: (dislikes) =>{
+        dispatch(setDislikes(dislikes))
     }
   }
 };

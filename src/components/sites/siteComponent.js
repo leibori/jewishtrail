@@ -6,17 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Circle from 'react-circle';
 
-
-const dotStyle = {
-  padding:10,
-      margin:20,
-      display:"inlineBlock",
-      backgroundColor: '#1C89BF',
-      borderRadius: "50%",
-      width:25,
-      height:25,
-}
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -44,14 +33,15 @@ const buttonVote = {
   borderRadius: '4px',
   background: 'transparent',
   border: 'none',
-
 }
 const SiteComponent = (props) => {
   const { site, siteButtonsProps,voteButtonsProps} = props;
   console.log(site);
   console.log(voteButtonsProps)
-  const [likeFlag,setLike] = useState(voteButtonsProps[0].colorLike(site.id,voteButtonsProps[0].buttonName))
-  const [dislikeFlag,setDislike] = useState(voteButtonsProps[1].colorDislike(site.id,voteButtonsProps[1].buttonName))
+  const likeStatus = voteButtonsProps ? voteButtonsProps[0].colorLike(site.id,voteButtonsProps[0].buttonName) : null
+  const [likeFlag,setLike] = useState(likeStatus)
+  const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(site.id,voteButtonsProps[1].buttonName) : null
+  const [dislikeFlag,setDislike] = useState(dislikes)
   console.log(dislikeFlag)
   // const buttonName = props.props.buttonName
   // const condition = props.props.condition
@@ -64,7 +54,7 @@ const SiteComponent = (props) => {
   const pickSiteButton = () => {
     return siteButtonsProps ? siteButtonsProps.find((buttonProps) => buttonProps.canRender(site.id)) : undefined;
   }
-  const tenTheBig = (e,vote,siteId)=>{
+  const setVoteDb = (e,vote,siteId)=>{
     const likeButton = like.buttonName
     const dislikeButton = dislike.buttonName
     vote ? like.buttonFunction(e,vote,siteId) :dislike.buttonFunction(e,vote,siteId)
@@ -76,11 +66,10 @@ const SiteComponent = (props) => {
   // }
 
   const buttonProps = pickSiteButton();
-  const like = voteButtonsProps[0] ? voteButtonsProps[0] : undefined
-  const dislike = voteButtonsProps[1] ? voteButtonsProps[1] : undefined
+  const like = voteButtonsProps ? voteButtonsProps[0] : undefined
+  const dislike = voteButtonsProps ? voteButtonsProps[1] : undefined
   
   return (
-    console.log(site.vote) ||
     <div className={classes.root}>
       <Paper className={classes.paper}>
         {/* <Link to={info_url} className="black-text"> */}
@@ -115,7 +104,7 @@ const SiteComponent = (props) => {
                   }
                   {like && like.canRender(site.id) &&
                   (<Grid item style ={{marginLeft:'15%'}}>
-                    <button variant="outlined" style={buttonVote} onClick={(e) => tenTheBig(e,1,site.id)}>{likeFlag}</button>
+                    <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,1,site.id)}>{likeFlag}</button>
                   </Grid>)
                   // (<Grid item>
                   //   <button variant="outlined" style={buttonVote} onClick={(e) => tenTheBig(e,1,site.id,like.buttonName)}><span style={{color:'green'}} >{like.buttonName}</span></button>
@@ -123,7 +112,7 @@ const SiteComponent = (props) => {
                   } 
                   {dislike && dislike.canRender(site.id) &&
                   (<Grid item>
-                    <button variant="outlined" style={buttonVote} onClick={(e) => tenTheBig(e,0,site.id)}>{dislikeFlag}</button>
+                    <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,0,site.id)}>{dislikeFlag}</button>
                   </Grid>)
                   }
                 </Grid>

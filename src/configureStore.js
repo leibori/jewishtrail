@@ -1,14 +1,37 @@
 import { createStore } from 'redux'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
 import allReducers from './reducers'
 
-const persistConfig = {
-    key: 'root',
-    storage
+
+function saveTolLocalStorage(state) {
+    try {
+        const serializedState = JSON.stringify(state)
+        localStorage.setItem('state', serializedState)
+    } catch(e) {
+        console.log(e)
+    }
 }
 
-const persistedReducer = persistReducer(persistConfig, allReducers)
+function loadFromLocalStorage() {
+    try {
+        const serializedState = localStorage.getItem('state')
+        if (serializedState === null) return undefined
+        return JSON.parse(serializedState)
+    } catch(e) {
+        console.log(e)
+        return undefined
+    }
+}
 
-export var store = createStore(persistedReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-export var persistor = persistStore(store)
+export const persistConfig = {
+    key: 'root',
+    version: 0,
+}
+
+const persistedState = loadFromLocalStorage()
+
+export var store = createStore(
+    allReducers,
+    persistedState,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+
+store.subscribe(() => saveTolLocalStorage(store.getState()))

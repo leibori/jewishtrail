@@ -40,10 +40,10 @@ class SearchMenu extends Component {
         this.state = {
            
             // In case a user is registered this hold the site id's of it's favorite sites.
-            siteFavoriteList: [],
+            // siteFavoriteList: [],
 
             // In case a user is registered this hold the road id's of it's favorite roads.
-            roadFavoriteList: [],
+            // roadFavoriteList: [],
 
             // Pulls a string in the address' parameters into "searchVal", otherwise sets empty string.
             searchVal: props.match.params.searchVal ? props.match.params.searchVal : '',
@@ -106,7 +106,7 @@ class SearchMenu extends Component {
     canRenderAddSite = (sid) => {
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
-            if(!this.state.siteFavoriteList.includes(sid)) {
+            if(!this.props.siteFavorites.includes(sid)) {
                 return true
             }
         }
@@ -117,7 +117,7 @@ class SearchMenu extends Component {
     canRenderDeleteSite = (sid) => {
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
-            if (this.state.siteFavoriteList.includes(sid)){
+            if (this.props.siteFavorites.includes(sid)){
                 return true;
             }
         }
@@ -154,7 +154,7 @@ class SearchMenu extends Component {
     canRenderAddRoad = (sid) => {
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
-            if(!this.state.roadFavoriteList.includes(sid)) {
+            if(!this.props.trailFavorites.includes(sid)) {
                 return true
             }
         }
@@ -164,7 +164,7 @@ class SearchMenu extends Component {
     canRenderDeleteRoad = (rid) => {
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
-            return (this.state.roadFavoriteList.includes(rid));
+            return (this.props.trailFavorites.includes(rid));
         }
         return false
     }
@@ -174,7 +174,7 @@ class SearchMenu extends Component {
      */
     addSiteToFavorites = async(e, sid) => {
         const { uid } = this.props.logStatus
-        const favorites = this.state.siteFavoriteList;
+        const favorites = this.props.siteFavorites;
 
         favorites.push(sid);
 
@@ -191,7 +191,7 @@ class SearchMenu extends Component {
      */
     addRoadToFavorites = async(e, trailId) => {
         const { uid } = this.props.logStatus
-        var favorites = this.state.roadFavoriteList
+        var favorites = this.props.trailFavorites
 
         favorites.push(trailId)
         
@@ -292,7 +292,6 @@ class SearchMenu extends Component {
         const roadButtonsProps = [{buttonFunction: this.addRoadToFavorites, buttonName: buttonName1, canRender: this.canRenderAddRoad},
             {buttonFunction: this.deleteRoadInFavorites, buttonName: buttonName2, canRender: this.canRenderDeleteRoad}];
         return (
-            
             <GeneralSearch style={{width: '100%'}}
                 {...{siteButtonsProps, roadButtonsProps,voteButtonsProps}}
                 searchVal={this.state.searchVal}

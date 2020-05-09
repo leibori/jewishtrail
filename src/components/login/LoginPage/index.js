@@ -121,6 +121,7 @@ const mapDispatchToProps = (dispatch) => {
     set: async (user) => { 
       await dispatch(setLogStatus({
         claims: await getUserClaims(user),
+        user_name: user.displayName,
         uid: user.uid,
         isVerified: user.emailVerified,
       }))

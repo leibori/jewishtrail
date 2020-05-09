@@ -10,14 +10,11 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
-import { store, persistor } from './configureStore'
+import { store } from './configureStore'
 
 ReactDOM.render(
     <Provider store={ store }>
-        <PersistGate loading={null} persistor={persistor}>
-            <App style={{zScore: '700'}}/>
-        </PersistGate>
+        <App style={{zScore: '700'}}/>
     </Provider>
 , document.getElementById('root'));
 

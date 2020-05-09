@@ -29,9 +29,11 @@ import { connect } from 'react-redux'
 
 class MyBrowserRouter extends Component{
   render() {
-    let admin = this.props.claims === 'admin';
-    let online = ((this.props.claims === 'registered') || admin) && (this.props.id !== '');
-  let verified = ((this.props.isVerified) && online);
+  let admin = this.props.claims === 'admin';
+  let online = ((this.props.claims === 'registered') || admin) && (this.props.id !== '');
+  let verified = this.props.isVerified
+  let online_and_verified = (verified && online);
+  let online_not_veridied = (!verified && online);
   return (
       <BrowserRouter forceRefresh={true}>
       <div style={{position: 'fixed', zIndex: '20', width: '100%',backgroundColor: 'rgba(255,255,255,0.55)',}}>
@@ -50,43 +52,43 @@ class MyBrowserRouter extends Component{
             <MyRoute exact path='/' component={LoginPage}>
               <Redirect to='/LoginPage'/> </MyRoute>
             <MyRoute exact path='/aroundyou'  component={AroundYou} />
-            <MyRoute exact path='/loginpage' component={LoginPage} condition={online} />
+            <MyRoute exact path='/loginpage' component={LoginPage} aboutCond={online} verCond={online_not_veridied} />
             <MyRoute exact path='/logout' component={LogOut}/>
-            <MyRoute exact path='/signup' component={SignUp} condition={online}/>
-            <MyRoute exact path='/createsite' component={CreateSite} condition={!admin}/>
-            <MyRoute exact path='/deletesite' component={DeleteSite} condition={!admin}/>
-            <MyRoute exact path='/deletesite/:searchVal' component={DeleteSite} condition={!admin} />
-            <MyRoute exact path='/updatesite' component={UpdateSite} condition={!admin} />
-            <MyRoute exact path='/updatesite/:searchVal' component={UpdateSite} condition={!admin} />
-            <MyRoute exact path='/updateform/:id' component={UpdateForm} condition={!admin}/>
-            <MyRoute exact path='/auth' component={AuthMenu} condition={!admin}/>
+            <MyRoute exact path='/signup' component={SignUp} aboutCond={online} verCond={online_not_veridied}/>
+            <MyRoute exact path='/createsite' component={CreateSite} aboutCond={!admin} verCond={online_not_veridied}/>
+            <MyRoute exact path='/deletesite' component={DeleteSite} aboutCond={!admin} verCond={online_not_veridied}/>
+            <MyRoute exact path='/deletesite/:searchVal' component={DeleteSite} aboutCond={!admin} verCond={online_not_veridied}/>
+            <MyRoute exact path='/updatesite' component={UpdateSite} aboutCond={!admin} verCond={online_not_veridied}/>
+            <MyRoute exact path='/updatesite/:searchVal' component={UpdateSite} aboutCond={!admin} verCond={online_not_veridied}/>
+            <MyRoute exact path='/updateform/:id' component={UpdateForm} aboutCond={!admin} verCond={online_not_veridied}/>
+            <MyRoute exact path='/auth' component={AuthMenu} aboutCond={!admin}/>
             <MyRoute exact path='/search' component={SearchMenu}/>
             <MyRoute exact path='/search/:searchVal' component={SearchMenu} /> 
-            <MyRoute exact path='/favorites' component={Favorites} condition={!verified}/>
+            <MyRoute exact path='/favorites' component={Favorites} aboutCond={!online} verCond={online_not_veridied}/>
             <MyRoute exact path='/about' component={About} />
             <MyRoute exact path='/site/:id' component={SitePage} />
             <MyRoute exact path='/roadform' component={RoadForm} />
             <MyRoute exact path='/roadform/:searchVal' component={RoadForm} />
             <MyRoute exact path='/road/:id' component={RoadPage} />
-            <MyRoute exact path='/deleteroad' component={DeleteRoad} condition={!admin}/>
-            <MyRoute exact path='/deleteroad/:searchVal' component={DeleteRoad} condition={!admin}/>          
-            <MyRoute exact path='/adminRoadPage' component={AdminRoadPage} condition={!admin}/> 
-            <MyRoute exact path='/adminSitePage' component={AdminSitePage} condition={!admin}/>       
-            <MyRoute exact path='/admin' component={AdminMenu} condition={!admin}/>
-            <MyRoute exact path='/forgotpassword' component={ForgotPassword} condition={online}/>
-            <MyRoute exact path='/updateRoad' component={updateRoad} condition={!admin}/>  
-            <MyRoute exact path='/updateRoad/:searchVal' component={updateRoad} condition={!admin}/>
-            <MyRoute exact path='/notverified' component={NotVerified} condition={!verified}/>
+            <MyRoute exact path='/deleteroad' component={DeleteRoad} aboutCond={!admin} verCond={online_not_veridied}/>
+            <MyRoute exact path='/deleteroad/:searchVal' component={DeleteRoad} aboutCond={!admin} verCond={online_not_veridied}/>          
+            <MyRoute exact path='/adminRoadPage' component={AdminRoadPage} aboutCond={!admin} verCond={online_not_veridied}/> 
+            <MyRoute exact path='/adminSitePage' component={AdminSitePage} aboutCond={!admin} verCond={online_not_veridied}/>       
+            <MyRoute exact path='/admin' component={AdminMenu} aboutCond={!admin} verCond={online_not_veridied}/>
+            <MyRoute exact path='/forgotpassword' component={ForgotPassword} aboutCond={online} verCond={online_not_veridied}/>
+            <MyRoute exact path='/updateRoad' component={updateRoad} aboutCond={!admin} verCond={online_not_veridied}/>  
+            <MyRoute exact path='/updateRoad/:searchVal' component={updateRoad} aboutCond={!admin} verCond={online_not_veridied}/>
+            <MyRoute exact path='/notverified' component={NotVerified} aboutCond={online_and_verified}/>
           </div>
         </BrowserRouter>);
   }
 }
 
 function MyRoute(props){
-  const { exact, path, component, condition} = props;
+  const { exact, path, component, aboutCond, verCond} = props;
   return (
     <Route exact path={path} component={component}>
-      {condition && <Redirect to="/about"/>}
+      {aboutCond ? <Redirect to="/about"/> : verCond ? <Redirect to='/notverified'/> : undefined}
     </Route>);
 }
 
