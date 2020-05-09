@@ -89,7 +89,9 @@ exports.updateVotes = functions.https.onRequest(async (request,response)=>{
         db.collection(collectionName).doc(key).update({ 
           vote: ratio,
         })
-      })    
+      }).catch((e) => {
+        console.log(e)
+      })
     }
     response.status(200).json({message: 'success'});}
     catch(e) {
