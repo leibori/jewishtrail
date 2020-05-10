@@ -7,8 +7,10 @@ import ReactLoading from "react-loading";
 import "bootstrap/dist/css/bootstrap.css";
 import {getFavoritesIDs,getRoadFavoritesIDs} from '../firebase/FirebaseUtilities'
 import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../../actions/index'
+import InnerBgImg from "../../assets/img/signs.jpg";
 import { connect } from 'react-redux'
 import {updateVote,getVoteByUserID,deleteVote} from '../firebase/FirebaseVotingUtils'
+import "components/search/GeneralSearch/index.css"
 
 let buttonVote = {
   width: '40px',
@@ -23,6 +25,16 @@ let likeStyle ={
 }
 let dislikeStyle={
   ...buttonVote,
+}
+const fixedbutton = {
+  backgroundImage: "url(" + InnerBgImg +") no-repeat",
+  paddingTop: '10px',
+  position: 'fixed',
+  zIndex: '1',
+  marginTop:' 0px',
+  paddingBottom: '10px',
+  top: '0%',
+  width: '100%'
 }
 class Favorites extends Component {
   constructor(props) {
@@ -257,7 +269,7 @@ class Favorites extends Component {
               );
     });
     return (
-      <div style ={{width: '100%'}}>
+      <div style ={{height: '100%',width: '100%'}}>
         {this.state.favoritesArr.length === 0 && <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
         {!this.state.empty ? (
            <ReactLoading type={"bars"} color={"white"} />
@@ -266,15 +278,15 @@ class Favorites extends Component {
         )}
         </div>}
         {this.state.favoritesArr.length > 0 &&
-        <div style={{marginBottom: '5%' }}>
+        <div className="fixedButton">
           <button
               onClick={this.siteFilterClicked}
-              style={{backgroundColor: siteColorPredicate, marginTop:"15%",borderRadius: '4px', marginLeft: '5%', padding: '8px' }}>Only Sites</button>
+              style={{backgroundColor: siteColorPredicate, marginTop:"5%",borderRadius: '4px', marginLeft: '5%', padding: '6px'}}>Only Sites</button>
           <button
               onClick={this.roadFilterClicked}
-              style={{backgroundColor: roadColorPredicate, marginTop:"15%",borderRadius: '4px', marginLeft: '10%', padding: '8px' }}>Only Roads</button>
+              style={{backgroundColor: roadColorPredicate, marginTop:"5%",borderRadius: '4px', marginLeft: '3%', padding: '6px'}}>Only Roads</button>
         </div>}
-        <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px'}}>
+        <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px',marginTop: '105px'}}>
                     {this.checkCondition() ? 
                     <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
                       <img src="/image/NoMatch.png"/>
