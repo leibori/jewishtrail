@@ -39,13 +39,13 @@ class DeleteSite extends Component {
     this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
 };
 
-DeleteSite = async(e, site) => {
+DeleteSite = async(e, siteID) => {
   const siteList = this.myRef.current.state.siteList;
   e.preventDefault();
   if(!(window.confirm("Are you sure you want to delete this site?"))){
     return
   }
-  const index = siteList.findIndex(s=> s.id === site.id );
+  const index = siteList.findIndex(s=> s.id === siteID );
   await DeleteSiteFromDB(siteList[index]);
   console.log("site" + siteList[index].name + "had deleted")
   

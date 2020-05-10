@@ -149,12 +149,12 @@ class GeneralSearch extends Component {
         const { siteButtonsProps, roadButtonsProps, voteButtonsProps,startedSearch, finishedSearch } = this.state;
         
         // Predicate that decides the color of the button of the site filter.
-        const siteColorPredicate = !this.state.roadFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
+        const siteColorPredicate = !this.state.roadFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
 
         // Predicate that decides the color of the button of the road filter.
-        const roadColorPredicate = !this.state.siteFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
+        const roadColorPredicate = !this.state.siteFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
 
-        // Extract "buttonName" and "searchResult" variable for ease of use.
+        // Extract "searchResult" variable for ease of use.
         const { searchResult } = this.state;
 
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
@@ -173,7 +173,7 @@ class GeneralSearch extends Component {
                         </div>
 
                     );
-        });      
+        });     
 
         return (
             <div style={{height: '100%', width: '100%'}}>

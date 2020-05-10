@@ -57,7 +57,7 @@ class RoadForm extends Component {
             name: formerState ? formerState.name : '',
             description: formerState ? formerState.description : '',
             imgUrl: formerState ? formerState.imgUrl : '',
-            id: formerState && formerState.id ? formerState.id : null
+            id: formerState && formerState.roadId ? formerState.roadId : null
         }
 
         this.updateSearchValue = this.updateSearchValue.bind(this);
@@ -98,6 +98,7 @@ class RoadForm extends Component {
         const CityList = Array.from(new Set(this.state.siteList.map((site) => site.city)))
         const CountryList = Array.from(new Set(this.state.siteList.map((site) => site.country)))
         var TagList = []
+        console.log(this.state.siteList)
         let temp = Array.from(new Set(this.state.siteList.map((site) => site.tags)))
         temp.forEach((tagsArr) => tagsArr.forEach((tag) => TagList.push(tag)));
         searchTokens = Array.from(new Set([...TagList,...CityList,...CountryList,...roadName.split(" ")]))
@@ -117,8 +118,7 @@ class RoadForm extends Component {
         alert("Submittion Complete")
         this.props.history.push('/adminRoadPage')
     }
-    addSiteToRoadList = async(e, site) => {
-        const siteID = site.id;
+    addSiteToRoadList = async(e, siteID) => {
         const siteData = await getSiteByID(siteID)
         const siteObject = {
             ...siteData,

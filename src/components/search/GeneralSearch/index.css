@@ -1,5 +1,18 @@
+body {
+    font-family: sans-serif;
+    background: url(../../../assets/img/signs.jpg) no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+  }
+
 .searchbar {
-    background-color: #4ee44e;
+    /* background-color: #4ee44e; */
+    background: url(../../../assets/img/signs.jpg) no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    
     padding-top: 30px;
     /* position:-webkit-sticky;
     position:sticky;  */
@@ -10,7 +23,23 @@
     top: 0%;
     width: 100%;
 }
-
+.fixedButton {
+  /* background-color: #4ee44e; */
+  background: url(../../../assets/img/signs.jpg) no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  
+  padding-top: 30px;
+  /* position:-webkit-sticky;
+  position:sticky;  */
+  position: fixed;
+  z-index: 1;
+  margin-top: 0px;
+  padding-bottom: 10px;
+  top: 0%;
+  width: 100%;
+}
 .searchbar button {
     margin: 10px;
     padding: 3px;
