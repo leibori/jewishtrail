@@ -61,10 +61,10 @@ class LoginPage extends Component {
     this.props.history.push('/SignUp');
   }
   render() {
-    // if(this.state.online){
-    //   console.log("in redirect")
-    //   return <Redirect to = "/about"></Redirect>
-    // }
+    if(this.state.online){
+      console.log("in redirect")
+      return <Redirect to = "/about"></Redirect>
+    }
     return (
       <div style={{height: '100%'}}>
         <title>Login</title>
