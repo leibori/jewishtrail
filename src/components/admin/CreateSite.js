@@ -68,10 +68,9 @@ class CreateSite extends Component {
 
   async handleSubmit(e){
     e.preventDefault();
-    let searchTokens = Array.from(new Set([...this.state.tags,this.state.city,this.state.city,...this.state.name.split(" ")]))
+    let searchTokens = Array.from(new Set([...this.state.tags,this.state.city,this.state.country,...this.state.name.split(" "), 'site', 'sites']))
     searchTokens = searchTokens.map((i) => {return i.toLowerCase()});
-    
-    console.log(searchTokens)
+
     var site = {
       name: this.state.name,
       city: this.state.city,
@@ -85,8 +84,12 @@ class CreateSite extends Component {
       latitude: parseFloat(this.state.latitude),
       longitude: parseFloat(this.state.longitude),
       searchTokens: searchTokens,
+      vote: 50,
     }
-    console.log(site);
+    if (!site.latitude || !site.longitude) {
+      alert('error')
+      return
+    }
     await createNewSite(site)
     alert("created a new site");
     this.props.history.push('/adminSitePage');

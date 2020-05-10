@@ -15,6 +15,7 @@ export async function createNewSite(site){
       latitude: site.latitude,
       longitude: site.longitude,
       searchTokens: site.searchTokens,
+      vote: site.vote,
     })
 }
 
@@ -134,6 +135,7 @@ export async function createNewRoad( {siteListID,roadName,roadDescription,CityLi
         tags: TagList,
         searchTokens:searchTokens,
         imageUrl: imgUrl,
+        vote: 50,
     })
 }
 
