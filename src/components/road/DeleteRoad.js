@@ -33,15 +33,14 @@ class DeleteRoad extends Component {
     this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
 };
 
-DeleteRoad = async(e, road) => {
+DeleteRoad = async(e, roadID) => {
   if(!(window.confirm("Are you sure you want to Delete?"))){
     return 
   }
   e.preventDefault();
-  const rid = road.id;
   const roadList = this.myRef.current.state.roadList;
   
-  const index = roadList.findIndex(r => r.id === rid);
+  const index = roadList.findIndex(r => r.id === roadID);
   
   await deleteRoadFromDB(roadList[index])
   console.log("road" + roadList[index].name + "has been deleted")
