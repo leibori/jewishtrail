@@ -234,9 +234,11 @@ class Favorites extends Component {
       marginBottom: '5%'
     };
     // Predicate that decides the color of the button of the site filter.
-    const siteColorPredicate = !this.state.roadFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
+    const siteColorPredicate = !this.state.roadFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
+
     // Predicate that decides the color of the button of the road filter.
-    const roadColorPredicate = !this.state.siteFilter ? 'rgba(230,223,0,0.4)' : 'rgba(255,255,255,0.4)'
+    const roadColorPredicate = !this.state.siteFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
+
     const mapping = (list) => list.map((site, i) => {
       // console.log(site);
       return  (
@@ -263,13 +265,14 @@ class Favorites extends Component {
           <img src="/image/NoMatch.png"/>
         )}
         </div>}
-        {this.state.favoritesArr.length > 0 && <div style={{marginBottom: '5%'}}>
-        <button
-            onClick={this.siteFilterClicked}
-            style={{backgroundColor: siteColorPredicate, marginTop:"13%",borderRadius: '4px', marginLeft: '5%'}}>Only Sites</button>
-        <button
-            onClick={this.roadFilterClicked}
-            style={{backgroundColor: roadColorPredicate,marginTop:"13%",borderRadius: '4px', marginLeft: '10px' }}>Only Roads</button>
+        {this.state.favoritesArr.length > 0 &&
+        <div style={{marginBottom: '5%' }}>
+          <button
+              onClick={this.siteFilterClicked}
+              style={{backgroundColor: siteColorPredicate, marginTop:"15%",borderRadius: '4px', marginLeft: '5%', padding: '8px' }}>Only Sites</button>
+          <button
+              onClick={this.roadFilterClicked}
+              style={{backgroundColor: roadColorPredicate, marginTop:"15%",borderRadius: '4px', marginLeft: '10%', padding: '8px' }}>Only Roads</button>
         </div>}
         <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px'}}>
                     {this.checkCondition() ? 
