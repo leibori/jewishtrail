@@ -1,0 +1,41 @@
+/* Add a White background color to the top navigation */
+.App-transparent {
+    background-color: rgba(245, 245, 245, 0.836);
+    overflow: hidden;
+    text-align: center ;
+  }
+  @media (min-width: 768px) {
+    .navbar-nav > li > a {
+      /* (80px - line-height of 27px) / 2 = 26.5px */
+      padding-top: 22.5px;
+      padding-bottom: 22.5px;
+      line-height: 23px;
+    }
+  }
+
+
+/*.navbar-toggler{
+    background-color: white;
+  }
+  
+  @media (min-width: 768px) {
+    .navbar .navbar-nav {
+        font-weight: 600;
+      
+        background-color: transparent;
+        float:none;
+        /* margin:0 auto; */
+/*        margin: 0px;
+        text-align: center ;
+        font-size: larger;
+        font-family: Arial, Helvetica, sans-serif;
+        justify-content:space-between;
+    }
+  
+    .navbar .navbar-collapse {
+      vertical-align: center;
+      text-align: center;
+      display: inline-block;
+    }
+  
+  }*/

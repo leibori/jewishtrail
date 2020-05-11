@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import {myFirebase} from '../firebase/firebase';
-import SignedInLinks from './SignedInLinks'
-import SignedOutLinks from './SignedOutLinks'
-import {getUserClaims} from '../firebase/FirebaseUtilities'
-import AdminLinks from './AdminLinks';
+import './Navbar.css';
 import * as ReactBootStrap from "react-bootstrap";
 import {
     BrowserRouter as Router,
@@ -16,9 +13,10 @@ import { connect } from 'react-redux'
 const fontStyle = {
   // fontFamily: 'Cambay, sans-sarif',
   fontSize: '17px',
-  color:"white",
-  fontWeight:'1000',
-  textShadow:'2px 2px #202020'
+  color:"black",
+  fontWeight:'650',
+  textAlign: 'center',
+
 }
 const backStyle = {
   background:"rgba(255,255,255,0.3)'" 
@@ -60,13 +58,13 @@ class Navbar extends Component {
     const firstName = user_name ? user_name.split(' ')[0] : undefined;
     return (
       <nav className="nav-wrapper">
-          <div className="App transparent">
+          <div className="App-transparent">
         {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
       <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
         {/*<ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
       <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" />
-        { user_name && <div><span style={{color: 'white',}} className="far fa-user"></span>
-          <span style={{fontSize: '17px', WebkitTextStroke: '1px 1px black', fontFamily: 'Cambay', color: 'white', fontWeight: '1000',}}>{" " + firstName}</span></div>}
+        { user_name && <div><span style={{color: '#5C5B5C',}} className="far fa-user"></span>
+          <span style={{fontSize: '17px', WebkitTextStroke: '1px 1px black', fontFamily: 'Cambay', color: '#5C5B5C', fontWeight: '1000',}}>{" " + firstName}</span></div>}
         <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
           <ReactBootStrap.Nav className="mr-auto">
             { this.state.isLoggedIn ? (
@@ -76,7 +74,6 @@ class Navbar extends Component {
               )
             }
             
-            <ReactBootStrap.Nav.Link style={fontStyle} href="/about">About</ReactBootStrap.Nav.Link>
             <ReactBootStrap.Nav.Link style={fontStyle} href="/search">Search</ReactBootStrap.Nav.Link>
             {
               this.state.isLoggedIn && (<ReactBootStrap.Nav.Link style={fontStyle} href="/favorites">Favorites</ReactBootStrap.Nav.Link>)
@@ -87,6 +84,7 @@ class Navbar extends Component {
             {
               this.state.isAdmin && (<ReactBootStrap.Nav.Link style={fontStyle} href="/admin">Admin Page</ReactBootStrap.Nav.Link>)
             }          
+            <ReactBootStrap.Nav.Link style={fontStyle} href="/about">About</ReactBootStrap.Nav.Link>            
           </ReactBootStrap.Nav>
       </ReactBootStrap.Navbar.Collapse>    
     </ReactBootStrap.Navbar>
