@@ -68,6 +68,7 @@ class SignUp extends Component {
     signup(e, email, password, username);
     this.props.history.push('/notverified');
   }
+  //
   render() {
     const { email, password, username, recaptchaRef } = this.state;
     return (
