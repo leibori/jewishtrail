@@ -31,7 +31,6 @@ export async function login(e, email, password) {
       console.log(u.user)
       return u.user
     }).catch((error) => {
-      alert("Invalid email or password. Please try again.");
       return null
     });
     return user

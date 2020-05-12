@@ -15,6 +15,7 @@ class LoginPage extends Component {
       email: '',
       password: '',
       online: false,
+      formError: "",
     };
 
     this.googleLogin = this.googleLogin.bind(this);
@@ -27,7 +28,6 @@ class LoginPage extends Component {
       online: true,
     })
   }
-
   googleLogin = async (e) => {
     e.preventDefault();
 
@@ -46,7 +46,12 @@ class LoginPage extends Component {
 
     const user = await login(e, email, password)
 
-    if (!user) { return }
+    if (!user) {
+      this.setState({
+        formError: "You have entered an invalid email or password"
+      })
+      return 
+    }
 
     this.props.set(user)
 
@@ -80,6 +85,11 @@ class LoginPage extends Component {
                 <span className="fas fa-lock"></span>
                 <input required name="password" onChange={this.onChange} type='password' placeholder='Pasword...'></input>
               </div>
+              {
+                this.state.formError.length > 0 && (
+                <div className='myError'>{this.state.formError}</div>  
+                )
+              }
               <div className='pass'>
                 <a href='/forgotpassword'>Forgot Password?</a>
               </div>
