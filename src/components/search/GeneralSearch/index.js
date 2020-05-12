@@ -225,7 +225,7 @@ class GeneralSearch extends Component {
                     ) : ''
                 }
                 </div>
-                
+
             </div>
         )    
     }

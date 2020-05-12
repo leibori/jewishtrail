@@ -269,7 +269,7 @@ class Favorites extends Component {
               );
     });
     return (
-      <div style ={{height: '100%',width: '100%'}}>
+      <div style ={{height: '100%', width: '100%'}}>
         {this.state.favoritesArr.length === 0 && <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
         {!this.state.empty ? (
            <ReactLoading type={"bars"} color={"white"} />
@@ -281,12 +281,12 @@ class Favorites extends Component {
         <div className="fixedButton">
           <button
               onClick={this.siteFilterClicked}
-              style={{backgroundColor: siteColorPredicate, marginTop:"5%",borderRadius: '4px', marginLeft: '5%', padding: '6px'}}>Only Sites</button>
+              style={{backgroundColor: siteColorPredicate,borderRadius: '4px', marginLeft: '5%', padding: '5px'}}>Only Sites</button>
           <button
               onClick={this.roadFilterClicked}
-              style={{backgroundColor: roadColorPredicate, marginTop:"5%",borderRadius: '4px', marginLeft: '3%', padding: '6px'}}>Only Roads</button>
+              style={{backgroundColor: roadColorPredicate,borderRadius: '4px', marginLeft: '3%', padding: '5px'}}>Only Roads</button>
         </div>}
-        <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px',marginTop: '105px'}}>
+        <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px',marginTop:'100px',zIndex:'0',maxHeight: '60px'}}>
                     {this.checkCondition() ? 
                     <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
                       <img src="/image/NoMatch.png"/>
