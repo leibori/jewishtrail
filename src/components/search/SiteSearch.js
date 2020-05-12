@@ -125,7 +125,7 @@ export default class SiteSearch extends Component {
                 <div className="container">
                     {siteList.length !== 0 && <PaginatedList
                         list={siteList}
-                        itemsPerPage={3}
+                        itemsPerPage={9}
                         renderList={mapping}/>}
                 </div>
 

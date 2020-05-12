@@ -51,7 +51,7 @@ class UpdateForm extends Component {
       city: this.state.city,
       country: this.state.country,
       tags: this.state.tags,
-      adress: this.state.adress,
+      address: this.state.address,
       externalSourceUrl: this.state.externalSourceUrl,
       imageUrl: this.state.imageUrl,
       fullInfo: this.state.fullInfo,
@@ -59,11 +59,12 @@ class UpdateForm extends Component {
       latitude: parseFloat(this.state.latitude),
       longitude: parseFloat(this.state.longitude),
       searchTokens:searchTokens,
+      vote: this.state.vote ? this.state.vote: 50,
     }
-    
+    console.log(site)
     await UpdateSite(site)
     alert(site.name + " has updated!");
-    this.props.history.push('/adminPage')
+    this.props.history.push('/adminSitePage')
   }
 
   deleteTag = (e,index) =>{
@@ -94,8 +95,8 @@ class UpdateForm extends Component {
             <label htmlFor="country">  Country Name</label>
           </div>
           <div className="input-field">
-            <textarea id="adress" className="materialize-textarea" onChange={this.handleChange} value = {this.state.adress} required></textarea>
-            <label htmlFor="adress">  Adress</label>
+            <textarea id="address" className="materialize-textarea" onChange={this.handleChange} value = {this.state.address} required></textarea>
+            <label htmlFor="address">  Adress</label>
           </div>
           <div className="input-field">
             <textarea id="externalSourceUrl" className="materialize-textarea" onChange={this.handleChange} value = {this.state.externalSourceUrl} required></textarea>

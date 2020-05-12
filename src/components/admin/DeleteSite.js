@@ -71,7 +71,7 @@ updateTopDownhValue(e) {
 
 render() {
     return (
-        <div style={{position:"absolute", width:"75%",top:'12%'}}>
+        <div style={{position:"absolute", width:"100%",top:'12%'}}>
             <h5 style={LabelStyle}>Search Site to Delete</h5>
             {/* <form ref={this.form} id="search-form">
                 <div className="search-field">

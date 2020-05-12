@@ -56,8 +56,9 @@ class RoadForm extends Component {
             siteList: formerState ? formerState.siteList : [],
             name: formerState ? formerState.name : '',
             description: formerState ? formerState.description : '',
-            imgUrl: formerState ? formerState.imgUrl : '',
-            id: formerState && formerState.roadId ? formerState.roadId : null
+            imageUrl: formerState ? formerState.imageUrl : '',
+            id: formerState && formerState.roadId ? formerState.roadId : null,
+            vote: formerState ? formerState.vote : null
         }
 
         this.updateSearchValue = this.updateSearchValue.bind(this);
@@ -94,7 +95,8 @@ class RoadForm extends Component {
         const roadName = this.state.name;
         const roadId = this.state.id
         const roadDescription = this.state.description;
-        const { imgUrl } = this.state;
+        const { imageUrl } = this.state;
+        const vote = this.state.vote ? this.state.vote : 50;
         const CityList = Array.from(new Set(this.state.siteList.map((site) => site.city)))
         const CountryList = Array.from(new Set(this.state.siteList.map((site) => site.country)))
         var TagList = []
@@ -106,7 +108,7 @@ class RoadForm extends Component {
         let siteListID = []
         this.state.siteList.forEach((site) => siteListID.push(site.id));
         
-        const road = {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imgUrl};
+        const road = {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imageUrl, vote};
         if(roadId){
             await updateRoad(road,roadId)
             console.log("update Road")
@@ -168,8 +170,8 @@ class RoadForm extends Component {
                         <input style={inputStyle} required name="name" type="text" id='name' onChange={this.handleChange} value={this.state.name}/>                        
                     </div>
                     <div className="input-field">
-                        <label style={LabelStyle} htmlFor="imgUrl">Image URL:</label>
-                        <input style={inputStyle} required name="imgUrl" type="text" id='imgUrl' onChange={this.handleChange} value={this.state.imgUrl}/>
+                        <label style={LabelStyle} htmlFor="imageUrl">Image URL:</label>
+                        <input style={inputStyle} required name="imageUrl" type="text" id='imageUrl' onChange={this.handleChange} value={this.state.imageUrl}/>
                     </div>
                     <div className="for-group">
                          <label style={LabelStyle}> Road Description :</label>

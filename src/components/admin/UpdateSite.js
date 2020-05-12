@@ -77,9 +77,9 @@ render() {
   //   return <UpdateForm props={this.state.chosenSite}/>
   // }
     return (
-        <div style={{position:"absolute", width:"75%",top:'12%'}}>
+        <div style={{position:"absolute", width:"100%",top:'12%'}}>
             <h5 style={LabelStyle}>Search Site to Update</h5>
-            <SiteSearch
+            <SiteSearch style={{paddingLeft: '0px', paddingRight: '0px'}}
              siteButtonsProps= {[{
               buttonName: `Update site`,
               canRender: () => true,

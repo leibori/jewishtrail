@@ -104,7 +104,7 @@ class CreateSite extends Component {
 
   render() {
     return (
-      <div className="container" style={{position:"absolute", width:"75%",top:'12%'}}>
+      <div className="container" style={{position:"absolute", width:"100%",top:'12%'}}>
           <h5 className="white-text" style={{fontWeight:'600', fontFamily:'cambay',}}>Create a New Site</h5>
           <form onSubmit={(e)=> this.handleSubmit(e)} id="create-site-form">
           <div className="input-field">

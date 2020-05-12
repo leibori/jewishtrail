@@ -269,7 +269,7 @@ class Favorites extends Component {
               );
     });
     return (
-      <div style ={{height: '100%', width: '100%'}}>
+      <div style ={{height: '80%', width: '100%'}}>
         {this.state.favoritesArr.length === 0 && <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
         {!this.state.empty ? (
            <ReactLoading type={"bars"} color={"white"} />
@@ -286,7 +286,7 @@ class Favorites extends Component {
               onClick={this.roadFilterClicked}
               style={{backgroundColor: roadColorPredicate,borderRadius: '4px', marginLeft: '3%', padding: '5px'}}>Only Roads</button>
         </div>}
-        <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px',marginTop:'100px',zIndex:'0',maxHeight: '60px'}}>
+        <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px',marginTop:'100px',zIndex:'0',maxHeight: '50px'}}>
                     {this.checkCondition() ? 
                     <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
                       <img src="/image/NoMatch.png"/>

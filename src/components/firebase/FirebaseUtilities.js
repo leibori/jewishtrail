@@ -26,13 +26,14 @@ export async function UpdateSite(site){
       city: site.city,
       country: site.country,
       tags: site.tags,
-      adress: site.adress,
+      address: site.address,
       externalSourceUrl: site.externalSourceUrl,
       imageUrl: site.imageUrl,
       fullInfo: site.fullInfo,
       partialInfo: site.partialInfo,
       latitude: site.latitude,
-      longitude: site.longitude
+      longitude: site.longitude,
+      vote: site.vote
     })
 }
 
@@ -125,7 +126,7 @@ export async function getSiteByID(siteid) {
 }
 
 
-export async function createNewRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imgUrl} ){
+export async function createNewRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imageUrl} ){
     await myDatabase.collection('roads').add({
         name: roadName,
         description: roadDescription,
@@ -134,7 +135,7 @@ export async function createNewRoad( {siteListID,roadName,roadDescription,CityLi
         country:CountryList,
         tags: TagList,
         searchTokens:searchTokens,
-        imageUrl: imgUrl,
+        imageUrl: imageUrl,
         vote: 50,
     })
 }
@@ -154,7 +155,7 @@ export async function deleteRoadFromDB(road){
     await myDatabase.collection('roads').doc(road.id).delete();
 }
 
-export async function updateRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imgUrl}, roadId){
+export async function updateRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imageUrl, vote}, roadId){
     await myDatabase.collection('roads').doc(roadId).update({
         name: roadName,
         description: roadDescription,
@@ -163,7 +164,8 @@ export async function updateRoad( {siteListID,roadName,roadDescription,CityList,
         country:CountryList,
         tags: TagList,
         searchTokens:searchTokens,
-        imageUrl: imgUrl,
+        imageUrl: imageUrl,
+        vote: vote,
     })
 }
 
