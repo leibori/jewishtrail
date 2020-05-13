@@ -9,7 +9,7 @@ export default function NotVerified(props) {
         <div style={{position: 'fixed', minWidth: '100%', minHeight: '100%', margin: 'auto', display: 'flex', justifyContent: 'center',
           alignItems: 'center'}}>
             <div class="container1">
-                <header class="info">{text}<br/><a onClick={()=>emailAuthentication()} style={{textDecoration: 'underline', color: '#0000EE'}}>{sub_text}</a></header>
+                <header class="info">{text}<br/><a onClick={()=>emailAuthentication()} style={{textDecoration: 'underline', color: '#00CED1'}}>{sub_text}</a></header>
             </div>
         </div>
     );
