@@ -73,9 +73,9 @@ class GeneralSearch extends Component {
     onSearchButtonClicked(e) {
         e.preventDefault();
 
-        console.log(this.state.searchVal)
-
-        window.location.href = '/' + this.state.returnTo + '/' + this.state.searchVal
+        if (this.state.searchVal !== '') {
+            window.location.href = '/' + this.state.returnTo + '/' + this.state.searchVal
+        }
     }
 
     // The search function that calls for searches in the database.
@@ -178,14 +178,13 @@ class GeneralSearch extends Component {
         return (
             <div style={{height: '100%', width: '100%'}}>
                 <div className="searchbar">
-                    <form style={{paddingBottom: '0%', marginTop: '0%', width: '100%'}}>
+                    <form onSubmit={this.onSearchButtonClicked} style={{paddingBottom: '0%', marginTop: '0%', width: '100%'}}>
                         <header style={headerStyle}>Find a trail</header>
                         <div className='field'>
                             <span><i className="fas fa-search" style={{marginLeft: '12px'}}></i></span>
-                            <input style={{fontSize: '16px'}} required  placeholder='Search by trail name or location...' type="text" onChange={this.updateSearchValue} ref={this.searchVal} value={this.state.searchVal}></input>
+                            <input style={{fontSize: '16px'}} placeholder='Search by trail name or location...' type="text" onChange={this.updateSearchValue} ref={this.searchVal} value={this.state.searchVal} required />
                         </div>                        
                         <button
-                            onClick={this.onSearchButtonClicked}
                             type="submit"
                             style={{backgroundColor: 'rgba(255,255,255,0.4)', border: '1px solid black', borderRadius: '4px', display: 'none'}}>Search</button>
                     
