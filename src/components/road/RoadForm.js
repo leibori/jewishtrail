@@ -57,7 +57,7 @@ class RoadForm extends Component {
             name: formerState ? formerState.name : '',
             description: formerState ? formerState.description : '',
             imageUrl: formerState ? formerState.imageUrl : '',
-            id: formerState && formerState.roadId ? formerState.roadId : null,
+            roadId: formerState && formerState.roadId ? formerState.roadId : null,
             vote: formerState ? formerState.vote : null
         }
 
@@ -93,14 +93,13 @@ class RoadForm extends Component {
         }
         let searchTokens = [];
         const roadName = this.state.name;
-        const roadId = this.state.id
+        const roadId = this.state.roadId
         const roadDescription = this.state.description;
         const { imageUrl } = this.state;
         const vote = this.state.vote ? this.state.vote : 50;
         const CityList = Array.from(new Set(this.state.siteList.map((site) => site.city)))
         const CountryList = Array.from(new Set(this.state.siteList.map((site) => site.country)))
         var TagList = []
-        console.log(this.state.siteList)
         let temp = Array.from(new Set(this.state.siteList.map((site) => site.tags)))
         temp.forEach((tagsArr) => tagsArr.forEach((tag) => TagList.push(tag)));
         searchTokens = Array.from(new Set([...TagList,...CityList,...CountryList,...roadName.split(" ")]))
@@ -125,7 +124,6 @@ class RoadForm extends Component {
         const siteObject = {
             ...siteData,
             id:siteID
-            
         }
         var siteList = this.state.siteList
         siteList.push(siteObject)
@@ -134,9 +132,9 @@ class RoadForm extends Component {
         });
         // console.log(siteList)
     }
-    removeSite = (e, site)=>{
+    removeSite = (e, siteID)=>{
         const siteList = [...this.state.siteList]
-        const index = siteList.findIndex(s=> s.id==site.id )
+        const index = siteList.findIndex(s => s.id==siteID )
         siteList.splice(index,1);
         this.setState({siteList});
     }
