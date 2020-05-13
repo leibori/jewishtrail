@@ -86,7 +86,7 @@ class Navbar extends Component {
             <ReactBootStrap.Nav.Link style={fontStyle} href="/about">About</ReactBootStrap.Nav.Link>            
           </ReactBootStrap.Nav>
       </ReactBootStrap.Navbar.Collapse>  
-      { user_name && <div><span style={{color: '#5C5B5C',}} className="far fa-user"></span>
+      { user_name && <div style={{right: '10px', top: '10px', position:'fixed'}}><span style={{color: '#5C5B5C',}} className="far fa-user"></span>
           <span class="navbar-text-right" style={{fontSize: '17px', WebkitTextStroke: '1px 1px black',fontFamily: 'Cambay', color: '#5C5B5C', fontWeight: '1000',}}>{" " + firstName}</span></div>}  
     </ReactBootStrap.Navbar>
     </div>
