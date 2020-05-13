@@ -59,7 +59,7 @@ class Navbar extends Component {
     return (
       <div className="App-transparent">
       <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light" >        
-      <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" bg="transparent"/>
+      <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" bg="transparent" style={{ marginTop: '0px' }} />
     
         <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
           <ReactBootStrap.Nav className="mr-auto">
