@@ -3,6 +3,7 @@
     background-color: rgba(245, 245, 245, 0.836);
     overflow: hidden;
     text-align: center ;
+    margin: auto;
 
 
   }
@@ -16,6 +17,9 @@
     }
   }
 
+  .navbar-nav {
+    margin: auto;
+  }
 
 /*.navbar-toggler{
     background-color: white;
