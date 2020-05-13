@@ -54,7 +54,7 @@ class SignUp extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  onSignup = async(e) => {
+  onSignup = (e) => {
     e.preventDefault();
     const { email, password, username, confpassword, recaptchaRef } = this.state;
     if (!recaptchaRef.current.getValue()){
@@ -65,8 +65,7 @@ class SignUp extends Component {
       alert("Passwords does not match.")
       return;
     }
-    await signup(e, email, password, username);
-    this.props.history.push('/notverified');
+    signup(e, email, password, username).then(() => this.props.history.push('/notverified'));
   }
   //
   render() {
