@@ -57,13 +57,10 @@ class Navbar extends Component {
     const user_name = this.props.status.user_name;
     const firstName = user_name ? user_name.split(' ')[0] : undefined;
     return (
-      <nav className="nav-wrapper">
-          <div className="App-transparent">
-        {/* <Link to='/menu' className="brand-logo">Jewish Trail</Link> */}
-      <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light">
-        {/*<ReactBootStrap.Navbar.Brand href="/Menu">Jewish Trail</ReactBootStrap.Navbar.Brand>*/}
-      <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" />
-
+      <div className="App-transparent">
+      <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light" >        
+      <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" bg="transparent"/>
+    
         <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
           <ReactBootStrap.Nav className="mr-auto">
             { this.state.isLoggedIn ? (
@@ -72,14 +69,11 @@ class Navbar extends Component {
               <ReactBootStrap.Nav.Link style={fontStyle} href="/LoginPage">Log In </ReactBootStrap.Nav.Link>
               )
             }
-            
             <ReactBootStrap.Nav.Link style={fontStyle} href="/search">Search</ReactBootStrap.Nav.Link>
             {
               this.state.isLoggedIn && (<ReactBootStrap.Nav.Link style={fontStyle} href="/favorites">Favorites</ReactBootStrap.Nav.Link>)
             }
-
             <ReactBootStrap.Nav.Link style={fontStyle} href="/aroundyou">Around You </ReactBootStrap.Nav.Link>
-
             {
               this.state.isAdmin && (<ReactBootStrap.Nav.Link style={fontStyle} href="/admin">Admin Page</ReactBootStrap.Nav.Link>)
             }          
@@ -90,7 +84,6 @@ class Navbar extends Component {
           <span class="navbar-text-right" style={{fontSize: '17px', WebkitTextStroke: '1px 1px black',fontFamily: 'Cambay', color: '#5C5B5C', fontWeight: '1000',}}>{" " + firstName}</span></div>}  
     </ReactBootStrap.Navbar>
     </div>
-    </nav>
 
     )
   }
