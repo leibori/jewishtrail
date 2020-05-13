@@ -36,13 +36,13 @@ const buttonVote = {
 }
 const SiteComponent = (props) => {
   const { site, siteButtonsProps,voteButtonsProps} = props;
-  console.log(site);
-  console.log(voteButtonsProps)
+  // console.log(site);
+  // console.log(voteButtonsProps)
   const likeStatus = voteButtonsProps ? voteButtonsProps[0].colorLike(site.id,voteButtonsProps[0].buttonName) : null
   const [likeFlag,setLike] = useState(likeStatus)
   const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(site.id,voteButtonsProps[1].buttonName) : null
   const [dislikeFlag,setDislike] = useState(dislikes)
-  console.log(dislikeFlag)
+  // console.log(dislikeFlag)
   // const buttonName = props.props.buttonName
   // const condition = props.props.condition
   // const buttonFunction = props.props.buttonFunction
