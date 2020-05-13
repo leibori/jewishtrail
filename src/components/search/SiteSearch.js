@@ -16,6 +16,7 @@ export default class SiteSearch extends Component {
 
         // Extracting the props that the constructor recieves.
         const { siteButtonsProps, searchVal, returnTo, getParentState } = props;
+        console.log(props)
         
 
         this.state = {
@@ -90,7 +91,7 @@ export default class SiteSearch extends Component {
     render() {
         const url = '/' + this.state.returnTo + '/' + this.state.searchVal;
 
-        console.log(url);
+        // console.log(url);
 
         // Extract "buttonName" and "siteList" variable for ease of use.
         const { siteList, siteButtonsProps } = this.state;

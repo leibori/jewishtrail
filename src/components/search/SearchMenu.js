@@ -66,13 +66,10 @@ class SearchMenu extends Component {
      * This function is used in case the user has changed to get it's current claim, favorites and id.
      */
     async componentDidMount() {
-        console.log(this.props.logStatus)
         const { claims, uid } = this.props.logStatus
         if (claims != 'guest') {
             let likes = this.props.likes
             let dislikes = this.props.dislikes
-            console.log(likes)
-            console.log(dislikes)
             let allVotes = []
             let siteFavorites = this.props.siteFavorites
             let trailFavorites = this.props.trailFavorites
@@ -252,7 +249,6 @@ class SearchMenu extends Component {
     }
 
     canRenderVoteID = (siteId) => {
-        console.log(siteId)
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
             return true
@@ -261,7 +257,6 @@ class SearchMenu extends Component {
     }
     colorLike = (siteId,buttonName) => {
         if(this.props.likes.includes(siteId)){
-            console.log("bugaaaa")
             //return true
             return <span style={{color:'green'}}>{buttonName}</span>
         }
