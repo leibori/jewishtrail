@@ -38,7 +38,7 @@ export async function login(e, email, password) {
 
 export async function signup(e, email, password, user_name){
   e.preventDefault();
-  myFirebase.auth().createUserWithEmailAndPassword(email, password).then(u=>emailAuthentication(u))
+  await myFirebase.auth().createUserWithEmailAndPassword(email, password).then(u=>emailAuthentication(u))
   .then((u)=>CreateNewAccount(u.user.uid, user_name))
   .then((u)=>{console.log(u)})
   .catch((error) => {
