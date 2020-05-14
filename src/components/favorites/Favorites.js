@@ -10,7 +10,7 @@ import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../.
 import InnerBgImg from "../../assets/img/signs.jpg";
 import { connect } from 'react-redux'
 import {updateVote,getVoteByUserID,deleteVote} from '../firebase/FirebaseVotingUtils'
-import "components/search/GeneralSearch/index.css"
+import "./fav.css"
 
 let buttonVote = {
   width: '40px',
@@ -25,16 +25,6 @@ let likeStyle ={
 }
 let dislikeStyle={
   ...buttonVote,
-}
-const fixedbutton = {
-  backgroundImage: "url(" + InnerBgImg +") no-repeat",
-  paddingTop: '10px',
-  position: 'fixed',
-  zIndex: '1',
-  marginTop:' 0px',
-  paddingBottom: '10px',
-  top: '0%',
-  width: '100%'
 }
 class Favorites extends Component {
   constructor(props) {
