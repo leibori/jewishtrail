@@ -41,7 +41,7 @@ const SiteHandle = (props) => {
   const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(site.uid,voteButtonsProps[1].buttonName) : null
   const [dislikeFlag,setDislike] = useState(dislikes)
 
-  const info_url = '/site/'+props.uid
+  const info_url = '/site/'+site.uid
   const classes = useStyles()
 
   // const pickSiteButton = () => {

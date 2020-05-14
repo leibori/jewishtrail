@@ -47,7 +47,7 @@ const RoadHandle = (props) => {
   const [likeFlag,setLike] = useState(likeStatus)
   const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(road.uid,voteButtonsProps[1].buttonName) : null
   const [dislikeFlag,setDislike] = useState(dislikes)
-  var info_url = '/road/'+props.uid
+  var info_url = '/road/'+road.uid
 
   // const pickRoadButton = () => {
   //   return roadButtonsProps.find(buttonProps => buttonProps.canRender(road.id));
