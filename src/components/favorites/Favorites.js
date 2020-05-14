@@ -268,7 +268,7 @@ class Favorites extends Component {
         )}
         </div>}
         {this.state.favoritesArr.length > 0 &&
-        <div className="fixedButton">
+        <div className="fixed">
           <button
               onClick={this.siteFilterClicked}
               style={{backgroundColor: siteColorPredicate,borderRadius: '4px', marginLeft: '5%', padding: '5px'}}>Only Sites</button>
