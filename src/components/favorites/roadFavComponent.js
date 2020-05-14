@@ -92,7 +92,7 @@ const RoadHandle = (props) => {
                   </Grid>
                   { buttonProps &&
                     <Grid item>
-                      <button variant="outlined" onClick={(e) => buttonProps.buttonFunction(road.id,road.uid,road.type)}>{buttonProps.buttonName}</button>
+                      <button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => buttonProps.buttonFunction(road.id,road.uid,road.type)}>{buttonProps.buttonName}</button>
                     </Grid>
                   }
                   {true &&

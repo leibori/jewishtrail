@@ -87,7 +87,7 @@ const SiteHandle = (props) => {
                   </Grid>
                   { buttonProps &&
                     (<Grid item>
-                      <button variant="outlined" onClick={(e) => buttonProps.buttonFunction(site.id,site.uid,site.type)}>{buttonProps.buttonName}</button>
+                      <button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => buttonProps.buttonFunction(site.id,site.uid,site.type)}>{buttonProps.buttonName}</button>
                     </Grid>)
                   }
                   {true &&

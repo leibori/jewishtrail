@@ -94,7 +94,7 @@ const SiteComponent = (props) => {
                   </Grid>
                   { buttonProps &&
                     (<Grid item>
-                      <button variant="outlined" onClick={(e) => buttonProps.buttonFunction(e, site.id)}>{buttonProps.buttonName}</button>
+                      <button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => buttonProps.buttonFunction(e, site.id)}>{buttonProps.buttonName}</button>
                     </Grid>)
                   }
                   {true &&
