@@ -274,7 +274,7 @@ class Favorites extends Component {
               style={{backgroundColor: siteColorPredicate,borderRadius: '4px', marginLeft: '5%', padding: '5px',marginTop:'0px'}}>Only Sites</button>
           <button
               onClick={this.roadFilterClicked}
-              style={{backgroundColor: roadColorPredicate,borderRadius: '4px', marginLeft: '3%', padding: '5px',marginTop:'0px'}}>Only Roads</button>
+              style={{backgroundColor: roadColorPredicate,borderRadius: '4px', marginLeft: '3%', padding: '5px',marginTop:'0px'}}>Only Trails</button>
         </div>}
         <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px',marginTop:'100px',zIndex:'0',maxHeight: '50px'}}>
                     {this.checkCondition() ? 

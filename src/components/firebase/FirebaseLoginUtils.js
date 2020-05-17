@@ -56,7 +56,7 @@ async function CreateNewAccount(uid, UserName){
 
 export const forgotPassword = async(email) => {
   if(email != ""){
-        myFirebase.auth().sendPasswordResetEmail(email).then(() => alert("Email has been sent"));
+        myFirebase.auth().sendPasswordResetEmail(email).then(() => console.log("sent"));
     };
 }
 
