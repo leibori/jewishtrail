@@ -421,10 +421,10 @@ class RaodPage extends Component {
                     </Card.Body>
                     <ListGroup className="list-group-flush">
                         <ListGroupItem className="container">
-                            {siteList.length > 0 && <PaginatedList
+                            {siteList.length > 30 ? <PaginatedList
                                     list={siteList}
                                     itemsPerPage={30}
-                                    renderList={mapping}/>}
+                                    renderList={mapping}/>: mapping(siteList)}
                         </ListGroupItem>
                     </ListGroup>
                     <Card.Body>
