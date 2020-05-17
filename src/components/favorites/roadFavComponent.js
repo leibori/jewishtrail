@@ -100,7 +100,7 @@ const RoadHandle = (props) => {
                     <Circle progress={road.vote} progressColor="#50c878" size={80} bgColor="#ff0000" lineWidth={20} textColor="#3f704d"></Circle>
                   </Grid>)
                   }
-                  {like && like.canRender(road.uid) &&
+                  {/* {like && like.canRender(road.uid) &&
                   (<Grid item style ={{marginLeft:'15%'}}>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,1,road.uid)}>{likeFlag}</button>
                   </Grid>)
@@ -112,7 +112,7 @@ const RoadHandle = (props) => {
                   (<Grid item>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,0,road.uid)}>{dislikeFlag}</button>
                   </Grid>)
-                  }
+                  } */}
                 </Grid>
               </Grid>
             </Grid>
