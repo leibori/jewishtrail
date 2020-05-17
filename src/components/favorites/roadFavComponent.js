@@ -47,7 +47,7 @@ const RoadHandle = (props) => {
   const [likeFlag,setLike] = useState(likeStatus)
   const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(road.uid,voteButtonsProps[1].buttonName) : null
   const [dislikeFlag,setDislike] = useState(dislikes)
-  var info_url = '/road/'+props.uid
+  var info_url = '/road/'+road.uid
 
   // const pickRoadButton = () => {
   //   return roadButtonsProps.find(buttonProps => buttonProps.canRender(road.id));
@@ -92,7 +92,7 @@ const RoadHandle = (props) => {
                   </Grid>
                   { buttonProps &&
                     <Grid item>
-                      <button variant="outlined" onClick={(e) => buttonProps.buttonFunction(road.id,road.uid,road.type)}>{buttonProps.buttonName}</button>
+                      <button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => buttonProps.buttonFunction(road.id,road.uid,road.type)}>{buttonProps.buttonName}</button>
                     </Grid>
                   }
                   {true &&
@@ -100,7 +100,7 @@ const RoadHandle = (props) => {
                     <Circle progress={road.vote} progressColor="#50c878" size={80} bgColor="#ff0000" lineWidth={20} textColor="#3f704d"></Circle>
                   </Grid>)
                   }
-                  {like && like.canRender(road.uid) &&
+                  {/* {like && like.canRender(road.uid) &&
                   (<Grid item style ={{marginLeft:'15%'}}>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,1,road.uid)}>{likeFlag}</button>
                   </Grid>)
@@ -112,7 +112,7 @@ const RoadHandle = (props) => {
                   (<Grid item>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,0,road.uid)}>{dislikeFlag}</button>
                   </Grid>)
-                  }
+                  } */}
                 </Grid>
               </Grid>
             </Grid>

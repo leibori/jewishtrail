@@ -27,14 +27,12 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     width: '100%',
-    height: '100%',
+    height: '150px',
   },
   img: {
     outline: 'none',
     margin: 'auto',
     display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
   },
 }));
 
@@ -42,28 +40,28 @@ const RoadComponent = (props) => {
   const classes = useStyles()
   const { road, roadButtonsProps ,voteButtonsProps} = props;
 
-  console.log(voteButtonsProps)
-  const likeStatus = voteButtonsProps ? voteButtonsProps[0].colorLike(road.id,voteButtonsProps[0].buttonName) : null
-  const [likeFlag,setLike] = useState(likeStatus)
-  const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(road.id,voteButtonsProps[1].buttonName) : null
-  const [dislikeFlag,setDislike] = useState(dislikes)
+  // const likeStatus = voteButtonsProps ? voteButtonsProps[0].colorLike(road.id,voteButtonsProps[0].buttonName) : null
+  // const [likeFlag,setLike] = useState(likeStatus)
+  // const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(road.id,voteButtonsProps[1].buttonName) : null
+  // const [dislikeFlag,setDislike] = useState(dislikes)
+
   var info_url = '/road/'+road.id
 
   const pickRoadButton = () => {
     return roadButtonsProps.find(buttonProps => buttonProps.canRender(road.id));
   }
 
-  const setVoteDb = (e,vote,siteId)=>{
-    const likeButton = like.buttonName
-    const dislikeButton = dislike.buttonName
-    vote ? like.buttonFunction(e,vote,siteId) :dislike.buttonFunction(e,vote,siteId)
-    setDislike(dislike.colorDislike(siteId,dislikeButton))
-    setLike(like.colorLike(siteId,likeButton))
-  }
+  // const setVoteDb = (e,vote,siteId)=>{
+  //   const likeButton = like.buttonName
+  //   const dislikeButton = dislike.buttonName
+  //   vote ? like.buttonFunction(e,vote,siteId) :dislike.buttonFunction(e,vote,siteId)
+  //   setDislike(dislike.colorDislike(siteId,dislikeButton))
+  //   setLike(like.colorLike(siteId,likeButton))
+  // }
 
   const buttonProps = pickRoadButton();
-  const like = voteButtonsProps ? voteButtonsProps[0] : undefined
-  const dislike = voteButtonsProps ? voteButtonsProps[1] : undefined
+  // const like = voteButtonsProps ? voteButtonsProps[0] : undefined
+  // const dislike = voteButtonsProps ? voteButtonsProps[1] : undefined
 
   return (
     <div className={classes.root}>
@@ -73,7 +71,7 @@ const RoadComponent = (props) => {
           
           <Grid item xs={6} lg>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={road.imageUrl} />
+              <img className={classes.img} style={{ marginTop: '20px' }} alt="complex" src={road.imageUrl} />
             </ButtonBase>
           </Grid>
 
@@ -101,19 +99,16 @@ const RoadComponent = (props) => {
                     <Circle progress={road.vote} progressColor="#50c878" size={80} bgColor="#ff0000" lineWidth={20} textColor="#3f704d"></Circle>
                   </Grid>)
                   }
-                  {like && like.canRender(road.id) &&
+                  {/* {like && like.canRender(road.id) &&
                   (<Grid item style ={{marginLeft:'15%'}}>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,1,road.id)}>{likeFlag}</button>
                   </Grid>)
-                  // (<Grid item>
-                  //   <button variant="outlined" style={buttonVote} onClick={(e) => tenTheBig(e,1,site.id,like.buttonName)}><span style={{color:'green'}} >{like.buttonName}</span></button>
-                  // </Grid>)
                   } 
                   {dislike && dislike.canRender(road.id) &&
                   (<Grid item>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,0,road.id)}>{dislikeFlag}</button>
                   </Grid>)
-                  }
+                  } */}
                 </Grid>
               </Grid>
 

@@ -1,10 +1,10 @@
 const positionReducer = (state = { lat: 0, lng: 0, country: '' }, action) => {
     switch(action.type) {
-        case 'FIND_POSITION':
+        case 'SET_POSITION':
             return {
-                lat: action.lat,
-                lng: action.lng,
-                country: action.country
+                lat: action.position.lat,
+                lng: action.position.lng,
+                country: action.position.country
             }
         default:
             return state

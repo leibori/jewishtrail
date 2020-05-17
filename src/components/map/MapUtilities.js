@@ -1,4 +1,6 @@
 import L from 'leaflet';
+import { setPosition } from '../../actions'
+
 
 let maxZoom = 20
 let minZoom = 1.5
@@ -104,4 +106,30 @@ export function getSitePageMap(mapId, site, zoom) {
     var overlays = { "Marker": markerLayer };
     L.control.layers(baseLayers, overlays).addTo(map);
     
+}
+
+
+export function findUserPosition(dispatch) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+        const location = await fetch('https://ipapi.co/json').then(res => res.json())
+        dispatch(setPosition({
+            type: 'FIND_POSITION',
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+            country: location.country_name
+        }));
+    },
+    () => {
+        fetch('https://ipapi.co/json')
+        .then(res => res.json())
+        .then(location => {
+            dispatch(setPosition({
+                type: 'FIND_POSITION',
+                lat: location.latitude,
+                lng: location.longitude,
+                country: location.country_name
+            }))
+        })
+    },
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
 }

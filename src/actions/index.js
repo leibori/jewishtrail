@@ -1,5 +1,8 @@
-export const findPosition = (props) => {
-    return props
+export const setPosition = (position) => {
+    return {
+        type: 'SET_POSITION',
+        position
+    }
 }
 
 export const setLogStatus = (status) => {
@@ -21,12 +24,14 @@ export const setTrailFavorites = (favorites) => {
         trailFavorites: favorites
     }
 }
+
 export const setLikes = (likes) => {
     return {
         type: 'SET_LIKES',
         likes: likes
     }
 }
+
 export const setDislikes = (dislikes) => {
     return {
         type: 'SET_DISLIKES',

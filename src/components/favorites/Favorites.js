@@ -10,7 +10,7 @@ import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../.
 import InnerBgImg from "../../assets/img/signs.jpg";
 import { connect } from 'react-redux'
 import {updateVote,getVoteByUserID,deleteVote} from '../firebase/FirebaseVotingUtils'
-import "components/search/GeneralSearch/index.css"
+import "./fav.css"
 
 let buttonVote = {
   width: '40px',
@@ -25,16 +25,6 @@ let likeStyle ={
 }
 let dislikeStyle={
   ...buttonVote,
-}
-const fixedbutton = {
-  backgroundImage: "url(" + InnerBgImg +") no-repeat",
-  paddingTop: '10px',
-  position: 'fixed',
-  zIndex: '1',
-  marginTop:' 0px',
-  paddingBottom: '10px',
-  top: '0%',
-  width: '100%'
 }
 class Favorites extends Component {
   constructor(props) {
@@ -278,13 +268,13 @@ class Favorites extends Component {
         )}
         </div>}
         {this.state.favoritesArr.length > 0 &&
-        <div className="fixedButton">
+        <div className="fixed">
           <button
               onClick={this.siteFilterClicked}
-              style={{backgroundColor: siteColorPredicate,borderRadius: '4px', marginLeft: '5%', padding: '5px'}}>Only Sites</button>
+              style={{backgroundColor: siteColorPredicate,borderRadius: '4px', marginLeft: '5%', padding: '5px',marginTop:'0px'}}>Only Sites</button>
           <button
               onClick={this.roadFilterClicked}
-              style={{backgroundColor: roadColorPredicate,borderRadius: '4px', marginLeft: '3%', padding: '5px'}}>Only Roads</button>
+              style={{backgroundColor: roadColorPredicate,borderRadius: '4px', marginLeft: '3%', padding: '5px',marginTop:'0px'}}>Only Trails</button>
         </div>}
         <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px',marginTop:'100px',zIndex:'0',maxHeight: '50px'}}>
                     {this.checkCondition() ? 

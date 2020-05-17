@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { signInWithGoogle, login } from "components/firebase/FirebaseLoginUtils";
 import './index.css';
 import { getUserClaims } from '../../firebase/FirebaseUtilities'
-import { setLogStatus } from '../../../actions'
+import { setLogStatus, setPosition } from '../../../actions'
 import { connect } from 'react-redux'
 
 
@@ -134,6 +134,11 @@ const mapDispatchToProps = (dispatch) => {
         user_name: user.displayName,
         uid: user.uid,
         isVerified: user.emailVerified,
+      }))
+      await dispatch(setPosition({
+        lat: 0,
+        lng: 0,
+        country: '',
       }))
     }
   }

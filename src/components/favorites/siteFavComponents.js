@@ -5,7 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Circle from 'react-circle';
-import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +40,7 @@ const SiteHandle = (props) => {
   const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(site.uid,voteButtonsProps[1].buttonName) : null
   const [dislikeFlag,setDislike] = useState(dislikes)
 
-  const info_url = '/site/'+props.uid
+  const info_url = '/site/'+site.uid
   const classes = useStyles()
 
   // const pickSiteButton = () => {
@@ -87,7 +86,7 @@ const SiteHandle = (props) => {
                   </Grid>
                   { buttonProps &&
                     (<Grid item>
-                      <button variant="outlined" onClick={(e) => buttonProps.buttonFunction(site.id,site.uid,site.type)}>{buttonProps.buttonName}</button>
+                      <button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => buttonProps.buttonFunction(site.id,site.uid,site.type)}>{buttonProps.buttonName}</button>
                     </Grid>)
                   }
                   {true &&
@@ -95,7 +94,7 @@ const SiteHandle = (props) => {
                     <Circle progress={site.vote} progressColor="#50c878" size={80} bgColor="#ff0000" lineWidth={20} textColor="#3f704d"></Circle>
                   </Grid>)
                   }
-                  {like && like.canRender(site.uid) &&
+                  {/* {like && like.canRender(site.uid) &&
                   (<Grid item style ={{marginLeft:'15%'}}>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,1,site.uid)}>{likeFlag}</button>
                   </Grid>)
@@ -107,7 +106,7 @@ const SiteHandle = (props) => {
                   (<Grid item>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,0,site.uid)}>{dislikeFlag}</button>
                   </Grid>)
-                  }
+                  } */}
                   {/* <Grid item xs={6}>
                     <Button onClick={()=>{if (window.confirm('Are you sure you wish to delete this item?')) deleteSite(props.id,props.uid,props.type)}} className={buttonClasses.button} variant="outlined" style={{border: 'none',background: 'none',width: '40px',height:'40px',maxHeight: '40px',maxWidth: '40px',backgroundColor: 'tranparent'}} size="small">
                     <img src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-remove-icon.png"></img>

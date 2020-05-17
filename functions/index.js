@@ -87,7 +87,7 @@ exports.updateVotes = functions.https.onRequest(async (request,response)=>{
       await db.collection('sites').doc(key).get().then((doc) => {
         collectionName =  doc.exists ? 'sites' : 'roads'
         db.collection(collectionName).doc(key).update({ 
-          vote: ratio,
+          vote: Math.round(ratio),
         })
       }).catch((e) => {
         console.log(e)
