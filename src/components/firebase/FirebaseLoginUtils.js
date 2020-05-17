@@ -38,17 +38,19 @@ export async function login(e, email, password) {
 
 export async function signup(e, email, password, user_name){
   e.preventDefault();
-  await myFirebase.auth().createUserWithEmailAndPassword(email, password).then(u=>emailAuthentication(u))
-  .then((u)=>CreateNewAccount(u.user.uid, user_name))
-  .then((u)=>{console.log(u)})
+  await myFirebase.auth().createUserWithEmailAndPassword(email, password)
+  .then(async (u) => {
+    u.user.updateProfile({ displayName: user_name })
+    await emailAuthentication(u)
+    await CreateNewAccount(u.user.uid)
+  })
   .catch((error) => {
     alert(error);
   })
 }
 
-async function CreateNewAccount(uid, UserName){
+async function CreateNewAccount(uid){
   await myDatabase.collection("accounts").doc(uid).set({
-      user_name: UserName,
       favorites: [],
       RoadsFavorites: [],
   })
@@ -62,7 +64,6 @@ export const forgotPassword = async(email) => {
 
 export const emailAuthentication = async(u) => {
   const user = firebase.auth().currentUser;
-  console.log(user)
   if (!user){
     alert(user)
     return;
