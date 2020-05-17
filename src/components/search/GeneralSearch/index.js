@@ -188,7 +188,7 @@ class GeneralSearch extends Component {
         });     
 
         return (
-            <div style={{height: '100%', width: '100%'}}>
+            <div style={{height: '70%', width: '100%'}}>
                 <div className="searchbar">
                     <form onSubmit={this.onSearchButtonClicked} style={{paddingBottom: '0%', marginTop: '0%', width: '100%'}}>
                         <header style={headerStyle}>Find a trail</header>
