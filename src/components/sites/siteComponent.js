@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     width: '100%',
-    height: '100%',
+    height: '150px',
   },
   img: {
     outline: 'none',
@@ -34,14 +34,19 @@ const buttonVote = {
   background: 'transparent',
   border: 'none',
 }
+
+
 const SiteComponent = (props) => {
-  const { site, siteButtonsProps,voteButtonsProps} = props;
-  // console.log(site);
+  // const { site, siteButtonsProps,voteButtonsProps} = props;
+  const { site, siteButtonsProps } = props;
+
   // console.log(voteButtonsProps)
-  const likeStatus = voteButtonsProps ? voteButtonsProps[0].colorLike(site.id,voteButtonsProps[0].buttonName) : null
-  const [likeFlag,setLike] = useState(likeStatus)
-  const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(site.id,voteButtonsProps[1].buttonName) : null
-  const [dislikeFlag,setDislike] = useState(dislikes)
+
+  // const likeStatus = voteButtonsProps ? voteButtonsProps[0].colorLike(site.id,voteButtonsProps[0].buttonName) : null
+  // const [likeFlag,setLike] = useState(likeStatus)
+  // const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(site.id,voteButtonsProps[1].buttonName) : null
+  // const [dislikeFlag,setDislike] = useState(dislikes)
+
   // console.log(dislikeFlag)
   // const buttonName = props.props.buttonName
   // const condition = props.props.condition
@@ -54,20 +59,20 @@ const SiteComponent = (props) => {
   const pickSiteButton = () => {
     return siteButtonsProps ? siteButtonsProps.find((buttonProps) => buttonProps.canRender(site.id)) : undefined;
   }
-  const setVoteDb = (e,vote,siteId)=>{
-    const likeButton = like.buttonName
-    const dislikeButton = dislike.buttonName
-    vote ? like.buttonFunction(e,vote,siteId) :dislike.buttonFunction(e,vote,siteId)
-    setDislike(dislike.colorDislike(siteId,dislikeButton))
-    setLike(like.colorLike(siteId,likeButton))
-  }
+  // const setVoteDb = (e,vote,siteId)=>{
+  //   const likeButton = like.buttonName
+  //   const dislikeButton = dislike.buttonName
+  //   vote ? like.buttonFunction(e,vote,siteId) :dislike.buttonFunction(e,vote,siteId)
+  //   setDislike(dislike.colorDislike(siteId,dislikeButton))
+  //   setLike(like.colorLike(siteId,likeButton))
+  // }
   // const pickIconButton = () =>{
   //   return voteButtonsProps ? voteButtonsProps.find((voteProps) => voteProps.canRender(site.id)) : undefined;
   // }
 
   const buttonProps = pickSiteButton();
-  const like = voteButtonsProps ? voteButtonsProps[0] : undefined
-  const dislike = voteButtonsProps ? voteButtonsProps[1] : undefined
+  // const like = voteButtonsProps ? voteButtonsProps[0] : undefined
+  // const dislike = voteButtonsProps ? voteButtonsProps[1] : undefined
   
   return (
     <div className={classes.root}>
@@ -77,7 +82,7 @@ const SiteComponent = (props) => {
           
           <Grid item xs={6} lg>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={site.imageUrl} />
+              <img className={classes.img} style={{ marginTop: '20px' }} alt="complex" src={site.imageUrl} />
             </ButtonBase>
           </Grid>
           <Grid item xs={6} sm container>
@@ -99,22 +104,19 @@ const SiteComponent = (props) => {
                   }
                   {true &&
                   (<Grid item style ={{marginLeft:'20%'}}>
-                    <Circle progress={site.vote} progressColor="#50c878" size={80} bgColor="#ff0000" lineWidth={20} textColor="#3f704d"></Circle>
+                    <Circle progress={site.vote} progressColor="#50c878" size={70} bgColor="#ff0000" lineWidth={20} textColor="#3f704d" textStyle={{font:'bold 6rem Helvetica, Ariel, sens-serif'}}></Circle>
                   </Grid>)
                   }
-                  {like && like.canRender(site.id) &&
+                  {/* {like && like.canRender(site.id) &&
                   (<Grid item style ={{marginLeft:'15%'}}>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,1,site.id)}>{likeFlag}</button>
                   </Grid>)
-                  // (<Grid item>
-                  //   <button variant="outlined" style={buttonVote} onClick={(e) => tenTheBig(e,1,site.id,like.buttonName)}><span style={{color:'green'}} >{like.buttonName}</span></button>
-                  // </Grid>)
                   } 
                   {dislike && dislike.canRender(site.id) &&
                   (<Grid item>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,0,site.id)}>{dislikeFlag}</button>
                   </Grid>)
-                  }
+                  } */}
                 </Grid>
               </Grid>
             </Grid>
