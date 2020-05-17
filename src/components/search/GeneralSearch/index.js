@@ -7,15 +7,13 @@ import ReactLoading from "react-loading";
 // import Select from 'react-select'
 import './index.css';         
 
+// Header style properties.
 const headerStyle = {
     color: 'white',
     fontWeight: '800',
     fontSize: '32px',
     fontFamily: "Cambay, sans-serif",
     textShadow: "2px 2px black",
-    // WebkitTextStroke: 'px black',
-    // WebkitTextStrokeWidth: '1px',
-    // WebkitTextStrokeColor: 'black',
 }
 
 
@@ -32,15 +30,19 @@ class GeneralSearch extends Component {
 
     // A constructor that sets the values of this component's state.
     constructor(props) {
+
         super(props);
 
         // Extracting the props that the constructor recieves.
-        const { siteButtonsProps, roadButtonsProps, voteButtonsProps ,searchVal, returnTo } = props;
-        // const { buttonName, onRoadClickMethod, onSiteClickMethod, canRenderButtonSite, canRenderButtonRoad, searchVal, returnTo, classes } = props;
+        const { siteButtonsProps, roadButtonsProps ,searchVal, returnTo } = props;
+        // const { siteButtonsProps, roadButtonsProps, voteButtonsProps ,searchVal, returnTo } = props;
+
+
         this.state = {
             // Is true if a search value is sent, and false otherwise.
             startedSearch: false,
 
+            // Is true if the search function has finished.
             finishedSearch: false,
 
             // The search value as array of strings.
@@ -48,28 +50,35 @@ class GeneralSearch extends Component {
 
             // The array of search results.
             searchResult: [],
-            // Button content for voting
-            voteButtonsProps,
-            // Button content next to each entry
+
+            // Button content for voting.
+            // voteButtonsProps,
+            
+            // Button content next to each site entry.
             siteButtonsProps,
 
+            // Button content next to each site entry.
             roadButtonsProps,
 
             // The beginning of the address that is set after the search button is pressed.
             returnTo: returnTo,
 
-            siteFilter: true,
+            // Is true if the search result are to filter out sites.
+            siteFilter: false,
 
-            roadFilter: true,
+            // Is true if the search result are to filter out trails.
+            trailFilter: false,
 
         }
         
+        // A bind to the search "button" function
         this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
 
+        // A bind to the function the updates the search value.
         this.updateSearchValue = this.updateSearchValue.bind(this);
     };
 
-    // transition to a new page based on the "returnTo" and the search value.
+    // Transition to a new page based on the "returnTo" and the search value.
     onSearchButtonClicked(e) {
         e.preventDefault();
 
@@ -113,11 +122,11 @@ class GeneralSearch extends Component {
     /**
      * This function executes when the user clicks on the site filter button, and it sets boolean values in order to filter the results.
      */
-    siteFilterClicked = () => {
-        if (!this.state.roadFilter) {
-            this.setState({roadFilter: true})
+    onlySitesClicked = () => {
+        if (this.state.trailFilter) {
+            this.setState({trailFilter: false})
         } else {
-            this.setState({siteFilter: true, roadFilter: false})
+            this.setState({siteFilter: false, trailFilter: true})
         }
     }
 
@@ -125,11 +134,11 @@ class GeneralSearch extends Component {
     /**
      * This function executes when the user clicks on the road filter button, and it sets boolean values in order to filter the results.
      */
-    roadFilterClicked = () => {
-        if (!this.state.siteFilter) {
-            this.setState({siteFilter: true})
+    onlyTrailsClicked = () => {
+        if (this.state.siteFilter) {
+            this.setState({siteFilter: false})
         } else {
-            this.setState({siteFilter: false, roadFilter: true}) 
+            this.setState({siteFilter: true, trailFilter: false}) 
         }
     }
 
@@ -138,36 +147,39 @@ class GeneralSearch extends Component {
      * This function is used to filter (by site or by road) the results based on boolean values.
      */
     resultsFilter = (result) => {
-        return (this.state.siteFilter && result.type === 'sites') ||
-            (this.state.roadFilter && result.type === 'roads')
+        return (!this.state.siteFilter && result.type === 'sites') ||
+            (!this.state.trailFilter && result.type === 'roads')
     }
 
 
     // Renders the component.
     render() {
 
-        const { siteButtonsProps, roadButtonsProps, voteButtonsProps,startedSearch, finishedSearch } = this.state;
+        // Extract "siteButtonsProps", "roadButtonsProps", "voteButtonsProps", "startedSearch", "finishedSearch" and "searchResult" values from "this.state" for ease of use.
+        // const { siteButtonsProps, roadButtonsProps, voteButtonsProps, startedSearch, finishedSearch, searchResult } = this.state;
+        
+        // Extract "siteButtonsProps", "roadButtonsProps", "startedSearch", "finishedSearch" and "searchResult" values from "this.state" for ease of use.
+        const { siteButtonsProps, roadButtonsProps, startedSearch, finishedSearch, searchResult } = this.state;
         
         // Predicate that decides the color of the button of the site filter.
-        const siteColorPredicate = !this.state.roadFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
+        const siteColorPredicate = this.state.trailFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
 
         // Predicate that decides the color of the button of the road filter.
-        const roadColorPredicate = !this.state.siteFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
-
-        // Extract "searchResult" variable for ease of use.
-        const { searchResult } = this.state;
+        const roadColorPredicate = this.state.siteFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
 
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
         const mapping = (list) => list.map((site, i) => {
             return  (
                         <div style={{width: '100%'}} key={i}>
-                        {site.type === 'sites' && this.state.siteFilter ?
+                        {site.type === 'sites' && !this.state.siteFilter ?
                             (<div>  
-                                <SiteComponent {...{siteButtonsProps,voteButtonsProps}} site={site} />
+                                {/* <SiteComponent {...{siteButtonsProps,voteButtonsProps}} site={site} /> */}
+                                <SiteComponent {...{siteButtonsProps}} site={site} />
                             </div>)
-                            : site.type === 'roads' && this.state.roadFilter ?
+                            : site.type === 'roads' && !this.state.trailFilter ?
                             (<div style={{width: '100%'}}>
-                                 <RoadComponent {...{roadButtonsProps,voteButtonsProps}} road={site}/>
+                                 {/* <RoadComponent {...{roadButtonsProps,voteButtonsProps}} road={site}/> */}
+                                 <RoadComponent {...{roadButtonsProps}} road={site}/>
                             </div>) : ''
                         }
                         </div>
@@ -193,10 +205,10 @@ class GeneralSearch extends Component {
                     {finishedSearch && searchResult.length !== 0 && 
                         <div>
                                 <button
-                                    onClick={this.siteFilterClicked}
+                                    onClick={this.onlySitesClicked}
                                     style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
                                 <button
-                                    onClick={this.roadFilterClicked}
+                                    onClick={this.onlyTrailsClicked}
                                     style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
                             </div>}
                 </div>
