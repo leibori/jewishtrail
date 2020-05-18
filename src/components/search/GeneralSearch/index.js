@@ -4,6 +4,8 @@ import SiteComponent from 'components/sites/siteComponent'
 import { PaginatedList } from 'react-paginated-list'
 import RoadComponent from 'components/road/RoadComponent';
 import ReactLoading from "react-loading";
+import { saveSearchResults } from '../../../actions'
+import { connect } from 'react-redux'
 // import Select from 'react-select'
 import './index.css';         
 
@@ -83,6 +85,13 @@ class GeneralSearch extends Component {
         e.preventDefault();
 
         if (this.state.searchVal !== '') {
+            this.props.saveSearchResults({
+                searchVal: '',
+                results: [],
+                siteFilter: false,
+                trailFilter: false,
+            })
+
             window.location.href = '/' + this.state.returnTo + '/' + this.state.searchVal
         }
     }
@@ -94,6 +103,12 @@ class GeneralSearch extends Component {
         // console.log(searchValues)
         const result = await findFromDB(searchValues, ['sites', 'roads'])
         // console.log(result)
+        this.props.saveSearchResults({
+            searchVal: this.state.searchVal,
+            results: result,
+            siteFilter: this.state.siteFilter,
+            trailFilter: this.state.trailFilter,
+        })
         this.setState({searchResult: result,
                         finishedSearch: true})
     }
@@ -114,7 +129,18 @@ class GeneralSearch extends Component {
     // Execute the search if the componenet recieved a search value.
     async componentWillMount() {
         if(this.state.searchVal.length >= 1) {
-            await this.executeSearch()
+            const savedResults = this.props.searchResults
+            console.log(savedResults)
+            if (savedResults.results.length >= 1 && savedResults.searchVal == this.state.searchVal) {
+                this.setState({
+                    searchResult: savedResults.results,
+                    finishedSearch: true,
+                    siteFilter: savedResults.siteFilter,
+                    trailFilter: savedResults.trailFilter,
+                })
+            } else {
+                await this.executeSearch()
+            }
         }
     }
 
@@ -124,8 +150,20 @@ class GeneralSearch extends Component {
      */
     onlySitesClicked = () => {
         if (this.state.trailFilter) {
+            this.props.saveSearchResults({
+                searchVal: this.state.searchVal,
+                results: this.state.searchResult,
+                siteFilter: this.state.siteFilter,
+                trailFilter: false,
+            })
             this.setState({trailFilter: false})
         } else {
+            this.props.saveSearchResults({
+                searchVal: this.state.searchVal,
+                results: this.state.searchResult,
+                siteFilter: false,
+                trailFilter: true,
+            })
             this.setState({siteFilter: false, trailFilter: true})
         }
     }
@@ -136,8 +174,20 @@ class GeneralSearch extends Component {
      */
     onlyTrailsClicked = () => {
         if (this.state.siteFilter) {
+            this.props.saveSearchResults({
+                searchVal: this.state.searchVal,
+                results: this.state.searchResult,
+                siteFilter: false,
+                trailFilter: this.state.trailFilter,
+            })
             this.setState({siteFilter: false})
         } else {
+            this.props.saveSearchResults({
+                searchVal: this.state.searchVal,
+                results: this.state.searchResult,
+                siteFilter: true,
+                trailFilter: false,
+            })
             this.setState({siteFilter: true, trailFilter: false}) 
         }
     }
@@ -242,4 +292,20 @@ class GeneralSearch extends Component {
     }
 }
 
-export default GeneralSearch
+// export default GeneralSearch
+
+const mapStateToProps = (state) => {
+    return {
+        searchResults: state.searchResults,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveSearchResults: (searchProps) => {
+            dispatch(saveSearchResults(searchProps))
+        },
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GeneralSearch);
