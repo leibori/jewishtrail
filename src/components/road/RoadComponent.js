@@ -82,7 +82,7 @@ const RoadComponent = (props) => {
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1"><b>{road.name}</b></Typography>
                 <Typography variant="body2" gutterBottom><b>Cities:</b> {road.city.join(", ")}.</Typography>
-                <Typography variant="body2" ><b>Countries:</b> {road.country.join(", ")}.</Typography>
+                <Typography variant="body2" >{road.country[0]}</Typography>
                 <Grid item container direction='row' spacing={2}>
                   <Grid item xs={6}>
                     <button className="view-button" variant="outlined">
