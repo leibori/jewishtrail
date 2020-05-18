@@ -96,7 +96,7 @@ const RoadComponent = (props) => {
                   }
                   {true &&
                   (<Grid item style ={{marginLeft:'20%'}}>
-                    <Circle progress={road.vote} progressColor="#50c878" size={80} bgColor="#ff0000" lineWidth={20} textColor="#3f704d"></Circle>
+                    <Circle progress={road.vote} progressColor="#50c878" size={70} bgColor="#ff0000" lineWidth={20} textColor="#3f704d" textStyle={{font:'bold 6rem Helvetica, Ariel, sens-serif'}}></Circle>
                   </Grid>)
                   }
                   {/* {like && like.canRender(road.id) &&
