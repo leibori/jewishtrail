@@ -38,3 +38,13 @@ export const setDislikes = (dislikes) => {
         dislikes: dislikes
     }
 }
+
+export const saveSearchResults = (searchProps) => {
+    return {
+        type: 'SAVE_SEARCH_RESULTS',
+        searchVal: searchProps.searchVal,
+        results: searchProps.results,
+        siteFilter: searchProps.siteFilter,
+        trailFilter: searchProps.trailFilter,
+    }
+}

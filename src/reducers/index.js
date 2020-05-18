@@ -4,6 +4,7 @@ import siteFavoritesReducer from './siteFavorites'
 import trailFavoritesReducer from './trailFavorites'
 import likesReducer from './likes'
 import dislikesReducer from './dislikes'
+import searchResultsReducer from './searchResults'
 import { combineReducers } from 'redux'
 
 
@@ -14,6 +15,7 @@ const allReducers = combineReducers({
     position: positionReducer,
     siteFavorites: siteFavoritesReducer,
     trailFavorites: trailFavoritesReducer,
+    searchResults: searchResultsReducer,
 })
 
 export default allReducers
