@@ -43,7 +43,7 @@ class SitePage extends Component {
             externalSourceUrl: '',
             latitude: 1,
             longitude: 1,
-            vote: '',
+            vote: 0,
             zoom: 17,
             navigationLink: '',
             likeFlag: '',

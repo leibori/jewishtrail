@@ -43,7 +43,7 @@ class RaodPage extends Component {
             CountryList: [],
             description: "",
             siteList:[],
-            vote: '',
+            vote: 0,
             haveUsersLocation: false,
             imageUrl: '',
             location: {
