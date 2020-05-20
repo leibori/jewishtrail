@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {getFavorites, updateUserFavoriteSites, updateUserFavoriteRoads } from '../firebase/FirebaseUtilities'
 import SiteFavComponents from './siteFavComponents'
 import RoadFavComponent from './roadFavComponent'
+import SelectStyle from './selectStyle'
 import { PaginatedList } from 'react-paginated-list'
 import ReactLoading from "react-loading";
 import "bootstrap/dist/css/bootstrap.css";
@@ -11,6 +12,7 @@ import InnerBgImg from "../../assets/img/signs.jpg";
 import { connect } from 'react-redux'
 import {updateVote,getVoteByUserID,deleteVote} from '../firebase/FirebaseVotingUtils'
 import "./fav.css"
+import {findUserPosition} from '../map/MapUtilities'
 
 let buttonVote = {
   width: '40px',
@@ -38,6 +40,8 @@ class Favorites extends Component {
       roadFilter: true,
       done: false,
       empty: false,
+      searchField: '',
+      categorySearch: '',
     }
   }
 
@@ -46,6 +50,8 @@ class Favorites extends Component {
     let likes = this.props.likes
     let dislikes = this.props.dislikes
     let allVotes = []
+    // let lat = this.props.position.lat
+    // let lng = this.props.position.lng
     let siteFavorites = this.props.siteFavorites
     let trailFavorites = this.props.trailFavorites
     if(likes.length === 0 && dislikes.length === 0){
@@ -54,7 +60,7 @@ class Favorites extends Component {
       dislikes = allVotes.filter(x=>x.vote === 0).map(x=>x.siteID)
       this.props.setLikes(likes)
       this.props.setDislikes(dislikes) 
-  }
+    }
     if (siteFavorites.length === 0) {
       siteFavorites = await getFavoritesIDs(uid)
       this.props.setSiteFavorites(siteFavorites)
@@ -185,7 +191,60 @@ class Favorites extends Component {
       updateUserFavoriteRoads(userid, uidList)
     }
   }
+  categorySearch = (typeSearch) => {
+    this.setState({
+      categorySearch: typeSearch
+    })    
+  }
+  sortBy = (typeSort) => {
+    console.log(typeSort)
+    let sortedArray = []
+    if(typeSort == 'Distances'){
+        const lat = this.props.latitude
+        const long = this.props.longitude
+        sortedArray = this.state.favoritesArr.sort(function(a, b) {
+        var radlat1 = Math.PI * a.latitude/180;
+        var radlat2 = Math.PI * lat/180;
+        var theta = a.longitude-long;
+        var radtheta = Math.PI * theta/180;
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        if (dist > 1) {
+          dist = 1;
+        }
+        dist = Math.acos(dist);
+        dist = dist * 180/Math.PI;
+        dist = dist * 60 * 1.1515;
 
+        var radlat3 = Math.PI * b.latitude/180;
+        var radlat4 = Math.PI * lat/180;
+        var theta = b.longitude-long;
+        var radtheta2 = Math.PI * theta/180;
+        var dist2 = Math.sin(radlat3) * Math.sin(radlat4) + Math.cos(radlat3) * Math.cos(radlat4) * Math.cos(radtheta2);
+        if (dist2 > 1) {
+          dist2 = 1;
+        }
+        dist2 = Math.acos(dist2);
+        dist2 = dist2 * 180/Math.PI;
+        dist2 = dist2 * 60 * 1.1515;
+        if(dist > dist2){
+          return 1;
+        }
+        else{
+          return -1;
+        }
+      });
+      this.setState({
+        favoritesArr: sortedArray
+      })
+    }
+    else if(typeSort == 'Rates'){
+      sortedArray = this.state.favoritesArr.sort((a, b) => parseFloat(b.vote) - parseFloat(a.vote))
+      this.setState({
+        favoritesArr: sortedArray
+      })
+    }
+    //this.state.favoritesArr.sort((a, b) => parseFloat(a.vote) - parseFloat(b.vote));
+  }
 
   /**
   * This function is used to filter (by site or by road) the results based on boolean values.
@@ -226,15 +285,6 @@ class Favorites extends Component {
                             {buttonFunction: this.voteSite, buttonName:voteDislikeButtonName,colorDislike:this.colorDislike,canRender:this.canRenderVoteID}]
     const roadButtonsProps = [{buttonFunction: this.addRoadToFavorites, buttonName: buttonName2},
           {buttonFunction: this.deleteRoadInFavorites, buttonName: buttonName2}];
-    const field = {
-      position: "relative",
-      height: "45px",
-      width: "100%",
-      marginTop:"20%",
-      display: "flex",
-      borderRadius: "5px",
-      marginBottom: '5%'
-    };
     // Predicate that decides the color of the button of the site filter.
     const siteColorPredicate = !this.state.roadFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
 
@@ -242,7 +292,6 @@ class Favorites extends Component {
     const roadColorPredicate = !this.state.siteFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
 
     const mapping = (list) => list.map((site, i) => {
-      // console.log(site);
       return  (
                   <div tyle={{width: '100%'}} key={i}>
                   {site.type === 'sites' && this.state.siteFilter ?
@@ -258,28 +307,74 @@ class Favorites extends Component {
 
               );
     });
+    let filteredFav = []
+    if(this.state.searchField.length > 0){
+      if(this.state.categorySearch == 'Name'){
+        filteredFav = this.state.favoritesArr.filter(fav=>fav.name.toLowerCase().includes(this.state.searchField.toLowerCase()))
+      }
+      if(this.state.categorySearch == 'Country'){
+        filteredFav = this.state.favoritesArr.filter(fav=>Array.isArray(fav.country) ?
+        fav.country[0].toLowerCase().includes(this.state.searchField.toLowerCase()) :
+        fav.country.toLowerCase().includes(this.state.searchField.toLowerCase()))
+      }
+      if(this.state.categorySearch == 'City'){
+        filteredFav = this.state.favoritesArr.filter(fav=>Array.isArray(fav.city) ? 
+        fav.city.some(value => value.toLowerCase().includes(this.state.searchField.toLowerCase())) :
+        fav.city.toLowerCase().includes(this.state.searchField.toLowerCase())) 
+      }
+    }
     return (
-      <div style ={{height: '80%', width: '100%'}}>
+      <div style ={{height: '20%', width: '100%'}}>
         {this.state.favoritesArr.length === 0 && <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
         {!this.state.empty ? (
-           <ReactLoading type={"bars"} color={"white"} />
-        ) : (
-          <img src="/image/NoMatch.png"/>
+           <ReactLoading type={"bars"} color={"black"} />
+        ) : (<div style={{ height: '100%', paddingTop: '30%' }}>
+          <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
+          <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
+          <img src="/image/binoculars.png"/>
+          </div>
         )}
         </div>}
         {this.state.favoritesArr.length > 0 &&
         <div className="fixed">
+            <form onSubmit={this.onSearchButtonClicked} style={{paddingBottom: '0%', marginTop: '0%', width: '100%'}}>
+              <div className='favoritesField' style={{width:'75%'}}>
+                  <span><i className="fas fa-search" style={{marginLeft: '12px'}}></i></span>
+                  <input style={{marginTop:'0px'}}
+                  placeholder='Choose your search category...' 
+                  type="search"
+                  onChange={e => this.setState({searchField: e.target.value})}
+                  />
+                  <button
+                    type="submit"
+                    style={{backgroundColor: 'rgba(255,255,255,0.4)', border: '1px solid black', borderRadius: '4px', display: 'none'}}>Search</button>
+                  <p className="error pink-text center-align"></p>
+                </div>
+                <div className='search-options'>
+                <SelectStyle passFunction={this.categorySearch} type ={"search"}/>
+                </div>
+            </form>
           <button
               onClick={this.siteFilterClicked}
-              style={{backgroundColor: siteColorPredicate,borderRadius: '4px', marginLeft: '5%', padding: '5px',marginTop:'0px'}}>Only Sites</button>
+              style={{backgroundColor: siteColorPredicate,borderRadius: '4px', padding: '5px',margin:'6px 0px 0px 22px'}}>Only Sites</button>
           <button
               onClick={this.roadFilterClicked}
-              style={{backgroundColor: roadColorPredicate,borderRadius: '4px', marginLeft: '3%', padding: '5px',marginTop:'0px'}}>Only Trails</button>
+              style={{backgroundColor: roadColorPredicate,borderRadius: '4px', padding: '5px',margin:'6px 0px 0px 10px'}}>Only Trails</button>
+          <div className='sort-by'>
+          <SelectStyle passFunction={this.sortBy} type ={"sort"}/>
+          </div>
         </div>}
-        <div className="container" style={{ paddingLeft: '0px', paddingRight: '0px',marginTop:'100px',zIndex:'0',maxHeight: '50px'}}>
-                    {this.checkCondition() ? 
+        <div className="FavoritesResult" style={{zIndex:'0'}}>
+                    {this.state.searchField.length > 0 ? filteredFav.length > 0 ? mapping(filteredFav) : 
+                    <div style ={{ height: '100%', paddingTop: '30%' }}>
+                    <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
+                    <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
+                    <img src="/image/binoculars.png" style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                    </div>
+                    : 
+                    this.checkCondition() && this.state.searchField.length == 0 ? 
                     <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
-                      <img src="/image/NoMatch.png"/>
+                      <img src="/image/binoculars.png"/>
                       </div> :
                     this.state.favoritesArr.filter(this.resultsFilter).length > 20 ? 
                      <PaginatedList
@@ -314,7 +409,9 @@ const mapStateToProps = (state) => {
       siteFavorites: state.siteFavorites,
       trailFavorites: state.trailFavorites,
       likes: state.likes,
-      dislikes: state.dislikes
+      dislikes: state.dislikes,
+      latitude: state.position.lat,
+      longitude: state.position.lng
   };
 };
 
@@ -331,6 +428,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setDislikes: (dislikes) =>{
         dispatch(setDislikes(dislikes))
+    },
+    findUserPosition: ()=>{
+      findUserPosition(dispatch)
     }
   }
 };
