@@ -87,6 +87,8 @@ export async function extarctData(kind,arrayList,id){
                 city: getData.city,
                 country: getData.country,
                 vote: getData.vote,
+                latitude: getData.latitude ? getData.latitude : undefined,
+                longitude: getData.longitude ? getData.longitude : undefined,
                 id: id,
                 uid: site,
                 type: kind
