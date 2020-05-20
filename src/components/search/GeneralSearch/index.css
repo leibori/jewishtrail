@@ -39,3 +39,9 @@ body {
   font-family: sans-serif;
   color: #525252;
 }
+
+.FavoritesResult{
+    width: 100%;
+    min-width: 100%;
+    margin-top: 200px;
+  }

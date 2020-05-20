@@ -158,3 +158,37 @@ input[type="submit"]:hover{
       width: 100%;
     }
   }
+
+  .favoritesField {
+    position: relative;
+    height: 45px;
+    width: 100%;
+    display: flex;
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 5px;
+}
+.favoritesField span {
+    color: #222;
+    width: 40px;
+    line-height: 45px;
+}
+.favoritesField input {
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+.search-options{
+    position: absolute;
+    top: 80px;
+    right: 0px;
+}
+.sort-by {
+    position: absolute;
+    float: right;
+    top: 122px;
+    right: 0px;
+}

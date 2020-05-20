@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import { Row, Col } from 'react-bootstrap'
 import '../road/index.css';
 import Circle from 'react-circle';
 
@@ -27,22 +28,18 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     width: '100%',
-    height: '100%',
+    height: '150px',
   },
   img: {
     outline: 'none',
     margin: 'auto',
     display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
   },
 }));
 
 const RoadHandle = (props) => {
   const classes = useStyles()
   const { road, siteButtonsProps ,voteButtonsProps} = props;
-
-  console.log(voteButtonsProps)
   const likeStatus = voteButtonsProps ? voteButtonsProps[0].colorLike(road.uid,voteButtonsProps[0].buttonName) : null
   const [likeFlag,setLike] = useState(likeStatus)
   const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(road.uid,voteButtonsProps[1].buttonName) : null
@@ -85,21 +82,19 @@ const RoadHandle = (props) => {
                 <Typography variant="body2" gutterBottom><b>Cities:</b> {road.city.join(", ")}.</Typography>
                 <Typography variant="body2" ><b>Countries:</b> {road.country.join(", ")}.</Typography>
                 <Grid item container direction='row' spacing={2}>
-                <Grid item xs={6}>
+                <Col xs={7}>
+                    <Row style={{ paddingLeft: '10%' }}>
                     <button className="view-button" variant="outlined">
                       <a href={info_url}>View Trail</a>
                     </button>
-                  </Grid>
-                  { buttonProps &&
-                    <Grid item>
+                    </Row>
+                    <Row style={{ paddingTop: '20%', paddingLeft: '45%'}}>
                       <button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => buttonProps.buttonFunction(road.id,road.uid,road.type)}>{buttonProps.buttonName}</button>
-                    </Grid>
-                  }
-                  {true &&
-                  (<Grid item style ={{marginLeft:'20%'}}>
-                    <Circle progress={road.vote} progressColor="#50c878" size={80} bgColor="#ff0000" lineWidth={20} textColor="#3f704d"></Circle>
-                  </Grid>)
-                  }
+                    </Row>
+                    </Col>
+                    <Col xs={1} style={{ paddingLeft: '0px', paddingTop: '8px' }}>
+                    <Circle progress={road.vote} progressColor="#50c878" size={70} bgColor="#ff0000" lineWidth={20} textColor="#3f704d" textStyle={{font:'bold 6rem Helvetica, Ariel, sens-serif'}}></Circle>
+                  </Col>
                   {/* {like && like.canRender(road.uid) &&
                   (<Grid item style ={{marginLeft:'15%'}}>
                     <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,1,road.uid)}>{likeFlag}</button>

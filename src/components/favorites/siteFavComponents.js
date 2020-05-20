@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import { Row, Col } from 'react-bootstrap'
 import Circle from 'react-circle';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     width: '100%',
-    height: '100%',
+    height: '150px',
   },
   img: {
     outline: 'none',
@@ -26,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const buttonVote = {  
-  marginTop: '10px',
-  textAlign: 'center',
-  borderRadius: '4px',
-  background: 'transparent',
-  border: 'none',
-}
+// const buttonVote = {  
+//   marginTop: '10px',
+//   textAlign: 'center',
+//   borderRadius: '4px',
+//   background: 'transparent',
+//   border: 'none',
+// }
 const SiteHandle = (props) => {
   const { site, siteButtonsProps,voteButtonsProps} = props;
   const likeStatus = voteButtonsProps ? voteButtonsProps[0].colorLike(site.uid,voteButtonsProps[0].buttonName) : null
@@ -78,40 +79,24 @@ const SiteHandle = (props) => {
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1"><b>{site.name}</b></Typography>
                 <Typography variant="body2" gutterBottom>{site.city}, {site.country}</Typography>
-                <Grid item container direction='row' spacing={2}>
-                  <Grid item xs={6}>
+                <Grid item container direction='row' spacing={1}>
+                  <Col xs={7}>
+                  <Row style={{ paddingLeft: '10%' }}>
                     <button className='view-button' variant="outlined">
                       <a href={info_url}>View Site</a>
                     </button>
-                  </Grid>
+                  </Row>
+                  <Row style={{ paddingTop: '20%', paddingLeft: '45%'}}>
                   { buttonProps &&
-                    (<Grid item>
+                    
                       <button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => buttonProps.buttonFunction(site.id,site.uid,site.type)}>{buttonProps.buttonName}</button>
-                    </Grid>)
+                    
                   }
-                  {true &&
-                  (<Grid item style ={{marginLeft:'20%'}}>
-                    <Circle progress={site.vote} progressColor="#50c878" size={80} bgColor="#ff0000" lineWidth={20} textColor="#3f704d"></Circle>
-                  </Grid>)
-                  }
-                  {/* {like && like.canRender(site.uid) &&
-                  (<Grid item style ={{marginLeft:'15%'}}>
-                    <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,1,site.uid)}>{likeFlag}</button>
-                  </Grid>)
-                  // (<Grid item>
-                  //   <button variant="outlined" style={buttonVote} onClick={(e) => tenTheBig(e,1,site.id,like.buttonName)}><span style={{color:'green'}} >{like.buttonName}</span></button>
-                  // </Grid>)
-                  } 
-                  {dislike && dislike.canRender(site.uid) &&
-                  (<Grid item>
-                    <button variant="outlined" style={buttonVote} onClick={(e) => setVoteDb(e,0,site.uid)}>{dislikeFlag}</button>
-                  </Grid>)
-                  } */}
-                  {/* <Grid item xs={6}>
-                    <Button onClick={()=>{if (window.confirm('Are you sure you wish to delete this item?')) deleteSite(props.id,props.uid,props.type)}} className={buttonClasses.button} variant="outlined" style={{border: 'none',background: 'none',width: '40px',height:'40px',maxHeight: '40px',maxWidth: '40px',backgroundColor: 'tranparent'}} size="small">
-                    <img src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-remove-icon.png"></img>
-                    </Button>
-                  </Grid> */}
+                  </Row>
+                  </Col>
+                  <Col xs={1} style={{ paddingLeft: '0px', paddingTop: '8px' }}>
+                    <Circle progress={site.vote} progressColor="#50c878" size={70} bgColor="#ff0000" lineWidth={20} textColor="#3f704d" textStyle={{font:'bold 6rem Helvetica, Ariel, sens-serif'}}></Circle>
+                  </Col>
                 </Grid>
               </Grid>
             </Grid>
