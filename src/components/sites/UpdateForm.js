@@ -17,6 +17,7 @@ class UpdateForm extends Component {
   async componentDidMount(){
     const id = this.state.id
     let site = await getSiteByID(id);
+    console.log(site)
   
     this.setState({
       ...site,
@@ -44,7 +45,7 @@ class UpdateForm extends Component {
 
   async handleSubmit(e){  
     e.preventDefault();
-    const searchTokens = Array.from(new Set([...this.state.tags,this.state.city,this.state.city,...this.state.name.split(" "), 'site', 'sites']))
+    const searchTokens = Array.from(new Set([...this.state.tags,this.state.city,this.state.country,...this.state.name.split(" "), 'site', 'sites']))
     var site = {
       id: this.state.id,
       name: this.state.name,
@@ -61,6 +62,11 @@ class UpdateForm extends Component {
       searchTokens:searchTokens,
       vote: this.state.vote ? this.state.vote: 50,
     }
+    if (isNaN(site.latitude) || isNaN(site.longitude)) {
+      alert('invalid latitude or longitude')
+      return
+    }
+
     console.log(site)
     await UpdateSite(site)
     alert(site.name + " has updated!");
@@ -96,7 +102,7 @@ class UpdateForm extends Component {
           </div>
           <div className="input-field">
             <textarea id="address" className="materialize-textarea" onChange={this.handleChange} value = {this.state.address} required></textarea>
-            <label htmlFor="address">  Adress</label>
+            <label htmlFor="address">  Address</label>
           </div>
           <div className="input-field">
             <textarea id="externalSourceUrl" className="materialize-textarea" onChange={this.handleChange} value = {this.state.externalSourceUrl} required></textarea>

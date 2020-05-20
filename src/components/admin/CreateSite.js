@@ -36,7 +36,7 @@ class CreateSite extends Component {
       Name: '',
       city: '',
       country: '',
-      adress: '',
+      address: '',
       externalSourceUrl: '',
       imageUrl: '',
       fullInfo: '',
@@ -76,7 +76,7 @@ class CreateSite extends Component {
       city: this.state.city,
       country: this.state.country,
       tags: this.state.tags,
-      adress: this.state.adress,
+      address: this.state.address,
       externalSourceUrl: this.state.externalSourceUrl,
       imageUrl: this.state.imageUrl,
       fullInfo: this.state.fullInfo,
@@ -120,8 +120,8 @@ class CreateSite extends Component {
             <label style={LabelStyle} htmlFor="country"> Country Name</label>
           </div>
           <div className="input-field">
-            <textarea style={inputStyle} id="adress" className="materialize-textarea" onChange={this.handleChange} required></textarea>
-            <label style={LabelStyle} htmlFor="adress"> Address</label>
+            <textarea style={inputStyle} id="address" className="materialize-textarea" onChange={this.handleChange} required></textarea>
+            <label style={LabelStyle} htmlFor="address"> Address</label>
           </div>
           <div className="input-field">
             <textarea style={inputStyle} id="externalSourceUrl" className="materialize-textarea" onChange={this.handleChange} required></textarea>

@@ -7,7 +7,7 @@ export async function createNewSite(site){
       city: site.city,
       country: site.country,
       tags: site.tags,
-      adress: site.adress,
+      address: site.address,
       externalSourceUrl: site.externalSourceUrl,
       imageUrl: site.imageUrl,
       fullInfo: site.fullInfo,
@@ -33,7 +33,8 @@ export async function UpdateSite(site){
       partialInfo: site.partialInfo,
       latitude: site.latitude,
       longitude: site.longitude,
-      vote: site.vote
+      vote: site.vote,
+      searchTokens: site.searchTokens
     })
 }
 
