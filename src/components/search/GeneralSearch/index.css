@@ -1,6 +1,6 @@
 body {
     font-family: sans-serif;
-    background: url(../../../assets/img/signs.jpg) no-repeat;
+    /* background: url(../../../assets/img/signs.jpg) no-repeat; */
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
@@ -9,17 +9,17 @@ body {
 .searchbar {
     /* background-color: #4ee44e; */
     background: url(../../../assets/img/signs.jpg) no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center center;
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
     
-    padding-top: 30px;
+    padding-top: 20%;
     /* position:-webkit-sticky;
     position:sticky;  */
     position: fixed;
     z-index: 1;
     margin-top: 0px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     top: 0%;
     width: 100%;
 }
@@ -32,4 +32,10 @@ body {
     width: 100%;
     min-width: 100%;
     margin-top: 190px;
-  }
+}
+
+.message {
+  font-size: 18sp;
+  font-family: sans-serif;
+  color: #525252;
+}

@@ -8,12 +8,15 @@ import { saveSearchResults } from '../../../actions'
 import { connect } from 'react-redux'
 // import Select from 'react-select'
 import './index.css';         
+import noResultsIcon from '../../../assets/img/SearchNoResults.png'
+import SearchStart from '../../../assets/img/SearchStart.png'
+
 
 // Header style properties.
 const headerStyle = {
     color: 'white',
     fontWeight: '800',
-    fontSize: '32px',
+    fontSize: '22px',
     fontFamily: "Cambay, sans-serif",
     textShadow: "2px 2px black",
 }
@@ -131,7 +134,7 @@ class GeneralSearch extends Component {
         if(this.state.searchVal.length >= 1) {
             const savedResults = this.props.searchResults
             console.log(savedResults)
-            if (savedResults.results.length >= 1 && savedResults.searchVal == this.state.searchVal) {
+            if (savedResults.results.length >= 1 && savedResults.searchVal === this.state.searchVal) {
                 this.setState({
                     searchResult: savedResults.results,
                     finishedSearch: true,
@@ -238,7 +241,7 @@ class GeneralSearch extends Component {
         });     
 
         return (
-            <div style={{height: '70%', width: '100%'}}>
+            <div style={{width: '100%'}}>
                 <div className="searchbar">
                     <form onSubmit={this.onSearchButtonClicked} style={{paddingBottom: '0%', marginTop: '0%', width: '100%'}}>
                         <header style={headerStyle}>Find a trail</header>
@@ -262,16 +265,16 @@ class GeneralSearch extends Component {
                                     style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
                             </div>}
                 </div>
-                <div className="results" style={{zIndex:'0'}}>
+                <div className="results" style={{zIndex:'0', paddingTop: '12%'}}>
                 { startedSearch && ! finishedSearch ? (
                     <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
-                        <ReactLoading type={"bars"} color={"white"} />
+                        <ReactLoading type={"bars"} color={"black"} />
                     </div>
                     ) : finishedSearch && searchResult.length !== 0 ? (
                     <div style={{width: '100%'}}>
                         <div className="container" style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px' }}>
                             {
-                                searchResult.filter(this.resultsFilter).length == 0 ?
+                                searchResult.filter(this.resultsFilter).length === 0 ?
                                 <img src="https://premieregyptonline.com/images/no-results.png"/> :
                                 searchResult.filter(this.resultsFilter).length > 9 ?
                                 < PaginatedList style={{width:'100%'}}
@@ -281,9 +284,18 @@ class GeneralSearch extends Component {
                         </div>
                     </div>
                     ) : finishedSearch && searchResult.length === 0 ? (
-                        <img src="https://premieregyptonline.com/images/no-results.png"/>
-                        // <h4 style={{ fontWeight: '650', marginLeft: '5%' , color: 'rgba(223,30,38,0.9)'}}>No matches found!</h4>
-                    ) : ''
+                        <div style={{ height: '100%', paddingTop: '30%' }}>
+                            <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
+                            <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
+                            <img src={noResultsIcon} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                        </div>
+                    ) : (
+                        <div style={{ height: '100%', paddingTop: '30%' }}>
+                            <span className='message' style={{ paddingLeft: '34%' }}>Search for a trail</span><br/>
+                            <span className='message' style={{ paddingLeft: '31%' }}>to find your journey</span>
+                            <img src={SearchStart} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                        </div>
+                    )
                 }
                 </div>
 
