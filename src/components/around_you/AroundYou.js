@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { findSitesByCountryForMarker } from '../search/SearchUtils'
 import { getAroundYouMap, findUserPosition } from '../map/MapUtilities'
 import { connect } from 'react-redux'
+import backgroundImage from '../../assets/img/AroundYouBG.jpg'
 
 
 /**
@@ -55,7 +56,8 @@ class AroundYou extends Component {
 
                     {/* This div contains the top part with the image and the title of the page. */}
                     <div style={{  marginLeft: '0px', marginRight: '0px', marginTop: '0px', height: '34%', }}>
-                        <img src="https://media.istockphoto.com/photos/the-perfect-vantage-point-picture-id546763388?k=6&m=546763388&s=170667a&w=0&h=Lqd2Gaw7v39wE6uhVJAf9oXzN0Knp4RwRZlsDIvWspk="/>
+                        {/* <img src="https://media.istockphoto.com/photos/the-perfect-vantage-point-picture-id546763388?k=6&m=546763388&s=170667a&w=0&h=Lqd2Gaw7v39wE6uhVJAf9oXzN0Knp4RwRZlsDIvWspk="/> */}
+                        <img src={backgroundImage}/>
                         <header style={{ position: 'absolute', top:'25%', zIndex: '1', fontWeight: '800', fontSize: '23px', textShadow: '1px 1px black', fontFamily: 'cambay', color: 'white', marginLeft: '3%' }}>Discover places near you</header>
 
                     </div>

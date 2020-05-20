@@ -1,12 +1,10 @@
 import L from 'leaflet';
 import { setPosition } from '../../actions'
+import iconUrl from '../../assets/img/MarkerIcon.png'
 
 
 let maxZoom = 20
 let minZoom = 1.5
-
-// Marker icon url
-let iconUrl = 'http://www.clker.com/cliparts/k/a/2/B/c/u/map-marker-red-th.png'
 
 // Basic map url
 let mapUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
@@ -28,10 +26,10 @@ const satelliteStreets = L.tileLayer(mapUrl, {id: 'mapbox/satellite-streets-v11'
 
 // Basic icon for marker.
 var myIcon = L.icon({
-    iconUrl: iconUrl,
-    iconSize: [24.8, 39.6],
-    iconAnchor: [12.4, 39.6],
-    popupAnchor: [0, -30]
+    iconUrl,
+    iconSize: [30, 41],
+    iconAnchor: [15, 43],
+    popupAnchor: [0, -25]
 });
 
 
