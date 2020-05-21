@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import './GeneralAdmin.css';
 
 const buttonStyle = {
   marginLeft:"30px",
@@ -21,6 +22,7 @@ const LabelStyle = {
 class AdminSitePage extends Component {
   render() {
     return (
+    <div className='bg-admin'>
     <div className="container" style={{position:"absolute",margin:'auto', width:"75%",textAlign:'center',top:'10%',height:'35%'}}>
       <h5 style={LabelStyle}>Welcome to Site Management. choose an Option:</h5>
       <button className="btn" style={buttonStyle} id='create'><Link to="/createSite" className="white-text">Create new Site</Link></button>
@@ -28,6 +30,7 @@ class AdminSitePage extends Component {
       <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/updateSite">Update Site</Link></button>
       <br></br>
       <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/admin">Return to Admin Main Menu</Link></button>
+    </div>
     </div>
     )    
   }

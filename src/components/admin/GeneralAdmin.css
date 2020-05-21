@@ -1,0 +1,9 @@
+.bg-admin {
+    background: url(../../assets/img/signs.jpg);
+    height: 100%;
+    width: 100%;
+    bottom: 0px;
+    background-size: cover;
+    background-position: center;
+}
+

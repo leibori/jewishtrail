@@ -3,6 +3,7 @@ import {findFromDB} from '../search/SearchUtils'
 import {DeleteSiteFromDB} from '../firebase/FirebaseUtilities'
 import { Link } from 'react-router-dom'
 import SiteSearch from '../search/SiteSearch'
+import './GeneralAdmin.css';
 
 const buttonStyle = {
   marginLeft:"30px",
@@ -71,17 +72,9 @@ updateTopDownhValue(e) {
 
 render() {
     return (
+      <div className='bg-admin'>
         <div style={{position:"absolute", width:"100%",top:'12%'}}>
             <h5 style={LabelStyle}>Search Site to Delete</h5>
-            {/* <form ref={this.form} id="search-form">
-                <div className="search-field">
-                    <textarea ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
-                </div>
-                <Select ref={this.dropList} defaultValue={options[0]} onChange={this.updateTopDownhValue} options = {options} />
-                <button onClick={this.onSearchButtonClicked}>Search</button>
-                <p className="error pink-text center-align"></p>
-            </form> */}
-            
             <SiteSearch ref={this.myRef}
               siteList={this.state.siteList}
               siteButtonsProps= {[{
@@ -91,17 +84,8 @@ render() {
             }]}
               searchVal={this.state.searchVal}
               returnTo='deleteSite'/>
-
-            {/* <ul className="container" bind={this.state.siteList}>
-                {this.state.siteList.map((site, i) => (
-                  <li key = {i}>
-                  <SiteComponent props={site}/>
-                  <button onClick={(e) => this.DeleteSite(e,i)}>Delete Site</button>
-                  </li>
-                ))
-                }
-              </ul>*/}
             <button style={buttonStyle} className="btn"><Link className="white-text" to="/adminSitePage">Return to Admin Menu</Link></button>
+        </div>
         </div>
     )    
   }

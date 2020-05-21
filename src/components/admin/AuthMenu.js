@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {myFunctions} from '../firebase/firebase'
 import { Link } from 'react-router-dom'
+import './GeneralAdmin.css';
 
 const buttonStyle = {
   marginLeft:"30px",
@@ -98,8 +99,10 @@ class AdminMenu extends Component {
   render() {
     const action = this.state.action;
     const {error} = this.state;
+    
     if(action === "deleteUser"){
          return(
+          <div className='bg-admin'>
             <div style={{position:"absolute", width:"75%",top:'10%',height:'35%'}} className="input-field">
               <form onSubmit={(e) => {if(window.confirm("are you sure you want to delete this user?")){this.deleteUser(e)};}}>
                 <input  style={inputStyle} id="email" onChange={this.handleChange}placeholder="Email Address" value={this.state.email} required type='email'></input><br></br>
@@ -108,9 +111,11 @@ class AdminMenu extends Component {
                 <button className="button" style={{...buttonStyle, padding:'10px 63px'}} className="btn text-white" id='' onClick={this.activeAction}>Retrun</button>
               </form>
             </div>
+            </div>
          )   
     } else if (action === "createAdmin"){
         return (
+          <div className='bg-admin'>
             <div style={{position:"absolute", width:"75%",top:'10%',height:'35%'}} className="input-field">
               <form onSubmit={(e) => this.createAdmin(e)}>
               <input style={inputStyle} id="email" onChange={this.handleChange} placeholder="Email Address" value={this.state.email} required type='email'></input><br></br>
@@ -119,9 +124,11 @@ class AdminMenu extends Component {
               <button className="button" style={{...buttonStyle, padding:'10px 63px'}} className="btn text-white" id='' onClick={this.activeAction}>Retrun</button>
               </form>
             </div>
+            </div>
         )
     }    
     return (
+    <div className='bg-admin'>
     <div style={{position:"absolute", width:"75%",top:'10%',height:'35%'}} className="container">
       <h5 style={LabelStyle} className="black-tex">Admin Authorities Options:</h5>
       <p style={LabelStyle} >please Choose Option: </p>
@@ -129,6 +136,7 @@ class AdminMenu extends Component {
       <button style={{...buttonStyle, padding:'10px 60px'}} className="btn text-white" id='deleteUser' onClick={this.activeAction}>Delete User</button>
       <br></br>
       <Link style={{...buttonStyle,padding:'10px 30px',}} className="btn text-white" to='/admin'>Return to Admin Menu</Link>
+    </div>
     </div>
     )    
   }

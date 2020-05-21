@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import {findFromDB} from '../search/SearchUtils'
 import SiteSearch from '../search/SiteSearch'
+import './GeneralAdmin.css';
 
 const buttonStyle = {
   marginLeft:"30px",
@@ -39,14 +40,7 @@ class ChangeSite extends Component {
     this.onSiteButtonClick = this.onSiteButtonClick.bind(this);
 };
 
-// async UpdateSite(e,index){
-//   e.preventDefault();
-//   const siteID = this.state.siteList[index].id
-//   //let site = await getSiteByID(siteID);
-//   //site.id = siteID;
-//   //setState({changingFlag: true, chosenSite:site})
-//   this.setState({changingFlag: true, chosenSite:siteID})
-// }
+
 
 
 async onSearchButtonClicked(e) {
@@ -73,10 +67,8 @@ updateTopDownhValue(e) {
 
 
 render() {
-  // if(this.state.changingFlag){
-  //   return <UpdateForm props={this.state.chosenSite}/>
-  // }
     return (
+      <div className='bg-admin'>
         <div style={{position:"absolute", width:"100%",top:'12%'}}>
             <h5 style={LabelStyle}>Search Site to Update</h5>
             <SiteSearch style={{paddingLeft: '0px', paddingRight: '0px'}}
@@ -107,6 +99,7 @@ render() {
                 }
             </ul> */}
             <button style={buttonStyle} className="btn" type="button"><Link className="white-text" to="/adminSitePage">Return to Admin Menu</Link></button>
+        </div>
         </div>
     )    
   }

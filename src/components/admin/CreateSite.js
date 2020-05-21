@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {createNewSite} from '../firebase/FirebaseUtilities'
 import { Link } from 'react-router-dom'
+import './GeneralAdmin.css';
 
 const buttonStyle = {
   marginLeft:"30px",
@@ -104,6 +105,7 @@ class CreateSite extends Component {
 
   render() {
     return (
+      <div className='bg-admin'>
       <div className="container" style={{position:"absolute", width:"100%",top:'12%'}}>
           <h5 className="white-text" style={{fontWeight:'600', fontFamily:'cambay',}}>Create a New Site</h5>
           <form onSubmit={(e)=> this.handleSubmit(e)} id="create-site-form">
@@ -166,6 +168,7 @@ class CreateSite extends Component {
             <button style={buttonStyle} type="button" className="btn"><Link className="white-text" to="/adminSitePage">Return to Admin Menu</Link></button>
           </div>
           </form>
+      </div>
       </div>
     )
   }
