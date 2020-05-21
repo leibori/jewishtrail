@@ -101,7 +101,7 @@ const SiteComponent = (props) => {
                     </Row>
                     <Row style={{ paddingTop: '20%', paddingLeft: '45%'}}>
                       { buttonProps &&
-                        <button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => buttonProps.buttonFunction(e, site.id)}>{buttonProps.buttonName}</button>
+                        <button variant="outlined" style= {{marginTop: '0%', maxHeight: '40px'}} onClick={(e) => buttonProps.buttonFunction(e, site.id)}>{buttonProps.buttonName}</button>
                       }
                     </Row>
                   </Col>

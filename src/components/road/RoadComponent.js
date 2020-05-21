@@ -49,7 +49,7 @@ const RoadComponent = (props) => {
   var info_url = '/road/'+road.id
 
   const pickRoadButton = () => {
-    return roadButtonsProps.find(buttonProps => buttonProps.canRender(road.id));
+    return roadButtonsProps ? roadButtonsProps.find(buttonProps => buttonProps.canRender(road.id)) : undefined;
   }
 
   // const setVoteDb = (e,vote,siteId)=>{
@@ -91,9 +91,11 @@ const RoadComponent = (props) => {
                         <a href={info_url}>View Trail</a>
                       </button>
                     </Row>
-                    <Row style={{ paddingTop: '20%', paddingLeft: '45%'}}>
-                      <button  variant="outlined" onClick={(e) => buttonProps.buttonFunction(e, road.id)}>{buttonProps.buttonName}</button>
-                    </Row>
+                    { buttonProps &&
+                      <Row style={{ paddingTop: '20%', paddingLeft: '45%'}}>
+                        <button variant="outlined" style={{ maxHeight: '40px' }} onClick={(e) => buttonProps.buttonFunction(e, road.id)}>{buttonProps.buttonName}</button> 
+                      </Row>
+                    }
                   </Col>
                   <Col xs={1} style={{ paddingLeft: '0px', paddingTop: '8px' }}>
                     <Circle progress={road.vote} progressColor="#50c878" size={70} bgColor="#ff0000" lineWidth={20} textColor="#3f704d" textStyle={{font:'bold 6rem Helvetica, Ariel, sens-serif'}}></Circle>
