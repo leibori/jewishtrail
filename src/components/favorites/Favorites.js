@@ -328,12 +328,8 @@ class Favorites extends Component {
         {this.state.favoritesArr.length === 0 && <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
         {!this.state.empty ? (
            <ReactLoading type={"bars"} color={"black"} />
-        ) : (<div style={{ height: '100%', paddingTop: '30%' }}>
-          <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
-          <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
-          <img src="/image/binoculars.png"/>
-          </div>
-        )}
+        ) : null
+        }
         </div>}
         {this.state.favoritesArr.length > 0 &&
         <div className="fixed">
@@ -366,15 +362,15 @@ class Favorites extends Component {
         </div>}
         <div className="FavoritesResult" style={{zIndex:'0'}}>
                     {this.state.searchField.length > 0 ? filteredFav.length > 0 ? mapping(filteredFav) : 
-                    <div style ={{ height: '100%', paddingTop: '30%' }}>
-                    <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
-                    <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
-                    <img src="/image/binoculars.png" style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
-                    </div>
+                    <div style={{top: '50%', left:'50%',position:'fixed',width:'70%',transform: 'translate(-50%, -50%)'}}>
+                    <span className='message' style={{ paddingLeft: '20%' ,fontSize:'16px'}}>Looks like you'r list empty</span><br/>
+                      <img src="/image/binoculars.png" style={{ maxHeight: '50%', maxWidth: '50%', paddingTop: '25px' }}/>
+                      </div>
                     : 
                     this.checkCondition() && this.state.searchField.length == 0 ? 
-                    <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
-                      <img src="/image/binoculars.png"/>
+                    <div style={{top: '50%', left:'50%',position:'fixed',width:'70%',transform: 'translate(-50%, -50%)'}}>
+                    <span className='message' style={{ paddingLeft: '20%' ,fontSize:'16px'}}>Looks like you'r list empty</span><br/>
+                      <img src="/image/binoculars.png" style={{ maxHeight: '50%', maxWidth: '50%', paddingTop: '25px' }}/>
                       </div> :
                     this.state.favoritesArr.filter(this.resultsFilter).length > 20 ? 
                      <PaginatedList
