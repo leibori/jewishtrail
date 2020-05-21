@@ -4,6 +4,7 @@ import  {myFirebase} from '../firebase/firebase';
 import {signup, signInWithGoogle} from '../firebase/FirebaseLoginUtils'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
 import ReCAPTCHA from "react-google-recaptcha";
+import './GeneralBack.css';
 import { recaptchaKey } from 'keys'
 
 
@@ -71,7 +72,7 @@ class SignUp extends Component {
   render() {
     const { email, password, username, recaptchaRef } = this.state;
     return (
-    <div>
+    <div style={{height: '100%'}} >
         <title>Login</title>
         <div className='bg-img'>
           <div className='content'>

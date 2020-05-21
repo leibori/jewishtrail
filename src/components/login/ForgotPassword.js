@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import { forgotPassword } from "components/firebase/FirebaseLoginUtils";
+import './GeneralBack.css';
+
 
 export default class ForgotPassword extends Component{
     constructor(props){

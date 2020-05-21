@@ -1,0 +1,20 @@
+.bg-img {
+    background: url(../../assets/img/signs.jpg);
+    height: 100%;
+    width: 100%;
+    bottom: 0px;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-img:after {
+    position: fixed;
+    content: '';
+    left: 0px;
+    bottom: 0px;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.1);
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
