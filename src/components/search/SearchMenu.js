@@ -158,7 +158,6 @@ class SearchMenu extends Component {
         // this.deleteElementFromRedux('siteFavorites', sid)
         updateUserFavoriteSites(uid, newSiteFavorites)
 
-        alert("The site was removed from your favorites.");
         this.setState({})
     }
 
@@ -177,7 +176,6 @@ class SearchMenu extends Component {
         // this.deleteElementFromRedux('trailFavorites', trailId)
         updateUserFavoriteRoads(uid, newTrailFavorites)
 
-        alert("The trail was removed from your favorites.");
         this.setState({})
     }
    
@@ -194,8 +192,7 @@ class SearchMenu extends Component {
 
         this.props.setSiteFavorites(favorites)
         updateUserFavoriteSites(uid, favorites);   
-        
-        alert("The site was added to your favorites.");
+ 
         this.setState({})
     }
 
@@ -213,7 +210,6 @@ class SearchMenu extends Component {
         this.props.setTrailFavorites(favorites)
         updateUserFavoriteRoads(uid, favorites)
         
-        alert("The trail was added to your favorites.");
         this.setState({})
     }
 
