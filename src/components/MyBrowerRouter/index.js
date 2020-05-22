@@ -23,6 +23,11 @@ import AdminSitePage from 'components/admin/AdminSitePage'
 import AdminRoadPage from 'components/admin/AdminRoadPage'
 import ForgotPassword from 'components/login/ForgotPassword'
 import updateRoad from 'components/road/updateRoad'
+import ContactUs from 'components/MailBox/ContactUs'
+import massegeList from 'components/MailBox/massegeList'
+import massegePage from 'components/MailBox/massegePage'
+
+
 
 import { connect } from 'react-redux'
 
@@ -66,6 +71,9 @@ class MyBrowserRouter extends Component{
             <MyRoute exact path='/search/:searchVal' component={SearchMenu} /> 
             <MyRoute exact path='/favorites' component={Favorites} aboutCond={!online} verCond={online_not_verified}/>
             <MyRoute exact path='/about' component={About} />
+            <MyRoute exact path='/contactUs' component={ContactUs} />
+            <MyRoute exact path='/massegeList' component={massegeList} aboutCond={!admin} verCond={online_not_verified} />
+            <MyRoute exact path='/massege/:id' component={massegePage} aboutCond={!admin} verCond={online_not_verified}/>
             <MyRoute exact path='/site/:id' component={SitePage} />
             <MyRoute exact path='/roadform' component={RoadForm} />
             <MyRoute exact path='/roadform/:searchVal' component={RoadForm} />

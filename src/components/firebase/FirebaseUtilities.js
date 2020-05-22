@@ -175,3 +175,30 @@ export async function updateRoad( {siteListID,roadName,roadDescription,CityList,
 async function deleteDocumentFromDB(collectionName, documentID) {
     await myDatabase.collection(collectionName).doc(documentID).delete();
 }
+export async function createContactMassege(name, email, title, details){
+    await myDatabase.collection('massege').add({
+        name: name,
+        email: email,
+        title: title,
+        details: details
+    })
+}
+
+export async function getMasseges(){
+    var massegeList = []
+    const snapshot = await myDatabase.collection('massege').get()
+    snapshot.docs.forEach(doc => {
+        var data = doc.data()
+        massegeList.push({ id: doc.id,
+                        name: data.name,
+                        email: data.email,
+                        title: data.title,
+                        details: data.details,
+                        })
+    })
+    return massegeList
+}
+
+export async function deleteMassegeFromDB(massege){
+    await myDatabase.collection('massege').doc(massege.id).delete();
+}
