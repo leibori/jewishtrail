@@ -165,7 +165,7 @@ input[type="submit"]:hover{
 }
 
 
-  .field textarea {
+.field textarea {
     height: 120px;
     width: 300px;
     background: white;

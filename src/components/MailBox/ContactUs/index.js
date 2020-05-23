@@ -55,10 +55,10 @@ class ContactUs extends Component {
                 <span className="fas fa-heading"></span>
                 <input required name="title" onChange={this.onChange} type='text' placeholder='Title'></input>
               </div>
-              <div className='field space'>
-                <textarea required name="details" onChange={this.onChange} placeholder='Message...' type='text'></textarea>
+              <div>
+                <textarea className='field space' required name="details" style={{height:'120px'}} onChange={this.onChange} placeholder='Message...' type='text'></textarea>
               </div>
-              <div className='field text-space'>
+              <div className='field text-space' style={{marginTop:'30px'}}>
                 <input type='submit' value='Submit'></input>
               </div>
             </form>

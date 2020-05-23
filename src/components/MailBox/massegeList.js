@@ -5,7 +5,6 @@ import {deleteMassegeFromDB, getMasseges} from 'components/firebase/FirebaseUtil
 import TextCard from '../MailBox/TextCard'
 //import contactUsImage from '../../assets/img/contactUs.png'
 
-
 class massegeList extends Component {
 
     constructor(props) {
@@ -61,7 +60,7 @@ class massegeList extends Component {
             <div style={{ width: '100%', height: '100%' }}>
                 <Card style={{ width: '100%', height: '100%' }}>
                     <div style={{height: '300px'}}>
-                        <Card.Img variant="top"  style={{height: '300px', width: '100%'}} />
+                        <Card.Img src="/image/contactUs.png" variant="top"  style={{marginTop:'30px',height: '220px', width: '100%'}} />
                     </div>
                     {/* <Card.Body> */}
                     <div style={{marginLeft:'20px',marginTop:'15px'}}>

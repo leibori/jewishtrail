@@ -187,6 +187,11 @@ input[type="submit"]:hover{
     top: 80px;
     right: 0px;
 }
+.forSearch-options{
+    position: absolute;
+    top: 178px;
+    right: 0px;
+}
 .sort-by {
     position: absolute;
     float: right;
