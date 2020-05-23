@@ -327,7 +327,7 @@ class GeneralSearch extends Component {
                         <div className="container" style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px' }}>
                             {
                                 searchResult.filter(this.resultsFilter).length === 0 ?
-                                <div style={{ height: '100%', paddingTop: '30%' }}>
+                                <div className="results-test" style={{ height: '100%', paddingTop: '30%' }}>
                                 <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
                                 <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
                                 <img src={noResultsIcon} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
@@ -340,7 +340,7 @@ class GeneralSearch extends Component {
                         </div>
                     </div>
                     ) : finishedSearch && searchResult.length === 0 ? (
-                        <div style={{ height: '100%', paddingTop: '30%' }}>
+                        <div className="results-test">
                             <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
                             <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
                             <img src={noResultsIcon} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
