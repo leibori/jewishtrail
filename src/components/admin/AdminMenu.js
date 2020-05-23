@@ -14,7 +14,7 @@ const buttonStyle = {
 const LabelStyle = {
   color:'white',
   marginLeft:'3%',
-  fontWeight:'400',
+  fontWeight:'800',
   fontFamily: 'Cambay, sans-serif',
   textShadow:'1px 1px black'
 }
@@ -23,12 +23,13 @@ class AdminMenu extends Component {
   render() {
     return (
       <div className='bg-admin' >
-      <div className="container" style={{position:"absolute",margin:'auto', width:"75%",textAlign:'center',top:'10%',height:'35%'}}>
-          <p style={LabelStyle}> Welcome to Admin Menu, Please select a Option:</p>
+      <div className="container" style={{position:"absolute",margin:'auto', width:"100%",textAlign:'center',top:'10%',height:'35%'}}>
+          <p style={LabelStyle}> Welcome to Admin Menu, Please select an Option:</p>
           <div className="container">
             <button style={buttonStyle} className="btn"><Link className="white-text" to="/adminSitePage">Site Management</Link></button>
             <button style={buttonStyle} className="btn"><Link className="white-text" to="/adminRoadPage">Road Management</Link></button>
             <button style={buttonStyle} className="btn"><Link className="white-text" to="/auth">Users Management</Link></button>
+            <button style={buttonStyle} className="btn"><Link className="white-text" to="/massegeList">MailBox</Link></button>
         </div>
       </div>
       </div>

@@ -73,7 +73,7 @@ updateTopDownhValue(e) {
 render() {
     return (
       <div className='bg-admin'>
-        <div style={{position:"absolute", width:"100%",top:'12%'}}>
+        <div style={{position:"absolute", width:"100%",top:'12%',height:'100%'}}>
             <h5 style={LabelStyle}>Search Site to Delete</h5>
             <SiteSearch ref={this.myRef}
               siteList={this.state.siteList}

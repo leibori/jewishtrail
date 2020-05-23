@@ -14,7 +14,7 @@ const buttonStyle = {
 const LabelStyle = {
   color:'white',
   marginLeft:'3%',
-  fontWeight:'400',
+  fontWeight:'800',
   fontFamily: 'Cambay, sans-serif',
   textShadow:'1px 1px black'
 }
@@ -26,10 +26,12 @@ class AdminRoadPage extends Component {
   render() {
     return (
     <div className='bg-admin'>
-    <div className="container" style={{position:"absolute",margin:'auto', width:"75%",textAlign:'center',top:'10%',height:'35%'}}>
-      <h5 style={LabelStyle}>Welcome to Road Management. choose an Option:</h5>
+    <div className="container" style={{position:"absolute",margin:'auto', width:"100%",textAlign:'center',top:'10%',height:'35%'}}>
+      <p style={LabelStyle}>Welcome to Road Management, choose an Option:</p>
       <button className="btn" style={buttonStyle} id='create'><Link to="/roadForm" className="white-text">Create new Road</Link></button>
+      <br></br>
       <button className="btn" style={buttonStyle} id='delete'><Link className="white-text" to="/deleteRoad">Delete Road</Link></button>
+      <br></br>
       <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/updateRoad">Update Road</Link></button>
       <br></br>
       <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/admin">Return to Admin Main Menu</Link></button>

@@ -62,7 +62,7 @@ class AdminMenu extends Component {
     const deleteUserByEmails = myFunctions.httpsCallable('deleteUserByEmails');
     deleteUserByEmails({email: email}).then(result => {
       const error = result.data.error ? result.data.error : null
-      const FireBaseErr = result.data.errorInfo && result.data.errorInfo.message ? result.data.errorInfo.message : null
+      const FireBaseErr = result.data.errorInfo && result.data.errorInfo.message ? "Invalid email" : null
       if(error){ this.setState({error})}
       else if(FireBaseErr) { this.setState({error:FireBaseErr})}
       else{
@@ -78,7 +78,7 @@ class AdminMenu extends Component {
     const addAdminRole = myFunctions.httpsCallable('addAdminRole');
     addAdminRole({email: email}).then(result => {
       const error = result.data.error ? result.data.error : null
-      const FireBaseErr = result.data.errorInfo && result.data.errorInfo.message ? result.data.errorInfo.message : null
+      const FireBaseErr = result.data.errorInfo && result.data.errorInfo.message ? "Invalid Email" : null
       if(error){ this.setState({error})}
       else if(FireBaseErr) { this.setState({error:FireBaseErr})}
       else{
@@ -104,8 +104,8 @@ class AdminMenu extends Component {
          return(
           <div className='bg-admin'>
             <div style={{position:"absolute", width:"75%",top:'10%',height:'35%'}} className="input-field">
-              <form onSubmit={(e) => {if(window.confirm("are you sure you want to delete this user?")){this.deleteUser(e)};}}>
-                <input  style={inputStyle} id="email" onChange={this.handleChange}placeholder="Email Address" value={this.state.email} required type='email'></input><br></br>
+              <form style={{marginTop:'0px'}} onSubmit={(e) => {if(window.confirm("are you sure you want to delete this user?")){this.deleteUser(e)};}}>
+                <input  style={inputStyle} id="email" onChange={this.handleChange} placeholder="Please enter an email" value={this.state.email} required type='email'></input><br></br>
                 {error && <span style={errorStyle}>{error} <br/></span>}
                 <button className="submit" style={buttonStyle} className="btn text-white" id='deleteUser'>Delete User Via Email</button>
                 <button className="button" style={{...buttonStyle, padding:'10px 63px'}} className="btn text-white" id='' onClick={this.activeAction}>Retrun</button>
@@ -117,8 +117,8 @@ class AdminMenu extends Component {
         return (
           <div className='bg-admin'>
             <div style={{position:"absolute", width:"75%",top:'10%',height:'35%'}} className="input-field">
-              <form onSubmit={(e) => this.createAdmin(e)}>
-              <input style={inputStyle} id="email" onChange={this.handleChange} placeholder="Email Address" value={this.state.email} required type='email'></input><br></br>
+              <form style={{marginTop:'0px'}} onSubmit={(e) => this.createAdmin(e)}>
+              <input style={inputStyle} id="email" onChange={this.handleChange} placeholder="pleae enter an email" value={this.state.email} required type='email'></input><br></br>
               {error && <span style={errorStyle}>{error} <br/></span>}
               <button className="submit" style={buttonStyle} className="btn text-white" id='deleteUser'>Create Admin Via Email</button>
               <button className="button" style={{...buttonStyle, padding:'10px 63px'}} className="btn text-white" id='' onClick={this.activeAction}>Retrun</button>

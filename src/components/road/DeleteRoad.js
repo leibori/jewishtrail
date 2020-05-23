@@ -14,7 +14,8 @@ const buttonStyle = {
 
 const LabelStyle = {
 color:'white',
-marginLeft:'3%',
+float:'left',
+marginLeft:'20px',
 fontWeight:'400',
 fontFamily: 'Cambay, sans-serif',
 textShadow:'1px 1px black'
@@ -58,7 +59,7 @@ updateTopDownhValue(e) {
 
 render() {
     return (
-        <div style={{position:"absolute",margin:'auto', width:"75%",textAlign:'center',top:'10%',height:'35%'}}>
+        <div style={{position:"absolute",margin:'auto', width:"100%",textAlign:'center',top:'10%',height:'35%'}}>
             <h5 style={LabelStyle}>Search Road to Delete: </h5>            
             <RoadSearch ref={this.myRef}
               roadList={this.state.roadList}

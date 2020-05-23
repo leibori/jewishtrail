@@ -4,6 +4,15 @@ import SiteComponent from '../sites/siteComponent'
 import { PaginatedList } from 'react-paginated-list'
 import { Link } from 'react-router-dom';
 
+const buttonStyle = {
+    marginLeft:"30px",
+    padding:"10px 24px",
+    borderRadius:'8px', 
+    backgroundColor:'#5dbb63',
+    opacity:'0.8',
+    marginTop:'20px'
+  }
+  
 
 /**
  * This component is holds the all of th elements of a search page and calls functions that execute searches.
@@ -92,13 +101,11 @@ export default class SiteSearch extends Component {
         const url = '/' + this.state.returnTo + '/' + this.state.searchVal;
 
         // console.log(url);
-
         // Extract "buttonName" and "siteList" variable for ease of use.
         const { siteList, siteButtonsProps } = this.state;
-
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
         const mapping = (list) => list.map((site, i) => {
-            return (<div key={i} >
+            return (siteButtonsProps.find((buttonProps) => buttonProps.canRender(site.id)) && <div key={i} style={{paddingRight:'0px',paddingLeft:'0px'}}>
                         <SiteComponent site={site} {...{siteButtonsProps}}/>
                     </div>)
         });      
@@ -106,13 +113,17 @@ export default class SiteSearch extends Component {
         return (
             <div>
                 {/* Search site form */}
-                <form onSubmit={e=>e.preventDefault()} id="search-form">
-                    <div className="search-field">
-                        <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
+                <form style={{marginTop:'0px',padding:'0px'}} onSubmit={e=>e.preventDefault()} id="search-form">
+                    <div className="container">
+                         <div className='field'>
+                            <span><i className="fas fa-search" style={{marginLeft: '12px'}}></i></span>
+                            <input style={{fontSize: '16px'}} placeholder='Search by location...' type="text" onChange={this.updateSearchValue} ref={this.searchVal} required />
+                        </div> 
+                        {/* //<input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required /> */}
                     </div>
                     <div>
-                        { <button type="button">
-                            <Link to={{
+                        { <button style={buttonStyle}  type="button">
+                            <Link className="white-text" to={{
                                 pathname: url,
                                 state: this.state.getParentState(),
                             }}>Search</Link>
@@ -123,11 +134,12 @@ export default class SiteSearch extends Component {
                 </form>
                 
                 {/* Results */}
-                <div className="container">
-                    {siteList.length !== 0 && <PaginatedList
+                <div className="container" style={{padding:'10px', paddingLeft:'0px',paddingRight:'0px'}}>
+                    {siteList.length > 5 ?
+                    siteList.length !== 0 && <PaginatedList
                         list={siteList}
-                        itemsPerPage={9}
-                        renderList={mapping}/>}
+                        itemsPerPage={5}
+                        renderList={mapping}/> : mapping(siteList)}
                 </div>
 
                 {

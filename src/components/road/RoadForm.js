@@ -161,7 +161,7 @@ class RoadForm extends Component {
         });
 
         return (
-            <div className="col-md">
+            <div style={{width:'100%'}}>
                 <form onSubmit={()=>alert(2)}>
                     <div className="input-field">
                         <label style={LabelStyle} htmlFor="name">  Road Name:</label>
@@ -178,11 +178,11 @@ class RoadForm extends Component {
                     <button style={buttonStyle} type="submit" onClick={(e) =>this.createNewRoadSubmit(e)} className="btn text-white">Submit</button>
                     <button style={buttonStyle} type="button" className="btn text-white"><Link to="/adminRoadPage" className="text-white">Return</Link></button>
                  </form>
-                <ul className="container">
-                    {siteList.length > 0 && <PaginatedList
+                <ul className="container" style={{paddingLeft:'0px',paddingRight:'0px',width:'100%'}}>
+                    {siteList.length > 3 ? <PaginatedList
                             list={siteList}
                             itemsPerPage={3}
-                            renderList={mapping}/>}
+                            renderList={mapping}/> : mapping(siteList)}
                     {/* {this.state.siteList.map((site, i) => {
                         return (
                             <div key={i} >
@@ -192,6 +192,7 @@ class RoadForm extends Component {
                             <button onClick={() => this.removeSite(i)}>remove Site </button>
                             </div>)})} */}
                 </ul>
+                <br></br>
                 <SiteSearch
                     getParentState={this.getState}
                     siteButtonsProps= {[{

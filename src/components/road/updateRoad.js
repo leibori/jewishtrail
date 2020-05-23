@@ -15,7 +15,7 @@ const buttonStyle = {
 
 const LabelStyle = {
 color:'white',
-marginLeft:'3%',
+marginLeft:'20px',
 fontWeight:'400',
 fontFamily: 'Cambay, sans-serif',
 textShadow:'1px 1px black'
@@ -50,7 +50,7 @@ async onRoadButtonClick(e, roadId){
 
 render() {
     return (
-        <div  style={{position:"absolute", width:"75%",top:'12%'}}>
+        <div  style={{position:"absolute", width:"100%",top:'12%'}}>
             <h5 style={LabelStyle}>Search Site to Update</h5>
             <RoadSearch
              roadButtonsProps = {[{

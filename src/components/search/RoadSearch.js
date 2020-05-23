@@ -51,7 +51,7 @@ class RoadSearch extends Component {
     render() {
         const { roadList, roadButtonsProps } = this.state;
         const mapping = (list) => list.map((road, i) => {
-            return  <div key={i} >
+            return  <div key={i} style={{paddingLeft:'0px',paddingRight:'0px'}}>
                         <RoadComponent key={i} road={road} {...{roadButtonsProps}}/>
                     </div>
         });
@@ -61,22 +61,26 @@ class RoadSearch extends Component {
         return (
             <div>
                 {/* Search site form */}
-                <form ref={this.form} id="search-form">
-                    <div className="search-field">
-                        <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
+                <form style={{marginTop:'0px',padding:'0px'}} ref={this.form} id="search-form">
+                    <div className="container">
+                         <div className='field'>
+                            <span><i className="fas fa-search" style={{marginLeft: '12px'}}></i></span>
+                            <input style={{fontSize: '16px'}} placeholder='Search Trail...' type="text" onChange={this.updateSearchValue} ref={this.searchVal} required />
+                        </div> 
+                        {/* //<input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required /> */}
                     </div>
                     <div>
-                        <button onClick={this.onSearchButtonClicked}>Search</button>
+                        <button style={{display:'none'}} onClick={this.onSearchButtonClicked}></button>
                     </div>
                     <p className="error pink-text center-align"></p>
                 </form>
                 
                 {/* Results */}
-                <div className="container">
-                    {roadList.length !== 0 && <PaginatedList
+                <div className="container" style={{padding:'10px', paddingLeft:'0px',paddingRight:'0px'}}>
+                    {roadList.length > 30 ? <PaginatedList
                         list={roadList}
-                        itemsPerPage={3}
-                        renderList={mapping}/>}
+                        itemsPerPage={31}
+                        renderList={mapping}/> : mapping(roadList)}
                 </div>
             </div>
         )    
