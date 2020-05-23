@@ -34,7 +34,7 @@ const SelectStyle = (props) =>{
   };
   return (
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="age-native-simple" style={{fontSize:'16px',color:'#ECECEC',textShadow: "2px 2px black",fontWeight:'800',fontFamily: "Cambay, sans-serif",}}>{optionValues[0]}</InputLabel>
+        <InputLabel htmlFor="age-native-simple" style={{fontSize:'16px',color:'#ECECEC',textShadow: "2px 2px black",fontWeight:'800',fontFamily: "Cambay, sans-serif"}}>{optionValues[0]}</InputLabel>
         <Select
           native
           value={state.age}
@@ -43,10 +43,11 @@ const SelectStyle = (props) =>{
             name: 'age',
             id: 'age-native-simple',
           }}
+          style={{fontSize:'16px',textShadow: "2px 2px black",color:'#DBE4EB',fontWeight:'800',fontFamily: "Cambay, sans-serif"}}
         >
           <option aria-label="None" value=""/>
-          <option style={{fontSize:'16px',color:'Black'}} value={optionValues[1]}>{optionValues[1]}</option>
-          <option style={{fontSize:'16px',color:'Black'}} value={optionValues[2]}>{optionValues[2]}</option>
+          <option style={{fontSize:'16px',color:'black'}} value={optionValues[1]}>{optionValues[1]}</option>
+          <option style={{fontSize:'16px',color:'black'}} value={optionValues[2]}>{optionValues[2]}</option>
           {optionValues.length > 3 &&
           (<option style={{fontSize:'16px',color:'Black'}} value={optionValues[3]}>{optionValues[3]}</option>)}
         </Select>

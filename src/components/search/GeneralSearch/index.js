@@ -6,6 +6,7 @@ import RoadComponent from 'components/road/RoadComponent';
 import ReactLoading from "react-loading";
 import { saveSearchResults } from '../../../actions'
 import { connect } from 'react-redux'
+import SelectStyle from '../../favorites/selectStyle'
 // import Select from 'react-select'
 import './index.css';         
 import noResultsIcon from '../../../assets/img/SearchNoResults.png'
@@ -203,7 +204,55 @@ class GeneralSearch extends Component {
         return (!this.state.siteFilter && result.type === 'sites') ||
             (!this.state.trailFilter && result.type === 'roads')
     }
-
+    sortBy = (typeSort) => {
+        console.log(typeSort)
+        let sortedArray = []
+        if(typeSort == 'Distances'){
+            const lat = this.props.latitude
+            const long = this.props.longitude
+            sortedArray = this.state.searchResult.sort(function(a, b) {
+            var radlat1 = Math.PI * a.latitude/180;
+            var radlat2 = Math.PI * lat/180;
+            var theta = a.longitude-long;
+            var radtheta = Math.PI * theta/180;
+            var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            if (dist > 1) {
+              dist = 1;
+            }
+            dist = Math.acos(dist);
+            dist = dist * 180/Math.PI;
+            dist = dist * 60 * 1.1515;
+    
+            var radlat3 = Math.PI * b.latitude/180;
+            var radlat4 = Math.PI * lat/180;
+            var theta = b.longitude-long;
+            var radtheta2 = Math.PI * theta/180;
+            var dist2 = Math.sin(radlat3) * Math.sin(radlat4) + Math.cos(radlat3) * Math.cos(radlat4) * Math.cos(radtheta2);
+            if (dist2 > 1) {
+              dist2 = 1;
+            }
+            dist2 = Math.acos(dist2);
+            dist2 = dist2 * 180/Math.PI;
+            dist2 = dist2 * 60 * 1.1515;
+            if(dist > dist2){
+              return 1;
+            }
+            else{
+              return -1;
+            }
+          });
+          this.setState({
+            favoritesArr: sortedArray
+          })
+        }
+        else if(typeSort == 'Rates'){
+          sortedArray = this.state.searchResult.sort((a, b) => parseFloat(b.vote) - parseFloat(a.vote))
+          this.setState({
+            searchResult: sortedArray
+          })
+        }
+        //this.state.favoritesArr.sort((a, b) => parseFloat(a.vote) - parseFloat(b.vote));
+      }
 
     // Renders the component.
     render() {
@@ -263,6 +312,9 @@ class GeneralSearch extends Component {
                                 <button
                                     onClick={this.onlyTrailsClicked}
                                     style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
+                                <div className='forSearch-options'>
+                                <SelectStyle passFunction={this.sortBy} type ={"sort"}/>
+                                </div>
                             </div>}
                 </div>
                 <div className="results" style={{zIndex:'0', paddingTop: '12%'}}>
@@ -275,7 +327,11 @@ class GeneralSearch extends Component {
                         <div className="container" style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px' }}>
                             {
                                 searchResult.filter(this.resultsFilter).length === 0 ?
-                                <img src="https://premieregyptonline.com/images/no-results.png"/> :
+                                <div style={{ height: '100%', paddingTop: '30%' }}>
+                                <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
+                                <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
+                                <img src={noResultsIcon} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                                </div> :
                                 searchResult.filter(this.resultsFilter).length > 9 ?
                                 < PaginatedList style={{width:'100%'}}
                                 list={searchResult.filter(this.resultsFilter)}
