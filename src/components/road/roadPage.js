@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getRoadByID } from '../search/SearchUtils'
-import { getAroundYouMap, findUserPosition } from '../map/MapUtilities'
+import { getAroundYouMap, findUserPosition, calculateDistance } from '../map/MapUtilities'
 import { getSiteByID } from "../firebase/FirebaseUtilities";
 import { PaginatedList } from 'react-paginated-list';
 import SiteComponent from '../sites/siteComponent'
@@ -105,8 +105,8 @@ class RaodPage extends Component {
 
         var navLink = this.state.navigationLink + "&waypoints="
         const firstSite = siteList[0], lastSite = siteList[siteList.length - 1]
-        var firstDistance = Math.sqrt(Math.pow(position.lat - firstSite.latitude, 2) + Math.pow(position.lng - firstSite.longitude, 2))
-        var lastDistance = Math.sqrt(Math.pow(position.lat - lastSite.latitude, 2) + Math.pow(position.lng - lastSite.longitude, 2))
+        var firstDistance = calculateDistance(position.lat, firstSite.latitude, position.lng, firstSite.longitude)
+        var lastDistance = calculateDistance(position.lat, lastSite.latitude, position.lng, lastSite.longitude)
 
         if(firstDistance < lastDistance) {
             navLink += firstSite.latitude + "%2C" + firstSite.longitude

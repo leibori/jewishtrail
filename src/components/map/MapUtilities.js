@@ -131,3 +131,7 @@ export function findUserPosition(dispatch) {
     },
     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
 }
+
+export function calculateDistance(lat1, lat2, lng1, lng2) {
+    return Math.sqrt(Math.pow(lat1 - lat2, 2) + Math.pow(lng1 - lng2, 2))
+}
