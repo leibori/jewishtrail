@@ -28,6 +28,10 @@ let likeStyle ={
 let dislikeStyle={
   ...buttonVote,
 }
+
+let searchOptions = ["Field","Name","Country","City"]
+let sortOptions = ["Sort by","Distances","Rates"]
+
 class Favorites extends Component {
   constructor(props) {
     super(props);
@@ -347,7 +351,7 @@ class Favorites extends Component {
                   <p className="error pink-text center-align"></p>
                 </div>
                 <div className='search-options'>
-                <SelectStyle passFunction={this.categorySearch} type ={"search"}/>
+                <SelectStyle passFunction={this.categorySearch} type ={searchOptions}/>
                 </div>
             </form>
           <button
@@ -357,7 +361,7 @@ class Favorites extends Component {
               onClick={this.roadFilterClicked}
               style={{backgroundColor: roadColorPredicate,borderRadius: '4px', padding: '5px',margin:'6px 0px 0px 10px'}}>Only Trails</button>
           <div className='sort-by'>
-          <SelectStyle passFunction={this.sortBy} type ={"sort"}/>
+          <SelectStyle passFunction={this.sortBy} type ={sortOptions}/>
           </div>
         </div>}
         <div className="FavoritesResult" style={{zIndex:'0'}}>
