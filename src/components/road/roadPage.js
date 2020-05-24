@@ -8,7 +8,7 @@ import { Card, ListGroupItem, ListGroup, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../../actions/index'
 import {updateVote, getVoteByUserID, deleteVote} from '../firebase/FirebaseVotingUtils'
-import { updateUserFavoriteSites, getRoadFavoritesIDs, updateUserFavoriteRoads, getFavoritesIDs } from '../firebase/FirebaseUtilities'
+import { getRoadFavoritesIDs, updateUserFavoriteRoads, getFavoritesIDs } from '../firebase/FirebaseUtilities'
 import Circle from 'react-circle';
 
 
@@ -38,7 +38,7 @@ class RaodPage extends Component {
 
         this.state = {
             trail_id: props.match.params.id,
-            roadName: "",
+            trailName: "",
             CityList: [],
             CountryList: [],
             description: "",
@@ -59,7 +59,7 @@ class RaodPage extends Component {
 
     async componentWillReceiveProps(nextProps) {
 
-        if (this.props.position != nextProps.position) {
+        if (this.props.position !== nextProps.position) {
             this.handleNavigationLink(nextProps.position)
         }
     }
@@ -69,7 +69,7 @@ class RaodPage extends Component {
 
         await this.handleSiteList()
 
-        if (this.props.position.country == '') {
+        if (this.props.position.country === '') {
             await this.props.findUserPosition()
         } else {
             this.handleNavigationLink(this.props.position)
@@ -87,14 +87,14 @@ class RaodPage extends Component {
 
 
     async handleSiteList() {
-        const roadId = this.state.trail_id;
-        var all_road_props = await getRoadByID(roadId)
+        const trailId = this.state.trail_id;
+        var all_trail_props = await getRoadByID(trailId)
 
-        const siteListID = all_road_props.siteList;
+        const siteListID = all_trail_props.siteList;
         const siteList = await Promise.all(siteListID.map((async (sid) => ({ id:sid, ...(await getSiteByID(sid))}))))
 
         this.setState({
-            ...all_road_props,
+            ...all_trail_props,
             siteList
         })
     }
@@ -122,7 +122,6 @@ class RaodPage extends Component {
             navLink += "&destination=" + firstSite.latitude + "%2C" + firstSite.longitude
         }
         navLink += "&dir_action=navigate"
-        // console.log(navLink)
         this.setState({
             navigationLink: navLink
         })
@@ -360,7 +359,6 @@ class RaodPage extends Component {
         var newTrailFavorites = trailFavorites.filter(r => r !== trailId).map(r=>r);
 
         this.props.setTrailFavorites(newTrailFavorites)
-        // this.deleteElementFromRedux('trailFavorites', trailId)
         updateUserFavoriteRoads(uid, newTrailFavorites)
 
         alert("The trail was removed from your favorites.");

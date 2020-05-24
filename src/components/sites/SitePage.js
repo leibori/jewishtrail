@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { updateUserFavoriteSites, getRoadFavoritesIDs, updateUserFavoriteRoads, getFavoritesIDs, getSiteByID } from '../firebase/FirebaseUtilities'
+import { updateUserFavoriteSites, getRoadFavoritesIDs, getFavoritesIDs, getSiteByID } from '../firebase/FirebaseUtilities'
 import { getSitePageMap } from '../map/MapUtilities'
 import { Card, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -54,7 +54,6 @@ class SitePage extends Component {
     async componentWillMount() {
 
         var all_site_props = await getSiteByID(this.state.site_id)
-        // this.setState({ ...all_site_props})
 
         var navLink = "https://www.google.com/maps/dir/?api=1&destination="+all_site_props.latitude+"%2C"+all_site_props.longitude+"&dir_action=navigate"
 
@@ -202,11 +201,9 @@ class SitePage extends Component {
         const voteLikeButtonName = <span className="fas fa-thumbs-up fa-lg" style={likeStyle}/>
 
         if(this.props.likes.includes(siteId)){
-            //return true
             return <span style={{color:'green'}}>{voteLikeButtonName}</span>
         }
         return voteLikeButtonName
-        //return false
     }
 
 
@@ -218,7 +215,6 @@ class SitePage extends Component {
         const voteDislikeButtonName = <span className="fas fa-thumbs-down fa-lg" style={dislikeStyle}/>
 
         if(this.props.dislikes.includes(siteId)){
-            //return true
             return <span style={{color:'red'}}>{voteDislikeButtonName}</span>
         }
         return voteDislikeButtonName
@@ -270,7 +266,6 @@ class SitePage extends Component {
         this.props.setSiteFavorites(favorites)
         updateUserFavoriteSites(uid, favorites);   
         
-        alert("The site was added to your favorites.");
         this.setState({})
     }
 
@@ -286,10 +281,8 @@ class SitePage extends Component {
         var newSiteFavorites = siteFavorites.filter(s => s !== sid).map(s=>s);
         
         this.props.setSiteFavorites(newSiteFavorites)
-        // this.deleteElementFromRedux('siteFavorites', sid)
         updateUserFavoriteSites(uid, newSiteFavorites)
 
-        alert("The site was removed from your favorites.");
         this.setState({})
     }
 

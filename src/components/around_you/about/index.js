@@ -1,10 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './index.css'
 // import { Link } from 'react- router-dom'
-import { Image, Card } from 'react-bootstrap';
 import pic from 'assets/img/about.jpg';
 
-const url = 'url(assets/img/about.jpg)'
 
 // const h1Style = {
 //     display:"block",

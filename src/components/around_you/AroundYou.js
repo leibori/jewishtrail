@@ -26,7 +26,7 @@ class AroundYou extends Component {
      */
     async componentWillReceiveProps(nextProps) {
 
-        if (this.props.position != nextProps.position) {
+        if (this.props.position !== nextProps.position) {
             var markers = await findSitesByCountryForMarker(nextProps.position.country)
             this.setState({ markers: markers })
 
@@ -40,7 +40,7 @@ class AroundYou extends Component {
      */
     async componentWillMount() {
 
-        if (this.props.position.country == '') {
+        if (this.props.position.country === '') {
             await this.props.find()
         } else {
             var markers = await findSitesByCountryForMarker(this.props.position.country)
@@ -56,7 +56,6 @@ class AroundYou extends Component {
 
                     {/* This div contains the top part with the image and the title of the page. */}
                     <div style={{  marginLeft: '0px', marginRight: '0px', marginTop: '0px', height: '34%', }}>
-                        {/* <img src="https://media.istockphoto.com/photos/the-perfect-vantage-point-picture-id546763388?k=6&m=546763388&s=170667a&w=0&h=Lqd2Gaw7v39wE6uhVJAf9oXzN0Knp4RwRZlsDIvWspk="/> */}
                         <img src={backgroundImage}/>
                         <header style={{ position: 'absolute', top:'25%', zIndex: '1', fontWeight: '800', fontSize: '23px', textShadow: '1px 1px black', fontFamily: 'cambay', color: 'white', marginLeft: '3%' }}>Discover places near you</header>
 
@@ -73,10 +72,6 @@ class AroundYou extends Component {
 }
 
 
-/**
- * This places the local storage of the variable position in "this.props".
- * @param {*} state 
- */
 const mapStateToProps = (state) => {
     return {
         position: state.position,

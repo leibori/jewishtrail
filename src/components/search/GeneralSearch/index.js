@@ -7,10 +7,10 @@ import ReactLoading from "react-loading";
 import { saveSearchResults } from '../../../actions'
 import { connect } from 'react-redux'
 import SelectStyle from '../../favorites/selectStyle'
-// import Select from 'react-select'
 import './index.css';         
 import noResultsIcon from '../../../assets/img/SearchNoResults.png'
 import SearchStart from '../../../assets/img/SearchStart.png'
+import _ from 'underscore'
 
 
 // Header style properties.
@@ -36,9 +36,7 @@ class GeneralSearch extends Component {
         super(props);
 
         // Extracting the props that the constructor recieves.
-        const { siteButtonsProps, roadButtonsProps ,searchVal, returnTo } = props;
-        // const { siteButtonsProps, roadButtonsProps, voteButtonsProps ,searchVal, returnTo } = props;
-
+        const { siteButtonsProps, trailButtonsProps ,searchVal, returnTo } = props;
 
         this.state = {
             // Is true if a search value is sent, and false otherwise.
@@ -52,15 +50,12 @@ class GeneralSearch extends Component {
 
             // The array of search results.
             searchResult: [],
-
-            // Button content for voting.
-            // voteButtonsProps,
             
             // Button content next to each site entry.
             siteButtonsProps,
 
             // Button content next to each site entry.
-            roadButtonsProps,
+            trailButtonsProps,
 
             // The beginning of the address that is set after the search button is pressed.
             returnTo: returnTo,
@@ -100,9 +95,8 @@ class GeneralSearch extends Component {
     async executeSearch() {
         this.setState({ startedSearch: true })
         var searchValues = this.state.searchVal.split(" ")
-        // console.log(searchValues)
         const result = await findFromDB(searchValues, ['sites', 'roads'])
-        // console.log(result)
+
         this.props.saveSearchResults({
             searchVal: this.state.searchVal,
             results: result,
@@ -116,21 +110,15 @@ class GeneralSearch extends Component {
 
     // Updates the value of "searchVal" based on the content of the input box.
     updateSearchValue(e) {
-        // console.log(e.target.value)
         this.setState({searchVal: e.target.value})
     }
-
-
-    // sortResults(e) {
-    //     console.log(e.label)
-    // }
 
 
     // Execute the search if the componenet recieved a search value.
     async componentWillMount() {
         if(this.state.searchVal.length >= 1) {
             const savedResults = this.props.searchResults
-            console.log(savedResults)
+
             if (savedResults.results.length >= 1 && savedResults.searchVal === this.state.searchVal) {
                 this.setState({
                     searchResult: savedResults.results,
@@ -170,7 +158,7 @@ class GeneralSearch extends Component {
 
 
     /**
-     * This function executes when the user clicks on the road filter button, and it sets boolean values in order to filter the results.
+     * This function executes when the user clicks on the trail filter button, and it sets boolean values in order to filter the results.
      */
     onlyTrailsClicked = () => {
         if (this.state.siteFilter) {
@@ -194,7 +182,7 @@ class GeneralSearch extends Component {
 
 
     /**
-     * This function is used to filter (by site or by road) the results based on boolean values.
+     * This function is used to filter (by site or by trail) the results based on boolean values.
      */
     resultsFilter = (result) => {
         return (!this.state.siteFilter && result.type === 'sites') ||
@@ -219,31 +207,26 @@ class GeneralSearch extends Component {
     // Renders the component.
     render() {
 
-        // Extract "siteButtonsProps", "roadButtonsProps", "voteButtonsProps", "startedSearch", "finishedSearch" and "searchResult" values from "this.state" for ease of use.
-        // const { siteButtonsProps, roadButtonsProps, voteButtonsProps, startedSearch, finishedSearch, searchResult } = this.state;
-        
-        // Extract "siteButtonsProps", "roadButtonsProps", "startedSearch", "finishedSearch" and "searchResult" values from "this.state" for ease of use.
-        const { siteButtonsProps, roadButtonsProps, startedSearch, finishedSearch, searchResult } = this.state;
+        // Extract "siteButtonsProps", "trailButtonsProps", "startedSearch", "finishedSearch" and "searchResult" values from "this.state" for ease of use.
+        const { siteButtonsProps, trailButtonsProps: trailButtonsProps, startedSearch, finishedSearch, searchResult } = this.state;
         
         // Predicate that decides the color of the button of the site filter.
         const siteColorPredicate = this.state.trailFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
 
-        // Predicate that decides the color of the button of the road filter.
-        const roadColorPredicate = this.state.siteFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
+        // Predicate that decides the color of the button of the trail filter.
+        const trailColorPredicate = this.state.siteFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
 
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
-        const mapping = (list) => list.map((site, i) => {
+        const mapping = (list) => list.map((result, i) => {
             return  (
                         <div style={{width: '100%'}} key={i}>
-                        {site.type === 'sites' && !this.state.siteFilter ?
+                        {result.type === 'sites' && !this.state.siteFilter ?
                             (<div>  
-                                {/* <SiteComponent {...{siteButtonsProps,voteButtonsProps}} site={site} /> */}
-                                <SiteComponent {...{siteButtonsProps}} site={site} />
+                                <SiteComponent {...{siteButtonsProps}} site={result} />
                             </div>)
-                            : site.type === 'roads' && !this.state.trailFilter ?
+                            : result.type === 'roads' && !this.state.trailFilter ?
                             (<div style={{width: '100%'}}>
-                                 {/* <RoadComponent {...{roadButtonsProps,voteButtonsProps}} road={site}/> */}
-                                 <RoadComponent {...{roadButtonsProps}} road={site}/>
+                                 <RoadComponent {...{roadButtonsProps: trailButtonsProps}} road={result}/>
                             </div>) : ''
                         }
                         </div>
@@ -268,16 +251,18 @@ class GeneralSearch extends Component {
                     </form>
                     {finishedSearch && searchResult.length !== 0 && 
                         <div>
-                                <button
-                                    onClick={this.onlySitesClicked}
-                                    style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
-                                <button
-                                    onClick={this.onlyTrailsClicked}
-                                    style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
+                            <button
+                                onClick={this.onlySitesClicked}
+                                style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
+                            <button
+                                onClick={this.onlyTrailsClicked}
+                                style={{backgroundColor: trailColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
                             <div className='forSearch-options'>
                                 <SelectStyle passFunction={this.sortBy} type ={sortOptions}/>
                             </div>
-                            </div>}
+                            
+                        </div>
+                    }
                 </div>
                 <div className="results" style={{zIndex:'0', paddingTop: '12%'}}>
                 { startedSearch && ! finishedSearch ? (
@@ -322,7 +307,6 @@ class GeneralSearch extends Component {
     }
 }
 
-// export default GeneralSearch
 
 const mapStateToProps = (state) => {
     return {
@@ -332,9 +316,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        saveSearchResults: (searchProps) => {
-            dispatch(saveSearchResults(searchProps))
-        },
+        saveSearchResults: (searchProps) => dispatch(saveSearchResults(searchProps))
     }
 };
 
