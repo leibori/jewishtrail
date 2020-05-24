@@ -22,11 +22,7 @@ const headerStyle = {
     textShadow: "2px 2px black",
 }
 
-
-// const options = [
-//     { label: "Relevance", value: 'relevance' },
-//     { label: "distance", value: 'distance' }
-// ]
+let sortOptions = ["Sort by","Relevance","Rates"]
 
 
 /**
@@ -278,9 +274,9 @@ class GeneralSearch extends Component {
                                 <button
                                     onClick={this.onlyTrailsClicked}
                                     style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
-                                <div className='forSearch-options'>
-                                <SelectStyle passFunction={this.sortBy} type ={"sort"}/>
-                                </div>
+                            <div className='forSearch-options'>
+                                <SelectStyle passFunction={this.sortBy} type ={sortOptions}/>
+                            </div>
                             </div>}
                 </div>
                 <div className="results" style={{zIndex:'0', paddingTop: '12%'}}>
