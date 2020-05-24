@@ -93,6 +93,7 @@ export async function findFromDB(searchVals, collectionName) {
             id: result.document.id,
             type: result.type,
             vote: result.document.data().vote,
+            relevance: result.relevance
         })
     })
 
