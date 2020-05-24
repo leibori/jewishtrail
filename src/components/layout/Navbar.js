@@ -74,7 +74,10 @@ class Navbar extends Component {
               this.state.isLoggedIn && (<ReactBootStrap.Nav.Link style={fontStyle} href="/favorites">Favorites</ReactBootStrap.Nav.Link>)
             }
             <ReactBootStrap.Nav.Link style={fontStyle} href="/aroundyou">Around You </ReactBootStrap.Nav.Link>
-            <ReactBootStrap.Nav.Link style={fontStyle} href="/contactUs">Contact Us </ReactBootStrap.Nav.Link>
+            {
+              !this.state.isAdmin && (  <ReactBootStrap.Nav.Link style={fontStyle} href="/contactUs">Contact Us </ReactBootStrap.Nav.Link>)
+            }  
+        
 
             {
               this.state.isAdmin && (<ReactBootStrap.Nav.Link style={fontStyle} href="/admin">Admin Page</ReactBootStrap.Nav.Link>)
