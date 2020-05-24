@@ -3,6 +3,7 @@ import { findSitesByCountryForMarker } from '../search/SearchUtils'
 import { getAroundYouMap, findUserPosition } from '../map/MapUtilities'
 import { connect } from 'react-redux'
 import backgroundImage from '../../assets/img/AroundYouBG.jpg'
+import no_image_available from '../../assets/img/no-image-available.png'
 
 
 /**
@@ -56,7 +57,7 @@ class AroundYou extends Component {
 
                     {/* This div contains the top part with the image and the title of the page. */}
                     <div style={{  marginLeft: '0px', marginRight: '0px', marginTop: '0px', height: '34%', }}>
-                        <img src={backgroundImage}/>
+                        <img src={backgroundImage} alt={no_image_available}/>
                         <header style={{ position: 'absolute', top:'25%', zIndex: '1', fontWeight: '800', fontSize: '23px', textShadow: '1px 1px black', fontFamily: 'cambay', color: 'white', marginLeft: '3%' }}>Discover places near you</header>
 
                     </div>

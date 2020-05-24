@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../../actions/index'
 import {updateVote,getVoteByUserID,deleteVote} from '../firebase/FirebaseVotingUtils'
 import Circle from 'react-circle';
+import favorites_add_icon from '../../assets/img/favorite-add-icon.png'
+import favorites_remove_icon from '../../assets/img/favorite-remove-icon.png'
 
 
 let buttonVote = {  
@@ -290,8 +292,8 @@ class SitePage extends Component {
     render() {
         const { site_id, imageUrl, navigationLink } = this.state;
 
-        const addToFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-add-icon.png"/>
-        const deleteInFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-remove-icon.png"/>
+        const addToFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_add_icon} alt="Add to favorites"/>
+        const deleteInFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_remove_icon} alt="Remove from favorites"/>
 
         return (
             <div>

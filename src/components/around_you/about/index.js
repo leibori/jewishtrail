@@ -1,6 +1,7 @@
 import React from 'react'
 import './index.css'
 import pic from 'assets/img/about.jpg';
+import no_image_available from '../../../assets/img/no-image-available.png'
 
 
 export default function About(props) {
@@ -13,7 +14,7 @@ export default function About(props) {
         <div style={{width: '100%', height: '100%',}}>
 
             <div style={{zIndex: '0', width: '100%', height:'40%', }}>
-                <img src={pic}/>
+                <img src={pic} alt={no_image_available}/>
                 <text className="bottomHeader">{name}</text>
             </div>
             <div className={"bottomcard"}>

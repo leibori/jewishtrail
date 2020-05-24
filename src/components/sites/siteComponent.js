@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { Row, Col } from 'react-bootstrap'
 import Circle from 'react-circle';
+import no_image_available from '../../assets/img/no-image-available.png'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +49,7 @@ const SiteComponent = (props) => {
           
           <Grid item xs={6} lg>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={site.imageUrl} />
+              <img className={classes.img} alt="complex" src={site.imageUrl} alt={no_image_available} />
             </ButtonBase>
           </Grid>
           <Grid item xs={6} sm container>

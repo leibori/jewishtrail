@@ -11,6 +11,7 @@ import './index.css';
 import noResultsIcon from '../../../assets/img/SearchNoResults.png'
 import SearchStart from '../../../assets/img/SearchStart.png'
 import _ from 'underscore'
+import no_image_available from '../../../assets/img/no-image-available.png'
 
 
 // Header style properties.
@@ -193,10 +194,10 @@ class GeneralSearch extends Component {
     sortBy = (typeSort) => {
         console.log(typeSort)
         let sortedArray = []
-        if(typeSort == 'Rates'){
+        if(typeSort === 'Rates'){
           sortedArray = this.state.searchResult.sort((a, b) => parseFloat(b.vote) - parseFloat(a.vote))
         }
-        else if(typeSort == 'Relevance') {
+        else if(typeSort === 'Relevance') {
             sortedArray = _.sortBy(this.state.searchResult, 'relevance').reverse()
         }
         this.setState({
@@ -208,7 +209,7 @@ class GeneralSearch extends Component {
     render() {
 
         // Extract "siteButtonsProps", "trailButtonsProps", "startedSearch", "finishedSearch" and "searchResult" values from "this.state" for ease of use.
-        const { siteButtonsProps, trailButtonsProps: trailButtonsProps, startedSearch, finishedSearch, searchResult } = this.state;
+        const { siteButtonsProps, trailButtonsProps, startedSearch, finishedSearch, searchResult } = this.state;
         
         // Predicate that decides the color of the button of the site filter.
         const siteColorPredicate = this.state.trailFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
@@ -277,7 +278,7 @@ class GeneralSearch extends Component {
                                 <div className="results-test" style={{ height: '100%', paddingTop: '30%' }}>
                                 <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
                                 <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
-                                <img src={noResultsIcon} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                                <img src={noResultsIcon} alt={no_image_available} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
                                 </div> :
                                 searchResult.filter(this.resultsFilter).length > 9 ?
                                 < PaginatedList style={{width:'100%'}}
@@ -290,13 +291,13 @@ class GeneralSearch extends Component {
                         <div className="results-test">
                             <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
                             <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
-                            <img src={noResultsIcon} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                            <img src={noResultsIcon} alt="No results found" style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
                         </div>
                     ) : (
                         <div style={{ height: '100%', paddingTop: '30%' }}>
                             <span className='message' style={{ paddingLeft: '34%' }}>Search for a trail</span><br/>
                             <span className='message' style={{ paddingLeft: '31%' }}>to find your journey</span>
-                            <img src={SearchStart} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                            <img src={SearchStart} alt="Please start searching" style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
                         </div>
                     )
                 }

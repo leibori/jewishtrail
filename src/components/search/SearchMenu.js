@@ -3,6 +3,8 @@ import { updateUserFavoriteSites, getRoadFavoritesIDs, updateUserFavoriteRoads, 
 import GeneralSearch from './GeneralSearch/';
 import { setSiteFavorites, setTrailFavorites } from '../../actions/index'
 import { connect } from 'react-redux'
+import favorites_add_icon from '../../assets/img/favorite-add-icon.png'
+import favorites_remove_icon from '../../assets/img/favorite-remove-icon.png'
 
 
 /**
@@ -189,8 +191,8 @@ class SearchMenu extends Component {
      * This function renders the components by calling the "SiteSearch" component.
      */
     render() {
-        const buttonName1 = <img style={{width: '40px', height:'40px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-add-icon.png"/>
-        const buttonName2 = <img style={{width: '40px', height:'40px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-remove-icon.png"/>
+        const buttonName1 = <img style={{width: '40px', height:'40px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_add_icon} alt="Add to favorites"/>
+        const buttonName2 = <img style={{width: '40px', height:'40px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_remove_icon} alt="Remove from favorites"/>
         const siteButtonsProps = [{buttonFunction: this.addSiteToFavorites, buttonName: buttonName1, canRender: this.canRenderAddSite}, 
             {buttonFunction: this.deleteSiteInFavorites, buttonName: buttonName2, canRender: this.canRenderDeleteSite}];
         const trailButtonsProps = [{buttonFunction: this.addRoadToFavorites, buttonName: buttonName1, canRender: this.canRenderAddRoad},

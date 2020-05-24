@@ -10,6 +10,9 @@ import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../.
 import {updateVote, getVoteByUserID, deleteVote} from '../firebase/FirebaseVotingUtils'
 import { getRoadFavoritesIDs, updateUserFavoriteRoads, getFavoritesIDs } from '../firebase/FirebaseUtilities'
 import Circle from 'react-circle';
+import no_image_available from '../../assets/img/no-image-available.png'
+import favorites_add_icon from '../../assets/img/favorite-add-icon.png'
+import favorites_remove_icon from '../../assets/img/favorite-remove-icon.png'
 
 
 let buttonVote = {  
@@ -369,8 +372,8 @@ class RaodPage extends Component {
     render() {
         const { trail_id, siteList, navigationLink, imageUrl } = this.state;
 
-        const addToFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-add-icon.png"/>
-        const deleteInFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-remove-icon.png"/>
+        const addToFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_add_icon} alt="Add to favorites"/>
+        const deleteInFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_remove_icon} alt="Remove from favorites"/>
 
         if(!siteList.length){
             return <span>Loading...</span>
@@ -386,7 +389,7 @@ class RaodPage extends Component {
             <div>
                 <Card style={{ width: '100%', height: '100%' }}>
                     <div style={{height: '33%'}}>
-                        <Card.Img variant="top" src={imageUrl} style={{height: '33%', width: '100%'}} />
+                        <Card.Img variant="top" src={imageUrl} alt={no_image_available} style={{height: '33%', width: '100%'}} />
                         <div className="card-img-overlay" style={{position: 'absolute', paddingTop:'33%', paddingLeft: '75%', maxHeight:'300px', zIndex: '1'}}>
                             <span style={{borderRadius: '50%', backgroundColor:'rgba(255,255,255,0.8)', height: '70px', width: '70px', display: 'inline-block'}}>
                                 <Circle progress={this.state.vote} progressColor="#50c878" size={70} bgColor="#ff0000" lineWidth={30} textColor="#3f704d" textStyle={{font:'bold 6rem Helvetica, Ariel, sens-serif'}}></Circle>
