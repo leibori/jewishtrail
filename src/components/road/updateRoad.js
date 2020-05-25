@@ -50,7 +50,7 @@ async onRoadButtonClick(e, roadId){
 
 render() {
     return (
-        <div  style={{position:"absolute", width:"100%",top:'12%'}}>
+      <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
             <h5 style={LabelStyle}>Search Site to Update</h5>
             <RoadSearch
              roadButtonsProps = {[{

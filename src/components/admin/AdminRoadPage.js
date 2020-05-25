@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './GeneralAdmin.css';
 
 const buttonStyle = {
-    marginLeft:"30px",
+    marginLeft:"8%",
     padding:"10px 24px",
     borderRadius:'8px', 
     backgroundColor:'#5dbb63',
@@ -25,8 +25,7 @@ const LabelStyle = {
 class AdminRoadPage extends Component {
   render() {
     return (
-    <div className='bg-admin'>
-    <div className="container" style={{position:"absolute",margin:'auto', width:"100%",textAlign:'center',top:'10%',height:'35%'}}>
+      <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%',textAlign:'center'}}>
       <p style={LabelStyle}>Welcome to Road Management, choose an Option:</p>
       <button className="btn" style={buttonStyle} id='create'><Link to="/roadForm" className="white-text">Create new Road</Link></button>
       <br></br>
@@ -35,7 +34,6 @@ class AdminRoadPage extends Component {
       <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/updateRoad">Update Road</Link></button>
       <br></br>
       <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/admin">Return to Admin Main Menu</Link></button>
-    </div>
     </div>
     )    
   }

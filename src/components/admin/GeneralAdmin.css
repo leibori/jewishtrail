@@ -1,7 +1,11 @@
 .bg-admin {
     background: url("../../assets/img/signs.jpg");
     overflow: auto;
+    -ms-overflow-style: none;
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
+}
+.bg-admin::-webkit-scrollbar {
+    display: none;
 }

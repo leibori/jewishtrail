@@ -14,7 +14,7 @@ const buttonStyle = {
 
 const LabelStyle = {
   color:'white',
-  marginLeft:'3%',
+  marginLeft:'5%',
   fontWeight:'400',
   fontFamily: 'Cambay, sans-serif',
   textShadow:'1px 1px black'

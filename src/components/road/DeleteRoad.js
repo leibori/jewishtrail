@@ -59,7 +59,7 @@ updateTopDownhValue(e) {
 
 render() {
     return (
-        <div style={{position:"absolute",margin:'auto', width:"100%",textAlign:'center',top:'10%',height:'35%'}}>
+      <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
             <h5 style={LabelStyle}>Search Road to Delete: </h5>            
             <RoadSearch ref={this.myRef}
               roadList={this.state.roadList}

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './GeneralAdmin.css';
 
 const buttonStyle = {
-  marginLeft:"30px",
+  marginLeft:"18%",
   padding:"10px 24px",
   borderRadius:'8px', 
   backgroundColor:'#5dbb63',
@@ -22,8 +22,7 @@ const LabelStyle = {
 class AdminMenu extends Component {
   render() {
     return (
-      <div className='bg-admin' >
-      <div className="container" style={{position:"absolute",margin:'auto', width:"100%",textAlign:'center',top:'10%',height:'35%'}}>
+      <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
           <p style={LabelStyle}> Welcome to Admin Menu, Please select an Option:</p>
           <div className="container">
             <button style={buttonStyle} className="btn"><Link className="white-text" to="/adminSitePage">Site Management</Link></button>
@@ -31,7 +30,6 @@ class AdminMenu extends Component {
             <button style={buttonStyle} className="btn"><Link className="white-text" to="/auth">Users Management</Link></button>
             <button style={buttonStyle} className="btn"><Link className="white-text" to="/massegeList">MailBox</Link></button>
         </div>
-      </div>
       </div>
 
     )

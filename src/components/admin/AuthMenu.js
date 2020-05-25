@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import './GeneralAdmin.css';
 
 const buttonStyle = {
-  marginLeft:"30px",
+  marginLeft:"30%",
   borderRadius:'8px', 
   padding:"10px 20px",
   backgroundColor:'#5dbb63',
@@ -102,8 +102,7 @@ class AdminMenu extends Component {
     
     if(action === "deleteUser"){
          return(
-          <div className='bg-admin'>
-            <div style={{position:"absolute", width:"75%",top:'10%',height:'35%'}} className="input-field">
+          <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
               <form style={{marginTop:'0px'}} onSubmit={(e) => {if(window.confirm("are you sure you want to delete this user?")){this.deleteUser(e)};}}>
                 <input  style={inputStyle} id="email" onChange={this.handleChange} placeholder="Please enter an email" value={this.state.email} required type='email'></input><br></br>
                 {error && <span style={errorStyle}>{error} <br/></span>}
@@ -111,12 +110,11 @@ class AdminMenu extends Component {
                 <button className="button" style={{...buttonStyle, padding:'10px 63px'}} className="btn text-white" id='' onClick={this.activeAction}>Retrun</button>
               </form>
             </div>
-            </div>
          )   
     } else if (action === "createAdmin"){
         return (
-          <div className='bg-admin'>
-            <div style={{position:"absolute", width:"75%",top:'10%',height:'35%'}} className="input-field">
+          
+            <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
               <form style={{marginTop:'0px'}} onSubmit={(e) => this.createAdmin(e)}>
               <input style={inputStyle} id="email" onChange={this.handleChange} placeholder="pleae enter an email" value={this.state.email} required type='email'></input><br></br>
               {error && <span style={errorStyle}>{error} <br/></span>}
@@ -124,19 +122,16 @@ class AdminMenu extends Component {
               <button className="button" style={{...buttonStyle, padding:'10px 63px'}} className="btn text-white" id='' onClick={this.activeAction}>Retrun</button>
               </form>
             </div>
-            </div>
         )
     }    
     return (
-    <div className='bg-admin'>
-    <div style={{position:"absolute", width:"75%",top:'10%',height:'35%'}} className="container">
+    <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
       <h5 style={LabelStyle} className="black-tex">Admin Authorities Options:</h5>
       <p style={LabelStyle} >please Choose Option: </p>
       <button style={{...buttonStyle,padding:'10px 35px'}} className="btn text-white" id='createAdmin' onClick={this.activeAction}>Add Admin Via Email</button>
       <button style={{...buttonStyle, padding:'10px 60px'}} className="btn text-white" id='deleteUser' onClick={this.activeAction}>Delete User</button>
       <br></br>
       <Link style={{...buttonStyle,padding:'10px 30px',}} className="btn text-white" to='/admin'>Return to Admin Menu</Link>
-    </div>
     </div>
     )    
   }

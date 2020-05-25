@@ -72,8 +72,7 @@ updateTopDownhValue(e) {
 
 render() {
     return (
-      <div className='bg-admin'>
-        <div style={{position:"absolute", width:"100%",top:'12%',height:'100%'}}>
+        <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
             <h5 style={LabelStyle}>Search Site to Delete</h5>
             <SiteSearch ref={this.myRef}
               siteList={this.state.siteList}
@@ -85,7 +84,6 @@ render() {
               searchVal={this.state.searchVal}
               returnTo='deleteSite'/>
             <button style={buttonStyle} className="btn"><Link className="white-text" to="/adminSitePage">Return to Admin Menu</Link></button>
-        </div>
         </div>
     )    
   }

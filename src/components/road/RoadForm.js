@@ -13,7 +13,7 @@ import {Link} from 'react-router-dom'
 // ]
 
 const buttonStyle = {
-    marginLeft:"30px",
+    marginLeft:"3%",
     padding:"10px 24px",
     borderRadius:'8px', 
     backgroundColor:'#5dbb63',
@@ -23,7 +23,7 @@ const buttonStyle = {
   
 const LabelStyle = {
   color:'white',
-  marginRight:'1%',
+  marginLeft:'3%',
   fontWeight:'400',
   fontFamily: 'Cambay, sans-serif',
   textShadow:'1px 1px black'
@@ -161,7 +161,7 @@ class RoadForm extends Component {
         });
 
         return (
-            <div style={{width:'100%'}}>
+            <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
                 <form onSubmit={()=>alert(2)}>
                     <div className="input-field">
                         <label style={LabelStyle} htmlFor="name">  Road Name:</label>
@@ -178,19 +178,11 @@ class RoadForm extends Component {
                     <button style={buttonStyle} type="submit" onClick={(e) =>this.createNewRoadSubmit(e)} className="btn text-white">Submit</button>
                     <button style={buttonStyle} type="button" className="btn text-white"><Link to="/adminRoadPage" className="text-white">Return</Link></button>
                  </form>
-                <ul className="container" style={{paddingLeft:'0px',paddingRight:'0px',width:'100%'}}>
+                <ul style={{paddingLeft:'0px',paddingRight:'0px',width:'100%'}}>
                     {siteList.length > 3 ? <PaginatedList
                             list={siteList}
                             itemsPerPage={3}
                             renderList={mapping}/> : mapping(siteList)}
-                    {/* {this.state.siteList.map((site, i) => {
-                        return (
-                            <div key={i} >
-                            <li>
-                                <SiteComponent props={site}/>
-                            </li>
-                            <button onClick={() => this.removeSite(i)}>remove Site </button>
-                            </div>)})} */}
                 </ul>
                 <br></br>
                 <SiteSearch
@@ -204,38 +196,6 @@ class RoadForm extends Component {
                     returnTo='roadForm'/>
             </div>
         );
-
-    //     return (
-            
-            
-
-
-
-                // <form ref={this.form} id="search-form">
-                //     <div className="search-field">
-                //         <input ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
-                //     </div>
-                //     <Select ref={this.dropList} onChange={this.updateTopDownhValue} options = {options} />
-                //     <div>
-                //         <button onClick={this.onSearchButtonClicked}>Search</button>
-                //     </div>
-                //     <p className="error pink-text center-align"></p>
-                // </form>
-                
-                // <div className="container">
-                //     {this.state.siteListResult.map((site, i) => {
-                //         if(this.renderButton(site.id)) {
-                //             return  <div key={i} >
-                //                         <SiteComponent props={site}/>
-                //                         <button onClick={() => this.addSiteToRoadList(site.id)}>Add to Road</button>
-                //                     </div>
-                //         }
-                //         return <SiteComponent key={i} props={site}/>
-                //     //if site-id is not in favoritesList show button to add to favorites
-                //   })}
-                // </div>
-    //         </div>
-    //     )    
     }
 }
 

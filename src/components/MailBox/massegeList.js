@@ -57,10 +57,10 @@ class massegeList extends Component {
                 </Card.Body>)
         });
         return (
-            <div style={{ width: '100%', height: '100%' }}>
-                <Card style={{ width: '100%', height: '100%' }}>
-                    <div style={{height: '300px'}}>
-                        <Card.Img src="/image/contactUs.png" variant="top"  style={{marginTop:'30px',height: '220px', width: '100%'}} />
+            <div className="fullscreen-message" >
+                <Card className="fullscreen-message">
+                    <div className="messageimage-container">
+                        <Card.Img src="/image/contactUs.png" variant="top"  style={{marginTop:'30px',height: '300px', width: '100%'}} />
                     </div>
                     {/* <Card.Body> */}
                     <div style={{marginLeft:'20px',marginTop:'15px'}}>

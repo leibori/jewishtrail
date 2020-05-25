@@ -68,8 +68,7 @@ updateTopDownhValue(e) {
 
 render() {
     return (
-      <div className='bg-admin'>
-        <div style={{position:"absolute", width:"100%",top:'12%'}}>
+        <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
             <h5 style={LabelStyle}>Search Site to Update</h5>
             <SiteSearch style={{paddingLeft: '0px', paddingRight: '0px'}}
              siteButtonsProps= {[{
@@ -79,27 +78,7 @@ render() {
           }]}
               searchVal={this.state.searchVal}
               returnTo='updateSite'/>
-
-            {/* <form ref={this.form} id="search-form">
-                <div className="search-field">
-                    <textarea ref={this.searchVal} onChange={this.updateSearchValue} type="text" required />
-                </div>
-                <Select ref={this.dropList} defaultValue={options[0]} onChange={this.updateTopDownhValue} options = {options} />
-                <button onClick={this.onSearchButtonClicked}>Search</button>
-                <p className="error pink-text center-align"></p>
-            </form> */}
-            
-            {/* <ul className="container" bind={this.state.siteList}>
-                {this.state.siteList.map((site, i) => (
-                  <li key = {i}>
-                  <SiteComponent props={site}/>
-                  <button><Link to={'/updateSite/'+site.id}>update Site</Link></button>
-                  </li>
-                ))
-                }
-            </ul> */}
             <button style={buttonStyle} className="btn" type="button"><Link className="white-text" to="/adminSitePage">Return to Admin Menu</Link></button>
-        </div>
         </div>
     )    
   }
