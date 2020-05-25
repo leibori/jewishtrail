@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SelectStyle = (props) =>{
   const {passFunction,type} = props
-  let optionValues = type == 'search' ? ["Field","Name","Country","City"] : ["Sort by","Distances","Rates"]
+  let optionValues = type
   const classes = useStyles();
   const [state, setState] = useState({
     age: '',

@@ -15,10 +15,18 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     margin: 'auto',
     maxWidth: '100%',
+    ['@media screen and (min-width:600px)']: {
+      padding: theme.spacing(1),
+      width:'30%'
+    },
   },
   image: {
     width: '100%',
     height: '150px',
+    ['@media screen and (min-width:600px)']: {
+      height: '150px',
+      width:'100%'
+    },
   },
   img: {
     outline: 'none',
@@ -26,39 +34,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
   },
 }));
-
-// const buttonVote = {  
-//   marginTop: '10px',
-//   textAlign: 'center',
-//   borderRadius: '4px',
-//   background: 'transparent',
-//   border: 'none',
-// }
 const SiteHandle = (props) => {
-  const { site, siteButtonsProps,voteButtonsProps} = props;
-  const likeStatus = voteButtonsProps ? voteButtonsProps[0].colorLike(site.uid,voteButtonsProps[0].buttonName) : null
-  const [likeFlag,setLike] = useState(likeStatus)
-  const dislikes = voteButtonsProps ? voteButtonsProps[1].colorDislike(site.uid,voteButtonsProps[1].buttonName) : null
-  const [dislikeFlag,setDislike] = useState(dislikes)
+  const { site, siteButtonsProps} = props;
 
   const info_url = '/site/'+site.uid
   const classes = useStyles()
 
-  // const pickSiteButton = () => {
-  //   return siteButtonsProps ? siteButtonsProps.find((buttonProps) => buttonProps.canRender(site.id)) : undefined;
-  // }
-
-  const setVoteDb = (e,vote,siteId)=>{
-    const likeButton = like.buttonName
-    const dislikeButton = dislike.buttonName
-    vote ? like.buttonFunction(e,vote,siteId) :dislike.buttonFunction(e,vote,siteId)
-    setDislike(dislike.colorDislike(siteId,dislikeButton))
-    setLike(like.colorLike(siteId,likeButton))
-  }
-
   const buttonProps = siteButtonsProps[0]
-  const like = voteButtonsProps ? voteButtonsProps[0] : undefined
-  const dislike = voteButtonsProps ? voteButtonsProps[1] : undefined
 
   return (
     <div className={classes.root}>

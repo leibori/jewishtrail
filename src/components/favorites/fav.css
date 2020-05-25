@@ -14,8 +14,65 @@
     top: 0%;
     width: 100%;
 }
+@media (min-width: 768px) {
+    .fixed {
+        background: url(../../assets/img/signs.jpg);
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        background-attachment: fixed;
+        overflow: hidden;
+        padding-top: 5%;
+        position: fixed;
+        z-index: 1;
+        margin-top: 0px;
+        padding-bottom: 10px;
+        top: 0%;
+        width: 100%;
+    }
+  }
 .message {
     font-size: 18sp;
     font-family: sans-serif;
     color: #525252;
-}  
+}
+@media (min-width: 768px){
+    .background-fullsize{
+        background-color: rgb(63,122,77,0.3);
+        /* background: url(../../assets/img/signs.jpg); */
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+        height: 100%;
+        width: 100%;
+    }
+}
+.button-leftFav{
+    border-radius: 4px;
+    padding : 5px;
+    margin: 6px 0px 0px 22px
+}
+@media (min-width: 768px) {
+    .button-leftFav{
+        border-radius: 4px;
+        padding : 5px;
+        margin: 6px 0px 0px 510px;
+    }   
+}
+.button-rightFav{
+    border-radius: 4px;
+    padding : 5px;
+    margin: 6px 0px 0px 10px
+}
+@media (min-width: 768px) {
+    .button-rightFav{
+        border-radius: 4px;
+        padding : 5px;
+        margin: 6px 0px 0px 12px;
+    }
+}
+@media (min-width: 768px){
+    .site-favContiner{
+        width: 50%;
+        margin-left: 27%;
+    }
+}
