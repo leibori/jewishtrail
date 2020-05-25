@@ -199,6 +199,8 @@ class GeneralSearch extends Component {
         }
         else if(typeSort === 'Relevance') {
             sortedArray = _.sortBy(this.state.searchResult, 'relevance').reverse()
+        } else {
+            return
         }
         this.setState({
             searchResult: sortedArray

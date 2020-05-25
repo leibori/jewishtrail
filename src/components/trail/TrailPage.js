@@ -348,7 +348,6 @@ class TrailPage extends Component {
         this.props.setTrailFavorites(favorites)
         updateUserFavoriteTrails(uid, favorites)
         
-        alert("The trail was added to your favorites.");
         this.setState({})
     }
 
@@ -366,7 +365,6 @@ class TrailPage extends Component {
         this.props.setTrailFavorites(newTrailFavorites)
         updateUserFavoriteTrails(uid, newTrailFavorites)
 
-        alert("The trail was removed from your favorites.");
         this.setState({})
     }
     /* extract image of sites that include in the trail for the slider */
