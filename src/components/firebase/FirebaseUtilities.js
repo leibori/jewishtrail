@@ -67,7 +67,7 @@ export async function getFavoritesIDs(userid) {
 }
 
 
-export async function getRoadFavoritesIDs(userid) {
+export async function getTrailFavoritesIDs(userid) {
     const user = await myDatabase.collection('accounts').doc(userid).get()
     return user.data().RoadsFavorites
 }
@@ -98,16 +98,14 @@ export async function extarctData(kind,arrayList,id){
     }
     return resultOfSite
 }
-export async function getFavorites(siteIdArray,roadsIdArray){
+export async function getFavorites(siteIdArray,trailsIdArray){
     var collectionName = ['sites','roads']
     var resultOfSite = []
-    // var siteList = await getFavoritesIDs(userid)
-    // var roadList = await getRoadFavoritesIDs(userid)
     for(var i = 0; i < collectionName.length; ++i) {
         if(collectionName[i] == 'sites')
             resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],siteIdArray,resultOfSite.length))
         else{
-            resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],roadsIdArray,resultOfSite.length))
+            resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],trailsIdArray,resultOfSite.length))
         }
     }
     return resultOfSite;
@@ -129,10 +127,10 @@ export async function getSiteByID(siteid) {
 }
 
 
-export async function createNewRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imageUrl} ){
+export async function createNewTrail( {siteListID,trailName, trailDescription, CityList, CountryList, TagList, searchTokens, imageUrl} ){
     await myDatabase.collection('roads').add({
-        name: roadName,
-        description: roadDescription,
+        name: trailName,
+        description: trailDescription,
         siteList: siteListID,
         city:CityList,
         country:CountryList,
@@ -144,7 +142,7 @@ export async function createNewRoad( {siteListID,roadName,roadDescription,CityLi
 }
 
 
-export async function updateUserFavoriteRoads(userid, newFavorites) {
+export async function updateUserFavoriteTrails(userid, newFavorites) {
     myDatabase.collection('accounts').doc(userid).update({
         'RoadsFavorites': newFavorites
     })
@@ -154,14 +152,14 @@ export async function updateUserFavoriteRoads(userid, newFavorites) {
 }
 
 
-export async function deleteRoadFromDB(road){
-    await myDatabase.collection('roads').doc(road.id).delete();
+export async function deleteTrailFromDB(trail){
+    await myDatabase.collection('roads').doc(trail.id).delete();
 }
 
-export async function updateRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imageUrl, vote}, roadId){
-    await myDatabase.collection('roads').doc(roadId).update({
-        name: roadName,
-        description: roadDescription,
+export async function updateTrail( {siteListID,trailName,trailDescription,CityList,CountryList,TagList,searchTokens, imageUrl, vote}, trailId){
+    await myDatabase.collection('roads').doc(trailId).update({
+        name: trailName,
+        description: trailDescription,
         siteList: siteListID,
         city:CityList,
         country:CountryList,
