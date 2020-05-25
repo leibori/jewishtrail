@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { updateUserFavoriteSites, getRoadFavoritesIDs, getFavoritesIDs, getSiteByID } from '../firebase/FirebaseUtilities'
+import { updateUserFavoriteSites, getTrailFavoritesIDs, getFavoritesIDs, getSiteByID } from '../firebase/FirebaseUtilities'
 import { getSitePageMap, findUserPosition } from '../map/MapUtilities'
 import { Card, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -85,7 +85,6 @@ class SitePage extends Component {
             let dislikes = this.props.dislikes
 
             let siteFavorites = this.props.siteFavorites
-            let trailFavorites = this.props.trailFavorites
 
             let allVotes = []
 
@@ -101,11 +100,6 @@ class SitePage extends Component {
                 siteFavorites = await getFavoritesIDs(uid)
                 this.props.setSiteFavorites(siteFavorites)
             } 
-
-            if (trailFavorites.length === 0) {
-                trailFavorites = await getRoadFavoritesIDs(uid)
-                this.props.setTrailFavorites(trailFavorites)
-            }
         }
     }
 
@@ -143,11 +137,6 @@ class SitePage extends Component {
                 reduxElementArray = this.props.siteFavorites
                 this.arraySpliceByElementID(reduxElementArray, elementId)
                 this.props.setSiteFavorites(reduxElementArray)  
-                break
-            case 'trailFavorites':
-                reduxElementArray = this.props.trailFavorites
-                this.arraySpliceByElementID(reduxElementArray, elementId)
-                this.props.setTrailFavorites(reduxElementArray)  
                 break
             default:
         }
@@ -356,7 +345,6 @@ const mapStateToProps = (state) => {
         logStatus: state.status,
         position: state.position,
         siteFavorites: state.siteFavorites,
-        trailFavorites: state.trailFavorites,
         likes: state.likes,
         dislikes: state.dislikes
     };
@@ -367,8 +355,6 @@ const mapDispatchToProps = (dispatch) => {
         findUserPosition: async () => findUserPosition(dispatch),
 
         setSiteFavorites: (siteFavorites) => dispatch(setSiteFavorites(siteFavorites)),
-
-        setTrailFavorites: (trailFavorites) => dispatch(setTrailFavorites(trailFavorites)),
 
         setLikes: (likes) => dispatch(setLikes(likes)),
         
