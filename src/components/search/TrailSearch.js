@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import {findFromDB} from './SearchUtils'
-import RoadComponent from '../road/RoadComponent'
+import TrailComponent from '../trail/TrailComponent'
 import { PaginatedList } from 'react-paginated-list'
 
 
-class RoadSearch extends Component {
+class TrailSearch extends Component {
 
     constructor(props) {
         super(props);
 
-        const { roadButtonsProps, searchVal, returnTo } = props;
+        const { trailButtonsProps, searchVal, returnTo } = props;
         this.state = {
             searchVal: searchVal ? searchVal.split(' ') : [],
-            roadList: [],
+            trailList: [],
             favoriteList: [],
             // Button content next to each entry
-            roadButtonsProps,
+            trailButtonsProps,
             returnTo: returnTo
         }
         // onClick event handler for an entry button.
@@ -37,11 +37,11 @@ class RoadSearch extends Component {
         window.location.href = '/' + this.state.returnTo + '/' + this.state.searchVal
 
     }
-    // search for roads
+    // search for trails.
     async executeSearch() {
-        console.log("searching road")
+        console.log("searching trail")
         const result = await findFromDB(this.state.searchVal,['roads'])
-        this.setState({roadList: result})
+        this.setState({trailList: result})
     }
 
     updateSearchValue(e) {
@@ -49,10 +49,10 @@ class RoadSearch extends Component {
     }
 
     render() {
-        const { roadList, roadButtonsProps } = this.state;
-        const mapping = (list) => list.map((road, i) => {
+        const { trailList, trailButtonsProps } = this.state;
+        const mapping = (list) => list.map((trail, i) => {
             return  <div key={i} style={{paddingLeft:'0px',paddingRight:'0px'}}>
-                        <RoadComponent key={i} road={road} {...{roadButtonsProps}}/>
+                        <TrailComponent key={i} trail={trail} {...{trailButtonsProps}}/>
                     </div>
         });
         //if site-id is not in favoritesList show button to add to favorites
@@ -77,14 +77,14 @@ class RoadSearch extends Component {
                 
                 {/* Results */}
                 <div className="container" style={{padding:'10px', paddingLeft:'0px',paddingRight:'0px'}}>
-                    {roadList.length > 30 ? <PaginatedList
-                        list={roadList}
+                    {trailList.length > 30 ? <PaginatedList
+                        list={trailList}
                         itemsPerPage={31}
-                        renderList={mapping}/> : mapping(roadList)}
+                        renderList={mapping}/> : mapping(trailList)}
                 </div>
             </div>
         )    
     }
 }
 
-export default RoadSearch
+export default TrailSearch

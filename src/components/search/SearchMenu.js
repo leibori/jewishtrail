@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { updateUserFavoriteSites, getRoadFavoritesIDs, updateUserFavoriteRoads, getFavoritesIDs } from '../firebase/FirebaseUtilities'
+import { updateUserFavoriteSites, getTrailFavoritesIDs, updateUserFavoriteTrails, getFavoritesIDs } from '../firebase/FirebaseUtilities'
 import GeneralSearch from './GeneralSearch/';
 import { setSiteFavorites, setTrailFavorites } from '../../actions/index'
 import { connect } from 'react-redux'
@@ -24,11 +24,11 @@ class SearchMenu extends Component {
 
         // Bind to various functions needed to render certain buttons.
         this.canRenderAddSite = this.canRenderAddSite.bind(this);
-        this.canRenderAddRoad = this.canRenderAddRoad.bind(this);
+        this.canRenderAddTrail = this.canRenderAddTrail.bind(this);
         this.canRenderDeleteSite = this.canRenderDeleteSite.bind(this);
-        this.canRenderDeleteRoad = this.canRenderDeleteRoad.bind(this);
+        this.canRenderDeleteTrail = this.canRenderDeleteTrail.bind(this);
         this.deleteSiteInFavorites = this.deleteSiteInFavorites.bind(this);
-        this.deleteRoadInFavorites = this.deleteRoadInFavorites.bind(this);
+        this.deleteTrailInFavorites = this.deleteTrailInFavorites.bind(this);
     }
 
 
@@ -50,7 +50,7 @@ class SearchMenu extends Component {
             } 
 
             if (trailFavorites.length === 0) {
-                trailFavorites = await getRoadFavoritesIDs(uid)
+                trailFavorites = await getTrailFavoritesIDs(uid)
                 this.props.setTrailFavorites(trailFavorites)
             }
         }
@@ -94,7 +94,7 @@ class SearchMenu extends Component {
      * Otherwise, it returns false.
      * This function is used to decide whether or not to show the "add to favorites" button.
      */
-    canRenderAddRoad = (sid) => {
+    canRenderAddTrail = (sid) => {
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
             if(!this.props.trailFavorites.includes(sid)) {
@@ -110,7 +110,7 @@ class SearchMenu extends Component {
      * Otherwise, it returns false.
      * This function is used to decide whether or not to show the "delete from favorites" button.
      */
-    canRenderDeleteRoad = (rid) => {
+    canRenderDeleteTrail = (rid) => {
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
             return (this.props.trailFavorites.includes(rid));
@@ -140,14 +140,14 @@ class SearchMenu extends Component {
      * This function receives a trail id and removes it from the user's favorite trails list.
      * It also updates the favorites trails that are saved in local storage using redux.
      */
-    deleteRoadInFavorites = async(e, trailId) => {
+    deleteTrailInFavorites = async(e, trailId) => {
         const { uid } = this.props.logStatus
         let trailFavorites = this.props.trailFavorites;
 
         var newTrailFavorites = trailFavorites.filter(r => r !== trailId).map(r=>r);
 
         this.props.setTrailFavorites(newTrailFavorites)
-        updateUserFavoriteRoads(uid, newTrailFavorites)
+        updateUserFavoriteTrails(uid, newTrailFavorites)
 
         this.setState({})
     }
@@ -174,14 +174,14 @@ class SearchMenu extends Component {
      * This function recieves a trail id and adds it to the user's favorite trails list in the database.
      * It also updates the favorites trails that are saved in local storage using redux.
      */
-    addRoadToFavorites = async(e, trailId) => {
+    addTrailToFavorites = async(e, trailId) => {
         const { uid } = this.props.logStatus
         var favorites = this.props.trailFavorites
 
         favorites.push(trailId)
         
         this.props.setTrailFavorites(favorites)
-        updateUserFavoriteRoads(uid, favorites)
+        updateUserFavoriteTrails(uid, favorites)
         
         this.setState({})
     }
@@ -195,8 +195,8 @@ class SearchMenu extends Component {
         const buttonName2 = <img style={{width: '40px', height:'40px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_remove_icon} alt="Remove from favorites"/>
         const siteButtonsProps = [{buttonFunction: this.addSiteToFavorites, buttonName: buttonName1, canRender: this.canRenderAddSite}, 
             {buttonFunction: this.deleteSiteInFavorites, buttonName: buttonName2, canRender: this.canRenderDeleteSite}];
-        const trailButtonsProps = [{buttonFunction: this.addRoadToFavorites, buttonName: buttonName1, canRender: this.canRenderAddRoad},
-            {buttonFunction: this.deleteRoadInFavorites, buttonName: buttonName2, canRender: this.canRenderDeleteRoad}];
+        const trailButtonsProps = [{buttonFunction: this.addTrailToFavorites, buttonName: buttonName1, canRender: this.canRenderAddTrail},
+            {buttonFunction: this.deleteTrailInFavorites, buttonName: buttonName2, canRender: this.canRenderDeleteTrail}];
         return (
             <GeneralSearch style={{width: '100%'}}
                 {...{siteButtonsProps, trailButtonsProps }}

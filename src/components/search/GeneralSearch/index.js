@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {findFromDB} from '../SearchUtils'
 import SiteComponent from 'components/sites/siteComponent'
 import { PaginatedList } from 'react-paginated-list'
-import RoadComponent from 'components/road/RoadComponent';
+import TrailComponent from 'components/trail/TrailComponent';
 import ReactLoading from "react-loading";
 import { saveSearchResults } from '../../../actions'
 import { connect } from 'react-redux'
@@ -227,7 +227,7 @@ class GeneralSearch extends Component {
                             </div>)
                             : result.type === 'roads' && !this.state.trailFilter ?
                             (<div style={{width: '100%'}}>
-                                 <RoadComponent {...{roadButtonsProps: trailButtonsProps}} road={result}/>
+                                 <TrailComponent {...{trailButtonsProps}} trail={result}/>
                             </div>) : ''
                         }
                         </div>

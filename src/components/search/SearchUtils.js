@@ -152,6 +152,6 @@ export async function getTrailByName(name){
  * It returns a trail.
  * @param {string} id 
  */
-export async function getRoadByID(id){
+export async function getTrailByID(id){
     return (await myDatabase.collection('roads').doc(id).get()).data()
 }
