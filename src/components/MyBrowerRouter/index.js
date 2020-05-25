@@ -100,6 +100,12 @@ function MyRoute(props){
     </Route>);
 }
 
+const userListiner = myFirebase.auth().onAuthStateChanged((user) => {
+  if(!user) {
+    this.props.logOut()
+  }
+})
+
 const mapStateToProps = (state) => {
   return {
       uid: state.status.uid,
@@ -109,7 +115,25 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    logOut: async () => { 
+      await dispatch(setLogStatus({
+        claims: 'guest',
+        user_name: '', 
+        uid: '',
+        isVerified: false,
+      }))
+      await dispatch(setLikes([]))
+      await dispatch(setDislikes([]))
+      await dispatch(setSiteFavorites([]))
+      await dispatch(setTrailFavorites([]))
+      await dispatch(setPosition({
+        lat: 0,
+        lng: 0,
+        country: '',
+      }))
+    }
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyBrowserRouter);
