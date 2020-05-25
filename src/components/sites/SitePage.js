@@ -59,7 +59,7 @@ class SitePage extends Component {
 
         var navLink = "https://www.google.com/maps/dir/?api=1&destination="+all_site_props.latitude+"%2C"+all_site_props.longitude+"&dir_action=navigate"
 
-        this.handleVotesAndFavorites()
+        await this.handleVotesAndFavorites()
 
         if(this.props.position.country === '') {
             this.props.findUserPosition()
