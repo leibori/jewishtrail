@@ -1,57 +1,63 @@
 body {
-    font-family: sans-serif;
-    /* background: url(../../../assets/img/signs.jpg) no-repeat; */
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-  }
+  font-family: sans-serif;
+  /* background: url(../../../assets/img/signs.jpg) no-repeat; */
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+}
 
 .searchbar {
-    /* background-color: #4ee44e; */
-    background: url(../../../assets/img/signs.jpg) no-repeat;
-    background-size: 100% 100%;
-    background-position: center center;
-    /* background-attachment: fixed; */
-    
-    padding-top: 20%;
-    /* position:-webkit-sticky;
-    position:sticky;  */
-    position: fixed;
-    z-index: 1;
-    margin-top: 0px;
-    padding-bottom: 20px;
-    top: 0%;
-    width: 100%;
+  /* background-color: #4ee44e; */
+  background: url(../../../assets/img/signs.jpg) no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+  /* background-attachment: fixed; */
+  
+  padding-top: 20%;
+  /* position:-webkit-sticky;
+  position:sticky;  */
+  position: fixed;
+  z-index: 1;
+  margin-top: 0px;
+  padding-bottom: 20px;
+  top: 0%;
+  width: 100%;
 }
 .searchbar button {
-    margin: 10px;
-    padding: 3px;
+  margin: 10px;
+  padding: 3px;
 }
 
 .results {
-    width: 100%;
-    min-width: 100%;
-    margin-top: 190px;
+  width: 100%;
+  min-width: 100%;
+  margin-top: 190px;
 }
 
 .message {
-  font-size: 18sp;
-  font-family: sans-serif;
-  color: #525252;
+font-size: 18sp;
+font-family: sans-serif;
+color: #525252;
 }
 
 .FavoritesResult{
-    width: 100%;
-    min-width: 100%;
-    margin-top: 200px;
-  }
-
+  width: 100%;
+  min-width: 100%;
+  margin-top: 200px;
+}
+@media (min-width: 768px) {
+.FavoritesResult{
+  width: 100%;
+  min-width: 100%;
+  margin-top: 12.5%;
+}
+}
+.results-test {
+  height: 100%;
+  padding-top: 30%;
+}
+@media (min-width: 768px) {
   .results-test {
-    height: 100%;
-    padding-top: 30%;
+    padding-top: 5%;
   }
-  @media (min-width: 768px) {
-    .results-test {
-      padding-top: 5%;
-    }
-  }
+}

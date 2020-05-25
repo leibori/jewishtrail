@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { updateUserFavoriteSites, getRoadFavoritesIDs, updateUserFavoriteRoads, getFavoritesIDs, getSiteByID } from '../firebase/FirebaseUtilities'
-import { getSitePageMap } from '../map/MapUtilities'
+import { updateUserFavoriteSites, getTrailFavoritesIDs, getFavoritesIDs, getSiteByID } from '../firebase/FirebaseUtilities'
+import { getSitePageMap, findUserPosition } from '../map/MapUtilities'
 import { Card, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../../actions/index'
 import {updateVote,getVoteByUserID,deleteVote} from '../firebase/FirebaseVotingUtils'
 import Circle from 'react-circle';
-
+import favorites_add_icon from '../../assets/img/favorite-add-icon.png'
+import favorites_remove_icon from '../../assets/img/favorite-remove-icon.png'
+import ReactLoading from "react-loading";
 
 let buttonVote = {  
     marginTop: '10px',
@@ -48,25 +50,30 @@ class SitePage extends Component {
             navigationLink: '',
             likeFlag: '',
             dislikeFlag: '',
+            done: false
         }
     };
 
     async componentWillMount() {
 
         var all_site_props = await getSiteByID(this.state.site_id)
-        // this.setState({ ...all_site_props})
 
         var navLink = "https://www.google.com/maps/dir/?api=1&destination="+all_site_props.latitude+"%2C"+all_site_props.longitude+"&dir_action=navigate"
 
-        getSitePageMap('map', all_site_props, this.state.zoom)
+        await this.handleVotesAndFavorites()
 
-        this.handleVotesAndFavorites()
+        if(this.props.position.country === '') {
+            this.props.findUserPosition()
+        }
+
+        getSitePageMap('map', all_site_props, this.state.zoom, this.props.position.lat, this.props.position.lng)
 
         this.setState({ 
             ...all_site_props,
             navigationLink: navLink,
             likeFlag: this.colorLike(),
             dislikeFlag: this.colorDislike(),
+            done: true
         })
     }
 
@@ -80,7 +87,6 @@ class SitePage extends Component {
             let dislikes = this.props.dislikes
 
             let siteFavorites = this.props.siteFavorites
-            let trailFavorites = this.props.trailFavorites
 
             let allVotes = []
 
@@ -96,11 +102,6 @@ class SitePage extends Component {
                 siteFavorites = await getFavoritesIDs(uid)
                 this.props.setSiteFavorites(siteFavorites)
             } 
-
-            if (trailFavorites.length === 0) {
-                trailFavorites = await getRoadFavoritesIDs(uid)
-                this.props.setTrailFavorites(trailFavorites)
-            }
         }
     }
 
@@ -138,11 +139,6 @@ class SitePage extends Component {
                 reduxElementArray = this.props.siteFavorites
                 this.arraySpliceByElementID(reduxElementArray, elementId)
                 this.props.setSiteFavorites(reduxElementArray)  
-                break
-            case 'trailFavorites':
-                reduxElementArray = this.props.trailFavorites
-                this.arraySpliceByElementID(reduxElementArray, elementId)
-                this.props.setTrailFavorites(reduxElementArray)  
                 break
             default:
         }
@@ -202,11 +198,9 @@ class SitePage extends Component {
         const voteLikeButtonName = <span className="fas fa-thumbs-up fa-lg" style={likeStyle}/>
 
         if(this.props.likes.includes(siteId)){
-            //return true
             return <span style={{color:'green'}}>{voteLikeButtonName}</span>
         }
         return voteLikeButtonName
-        //return false
     }
 
 
@@ -218,7 +212,6 @@ class SitePage extends Component {
         const voteDislikeButtonName = <span className="fas fa-thumbs-down fa-lg" style={dislikeStyle}/>
 
         if(this.props.dislikes.includes(siteId)){
-            //return true
             return <span style={{color:'red'}}>{voteDislikeButtonName}</span>
         }
         return voteDislikeButtonName
@@ -270,7 +263,6 @@ class SitePage extends Component {
         this.props.setSiteFavorites(favorites)
         updateUserFavoriteSites(uid, favorites);   
         
-        alert("The site was added to your favorites.");
         this.setState({})
     }
 
@@ -286,10 +278,8 @@ class SitePage extends Component {
         var newSiteFavorites = siteFavorites.filter(s => s !== sid).map(s=>s);
         
         this.props.setSiteFavorites(newSiteFavorites)
-        // this.deleteElementFromRedux('siteFavorites', sid)
         updateUserFavoriteSites(uid, newSiteFavorites)
 
-        alert("The site was removed from your favorites.");
         this.setState({})
     }
 
@@ -297,18 +287,23 @@ class SitePage extends Component {
     render() {
         const { site_id, imageUrl, navigationLink } = this.state;
 
-        const addToFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-add-icon.png"/>
-        const deleteInFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-remove-icon.png"/>
+        const addToFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_add_icon} alt="Add to favorites"/>
+        const deleteInFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_remove_icon} alt="Remove from favorites"/>
 
         return (
             <div>
                 <Card style={{ width: '100%', height: '100%' }}>
+                    {!this.state.done && <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
+                        <ReactLoading type={"bars"} color={"black"} />
+                    </div>}
                     <div style={{height: '33%'}}>
                         <Card.Img variant="top" src={imageUrl} style={{height: '33%', width: '100%'}} />
-                        <div className="card-img-overlay" style={{position: 'absolute', paddingTop:'33%', paddingLeft: '75%', maxHeight:'300px', zIndex: '1'}}>
+                        <div className="card-img-overlay" style={{position: 'absolute', paddingTop:'43%', paddingLeft: '75%', maxHeight:'300px', zIndex: '1'}}>
+                        {this.state.done &&
                             <span style={{borderRadius: '50%', backgroundColor:'rgba(255,255,255,0.8)', height: '70px', width: '70px', display: 'inline-block'}}>
                                 <Circle progress={this.state.vote} progressColor="#50c878" size={70} bgColor="#ff0000" lineWidth={30} textColor="#3f704d" textStyle={{font:'bold 6rem Helvetica, Ariel, sens-serif'}}></Circle>
                             </span>
+                            }
                         </div>
                     </div>
                     <Card.Body>
@@ -317,16 +312,19 @@ class SitePage extends Component {
                     </Card.Body>
                     <Card.Body style={{ paddingTop: '10px', paddingBottom: '10px' }}>
                         <Row>
+                        {this.state.done &&
                             <Col xs={5} style={{alignItems: 'center'}}>
                                 <br/>
                                 <Card.Link  onClick={() => window.open(navigationLink)} style={{ color: "#1295b1" }}>Navigate to site</Card.Link>
                             </Col>
-                            { this.props.logStatus.claims !== "guest" && this.state.vote !== '' ?
+                            }
+                            { this.state.done && this.props.logStatus.claims !== "guest" && this.state.vote !== '' ?
                                 (<React.Fragment>
                                     <Col xs={3}>
                                         <button variant="outlined" style={buttonVote} onClick={(e) => this.voteSite(e,1,site_id)}>{this.state.likeFlag}</button>
                                         <button variant="outlined" style={buttonVote} onClick={(e) => this.voteSite(e,0,site_id)}>{this.state.dislikeFlag}</button>
                                     </Col>
+                                    
                                     { this.canRenderAddSite(site_id) ? 
                                         (<Col style={{paddingTop: '3%'}}><button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => this.addSiteToFavorites(e, site_id)}>{addToFavoritesIcon}</button></Col>)
                                         : this.canRenderDeleteSite(site_id) ? 
@@ -341,7 +339,9 @@ class SitePage extends Component {
                         <Card.Text>{this.state.fullInfo}</Card.Text>
                     </Card.Body>
                     <Card.Body>
+                    {this.state.done &&
                         <Card.Link href={this.state.externalSourceUrl} style={{ color: "#1295b1" }}>View source</Card.Link>
+                        }
                     </Card.Body>
                     <Card.Body>
                         <div style={{height: '400px', width: '100%'}} id='map' />
@@ -355,8 +355,8 @@ class SitePage extends Component {
 const mapStateToProps = (state) => {
     return {
         logStatus: state.status,
+        position: state.position,
         siteFavorites: state.siteFavorites,
-        trailFavorites: state.trailFavorites,
         likes: state.likes,
         dislikes: state.dislikes
     };
@@ -364,9 +364,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setSiteFavorites: (siteFavorites) => dispatch(setSiteFavorites(siteFavorites)),
+        findUserPosition: async () => findUserPosition(dispatch),
 
-        setTrailFavorites: (trailFavorites) => dispatch(setTrailFavorites(trailFavorites)),
+        setSiteFavorites: (siteFavorites) => dispatch(setSiteFavorites(siteFavorites)),
 
         setLikes: (likes) => dispatch(setLikes(likes)),
         

@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import {findFromDB} from '../SearchUtils'
 import SiteComponent from 'components/sites/siteComponent'
 import { PaginatedList } from 'react-paginated-list'
-import RoadComponent from 'components/road/RoadComponent';
+import TrailComponent from 'components/trail/TrailComponent';
 import ReactLoading from "react-loading";
 import { saveSearchResults } from '../../../actions'
 import { connect } from 'react-redux'
 import SelectStyle from '../../favorites/selectStyle'
-// import Select from 'react-select'
 import './index.css';         
 import noResultsIcon from '../../../assets/img/SearchNoResults.png'
 import SearchStart from '../../../assets/img/SearchStart.png'
+import _ from 'underscore'
+import no_image_available from '../../../assets/img/no-image-available.png'
 
 
 // Header style properties.
@@ -22,11 +23,7 @@ const headerStyle = {
     textShadow: "2px 2px black",
 }
 
-
-// const options = [
-//     { label: "Relevance", value: 'relevance' },
-//     { label: "distance", value: 'distance' }
-// ]
+let sortOptions = ["Sort by","Relevance","Rates"]
 
 
 /**
@@ -40,9 +37,7 @@ class GeneralSearch extends Component {
         super(props);
 
         // Extracting the props that the constructor recieves.
-        const { siteButtonsProps, roadButtonsProps ,searchVal, returnTo } = props;
-        // const { siteButtonsProps, roadButtonsProps, voteButtonsProps ,searchVal, returnTo } = props;
-
+        const { siteButtonsProps, trailButtonsProps ,searchVal, returnTo } = props;
 
         this.state = {
             // Is true if a search value is sent, and false otherwise.
@@ -56,15 +51,12 @@ class GeneralSearch extends Component {
 
             // The array of search results.
             searchResult: [],
-
-            // Button content for voting.
-            // voteButtonsProps,
             
             // Button content next to each site entry.
             siteButtonsProps,
 
             // Button content next to each site entry.
-            roadButtonsProps,
+            trailButtonsProps,
 
             // The beginning of the address that is set after the search button is pressed.
             returnTo: returnTo,
@@ -104,9 +96,8 @@ class GeneralSearch extends Component {
     async executeSearch() {
         this.setState({ startedSearch: true })
         var searchValues = this.state.searchVal.split(" ")
-        // console.log(searchValues)
         const result = await findFromDB(searchValues, ['sites', 'roads'])
-        // console.log(result)
+
         this.props.saveSearchResults({
             searchVal: this.state.searchVal,
             results: result,
@@ -120,21 +111,15 @@ class GeneralSearch extends Component {
 
     // Updates the value of "searchVal" based on the content of the input box.
     updateSearchValue(e) {
-        // console.log(e.target.value)
         this.setState({searchVal: e.target.value})
     }
-
-
-    // sortResults(e) {
-    //     console.log(e.label)
-    // }
 
 
     // Execute the search if the componenet recieved a search value.
     async componentWillMount() {
         if(this.state.searchVal.length >= 1) {
             const savedResults = this.props.searchResults
-            console.log(savedResults)
+
             if (savedResults.results.length >= 1 && savedResults.searchVal === this.state.searchVal) {
                 this.setState({
                     searchResult: savedResults.results,
@@ -174,7 +159,7 @@ class GeneralSearch extends Component {
 
 
     /**
-     * This function executes when the user clicks on the road filter button, and it sets boolean values in order to filter the results.
+     * This function executes when the user clicks on the trail filter button, and it sets boolean values in order to filter the results.
      */
     onlyTrailsClicked = () => {
         if (this.state.siteFilter) {
@@ -198,90 +183,51 @@ class GeneralSearch extends Component {
 
 
     /**
-     * This function is used to filter (by site or by road) the results based on boolean values.
+     * This function is used to filter (by site or by trail) the results based on boolean values.
      */
     resultsFilter = (result) => {
         return (!this.state.siteFilter && result.type === 'sites') ||
             (!this.state.trailFilter && result.type === 'roads')
     }
+
+
     sortBy = (typeSort) => {
         console.log(typeSort)
         let sortedArray = []
-        if(typeSort == 'Distances'){
-            const lat = this.props.latitude
-            const long = this.props.longitude
-            sortedArray = this.state.searchResult.sort(function(a, b) {
-            var radlat1 = Math.PI * a.latitude/180;
-            var radlat2 = Math.PI * lat/180;
-            var theta = a.longitude-long;
-            var radtheta = Math.PI * theta/180;
-            var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-            if (dist > 1) {
-              dist = 1;
-            }
-            dist = Math.acos(dist);
-            dist = dist * 180/Math.PI;
-            dist = dist * 60 * 1.1515;
-    
-            var radlat3 = Math.PI * b.latitude/180;
-            var radlat4 = Math.PI * lat/180;
-            var theta = b.longitude-long;
-            var radtheta2 = Math.PI * theta/180;
-            var dist2 = Math.sin(radlat3) * Math.sin(radlat4) + Math.cos(radlat3) * Math.cos(radlat4) * Math.cos(radtheta2);
-            if (dist2 > 1) {
-              dist2 = 1;
-            }
-            dist2 = Math.acos(dist2);
-            dist2 = dist2 * 180/Math.PI;
-            dist2 = dist2 * 60 * 1.1515;
-            if(dist > dist2){
-              return 1;
-            }
-            else{
-              return -1;
-            }
-          });
-          this.setState({
-            favoritesArr: sortedArray
-          })
-        }
-        else if(typeSort == 'Rates'){
+        if(typeSort === 'Rates'){
           sortedArray = this.state.searchResult.sort((a, b) => parseFloat(b.vote) - parseFloat(a.vote))
-          this.setState({
-            searchResult: sortedArray
-          })
         }
-        //this.state.favoritesArr.sort((a, b) => parseFloat(a.vote) - parseFloat(b.vote));
+        else if(typeSort === 'Relevance') {
+            sortedArray = _.sortBy(this.state.searchResult, 'relevance').reverse()
+        }
+        this.setState({
+            searchResult: sortedArray
+        })
       }
 
     // Renders the component.
     render() {
 
-        // Extract "siteButtonsProps", "roadButtonsProps", "voteButtonsProps", "startedSearch", "finishedSearch" and "searchResult" values from "this.state" for ease of use.
-        // const { siteButtonsProps, roadButtonsProps, voteButtonsProps, startedSearch, finishedSearch, searchResult } = this.state;
-        
-        // Extract "siteButtonsProps", "roadButtonsProps", "startedSearch", "finishedSearch" and "searchResult" values from "this.state" for ease of use.
-        const { siteButtonsProps, roadButtonsProps, startedSearch, finishedSearch, searchResult } = this.state;
+        // Extract "siteButtonsProps", "trailButtonsProps", "startedSearch", "finishedSearch" and "searchResult" values from "this.state" for ease of use.
+        const { siteButtonsProps, trailButtonsProps, startedSearch, finishedSearch, searchResult } = this.state;
         
         // Predicate that decides the color of the button of the site filter.
         const siteColorPredicate = this.state.trailFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
 
-        // Predicate that decides the color of the button of the road filter.
-        const roadColorPredicate = this.state.siteFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
+        // Predicate that decides the color of the button of the trail filter.
+        const trailColorPredicate = this.state.siteFilter ? 'rgba(230,223,0,1)' : 'rgba(255,255,255,1)'
 
         // Creates a variable that holds the mapping of "SiteComponent" for paging later on.
-        const mapping = (list) => list.map((site, i) => {
+        const mapping = (list) => list.map((result, i) => {
             return  (
                         <div style={{width: '100%'}} key={i}>
-                        {site.type === 'sites' && !this.state.siteFilter ?
+                        {result.type === 'sites' && !this.state.siteFilter ?
                             (<div>  
-                                {/* <SiteComponent {...{siteButtonsProps,voteButtonsProps}} site={site} /> */}
-                                <SiteComponent {...{siteButtonsProps}} site={site} />
+                                <SiteComponent {...{siteButtonsProps}} site={result} />
                             </div>)
-                            : site.type === 'roads' && !this.state.trailFilter ?
+                            : result.type === 'roads' && !this.state.trailFilter ?
                             (<div style={{width: '100%'}}>
-                                 {/* <RoadComponent {...{roadButtonsProps,voteButtonsProps}} road={site}/> */}
-                                 <RoadComponent {...{roadButtonsProps}} road={site}/>
+                                 <TrailComponent {...{trailButtonsProps}} trail={result}/>
                             </div>) : ''
                         }
                         </div>
@@ -306,16 +252,18 @@ class GeneralSearch extends Component {
                     </form>
                     {finishedSearch && searchResult.length !== 0 && 
                         <div>
-                                <button
-                                    onClick={this.onlySitesClicked}
-                                    style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
-                                <button
-                                    onClick={this.onlyTrailsClicked}
-                                    style={{backgroundColor: roadColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
-                                <div className='forSearch-options'>
-                                <SelectStyle passFunction={this.sortBy} type ={"sort"}/>
-                                </div>
-                            </div>}
+                            <button
+                                onClick={this.onlySitesClicked}
+                                style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
+                            <button
+                                onClick={this.onlyTrailsClicked}
+                                style={{backgroundColor: trailColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
+                            <div className='forSearch-options'>
+                                <SelectStyle passFunction={this.sortBy} type ={sortOptions}/>
+                            </div>
+                            
+                        </div>
+                    }
                 </div>
                 <div className="results" style={{zIndex:'0', paddingTop: '12%'}}>
                 { startedSearch && ! finishedSearch ? (
@@ -330,7 +278,7 @@ class GeneralSearch extends Component {
                                 <div className="results-test" style={{ height: '100%', paddingTop: '30%' }}>
                                 <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
                                 <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
-                                <img src={noResultsIcon} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                                <img src={noResultsIcon} alt={no_image_available} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
                                 </div> :
                                 searchResult.filter(this.resultsFilter).length > 9 ?
                                 < PaginatedList style={{width:'100%'}}
@@ -343,13 +291,13 @@ class GeneralSearch extends Component {
                         <div className="results-test">
                             <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
                             <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
-                            <img src={noResultsIcon} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                            <img src={noResultsIcon} alt="No results found" style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
                         </div>
                     ) : (
                         <div style={{ height: '100%', paddingTop: '30%' }}>
                             <span className='message' style={{ paddingLeft: '34%' }}>Search for a trail</span><br/>
                             <span className='message' style={{ paddingLeft: '31%' }}>to find your journey</span>
-                            <img src={SearchStart} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                            <img src={SearchStart} alt="Please start searching" style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
                         </div>
                     )
                 }
@@ -360,7 +308,6 @@ class GeneralSearch extends Component {
     }
 }
 
-// export default GeneralSearch
 
 const mapStateToProps = (state) => {
     return {
@@ -370,9 +317,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        saveSearchResults: (searchProps) => {
-            dispatch(saveSearchResults(searchProps))
-        },
+        saveSearchResults: (searchProps) => dispatch(saveSearchResults(searchProps))
     }
 };
 

@@ -93,6 +93,7 @@ export async function findFromDB(searchVals, collectionName) {
             id: result.document.id,
             type: result.type,
             vote: result.document.data().vote,
+            relevance: result.relevance
         })
     })
 
@@ -123,35 +124,34 @@ export async function findSitesByCountryForMarker(country) {
 
 
 /**
- * This function recieves a string "name" and uses it to searche through the "roads" database for the roads that has the same name as the string "name"
- * It returns a array of roads.
+ * This function recieves a string "name" and uses it to searche through the "roads" collection for the trails that has the same name as the string "name"
+ * It returns a array of trails.
  * @param {string} name 
  */
-export async function getRoadByName(name){
+export async function getTrailByName(name){
 
     const NameField = "roadName";
 
     // The returned array at the end.
-    let roadList = [];
+    let trailList = [];
 
-    // Gets the snapshot of all the roads in the database that as the same name as the "name" variable.
+    // Gets the snapshot of all the trails in the database that as the same name as the "name" variable.
     const snapshot = await myDatabase.collection('roads').where(NameField, '==', name).get()
 
-    // Pushes the roads found to the "roadList" array.
+    // Pushes the trails found to the "trailList" array.
     snapshot.docs.forEach(doc => {
-        roadList.push(doc.data())
+        trailList.push(doc.data())
     })
 
-    // console.log(roadList)
-    return roadList;
+    return trailList;
 }
 
 
 /**
- * This function recieves a string "id" and uses it to searche through the "roads" database for the road that has the same id as the string "id"
- * It returns a road.
+ * This function recieves a string "id" and uses it to searche through the "roads" collection for the trail that has the same id as the string "id"
+ * It returns a trail.
  * @param {string} id 
  */
-export async function getRoadByID(id){
+export async function getTrailByID(id){
     return (await myDatabase.collection('roads').doc(id).get()).data()
 }

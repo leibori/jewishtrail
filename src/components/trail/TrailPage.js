@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { getRoadByID } from '../search/SearchUtils'
-import { getAroundYouMap, findUserPosition } from '../map/MapUtilities'
+import { getTrailByID } from '../search/SearchUtils'
+import { getTrailPageMap, findUserPosition, calculateDistance } from '../map/MapUtilities'
 import { getSiteByID } from "../firebase/FirebaseUtilities";
 import { PaginatedList } from 'react-paginated-list';
 import SiteComponent from '../sites/siteComponent'
@@ -8,9 +8,13 @@ import { Card, ListGroupItem, ListGroup, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../../actions/index'
 import {updateVote, getVoteByUserID, deleteVote} from '../firebase/FirebaseVotingUtils'
-import { updateUserFavoriteSites, getRoadFavoritesIDs, updateUserFavoriteRoads, getFavoritesIDs } from '../firebase/FirebaseUtilities'
+import { getTrailFavoritesIDs, updateUserFavoriteTrails, getFavoritesIDs } from '../firebase/FirebaseUtilities'
 import Circle from 'react-circle';
-
+import no_image_available from '../../assets/img/no-image-available.png'
+import favorites_add_icon from '../../assets/img/favorite-add-icon.png'
+import favorites_remove_icon from '../../assets/img/favorite-remove-icon.png'
+import SliderShow from '../sliderImage/sliderShow'
+import ReactLoading from "react-loading";
 
 let buttonVote = {  
     marginTop: '10px',
@@ -31,14 +35,14 @@ let dislikeStyle={
 }
 
 
-class RaodPage extends Component {
+class TrailPage extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             trail_id: props.match.params.id,
-            roadName: "",
+            trailName: "",
             CityList: [],
             CountryList: [],
             description: "",
@@ -59,7 +63,7 @@ class RaodPage extends Component {
 
     async componentWillReceiveProps(nextProps) {
 
-        if (this.props.position != nextProps.position) {
+        if (this.props.position !== nextProps.position) {
             this.handleNavigationLink(nextProps.position)
         }
     }
@@ -69,7 +73,7 @@ class RaodPage extends Component {
 
         await this.handleSiteList()
 
-        if (this.props.position.country == '') {
+        if (this.props.position.country === '') {
             await this.props.findUserPosition()
         } else {
             this.handleNavigationLink(this.props.position)
@@ -82,19 +86,20 @@ class RaodPage extends Component {
         this.setState({
             likeFlag: this.colorLike(),
             dislikeFlag: this.colorDislike(),
+            done: true
         })
     }
 
 
     async handleSiteList() {
-        const roadId = this.state.trail_id;
-        var all_road_props = await getRoadByID(roadId)
+        const trailId = this.state.trail_id;
+        var all_trail_props = await getTrailByID(trailId)
 
-        const siteListID = all_road_props.siteList;
+        const siteListID = all_trail_props.siteList;
         const siteList = await Promise.all(siteListID.map((async (sid) => ({ id:sid, ...(await getSiteByID(sid))}))))
 
         this.setState({
-            ...all_road_props,
+            ...all_trail_props,
             siteList
         })
     }
@@ -105,8 +110,8 @@ class RaodPage extends Component {
 
         var navLink = this.state.navigationLink + "&waypoints="
         const firstSite = siteList[0], lastSite = siteList[siteList.length - 1]
-        var firstDistance = Math.sqrt(Math.pow(position.lat - firstSite.latitude, 2) + Math.pow(position.lng - firstSite.longitude, 2))
-        var lastDistance = Math.sqrt(Math.pow(position.lat - lastSite.latitude, 2) + Math.pow(position.lng - lastSite.longitude, 2))
+        var firstDistance = calculateDistance(position.lat, firstSite.latitude, position.lng, firstSite.longitude)
+        var lastDistance = calculateDistance(position.lat, lastSite.latitude, position.lng, lastSite.longitude)
 
         if(firstDistance < lastDistance) {
             navLink += firstSite.latitude + "%2C" + firstSite.longitude
@@ -122,7 +127,6 @@ class RaodPage extends Component {
             navLink += "&destination=" + firstSite.latitude + "%2C" + firstSite.longitude
         }
         navLink += "&dir_action=navigate"
-        // console.log(navLink)
         this.setState({
             navigationLink: navLink
         })
@@ -141,9 +145,9 @@ class RaodPage extends Component {
         const avgLat = (maxLat + minLat) / 2
         const avgLng = (maxLng + minLng) / 2
 
-        const zoom = Math.round(3 * Math.abs(maxLat - minLat) + Math.abs(maxLng - minLng))
+        const zoom = Math.round(3 * (Math.abs(maxLat - minLat) + Math.abs(maxLng - minLng)))
 
-        getAroundYouMap('map', avgLat, avgLng, zoom, siteList)
+        getTrailPageMap('map', avgLat, avgLng, zoom, siteList, this.props.position.lat, this.props.position.lng)
     }
 
 
@@ -174,7 +178,7 @@ class RaodPage extends Component {
             } 
 
             if (trailFavorites.length === 0) {
-                trailFavorites = await getRoadFavoritesIDs(uid)
+                trailFavorites = await getTrailFavoritesIDs(uid)
                 this.props.setTrailFavorites(trailFavorites)
             }
         }
@@ -306,7 +310,7 @@ class RaodPage extends Component {
      * Otherwise, it returns false.
      * This function is used to decide whether or not to show the "add to favorites" button.
      */
-    canRenderAddRoad = (sid) => {
+    canRenderAddTrail = (sid) => {
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
             if(!this.props.trailFavorites.includes(sid)) {
@@ -322,7 +326,7 @@ class RaodPage extends Component {
      * Otherwise, it returns false.
      * This function is used to decide whether or not to show the "delete from favorites" button.
      */
-    canRenderDeleteRoad = (rid) => {
+    canRenderDeleteTrail = (rid) => {
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
             return (this.props.trailFavorites.includes(rid));
@@ -335,14 +339,14 @@ class RaodPage extends Component {
      * This function recieves a trail id and adds it to the user's favorite trails list in the database.
      * It also updates the favorites trails that are saved in local storage using redux.
      */
-    addRoadToFavorites = async(e, trailId) => {
+    addTrailToFavorites = async(e, trailId) => {
         const { uid } = this.props.logStatus
         var favorites = this.props.trailFavorites
 
         favorites.push(trailId)
         
         this.props.setTrailFavorites(favorites)
-        updateUserFavoriteRoads(uid, favorites)
+        updateUserFavoriteTrails(uid, favorites)
         
         alert("The trail was added to your favorites.");
         this.setState({})
@@ -353,29 +357,38 @@ class RaodPage extends Component {
      * This function receives a trail id and removes it from the user's favorite trails list.
      * It also updates the favorites trails that are saved in local storage using redux.
      */
-    deleteRoadInFavorites = async(e, trailId) => {
+    deleteTrailInFavorites = async(e, trailId) => {
         const { uid } = this.props.logStatus
         let trailFavorites = this.props.trailFavorites;
 
         var newTrailFavorites = trailFavorites.filter(r => r !== trailId).map(r=>r);
 
         this.props.setTrailFavorites(newTrailFavorites)
-        // this.deleteElementFromRedux('trailFavorites', trailId)
-        updateUserFavoriteRoads(uid, newTrailFavorites)
+        updateUserFavoriteTrails(uid, newTrailFavorites)
 
         alert("The trail was removed from your favorites.");
         this.setState({})
     }
-
+    /* extract image of sites that include in the trail for the slider */
+    extractImge = () =>{
+        let imageUrlArray = []
+        imageUrlArray.push(this.state.imageUrl)
+        this.state.siteList.forEach(item => imageUrlArray.push(item.imageUrl))
+        return imageUrlArray
+    }
 
     render() {
         const { trail_id, siteList, navigationLink, imageUrl } = this.state;
 
-        const addToFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-add-icon.png"/>
-        const deleteInFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/64/favorite-remove-icon.png"/>
+        const addToFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_add_icon} alt="Add to favorites"/>
+        const deleteInFavoritesIcon = <img style={{width: '30px', height:'30px', maxHeight: '40px', maxWidth: '40px'}} src={favorites_remove_icon} alt="Remove from favorites"/>
 
         if(!siteList.length){
-            return <span>Loading...</span>
+            return(
+                <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
+                            <ReactLoading type={"bars"} color={"black"} />
+                        </div>
+                )
         }
 
         const mapping = (list) => list.map((site, i) => {
@@ -388,7 +401,8 @@ class RaodPage extends Component {
             <div>
                 <Card style={{ width: '100%', height: '100%' }}>
                     <div style={{height: '33%'}}>
-                        <Card.Img variant="top" src={imageUrl} style={{height: '33%', width: '100%'}} />
+                    <SliderShow className="slide" slideImages= {this.extractImge()}></SliderShow>
+                        {/* <Card.Img variant="top" src={imageUrl} alt={no_image_available} style={{height: '33%', width: '100%'}} /> */}
                         <div className="card-img-overlay" style={{position: 'absolute', paddingTop:'33%', paddingLeft: '75%', maxHeight:'300px', zIndex: '1'}}>
                             <span style={{borderRadius: '50%', backgroundColor:'rgba(255,255,255,0.8)', height: '70px', width: '70px', display: 'inline-block'}}>
                                 <Circle progress={this.state.vote} progressColor="#50c878" size={70} bgColor="#ff0000" lineWidth={30} textColor="#3f704d" textStyle={{font:'bold 6rem Helvetica, Ariel, sens-serif'}}></Circle>
@@ -409,10 +423,10 @@ class RaodPage extends Component {
                                         <button variant="outlined" style={buttonVote} onClick={(e) => this.voteSite(e,1,trail_id)}>{this.state.likeFlag}</button>
                                         <button variant="outlined" style={buttonVote} onClick={(e) => this.voteSite(e,0,trail_id)}>{this.state.dislikeFlag}</button>
                                     </Col>
-                                    { this.canRenderAddRoad(trail_id) ? 
-                                        (<Col style={{paddingTop: '3%'}}><button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => this.addRoadToFavorites(e, trail_id)}>{addToFavoritesIcon}</button></Col>)
-                                        : this.canRenderDeleteRoad(trail_id) ? 
-                                        (<Col style={{paddingTop: '3%'}}><button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => this.deleteRoadInFavorites(e, trail_id)}>{deleteInFavoritesIcon}</button></Col>)
+                                    { this.canRenderAddTrail(trail_id) ? 
+                                        (<Col style={{paddingTop: '3%'}}><button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => this.addTrailToFavorites(e, trail_id)}>{addToFavoritesIcon}</button></Col>)
+                                        : this.canRenderDeleteTrail(trail_id) ? 
+                                        (<Col style={{paddingTop: '3%'}}><button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => this.deleteTrailInFavorites(e, trail_id)}>{deleteInFavoritesIcon}</button></Col>)
                                         : ''
                                     }
                                 </React.Fragment>) : ''
@@ -462,4 +476,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RaodPage);
+export default connect(mapStateToProps, mapDispatchToProps)(TrailPage);

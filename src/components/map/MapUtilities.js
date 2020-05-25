@@ -1,6 +1,7 @@
 import L from 'leaflet';
 import { setPosition } from '../../actions'
-import iconUrl from '../../assets/img/MarkerIcon.png'
+import site_marker_icon from '../../assets/img/site_marker_icon.png'
+import user_marker_icon from '../../assets/img/user_marker_icon.png'
 
 
 let maxZoom = 20
@@ -24,9 +25,18 @@ const satellite = L.tileLayer(mapUrl, {id: 'mapbox/satellite-v9', maxZoom: maxZo
 const satelliteStreets = L.tileLayer(mapUrl, {id: 'mapbox/satellite-streets-v11', maxZoom: maxZoom,
     minZoom: minZoom, tileSize: 512, zoomOffset: -1, attribution: mbAttr});
 
-// Basic icon for marker.
-var myIcon = L.icon({
-    iconUrl,
+// Site marker.
+var siteMarker = L.icon({
+    iconUrl: site_marker_icon,
+    iconSize: [30, 41],
+    iconAnchor: [15, 43],
+    popupAnchor: [0, -25]
+});
+
+
+// User marker.
+var userMarker = L.icon({
+    iconUrl: user_marker_icon,
     iconSize: [30, 41],
     iconAnchor: [15, 43],
     popupAnchor: [0, -25]
@@ -40,7 +50,7 @@ var myIcon = L.icon({
 function getSiteMarkerLayer(sites) {
     var markerLayer = L.layerGroup();
     sites.forEach(site => {
-        var marker = L.marker([site.latitude, site.longitude], {icon: myIcon}).addTo(markerLayer)
+        var marker = L.marker([site.latitude, site.longitude], {icon: siteMarker}).addTo(markerLayer)
         var link = "<a href='/site/" + site.id + "'>More info</a>"
         marker.bindPopup("<b>"+site.name+"</b><br/>"+
                         site.address+"<br/>"+
@@ -53,22 +63,52 @@ function getSiteMarkerLayer(sites) {
 
 /**
  * This function creates a map for the "Around You" page using the map id, latitude, longitude, zoom and sites given.
- * It is also used for a trail's page for now.
  * @param {string} mapId 
- * @param {double} latitude 
- * @param {double} longitude 
+ * @param {double} centerLat 
+ * @param {double} centerLng 
  * @param {int} zoom 
  * @param {site[]} sites 
  */
-export function getAroundYouMap(mapId, latitude, longitude, zoom, sites) {
+export function getAroundYouMap(mapId, centerLat, centerLng, zoom, sites) {
     var sitesMarkers = getSiteMarkerLayer(sites)
 
     var map = L.map(mapId, {
-        center: [latitude, longitude],
+        center: [centerLat, centerLng],
         zoom: zoom,
         zoomControl: false,
         layers: [streets, sitesMarkers] 
     })
+
+    L.marker([centerLat, centerLng], {icon: userMarker}).addTo(map)
+
+    var baseLayers = {
+            "Streets": streets,
+            "Sattelite": satellite,
+            "Sattelite and streets": satelliteStreets };
+    var overlays = { "Sites": sitesMarkers };
+    L.control.layers(baseLayers, overlays).addTo(map);
+}
+
+
+/**
+ * This function creates a map for the "trail page" using the map id, latitude, longitude, zoom and sites given.
+ * @param {string} mapId 
+ * @param {double} centerLat 
+ * @param {double} centerLng 
+ * @param {int} zoom 
+ * @param {site[]} sites 
+ */
+export function getTrailPageMap(mapId, centerLat, centerLng, zoom, sites, userLat, userLng) {
+    var sitesMarkers = getSiteMarkerLayer(sites)
+
+    var map = L.map(mapId, {
+        center: [centerLat, centerLng],
+        zoom: zoom,
+        zoomControl: false,
+        layers: [streets, sitesMarkers] 
+    })
+
+    L.marker([userLat, userLng], {icon: userMarker}).addTo(map)
 
     var baseLayers = {
             "Streets": streets,
@@ -85,10 +125,10 @@ export function getAroundYouMap(mapId, latitude, longitude, zoom, sites) {
  * @param {site} site 
  * @param {int} zoom 
  */
-export function getSitePageMap(mapId, site, zoom) {
+export function getSitePageMap(mapId, site, zoom, latitude, longitude) {
 
     var markerLayer = L.layerGroup();
-    L.marker([site.latitude, site.longitude], {icon: myIcon}).addTo(markerLayer)
+    L.marker([site.latitude, site.longitude], {icon: siteMarker}).addTo(markerLayer)
 
     var map = L.map(mapId, {
         center: [site.latitude, site.longitude],
@@ -96,6 +136,8 @@ export function getSitePageMap(mapId, site, zoom) {
         zoomControl: false,
         layers: [streets, markerLayer] 
     })
+
+    L.marker([latitude, longitude], {icon: userMarker}).addTo(map)
 
     var baseLayers = {
             "Streets": streets,
@@ -130,4 +172,8 @@ export function findUserPosition(dispatch) {
         })
     },
     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
+}
+
+export function calculateDistance(lat1, lat2, lng1, lng2) {
+    return Math.sqrt(Math.pow(lat1 - lat2, 2) + Math.pow(lng1 - lng2, 2))
 }

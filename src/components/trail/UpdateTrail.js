@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import {getRoadByID} from '../search/SearchUtils'
+import {getTrailByID as getTrailByID} from '../search/SearchUtils'
 import {getSiteByID} from '../firebase/FirebaseUtilities'
-import RoadSearch from 'components/search/RoadSearch';
+import TrailSearch from 'components/search/TrailSearch';
 
 const buttonStyle = {
   marginLeft:"30px",
@@ -21,7 +21,7 @@ fontFamily: 'Cambay, sans-serif',
 textShadow:'1px 1px black'
 }
 
-class UpdateRoad extends Component {
+class UpdateTrail extends Component {
 
   constructor(props) {
     super(props);
@@ -33,17 +33,17 @@ class UpdateRoad extends Component {
         changingFlag: false
     }
 
-    this.onRoadButtonClick = this.onRoadButtonClick.bind(this);
+    this.onTrailButtonClick = this.onTrailButtonClick.bind(this);
 };
 
 
-async onRoadButtonClick(e, roadId){
-    var all_road_props = await getRoadByID(roadId)
-    const siteListID = all_road_props.siteList;
+async onTrailButtonClick(e, trailId){
+    var all_trail_props = await getTrailByID(trailId)
+    const siteListID = all_trail_props.siteList;
     const siteList = await Promise.all(siteListID.map((async (sid) => ({ id:sid, ...(await getSiteByID(sid))}))))
     this.props.history.push({
-      pathname: '/roadForm',
-      state: {...all_road_props, siteList, roadId}
+      pathname: '/trailForm',
+      state: {...all_trail_props, siteList, trailId}
     });
 }
 
@@ -52,14 +52,14 @@ render() {
     return (
       <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
             <h5 style={LabelStyle}>Search Site to Update</h5>
-            <RoadSearch
-             roadButtonsProps = {[{
-              buttonName: `Update Road`,
+            <TrailSearch
+             trailButtonsProps = {[{
+              buttonName: `Update Trail`,
               canRender: () => true,
-              buttonFunction: this.onRoadButtonClick
+              buttonFunction: this.onTrailButtonClick
                }]}
               searchVal={this.state.searchVal}
-              returnTo='updateRoad'/>
+              returnTo='updateTrail'/>
 
             <button style={buttonStyle}  type="button"><Link className="white-text" to="/adminPage">Return to Admin Menu</Link></button>
         </div>
@@ -67,4 +67,4 @@ render() {
   }
 }
 
-export default UpdateRoad
+export default UpdateTrail

@@ -15,18 +15,19 @@ import About from 'components/around_you/about';
 import LogOut from 'components/login/LogOut';
 import Favorites from 'components/favorites/Favorites';
 import SitePage from 'components/sites/SitePage'
-import RoadForm from 'components/road/RoadForm';
+import TrailForm from 'components/trail/TrailForm';
 import UpdateForm from 'components/sites/UpdateForm'
-import RoadPage from 'components/road/roadPage';
-import DeleteRoad from 'components/road/DeleteRoad';
+import TrailPage from 'components/trail/TrailPage';
+import DeleteTrail from 'components/trail/DeleteTrail';
 import AdminSitePage from 'components/admin/AdminSitePage'
-import AdminRoadPage from 'components/admin/AdminRoadPage'
+import AdminTrailPage from 'components/admin/AdminTrailPage'
 import ForgotPassword from 'components/login/ForgotPassword'
-import updateRoad from 'components/road/updateRoad'
+import updateTrail from 'components/trail/UpdateTrail'
 import ContactUs from 'components/MailBox/ContactUs'
 import massegeList from 'components/MailBox/massegeList'
 import massegePage from 'components/MailBox/massegePage'
-
+import { myFirebase } from '../firebase/firebase'
+import { setLogStatus, setSiteFavorites, setTrailFavorites, setLikes, setDislikes, setPosition } from '../../actions/index';
 
 
 import { connect } from 'react-redux'
@@ -75,17 +76,17 @@ class MyBrowserRouter extends Component{
             <MyRoute exact path='/massegeList' component={massegeList} aboutCond={!admin} verCond={online_not_verified} />
             <MyRoute exact path='/massege/:id' component={massegePage} aboutCond={!admin} verCond={online_not_verified}/>
             <MyRoute exact path='/site/:id' component={SitePage} />
-            <MyRoute exact path='/roadform' component={RoadForm} />
-            <MyRoute exact path='/roadform/:searchVal' component={RoadForm} />
-            <MyRoute exact path='/road/:id' component={RoadPage} />
-            <MyRoute exact path='/deleteroad' component={DeleteRoad} aboutCond={!admin} verCond={online_not_verified}/>
-            <MyRoute exact path='/deleteroad/:searchVal' component={DeleteRoad} aboutCond={!admin} verCond={online_not_verified}/>          
-            <MyRoute exact path='/adminRoadPage' component={AdminRoadPage} aboutCond={!admin} verCond={online_not_verified}/> 
+            <MyRoute exact path='/trailform' component={TrailForm} />
+            <MyRoute exact path='/trailform/:searchVal' component={TrailForm} />
+            <MyRoute exact path='/trail/:id' component={TrailPage} />
+            <MyRoute exact path='/deletetrail' component={DeleteTrail} aboutCond={!admin} verCond={online_not_verified}/>
+            <MyRoute exact path='/deletetrail/:searchVal' component={DeleteTrail} aboutCond={!admin} verCond={online_not_verified}/>          
+            <MyRoute exact path='/adminTrailPage' component={AdminTrailPage} aboutCond={!admin} verCond={online_not_verified}/> 
             <MyRoute exact path='/adminSitePage' component={AdminSitePage} aboutCond={!admin} verCond={online_not_verified}/>       
             <MyRoute exact path='/admin' component={AdminMenu} aboutCond={!admin} verCond={online_not_verified}/>
             <MyRoute exact path='/forgotpassword' component={ForgotPassword} aboutCond={online} verCond={online_not_verified}/>
-            <MyRoute exact path='/updateRoad' component={updateRoad} aboutCond={!admin} verCond={online_not_verified}/>  
-            <MyRoute exact path='/updateRoad/:searchVal' component={updateRoad} aboutCond={!admin} verCond={online_not_verified}/>
+            <MyRoute exact path='/updateTrail' component={updateTrail} aboutCond={!admin} verCond={online_not_verified}/>  
+            <MyRoute exact path='/updateTrail/:searchVal' component={updateTrail} aboutCond={!admin} verCond={online_not_verified}/>
             <MyRoute exact path='/notverified' component={NotVerified} aboutCond={online_and_verified}/>
           </div>
         </BrowserRouter>);
@@ -100,6 +101,12 @@ function MyRoute(props){
     </Route>);
 }
 
+const userListiner = myFirebase.auth().onAuthStateChanged((user) => {
+  if(!user) {
+    this.props.logOut()
+  }
+})
+
 const mapStateToProps = (state) => {
   return {
       uid: state.status.uid,
@@ -109,7 +116,25 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    logOut: async () => { 
+      await dispatch(setLogStatus({
+        claims: 'guest',
+        user_name: '', 
+        uid: '',
+        isVerified: false,
+      }))
+      await dispatch(setLikes([]))
+      await dispatch(setDislikes([]))
+      await dispatch(setSiteFavorites([]))
+      await dispatch(setTrailFavorites([]))
+      await dispatch(setPosition({
+        lat: 0,
+        lng: 0,
+        country: '',
+      }))
+    }
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyBrowserRouter);
