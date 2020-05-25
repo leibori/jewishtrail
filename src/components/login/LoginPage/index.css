@@ -160,18 +160,36 @@ input[type="submit"]:hover{
     }
   }
 
-  .favoritesField {
+.favoritesField {
     position: relative;
     height: 45px;
-    width: 100%;
+    width: 75%;
     display: flex;
     background: rgba(255, 255, 255, 0.94);
     border-radius: 5px;
+}
+@media (min-width: 768px) {
+    .favoritesField {
+        position: relative;
+        height: 45px;
+        width: 30%;
+        margin-left: 490px;
+        display: flex;
+        background: rgba(255, 255, 255, 0.94);
+        border-radius: 5px;
+    }
 }
 .favoritesField span {
     color: #222;
     width: 40px;
     line-height: 45px;
+}
+@media (min-width: 768px) {
+    .favoritesField span {
+        color: #222;
+        width: 40px;
+        line-height: 45px;
+    }
 }
 .favoritesField input {
     height: 100%;
@@ -182,19 +200,46 @@ input[type="submit"]:hover{
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
 }
+@media (min-width: 768px) {
+    .favoritesField input {
+        height: 100%;
+        width: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+    }
+}
 .search-options{
     position: absolute;
     top: 80px;
     right: 0px;
+}
+@media (min-width: 768px) {
+    .search-options{
+    position: absolute;
+    top: 75px;
+    right: 450px;
+    }
 }
 .forSearch-options{
     position: absolute;
     top: 178px;
     right: 0px;
 }
+
 .sort-by {
     position: absolute;
     float: right;
     top: 122px;
     right: 0px;
+}
+@media (min-width: 768px) {
+    .sort-by {
+        position: absolute;
+        float: right;
+        top: 122px;
+        right: 450px;
+    }
 }

@@ -22,16 +22,16 @@ const LabelStyle = {
 
 
 
-class AdminRoadPage extends Component {
+class AdminTrailPage extends Component {
   render() {
     return (
       <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%',textAlign:'center'}}>
       <p style={LabelStyle}>Welcome to Road Management, choose an Option:</p>
-      <button className="btn" style={buttonStyle} id='create'><Link to="/roadForm" className="white-text">Create new Road</Link></button>
+      <button className="btn" style={buttonStyle} id='create'><Link to="/trailForm" className="white-text">Create new Road</Link></button>
       <br></br>
-      <button className="btn" style={buttonStyle} id='delete'><Link className="white-text" to="/deleteRoad">Delete Road</Link></button>
+      <button className="btn" style={buttonStyle} id='delete'><Link className="white-text" to="/deleteTrail">Delete Road</Link></button>
       <br></br>
-      <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/updateRoad">Update Road</Link></button>
+      <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/updateTrail">Update Road</Link></button>
       <br></br>
       <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/admin">Return to Admin Main Menu</Link></button>
     </div>
@@ -39,4 +39,4 @@ class AdminRoadPage extends Component {
   }
 }
 
-export default AdminRoadPage
+export default AdminTrailPage

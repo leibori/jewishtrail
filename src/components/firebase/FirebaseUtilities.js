@@ -1,6 +1,6 @@
 import { myDatabase } from './firebase'
 
-
+/* used to create new site from admin menu and added it to firestore */
 export async function createNewSite(site){
     await myDatabase.collection('sites').add({
       name: site.name,
@@ -19,7 +19,7 @@ export async function createNewSite(site){
     })
 }
 
-
+/* used to update site from admin menu and updated it to firestore */
 export async function UpdateSite(site){
     await myDatabase.collection('sites').doc(site.id).update({
       name: site.name,
@@ -38,12 +38,12 @@ export async function UpdateSite(site){
     })
 }
 
-
+/* used to delete site from admin menu and delete it to firestore */
 export async function DeleteSiteFromDB(site){
     await myDatabase.collection('sites').doc(site.id).delete();
 }
 
-
+/* extract information about user, guest / admin / if it regestered. */
 export async function getUserClaims(user){
     if(!user){
         return "guest"
@@ -60,18 +60,18 @@ export async function getUserClaims(user){
     return userClaims;
 }
 
-
+/* extract favorites that in user throughout userid */
 export async function getFavoritesIDs(userid) {
     const user = await myDatabase.collection('accounts').doc(userid).get()
     return user.data().favorites
 }
 
-
-export async function getRoadFavoritesIDs(userid) {
+/* extract trail that in favorites for user throughout userid */
+export async function getTrailFavoritesIDs(userid) {
     const user = await myDatabase.collection('accounts').doc(userid).get()
     return user.data().RoadsFavorites
 }
-
+// extract all information of site / trail from firestore.
 export async function extarctData(kind,arrayList,id){
     var resultOfSite = []
     for (const site of arrayList){
@@ -98,22 +98,21 @@ export async function extarctData(kind,arrayList,id){
     }
     return resultOfSite
 }
-export async function getFavorites(siteIdArray,roadsIdArray){
+// extract all the favorites of user (by uid) from firestore.
+export async function getFavorites(siteIdArray,trailsIdArray){
     var collectionName = ['sites','roads']
     var resultOfSite = []
-    // var siteList = await getFavoritesIDs(userid)
-    // var roadList = await getRoadFavoritesIDs(userid)
     for(var i = 0; i < collectionName.length; ++i) {
         if(collectionName[i] == 'sites')
             resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],siteIdArray,resultOfSite.length))
         else{
-            resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],roadsIdArray,resultOfSite.length))
+            resultOfSite = resultOfSite.concat(await extarctData(collectionName[i],trailsIdArray,resultOfSite.length))
         }
     }
     return resultOfSite;
 }
 
-
+// update favorites sites of user in firestore
 export async function updateUserFavoriteSites(userid, newFavorites) {
     await myDatabase.collection('accounts').doc(userid).update({
         'favorites': newFavorites
@@ -123,16 +122,16 @@ export async function updateUserFavoriteSites(userid, newFavorites) {
         });
 }
 
-
+/* get site from firestore according uid of specific uid.*/
 export async function getSiteByID(siteid) {
     return  (await myDatabase.collection('sites').doc(siteid).get()).data()
 }
 
-
-export async function createNewRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imageUrl} ){
+/* used to create new trail from admin menu and added it to firestore */
+export async function createNewTrail( {siteListID,trailName, trailDescription, CityList, CountryList, TagList, searchTokens, imageUrl} ){
     await myDatabase.collection('roads').add({
-        name: roadName,
-        description: roadDescription,
+        name: trailName,
+        description: trailDescription,
         siteList: siteListID,
         city:CityList,
         country:CountryList,
@@ -143,8 +142,8 @@ export async function createNewRoad( {siteListID,roadName,roadDescription,CityLi
     })
 }
 
-
-export async function updateUserFavoriteRoads(userid, newFavorites) {
+/* used to update favorites of user trail throughout user id in firestore */
+export async function updateUserFavoriteTrails(userid, newFavorites) {
     myDatabase.collection('accounts').doc(userid).update({
         'RoadsFavorites': newFavorites
     })
@@ -153,15 +152,16 @@ export async function updateUserFavoriteRoads(userid, newFavorites) {
     });
 }
 
-
-export async function deleteRoadFromDB(road){
-    await myDatabase.collection('roads').doc(road.id).delete();
+/* used to delete avaliable site from admin menu and delete it to firestore */
+export async function deleteTrailFromDB(trail){
+    await myDatabase.collection('roads').doc(trail.id).delete();
 }
 
-export async function updateRoad( {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imageUrl, vote}, roadId){
-    await myDatabase.collection('roads').doc(roadId).update({
-        name: roadName,
-        description: roadDescription,
+/* used to create new site from admin menu and added it to firestore */
+export async function updateTrail( {siteListID,trailName,trailDescription,CityList,CountryList,TagList,searchTokens, imageUrl, vote}, trailId){
+    await myDatabase.collection('roads').doc(trailId).update({
+        name: trailName,
+        description: trailDescription,
         siteList: siteListID,
         city:CityList,
         country:CountryList,
@@ -171,10 +171,11 @@ export async function updateRoad( {siteListID,roadName,roadDescription,CityList,
         vote: vote,
     })
 }
-
+/* used to delete collection from firestore likes users */
 async function deleteDocumentFromDB(collectionName, documentID) {
     await myDatabase.collection(collectionName).doc(documentID).delete();
 }
+/* used to create new site from admin menu and added it to firestore */
 export async function createContactMassege(name, email, title, details){
     await myDatabase.collection('massege').add({
         name: name,
@@ -183,7 +184,7 @@ export async function createContactMassege(name, email, title, details){
         details: details
     })
 }
-
+/* get all messages that availiable in firestore under message collection*/
 export async function getMasseges(){
     var massegeList = []
     const snapshot = await myDatabase.collection('massege').get()
@@ -198,7 +199,7 @@ export async function getMasseges(){
     })
     return massegeList
 }
-
+/* used to delete messages from admin menu and firestore */
 export async function deleteMassegeFromDB(massege){
     await myDatabase.collection('massege').doc(massege.id).delete();
 }
