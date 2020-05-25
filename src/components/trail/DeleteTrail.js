@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import {deleteRoadFromDB} from '../firebase/FirebaseUtilities'
-import RoadSearch from '../search/RoadSearch'
+import {deleteTrailFromDB as deleteTrailFromDB} from '../firebase/FirebaseUtilities'
+import TrailSearch from '../search/TrailSearch'
 import {Link} from 'react-router-dom'
 
 const buttonStyle = {
@@ -21,7 +21,7 @@ fontFamily: 'Cambay, sans-serif',
 textShadow:'1px 1px black'
 }
 
-class DeleteRoad extends Component {
+class DeleteTrail extends Component {
 
   constructor(props) {
     super(props);
@@ -34,19 +34,19 @@ class DeleteRoad extends Component {
     this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
 };
 
-DeleteRoad = async(e, roadID) => {
+DeleteTrail = async(e, trailID) => {
   if(!(window.confirm("Are you sure you want to Delete?"))){
     return 
   }
   e.preventDefault();
-  const roadList = this.myRef.current.state.roadList;
+  const trailList = this.myRef.current.state.trailList;
   
-  const index = roadList.findIndex(r => r.id === roadID);
+  const index = trailList.findIndex(r => r.id === trailID);
   
-  await deleteRoadFromDB(roadList[index])
-  console.log("road" + roadList[index].name + "has been deleted")
-  roadList.splice(index,1)
-  this.setState({roadList});
+  await deleteTrailFromDB(trailList[index])
+  console.log("Trail" + trailList[index].name + "has been deleted")
+  trailList.splice(index,1)
+  this.setState({trailList});
 }
 
 updateSearchValue(e) {
@@ -60,20 +60,20 @@ updateTopDownhValue(e) {
 render() {
     return (
         <div style={{position:"absolute",margin:'auto', width:"100%",textAlign:'center',top:'10%',height:'35%'}}>
-            <h5 style={LabelStyle}>Search Road to Delete: </h5>            
-            <RoadSearch ref={this.myRef}
-              roadList={this.state.roadList}
-              roadButtonsProps= {[{
-                buttonName: `Delete road`,
+            <h5 style={LabelStyle}>Search trail to delete: </h5>            
+            <TrailSearch ref={this.myRef}
+              trailList={this.state.trailList}
+              trailButtonsProps= {[{
+                buttonName: `Delete trail`,
                 canRender: () => true,
-                buttonFunction: this.DeleteRoad,
+                buttonFunction: this.DeleteTrail,
               }]}
               searchVal={this.state.searchVal}
-              returnTo='deleteRoad'/>
-        <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/adminRoadPage">Return</Link></button>
+              returnTo='deleteTrail'/>
+        <button className="btn" style={buttonStyle} id='change'><Link className="white-text" to="/adminTrailPage">Return</Link></button>
         </div>
     )    
   }
 }
 
-export default DeleteRoad
+export default DeleteTrail

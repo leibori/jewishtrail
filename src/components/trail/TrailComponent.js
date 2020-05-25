@@ -31,17 +31,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const RoadComponent = (props) => {
+const TrailComponent = (props) => {
   const classes = useStyles()
-  const { road, roadButtonsProps: trailButtonsProps } = props;
+  const { trail, trailButtonsProps } = props;
 
-  var info_url = '/road/'+road.id
+  var info_url = '/trail/'+trail.id
 
-  const pickRoadButton = () => {
-    return trailButtonsProps ? trailButtonsProps.find(buttonProps => buttonProps.canRender(road.id)) : undefined;
+  const pickTrailButton = () => {
+    return trailButtonsProps ? trailButtonsProps.find(buttonProps => buttonProps.canRender(trail.id)) : undefined;
   }
 
-  const buttonProps = pickRoadButton();
+  const buttonProps = pickTrailButton();
   
   return (
     <div className={classes.root}>
@@ -50,7 +50,7 @@ const RoadComponent = (props) => {
           
           <Grid item xs={6} lg>
             <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={road.imageUrl} alt={no_image_available} />
+              <img className={classes.img} alt="complex" src={trail.imageUrl} alt={no_image_available} />
             </ButtonBase>
           </Grid>
 
@@ -59,9 +59,9 @@ const RoadComponent = (props) => {
             <Grid item xs container direction="column" spacing={2}>
               
               <Grid item xs>
-                <Typography gutterBottom variant="subtitle1"><b>{road.name}</b></Typography>
-                <Typography variant="body2" gutterBottom><b>Cities:</b> {road.city.join(", ")}.</Typography>
-                <Typography variant="body2" >{road.country[0]}</Typography>
+                <Typography gutterBottom variant="subtitle1"><b>{trail.name}</b></Typography>
+                <Typography variant="body2" gutterBottom><b>Cities:</b> {trail.city.join(", ")}.</Typography>
+                <Typography variant="body2" >{trail.country[0]}</Typography>
                 <Grid item container direction='row' spacing={2}>
                   <Col xs={7}>
                     <Row style={{ paddingLeft: '10%' }}>
@@ -71,12 +71,12 @@ const RoadComponent = (props) => {
                     </Row>
                     { buttonProps &&
                       <Row style={{ paddingTop: '20%', paddingLeft: '45%'}}>
-                        <button variant="outlined" style={{ maxHeight: '40px' }} onClick={(e) => buttonProps.buttonFunction(e, road.id)}>{buttonProps.buttonName}</button> 
+                        <button variant="outlined" style={{ maxHeight: '40px' }} onClick={(e) => buttonProps.buttonFunction(e, trail.id)}>{buttonProps.buttonName}</button> 
                       </Row>
                     }
                   </Col>
                   <Col xs={1} style={{ paddingLeft: '0px', paddingTop: '8px' }}>
-                    <Circle progress={road.vote} progressColor="#50c878" size={70} bgColor="#ff0000" lineWidth={20} textColor="#3f704d" textStyle={{font:'bold 6rem Helvetica, Ariel, sens-serif'}}></Circle>
+                    <Circle progress={trail.vote} progressColor="#50c878" size={70} bgColor="#ff0000" lineWidth={20} textColor="#3f704d" textStyle={{font:'bold 6rem Helvetica, Ariel, sens-serif'}}></Circle>
                   </Col>
                 </Grid>
               </Grid>
@@ -88,4 +88,4 @@ const RoadComponent = (props) => {
   )
 }
 
-export default RoadComponent
+export default TrailComponent

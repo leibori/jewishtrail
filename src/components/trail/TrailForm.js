@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import SiteComponent from '../sites/siteComponent'
-import {getSiteByID,createNewRoad, updateRoad}  from '../firebase/FirebaseUtilities'
+import {getSiteByID,createNewTrail, updateTrail}  from '../firebase/FirebaseUtilities'
 import { PaginatedList } from 'react-paginated-list';
 import SiteSearch from '../search/SiteSearch';
 import {Link} from 'react-router-dom'
@@ -35,7 +35,7 @@ const inputStyle = {
     marginBottom:'2%',
 }
   
-class RoadForm extends Component {
+class TrailForm extends Component {
 
     constructor(props) {
         super(props);
@@ -57,13 +57,13 @@ class RoadForm extends Component {
             name: formerState ? formerState.name : '',
             description: formerState ? formerState.description : '',
             imageUrl: formerState ? formerState.imageUrl : '',
-            roadId: formerState && formerState.roadId ? formerState.roadId : null,
+            trailId: formerState && formerState.trailId ? formerState.trailId : null,
             vote: formerState ? formerState.vote : null
         }
 
         this.updateSearchValue = this.updateSearchValue.bind(this);
         this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
-        this.createNewRoadSubmit = this.createNewRoadSubmit.bind(this);
+        this.createNewTrailSubmit = this.createNewTrailSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.getState = this.getState.bind(this);
     };
@@ -85,16 +85,16 @@ class RoadForm extends Component {
     }
 
 
-    async createNewRoadSubmit(e){
+    async createNewTrailSubmit(e){
         e.preventDefault()
         if(!this.state.siteList.length){
             alert("no sites where selected")
             return
         }
         let searchTokens = [];
-        const roadName = this.state.name;
-        const roadId = this.state.roadId
-        const roadDescription = this.state.description;
+        const trailName = this.state.name;
+        const trailId = this.state.trailId
+        const trailDescription = this.state.description;
         const { imageUrl } = this.state;
         const vote = this.state.vote ? this.state.vote : 50;
         const CityList = Array.from(new Set(this.state.siteList.map((site) => site.city)))
@@ -102,24 +102,24 @@ class RoadForm extends Component {
         var TagList = []
         let temp = Array.from(new Set(this.state.siteList.map((site) => site.tags)))
         temp.forEach((tagsArr) => tagsArr.forEach((tag) => TagList.push(tag)));
-        searchTokens = Array.from(new Set([...TagList,...CityList,...CountryList,...roadName.split(" ")]))
+        searchTokens = Array.from(new Set([...TagList,...CityList,...CountryList,...trailName.split(" ")]))
         searchTokens = searchTokens.map((i) => {return i.toLowerCase()});
         let siteListID = []
         this.state.siteList.forEach((site) => siteListID.push(site.id));
         
-        const road = {siteListID,roadName,roadDescription,CityList,CountryList,TagList,searchTokens, imageUrl, vote};
-        if(roadId){
-            await updateRoad(road,roadId)
-            console.log("update Road")
+        const trail = {siteListID,trailName,trailDescription,CityList,CountryList,TagList,searchTokens, imageUrl, vote};
+        if(trailId){
+            await updateTrail(trail,trailId)
+            console.log("update Trail")
         }
         else{
-            await createNewRoad(road);
-            console.log("created new road")    
+            await createNewTrail(trail);
+            console.log("created new trail")    
         }
         alert("Submittion Complete")
-        this.props.history.push('/adminRoadPage')
+        this.props.history.push('/adminTrailPage')
     }
-    addSiteToRoadList = async(e, siteID) => {
+    addSiteToTrailList = async(e, siteID) => {
         const siteData = await getSiteByID(siteID)
         const siteObject = {
             ...siteData,
@@ -164,7 +164,7 @@ class RoadForm extends Component {
             <div style={{width:'100%'}}>
                 <form onSubmit={()=>alert(2)}>
                     <div className="input-field">
-                        <label style={LabelStyle} htmlFor="name">  Road Name:</label>
+                        <label style={LabelStyle} htmlFor="name">  Trail Name:</label>
                         <input style={inputStyle} required name="name" type="text" id='name' onChange={this.handleChange} value={this.state.name}/>                        
                     </div>
                     <div className="input-field">
@@ -172,11 +172,11 @@ class RoadForm extends Component {
                         <input style={inputStyle} required name="imageUrl" type="text" id='imageUrl' onChange={this.handleChange} value={this.state.imageUrl}/>
                     </div>
                     <div className="for-group">
-                         <label style={LabelStyle}> Road Description :</label>
-                        <textarea style={inputStyle} required value={this.state.description} onChange={this.handleChange} type="description" className="form-control" name="description" placeholder="Road Description" />
+                         <label style={LabelStyle}> Trail Description :</label>
+                        <textarea style={inputStyle} required value={this.state.description} onChange={this.handleChange} type="description" className="form-control" name="description" placeholder="Trail Description" />
                     </div>
-                    <button style={buttonStyle} type="submit" onClick={(e) =>this.createNewRoadSubmit(e)} className="btn text-white">Submit</button>
-                    <button style={buttonStyle} type="button" className="btn text-white"><Link to="/adminRoadPage" className="text-white">Return</Link></button>
+                    <button style={buttonStyle} type="submit" onClick={(e) =>this.createNewTrailSubmit(e)} className="btn text-white">Submit</button>
+                    <button style={buttonStyle} type="button" className="btn text-white"><Link to="/adminTrailPage" className="text-white">Return</Link></button>
                  </form>
                 <ul className="container" style={{paddingLeft:'0px',paddingRight:'0px',width:'100%'}}>
                     {siteList.length > 3 ? <PaginatedList
@@ -196,12 +196,12 @@ class RoadForm extends Component {
                 <SiteSearch
                     getParentState={this.getState}
                     siteButtonsProps= {[{
-                        buttonName: `Add to road`,
+                        buttonName: `Add to trail`,
                         canRender: this.renderButton,
-                        buttonFunction: this.addSiteToRoadList
+                        buttonFunction: this.addSiteToTrailList
                     }]}
                     searchVal={this.state.searchVal}
-                    returnTo='roadForm'/>
+                    returnTo='trailForm'/>
             </div>
         );
 
@@ -227,7 +227,7 @@ class RoadForm extends Component {
                 //         if(this.renderButton(site.id)) {
                 //             return  <div key={i} >
                 //                         <SiteComponent props={site}/>
-                //                         <button onClick={() => this.addSiteToRoadList(site.id)}>Add to Road</button>
+                //                         <button onClick={() => this.addSiteToTrailList(site.id)}>Add to Trail</button>
                 //                     </div>
                 //         }
                 //         return <SiteComponent key={i} props={site}/>
@@ -239,4 +239,4 @@ class RoadForm extends Component {
     }
 }
 
-export default RoadForm
+export default TrailForm

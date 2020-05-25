@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getRoadByID } from '../search/SearchUtils'
+import { getTrailByID } from '../search/SearchUtils'
 import { getTrailPageMap, findUserPosition, calculateDistance } from '../map/MapUtilities'
 import { getSiteByID } from "../firebase/FirebaseUtilities";
 import { PaginatedList } from 'react-paginated-list';
@@ -8,7 +8,7 @@ import { Card, ListGroupItem, ListGroup, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../../actions/index'
 import {updateVote, getVoteByUserID, deleteVote} from '../firebase/FirebaseVotingUtils'
-import { getRoadFavoritesIDs, updateUserFavoriteRoads, getFavoritesIDs } from '../firebase/FirebaseUtilities'
+import { getTrailFavoritesIDs, updateUserFavoriteTrails, getFavoritesIDs } from '../firebase/FirebaseUtilities'
 import Circle from 'react-circle';
 import no_image_available from '../../assets/img/no-image-available.png'
 import favorites_add_icon from '../../assets/img/favorite-add-icon.png'
@@ -34,7 +34,7 @@ let dislikeStyle={
 }
 
 
-class RaodPage extends Component {
+class TrailPage extends Component {
 
     constructor(props) {
         super(props);
@@ -91,7 +91,7 @@ class RaodPage extends Component {
 
     async handleSiteList() {
         const trailId = this.state.trail_id;
-        var all_trail_props = await getRoadByID(trailId)
+        var all_trail_props = await getTrailByID(trailId)
 
         const siteListID = all_trail_props.siteList;
         const siteList = await Promise.all(siteListID.map((async (sid) => ({ id:sid, ...(await getSiteByID(sid))}))))
@@ -176,7 +176,7 @@ class RaodPage extends Component {
             } 
 
             if (trailFavorites.length === 0) {
-                trailFavorites = await getRoadFavoritesIDs(uid)
+                trailFavorites = await getTrailFavoritesIDs(uid)
                 this.props.setTrailFavorites(trailFavorites)
             }
         }
@@ -308,7 +308,7 @@ class RaodPage extends Component {
      * Otherwise, it returns false.
      * This function is used to decide whether or not to show the "add to favorites" button.
      */
-    canRenderAddRoad = (sid) => {
+    canRenderAddTrail = (sid) => {
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
             if(!this.props.trailFavorites.includes(sid)) {
@@ -324,7 +324,7 @@ class RaodPage extends Component {
      * Otherwise, it returns false.
      * This function is used to decide whether or not to show the "delete from favorites" button.
      */
-    canRenderDeleteRoad = (rid) => {
+    canRenderDeleteTrail = (rid) => {
         const { claims } = this.props.logStatus
         if(claims !== "guest") {
             return (this.props.trailFavorites.includes(rid));
@@ -337,14 +337,14 @@ class RaodPage extends Component {
      * This function recieves a trail id and adds it to the user's favorite trails list in the database.
      * It also updates the favorites trails that are saved in local storage using redux.
      */
-    addRoadToFavorites = async(e, trailId) => {
+    addTrailToFavorites = async(e, trailId) => {
         const { uid } = this.props.logStatus
         var favorites = this.props.trailFavorites
 
         favorites.push(trailId)
         
         this.props.setTrailFavorites(favorites)
-        updateUserFavoriteRoads(uid, favorites)
+        updateUserFavoriteTrails(uid, favorites)
         
         alert("The trail was added to your favorites.");
         this.setState({})
@@ -355,14 +355,14 @@ class RaodPage extends Component {
      * This function receives a trail id and removes it from the user's favorite trails list.
      * It also updates the favorites trails that are saved in local storage using redux.
      */
-    deleteRoadInFavorites = async(e, trailId) => {
+    deleteTrailInFavorites = async(e, trailId) => {
         const { uid } = this.props.logStatus
         let trailFavorites = this.props.trailFavorites;
 
         var newTrailFavorites = trailFavorites.filter(r => r !== trailId).map(r=>r);
 
         this.props.setTrailFavorites(newTrailFavorites)
-        updateUserFavoriteRoads(uid, newTrailFavorites)
+        updateUserFavoriteTrails(uid, newTrailFavorites)
 
         alert("The trail was removed from your favorites.");
         this.setState({})
@@ -410,10 +410,10 @@ class RaodPage extends Component {
                                         <button variant="outlined" style={buttonVote} onClick={(e) => this.voteSite(e,1,trail_id)}>{this.state.likeFlag}</button>
                                         <button variant="outlined" style={buttonVote} onClick={(e) => this.voteSite(e,0,trail_id)}>{this.state.dislikeFlag}</button>
                                     </Col>
-                                    { this.canRenderAddRoad(trail_id) ? 
-                                        (<Col style={{paddingTop: '3%'}}><button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => this.addRoadToFavorites(e, trail_id)}>{addToFavoritesIcon}</button></Col>)
-                                        : this.canRenderDeleteRoad(trail_id) ? 
-                                        (<Col style={{paddingTop: '3%'}}><button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => this.deleteRoadInFavorites(e, trail_id)}>{deleteInFavoritesIcon}</button></Col>)
+                                    { this.canRenderAddTrail(trail_id) ? 
+                                        (<Col style={{paddingTop: '3%'}}><button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => this.addTrailToFavorites(e, trail_id)}>{addToFavoritesIcon}</button></Col>)
+                                        : this.canRenderDeleteTrail(trail_id) ? 
+                                        (<Col style={{paddingTop: '3%'}}><button variant="outlined" style= {{marginTop: '0%'}} onClick={(e) => this.deleteTrailInFavorites(e, trail_id)}>{deleteInFavoritesIcon}</button></Col>)
                                         : ''
                                     }
                                 </React.Fragment>) : ''
@@ -463,4 +463,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RaodPage);
+export default connect(mapStateToProps, mapDispatchToProps)(TrailPage);
