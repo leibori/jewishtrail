@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { updateUserFavoriteSites, getRoadFavoritesIDs, getFavoritesIDs, getSiteByID } from '../firebase/FirebaseUtilities'
-import { getSitePageMap } from '../map/MapUtilities'
+import { getSitePageMap, findUserPosition } from '../map/MapUtilities'
 import { Card, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { setSiteFavorites, setTrailFavorites, setLikes, setDislikes } from '../../actions/index'
@@ -59,9 +59,13 @@ class SitePage extends Component {
 
         var navLink = "https://www.google.com/maps/dir/?api=1&destination="+all_site_props.latitude+"%2C"+all_site_props.longitude+"&dir_action=navigate"
 
-        getSitePageMap('map', all_site_props, this.state.zoom)
-
         this.handleVotesAndFavorites()
+
+        if(this.props.position.country === '') {
+            this.props.findUserPosition()
+        }
+
+        getSitePageMap('map', all_site_props, this.state.zoom, this.props.position.lat, this.props.position.lng)
 
         this.setState({ 
             ...all_site_props,
@@ -350,6 +354,7 @@ class SitePage extends Component {
 const mapStateToProps = (state) => {
     return {
         logStatus: state.status,
+        position: state.position,
         siteFavorites: state.siteFavorites,
         trailFavorites: state.trailFavorites,
         likes: state.likes,
@@ -359,6 +364,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        findUserPosition: async () => findUserPosition(dispatch),
+
         setSiteFavorites: (siteFavorites) => dispatch(setSiteFavorites(siteFavorites)),
 
         setTrailFavorites: (trailFavorites) => dispatch(setTrailFavorites(trailFavorites)),

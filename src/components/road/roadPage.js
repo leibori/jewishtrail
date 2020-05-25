@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getRoadByID } from '../search/SearchUtils'
-import { getAroundYouMap, findUserPosition, calculateDistance } from '../map/MapUtilities'
+import { getTrailPageMap, findUserPosition, calculateDistance } from '../map/MapUtilities'
 import { getSiteByID } from "../firebase/FirebaseUtilities";
 import { PaginatedList } from 'react-paginated-list';
 import SiteComponent from '../sites/siteComponent'
@@ -143,9 +143,9 @@ class RaodPage extends Component {
         const avgLat = (maxLat + minLat) / 2
         const avgLng = (maxLng + minLng) / 2
 
-        const zoom = Math.round(3 * Math.abs(maxLat - minLat) + Math.abs(maxLng - minLng))
+        const zoom = Math.round(3 * (Math.abs(maxLat - minLat) + Math.abs(maxLng - minLng)))
 
-        getAroundYouMap('map', avgLat, avgLng, zoom, siteList)
+        getTrailPageMap('map', avgLat, avgLng, zoom, siteList, this.props.position.lat, this.props.position.lng)
     }
 
 
