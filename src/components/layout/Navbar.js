@@ -10,32 +10,35 @@ import {
 import { setLogStatus, setSiteFavorites, setTrailFavorites, setLikes, setDislikes, setPosition } from '../../actions/index';
 import { connect } from 'react-redux'
 
+  /* The font style */
 const fontStyle = {
-  // fontFamily: 'Cambay, sans-sarif',
   fontSize: '17px',
   color:"black",
   fontWeight:'650',
   textAlign: 'center',
 
 }
+  /*background color*/
 const backStyle = {
   background:"rgba(255,255,255,0.3)'" 
 }
 
 
-
+  /* user status */
 class Navbar extends Component {
   state=({
     isLoggedIn: false,
     isAdmin:false
   }) 
   
+    /*update user status */
   async componentDidMount(){
     const { claims } = this.props.status
     if(claims === "admin"){
       this.setState({isAdmin: true,
                     isLoggedIn: true}
     )}
+    // registered users
     else if(claims === "registered"){
       this.setState({isLoggedIn: true, isAdmin: false})
     }else{
@@ -45,7 +48,10 @@ class Navbar extends Component {
     }      
   }
 
+    /*log out */
+
   logOut = async() => {
+    //pop-up massege
     if(window.confirm("are you sure?")) {
       await this.props.logOut()
       myFirebase.auth().signOut();
@@ -54,13 +60,14 @@ class Navbar extends Component {
   }
 
   render() {
+      /* user name in navbar */
     const user_name = this.props.status.user_name;
     const firstName = user_name ? user_name.split(' ')[0] : undefined;
+     /* navbar decliration using bootstrap */
     return (
       <div className="App-transparent">
       <ReactBootStrap.Navbar collapseOnSelect expand="xl" bg="transparent" variant="light" >        
       <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" variant="dark" bg="transparent" style={{ marginTop: '0px',}} />
-    
         <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav"> 
           <ReactBootStrap.Nav className="mr-auto">
             { this.state.isLoggedIn ? (
@@ -77,7 +84,6 @@ class Navbar extends Component {
             {
               !this.state.isAdmin && (  <ReactBootStrap.Nav.Link style={fontStyle} href="/contactUs">Contact Us </ReactBootStrap.Nav.Link>)
             }  
-        
 
             {
               this.state.isAdmin && (<ReactBootStrap.Nav.Link style={fontStyle} href="/admin">Admin Page</ReactBootStrap.Nav.Link>)
@@ -92,13 +98,14 @@ class Navbar extends Component {
     )
   }
 }
-
+ /* user status */
 const mapStateToProps = (state) => {
   return {
     status: state.status,
   };
 };
-
+ 
+ /* update user status */
 const mapDispatchToProps = (dispatch) => {
   return {
     logOut: async () => { 
@@ -108,6 +115,7 @@ const mapDispatchToProps = (dispatch) => {
         uid: '',
         isVerified: false,
       }))
+      //update info
       await dispatch(setLikes([]))
       await dispatch(setDislikes([]))
       await dispatch(setSiteFavorites([]))

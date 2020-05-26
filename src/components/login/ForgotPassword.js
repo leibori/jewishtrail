@@ -5,6 +5,7 @@ import './GeneralBack.css';
 
 
 export default class ForgotPassword extends Component{
+
     constructor(props){
         super(props);
         this.state = {
@@ -13,17 +14,16 @@ export default class ForgotPassword extends Component{
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
-    
+    /* forgot password messege options  */
+
     onSubmit = (e) => {
       e.preventDefault();
         const { email } = this.state;
-        //forgotPassword(email).then(()=>this.props.history.push("/loginpage")).then()
         forgotPassword(email).then(()=>this.setState({
           resetMessage: "A password reset email was sent to " + email
         })).catch(function(error) {
           this.setState({ resetMessage: "invalid email"})
         });
-        //alert("A password reset email was sent to " + email )
     }
 
     onChange = (e) => {
@@ -41,6 +41,8 @@ export default class ForgotPassword extends Component{
           return <Redirect to = "/about"></Redirect>
         }
         return (
+              /*forgot password login */
+
           <div style={{height: '100%'}}>
             <title>Login</title>
             <div className='bg-img'>

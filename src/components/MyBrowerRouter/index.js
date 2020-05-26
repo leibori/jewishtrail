@@ -12,7 +12,6 @@ import AdminPage from 'components/admin/AdminPage';
 import AuthMenu from 'components/admin/AuthMenu';
 import SearchMenu from 'components/search/SearchMenu';
 import About from 'components/around_you/about';
-import LogOut from 'components/login/LogOut';
 import Favorites from 'components/favorites/Favorites';
 import SitePage from 'components/sites/SitePage'
 import TrailForm from 'components/trail/TrailForm';
@@ -59,7 +58,6 @@ class MyBrowserRouter extends Component{
               <Redirect to='/LoginPage'/> </MyRoute>
             <MyRoute exact path='/aroundyou'  component={AroundYou} />
             <MyRoute exact path='/loginpage' component={LoginPage} aboutCond={online} verCond={online_not_verified} />
-            <MyRoute exact path='/logout' component={LogOut}/>
             <MyRoute exact path='/signup' component={SignUp} aboutCond={online} verCond={online_not_verified}/>
             <MyRoute exact path='/createsite' component={CreateSite} aboutCond={!admin} verCond={online_not_verified}/>
             <MyRoute exact path='/deletesite' component={DeleteSite} aboutCond={!admin} verCond={online_not_verified}/>
