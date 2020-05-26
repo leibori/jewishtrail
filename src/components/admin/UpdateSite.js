@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import {findFromDB} from '../search/SearchUtils'
 import SiteSearch from '../search/SiteSearch'
 import './GeneralAdmin.css';
-
+// style options.
 const buttonStyle = {
   marginLeft:"30px",
   padding:"10px 24px",
@@ -42,7 +42,6 @@ class ChangeSite extends Component {
 
 
 
-
 async onSearchButtonClicked(e) {
     e.preventDefault();
     const result = await findFromDB(this.state.topDownValue, this.state.searchVal)
@@ -56,7 +55,7 @@ updateSearchValue(e) {
   this.setState({searchVal: e.target.value})
 }
 
-
+// in case of clicking update site button, redirect to updateForm page. 
 onSiteButtonClick = (e, siteID) => {
   this.props.history.push("/updateForm/" + siteID);
 }
@@ -65,7 +64,7 @@ updateTopDownhValue(e) {
   this.setState({topDownValue: e.value})
 }
 
-
+/*update site contain Site search component */
 render() {
     return (
         <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './GeneralAdmin.css';
 
+//  style options
 const buttonStyle = {
   marginLeft:"5%",
   padding:"10px 24px",
@@ -18,7 +19,7 @@ const LabelStyle = {
   fontFamily: 'Cambay, sans-serif',
   textShadow:'1px 1px black'
 }
-
+/*Site Page: Creation, delte and update site  */
 class AdminSitePage extends Component {
   render() {
     return (

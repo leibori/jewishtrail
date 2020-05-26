@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {deleteTrailFromDB as deleteTrailFromDB} from '../firebase/FirebaseUtilities'
 import TrailSearch from '../search/TrailSearch'
 import {Link} from 'react-router-dom'
-
+// style options
 const buttonStyle = {
   marginLeft:"30px",
   padding:"10px 24px",
@@ -33,7 +33,7 @@ class DeleteTrail extends Component {
     this.updateSearchValue = this.updateSearchValue.bind(this);
     this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
 };
-
+// in case of clicking delete trail button, delete trail from data base by id.
 DeleteTrail = async(e, trailID) => {
   if(!(window.confirm("Are you sure you want to Delete?"))){
     return 
@@ -56,10 +56,10 @@ updateSearchValue(e) {
 updateTopDownhValue(e) {
   this.setState({topDownValue: e.value})
 }
-
+// delete road page contain road seach component, call DeleteRoad function in case of clicking button.
 render() {
     return (
-        <div style={{position:"absolute",margin:'auto', width:"100%",textAlign:'center',top:'10%',height:'35%'}}>
+      <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
             <h5 style={LabelStyle}>Search trail to delete: </h5>            
             <TrailSearch ref={this.myRef}
               trailList={this.state.trailList}

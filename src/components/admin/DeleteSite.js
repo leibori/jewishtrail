@@ -4,7 +4,7 @@ import {DeleteSiteFromDB} from '../firebase/FirebaseUtilities'
 import { Link } from 'react-router-dom'
 import SiteSearch from '../search/SiteSearch'
 import './GeneralAdmin.css';
-
+// style options
 const buttonStyle = {
   marginLeft:"30px",
   padding:"10px 24px",
@@ -30,37 +30,40 @@ class DeleteSite extends Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
+    // in case of none empty search value, save it. 
     this.state = {
         searchVal: props.match.params.searchVal ? props.match.params.searchVal : '',
         topDownValue: 'tags',
         // siteList: []
     }
-    this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
+    //this.onSearchButtonClicked = this.onSearchButtonClicked.bind(this);
     this.updateSearchValue = this.updateSearchValue.bind(this);
     this.updateTopDownhValue = this.updateTopDownhValue.bind(this);
 };
 
 DeleteSite = async(e, siteID) => {
+  // get site list of SearchSite Component, in orther to remove this siteID from his list. 
   const siteList = this.myRef.current.state.siteList;
   e.preventDefault();
   if(!(window.confirm("Are you sure you want to delete this site?"))){
     return
   }
+  // find index of site in site list according to site id.
   const index = siteList.findIndex(s=> s.id === siteID );
   await DeleteSiteFromDB(siteList[index]);
   console.log("site" + siteList[index].name + "had deleted")
-  
+  // remove site from list.
   siteList.splice(index,1)
   this.setState({siteList});
 }
 
 
-async onSearchButtonClicked(e) {
-    e.preventDefault();
+// async onSearchButtonClicked(e) {
+//     e.preventDefault();
 
-    const result = await findFromDB(this.state.topDownValue, this.state.searchVal)
-    this.setState({siteList: result})
-}
+//     const result = await findFromDB(this.state.topDownValue, this.state.searchVal)
+//     this.setState({siteList: result})
+// }
 
 updateSearchValue(e) {
   this.setState({searchVal: e.target.value})
@@ -69,6 +72,7 @@ updateSearchValue(e) {
 updateTopDownhValue(e) {
   this.setState({topDownValue: e.value})
 }
+
 
 render() {
     return (

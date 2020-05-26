@@ -25,10 +25,10 @@ class AdminMenu extends Component {
       <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
           <p style={LabelStyle}> Welcome to Admin Menu, Please select an Option:</p>
           <div className="container">
-            <button style={buttonStyle} className="btn"><Link className="white-text" to="/adminSitePage">Site Management</Link></button>
-            <button style={buttonStyle} className="btn"><Link className="white-text" to="/adminRoadPage">Road Management</Link></button>
-            <button style={buttonStyle} className="btn"><Link className="white-text" to="/auth">Users Management</Link></button>
-            <button style={buttonStyle} className="btn"><Link className="white-text" to="/massegeList">MailBox</Link></button>
+            <button className="butonStyle-admin" ><Link className="white-text" to="/adminSitePage">Site Management</Link></button>
+            <button className="butonStyle-admin"><Link className="white-text" to="/adminTrailPage">Trail Management</Link></button>
+            <button className="butonStyle-admin"><Link className="white-text" to="/auth">Users Management</Link></button>
+            <button className="butonStyle-admin"><Link className="white-text" to="/massegeList">MailBox</Link></button>
         </div>
       </div>
 

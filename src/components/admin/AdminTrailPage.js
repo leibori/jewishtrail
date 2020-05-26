@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './GeneralAdmin.css';
-
+// style options
 const buttonStyle = {
     marginLeft:"8%",
     padding:"10px 24px",
@@ -21,7 +21,7 @@ const LabelStyle = {
   
 
 
-
+/*admin menu. conatain Links to Creation, delete and update Trails */
 class AdminTrailPage extends Component {
   render() {
     return (

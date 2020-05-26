@@ -9,3 +9,35 @@
 .bg-admin::-webkit-scrollbar {
     display: none;
 }
+
+.butonStyle-admin{
+    margin-left:18%;
+    padding: 10px 24px;
+    border-radius: 8px; 
+    background-color: #5dbb63;
+    opacity: 0.8;
+    margin-top:20px;
+}
+
+@media (min-width: 900px){
+    .butonStyle-admin{
+        margin-left:6%;
+        padding: 10px 24px;
+        border-radius: 8px; 
+        background-color: #5dbb63;
+        opacity: 0.8;
+        margin-top:20px;
+    }   
+}
+.inputStyle  {
+    width:80%;
+    border-radius:6px;
+    margin-bottom:2%;
+}
+@media (min-width:900px){
+    .inputStyle  {
+        width:60%;
+        border-radius:6px;
+        margin-bottom:2%;
+    }
+}

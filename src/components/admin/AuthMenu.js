@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {myFunctions} from '../firebase/firebase'
 import { Link } from 'react-router-dom'
 import './GeneralAdmin.css';
-
+// style options
 const buttonStyle = {
   marginLeft:"30%",
   borderRadius:'8px', 
@@ -36,7 +36,7 @@ const errorStyle = {
   color:'#ED6160'
 
 }
-
+/*User managment. Delete users as admin or make other users admin. */ 
 class AdminMenu extends Component {
   state = {
     action: '',
@@ -55,12 +55,14 @@ class AdminMenu extends Component {
       [e.target.id]: e.target.value
     })
   }
-
+  // delte user from firebase database.
   deleteUser = (e) => {
     e.preventDefault()
     const email = this.state.email
+    // use cloud fucntion in order to delete the user given email.
     const deleteUserByEmails = myFunctions.httpsCallable('deleteUserByEmails');
     deleteUserByEmails({email: email}).then(result => {
+      // in case of error, show it on user screen.
       const error = result.data.error ? result.data.error : null
       const FireBaseErr = result.data.errorInfo && result.data.errorInfo.message ? "Invalid email" : null
       if(error){ this.setState({error})}
@@ -71,10 +73,11 @@ class AdminMenu extends Component {
       }    
     })
   }
-
+  // create admin via email.
   createAdmin = (e) => {
     e.preventDefault();
-    const email = this.state.email        
+    const email = this.state.email
+    // use cloud fucntion in order to make other user admin, given email.
     const addAdminRole = myFunctions.httpsCallable('addAdminRole');
     addAdminRole({email: email}).then(result => {
       const error = result.data.error ? result.data.error : null
@@ -95,11 +98,11 @@ class AdminMenu extends Component {
       email:'',
     })
   }
-  
+  /*page conation 3 posible pages: auth menu, delete user page, or make an admin page.  */
   render() {
     const action = this.state.action;
     const {error} = this.state;
-    
+    // delete user given input of email.
     if(action === "deleteUser"){
          return(
           <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
@@ -111,6 +114,7 @@ class AdminMenu extends Component {
               </form>
             </div>
          )   
+    // make admin page.
     } else if (action === "createAdmin"){
         return (
           
@@ -123,7 +127,8 @@ class AdminMenu extends Component {
               </form>
             </div>
         )
-    }    
+    }  
+    // auth menu.  
     return (
     <div className='bg-admin' style={{paddingTop: '55px', width:"100%",top:'12%',height:'100%'}}>
       <h5 style={LabelStyle} className="black-tex">Admin Authorities Options:</h5>

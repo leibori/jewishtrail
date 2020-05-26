@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {createNewSite} from '../firebase/FirebaseUtilities'
 import { Link } from 'react-router-dom'
 import './GeneralAdmin.css';
-
+// style options
 const buttonStyle = {
   marginLeft:"30px",
   padding:"10px 24px",
@@ -26,11 +26,10 @@ const inputStyle = {
   borderRadius:'6px',
   marginBottom:'2%',
 }
-
+/* create admin form */
 class CreateSite extends Component {
   constructor(props){
     super(props)
-    console.log(props)
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       tags:[],
@@ -53,6 +52,7 @@ class CreateSite extends Component {
     })
   }
 
+  // show tags list according to user input.
   handleChangeTokens(e,index){
     var tags = this.state.tags
     tags[index] = e.target.value;
@@ -60,7 +60,7 @@ class CreateSite extends Component {
       tags: this.state.tags
     })
   }
-  
+  // add new tag to tag list, render it to the screen.
   addToken = (e) => {
     this.setState({
       tags:[...this.state.tags,""]
@@ -69,9 +69,10 @@ class CreateSite extends Component {
 
   async handleSubmit(e){
     e.preventDefault();
+    // cteate list of seach token from site tags, site city, country and name. casting as a set in order to delete duplicates.
     let searchTokens = Array.from(new Set([...this.state.tags,this.state.city,this.state.country,...this.state.name.split(" "), 'site', 'sites']))
     searchTokens = searchTokens.map((i) => {return i.toLowerCase()});
-    console.log("buga")
+    // cteate site object.
     var site = {
       name: this.state.name,
       city: this.state.city,
@@ -87,6 +88,7 @@ class CreateSite extends Component {
       searchTokens: searchTokens,
       vote: 50,
     }
+    // in case of invalid lotitude or longitude, alert error message.
     if (isNaN(site.latitude) || isNaN(site.longitude)) {
       alert('invalid latitude or longitude')
       return
@@ -95,14 +97,14 @@ class CreateSite extends Component {
     alert("created a new site");
     this.props.history.push('/adminSitePage');
   }
-
+  // delte tag from tag list
   deleteTag = (e,index) =>{
     var tags = [...this.state.tags]
     tags.splice(index,1)
     this.setState({tags: tags});
   }
 
-
+  /* create site Form */
   render() {
     return (
       <div className="bg-admin" style={{paddingTop: '55px', width:"100%",top:'12%'}}>
@@ -110,46 +112,57 @@ class CreateSite extends Component {
           <form style={{marginTop:'0px'}} onSubmit={(e)=> this.handleSubmit(e)} id="create-site-form">
           <div className="input-field">
             <label style={LabelStyle} htmlFor="name"> Site Name</label>
-            <input style={inputStyle} type="text" id='name' onChange={this.handleChange} required/>
+            <br></br>
+            <input className="inputStyle" type="text" id='name' onChange={this.handleChange} required/>
           </div>
           <div className="input-field">
           <label style={LabelStyle} htmlFor="city">City Name</label>
-            <input style={inputStyle} id="city" className="materialize-textarea" onChange={this.handleChange} required></input>
+          <br></br>
+            <input className="inputStyle materialize-textarea" id="city" onChange={this.handleChange} required></input>
           </div>
           <div className="input-field">
           <label style={LabelStyle} htmlFor="country"> Country Name</label>
-            <input style={inputStyle} id="country" className="materialize-textarea" onChange={this.handleChange} required></input>
+          <br></br>
+            <input className="inputStyle materialize-textarea" id="country" onChange={this.handleChange} required></input>
           </div>
           <div className="input-field">
           <label style={LabelStyle} htmlFor="address">Site address</label>
-            <textarea style={inputStyle} id="address" className="materialize-textarea" onChange={this.handleChange} required></textarea>
+          <br></br>
+            <textarea className="inputStyle materialize-textarea" id="address" onChange={this.handleChange} required></textarea>
           </div>
           <div className="input-field">
           <label style={LabelStyle} htmlFor="externalSourceUrl" > External Url Link</label>
-            <textarea style={inputStyle} id="externalSourceUrl" className="materialize-textarea" onChange={this.handleChange} required></textarea>
+          <br></br>
+            <textarea className="inputStyle materialize-textarea" id="externalSourceUrl" onChange={this.handleChange} required></textarea>
           </div>
           <div className="input-field">
           <label style={LabelStyle} htmlFor="imageUrl"> Image Url Link</label>
-            <textarea style={inputStyle} id="imageUrl" className="materialize-textarea" onChange={this.handleChange} required></textarea>
+          <br></br>
+            <textarea className="inputStyle materialize-textarea" id="imageUrl" onChange={this.handleChange} required></textarea>
           </div>
           <div className="input-field">
           <label style={LabelStyle} htmlFor="fullInfo"> Enter Description</label>
-            <textarea style={inputStyle} id="fullInfo" className="materialize-textarea" onChange={this.handleChange} required></textarea>
+          <br></br>
+            <textarea className="inputStyle materialize-textarea" id="fullInfo" onChange={this.handleChange} required></textarea>
           </div>
           <div className="input-field">
           <label style={LabelStyle} htmlFor="partialInfo">Marker Description</label>
-            <textarea style={inputStyle} id="partialInfo" className="materialize-textarea" onChange={this.handleChange} required></textarea>            
+          <br></br>
+            <textarea className="inputStyle materialize-textarea" id="partialInfo" onChange={this.handleChange} required></textarea>            
           </div>
           <div className="input-field">
           <label style={LabelStyle} htmlFor="latitude"> Enter latitude</label>
-            <input style={inputStyle} id="latitude" className="materialize-textarea" onChange={this.handleChange} required></input>
+          <br></br>
+            <input className="inputStyle materialize-textarea" id="latitude" onChange={this.handleChange} required></input>
           </div>
           <div className="input-field">
           <label style={LabelStyle} htmlFor="longitude"> Enter longitude</label>
-            <input style={inputStyle} id="longitude" className="materialize-textarea" onChange={this.handleChange} required></input>
+          <br></br>
+            <input className="inputStyle materialize-textarea" id="longitude" onChange={this.handleChange} required></input>
           </div>
           <label style={LabelStyle}>Tags</label>
           <button type="button" style={{marginLeft:'10px',backgroundColor:'#5dbb63',opacity:'0.8',borderRadius:'6px'}} className="white-text" id="token" onClick={this.addToken}>Add Tag</button>
+          {/* render each tag of tag list. */}
           {
             this.state.tags.map((token,index) => {
               return (
