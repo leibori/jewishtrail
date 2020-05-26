@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 class LoginPage extends Component {
   constructor() {
     super();
-
+  /*log in user info */
     this.state = {
       email: '',
       password: '',
@@ -22,12 +22,13 @@ class LoginPage extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSignUpClick = this.onSignUpClick.bind(this);
   }
-
+  /* user status */
   async componentWillReceiveProps() {
     this.setState({
       online: true,
     })
   }
+  /* google login */
   googleLogin = async (e) => {
     e.preventDefault();
 
@@ -39,13 +40,15 @@ class LoginPage extends Component {
     
   }
 
+    /*regular login */
+
   normalLogin = async (e) => {
     e.preventDefault();
 
     const { email, password } = this.state
 
     const user = await login(e, email, password)
-
+    // user invalid information
     if (!user) {
       this.setState({
         formError: "You have entered an invalid email or password"
@@ -56,21 +59,24 @@ class LoginPage extends Component {
     this.props.set(user)
 
   }
-  
+  /* change status state */  
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
+  /* signup */
 
   onSignUpClick = (e) => {
     e.preventDefault();
     this.props.history.push('/SignUp');
   }
   render() {
+ // while online move to about page
     if(this.state.online){
       console.log("in redirect")
       return <Redirect to = "/about"></Redirect>
     }
     return (
+      // login options to fill in  
       <div style={{height: '100%'}}>
         <title>Login</title>
         <div className='bg-img'>
@@ -125,7 +131,7 @@ const mapStateToProps = (state) => {
     status: state.status,
   };
 };
-
+// redux status
 const mapDispatchToProps = (dispatch) => {
   return {
     set: async (user) => { 

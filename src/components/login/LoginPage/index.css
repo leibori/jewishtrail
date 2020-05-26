@@ -1,3 +1,4 @@
+  /*image and background design*/
 .bg-img {
     background: url(../../../assets/img/signs.jpg);
     height: 100%;
@@ -29,7 +30,6 @@
     z-index: 999;
     width: 370px;
     text-align: center;
-    /* padding: 60px 32px; */
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.04);
     box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
@@ -104,7 +104,6 @@
 
 input[type="submit"]{
     background: #111e6c;
-    /* border: 1px solid #111e6c; */
     color: white;
     font-size: 18px;
     letter-spacing: 1px;
@@ -118,6 +117,7 @@ input[type="submit"]:hover{
     background: #003152;
 }
 
+  /*login design */
 .login {
     color: #cbd1d4;
     margin: 20px 0;
@@ -132,6 +132,7 @@ input[type="submit"]:hover{
     margin: 0 0 20px 0;
 }
 
+  /*google sign in design */
 .google {
     width: 100%;
     height: 42px;

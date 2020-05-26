@@ -291,14 +291,14 @@ class GeneralSearch extends Component {
                     </div>
                     ) : finishedSearch && searchResult.length === 0 ? (
                         <div className="results-test">
-                            <span className='message' style={{ paddingLeft: '31%' }}>Looks like nothing is</span><br/>
-                            <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
+                            <span className='message' style={{ paddingLeft: '33%', fontWeight: "bold"  }}>Looks like nothing is</span><br/>
+                            <span className='message' style={{ paddingLeft: '31%', fontWeight: "bold"}}>going around here yet...</span>
                             <img src={noResultsIcon} alt="No results found" style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
                         </div>
                     ) : (
                         <div style={{ height: '100%', paddingTop: '30%' }}>
-                            <span className='message' style={{ paddingLeft: '34%' }}>Search for a trail</span><br/>
-                            <span className='message' style={{ paddingLeft: '31%' }}>to find your journey</span>
+                            <span className='message' style={{ paddingLeft: '38%', fontWeight: "bold" }}>Search for a trail</span><br/>
+                            <span className='message' style={{ paddingLeft: '36%', fontWeight: "bold" }}>to find your journey</span>
                             <img src={SearchStart} alt="Please start searching" style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
                         </div>
                     )

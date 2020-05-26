@@ -3,6 +3,7 @@ import './NotVerified.css';
 import {emailAuthentication} from 'components/firebase/FirebaseLoginUtils';
 
 export default function NotVerified(props) {
+/* verify account */
     const text = "Please check your email to verify your account."
     const sub_text = "resend email"
     return (

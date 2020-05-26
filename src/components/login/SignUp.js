@@ -17,6 +17,8 @@ class SignUp extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
+
+    /*signup data */
     this.state = {
       online: '',
       email: '',
@@ -30,7 +32,7 @@ class SignUp extends Component {
     this.googleLogin = this.googleLogin.bind(this);
 
   }
-
+  /* login using google */
   googleLogin = async (e) => {
     e.preventDefault();
     var userid = await signInWithGoogle()
@@ -41,6 +43,7 @@ class SignUp extends Component {
     })
   }
 
+    /* firebase status */
   async componentDidMount(){
     myFirebase.auth().onAuthStateChanged(async (user) => {
       if(user){
@@ -55,6 +58,7 @@ class SignUp extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  /* Signup messege alert*/
   onSignup = (e) => {
     e.preventDefault();
     const { email, password, username, confpassword, recaptchaRef } = this.state;
@@ -68,10 +72,11 @@ class SignUp extends Component {
     }
     signup(e, email, password, username).then(() => this.props.history.push('/notverified'));
   }
-  //
+  
   render() {
     const { email, password, username, recaptchaRef } = this.state;
     return (
+    /* Signup form to fill in */
     <div style={{height: '100%'}} >
         <title>Login</title>
         <div className='bg-img'>
@@ -103,7 +108,7 @@ class SignUp extends Component {
               </div>
               <div className='login'>———————— or ————————</div>
               <div className='pass'>
-                <a href='/menu'>Continue as a guest</a>
+                <a href='/about'>Continue as a guest</a>
               </div>
               <div className='pass'>
                 Already have an account?  
@@ -115,60 +120,5 @@ class SignUp extends Component {
       </div>);
   }
 }
-//     return (
-//         <MDBContainer>
-//             <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
-//                 <MDBCol md="4">
-//                     <MDBCard>
-//                         <div className="header pt-3 blue-gradient">
-//                             <MDBRow className="d-flex justify-content-center">
-//                                 <h1 className="white-text mb-3 pt-3 font-weight-bold">
-//                                 Sign Up
-//                                 </h1>
-//                             </MDBRow>
-//                             <MDBRow className="mt-2 mb-3 d-flex justify-content-center">
-//                                 <a onClick={this.googleLogin} className="fa-lg p-2 m-2 gplus-ic">
-//                                     <MDBIcon fab className="fa-google-plus-g white-text fa-lg" />
-//                                 </a>
-//                             </MDBRow>
-//                         </div>
-//                         <MDBCardBody className="mx-4">
-//                         <h3 align='center' className="blue-text mb-3 pt-3 font-weight-bold">
-//                                 Start your trail today!
-//                                 </h3>
-//                           <form onSubmit={this.onSignup}>
-//                             <div className="md-form mt-3">
-//                               <i className="fa fa-envelope prefix grey-text"></i>
-//                               <input required name="email" onChange={this.handleChange} type="email" id="materialSubscriptionFormPasswords" className="form-control"/>
-//                               <label htmlFor="materialSubscriptionFormPasswords"> Email...</label>
-//                             </div>
-//                             <div className="md-form mt-3">
-//                               <i className="fa fa-lock prefix grey-text"></i>
-//                               <input required type="password" name="password" onChange={this.handleChange} id="materialSubscriptionFormPasswords" className="form-control"/>
-//                               <label htmlFor="materialSubscriptionFormPasswords">Password...</label>
-//                             </div> 
-//                             <div className="md-form mt-3">
-//                               <i className="fa fa-user prefix grey-text"></i>
-//                               <input required type="text" name="username" onChange={this.handleChange} id="materialSubscriptionFormPasswords" className="form-control"/>
-//                               <label htmlFor="materialSubscriptionFormPasswords">Username...</label>
-//                             </div>  
-//                             <div style={{margin: 'auto'}} className="text-center mb-3">
-//                                 <MDBBtn
-//                                     type="submit"
-//                                     gradient="blue"
-//                                     rounded
-//                                     className="z-depth-1a"
-//                                     style={{borderRadius: '18px',}}                                    
-//                                 >
-//                                   Sign up
-//                                 </MDBBtn>
-//                             </div>
-//                           </form>
-//                         </MDBCardBody>
-//                     </MDBCard>
-//                 </MDBCol>
-//             </MDBRow>
-//         </MDBContainer>
-//     );}
-// }
+
 export default SignUp;
