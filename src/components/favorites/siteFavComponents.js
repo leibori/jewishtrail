@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     ['@media screen and (min-width:600px)']: {
       padding: theme.spacing(1),
-      width:'30%'
+      width:'100%',
+      height:'180px'
     },
   },
   image: {

@@ -295,21 +295,21 @@ class Favorites extends Component {
         </div>}
         <div className="FavoritesResult" style={{zIndex:'0'}}>
                     {this.state.searchField.length > 0 ? filteredFav.length > 0 ? mapping(filteredFav) : 
-                    <div style={{top: '50%', left:'50%',position:'fixed',width:'70%',transform: 'translate(-50%, -50%)'}}>
-                    <span className='message' style={{ paddingLeft: '20%' ,fontSize:'16px'}}>Looks like you'r list empty</span><br/>
-                      <img src="/image/binoculars.png" style={{ maxHeight: '50%', maxWidth: '50%', paddingTop: '25px' }}/>
+                    <div className="errormessage-conatiner">
+                    <span className='message-favorites'>Looks like you'r list empty</span><br/>
+                    <img className="errormessage-favorites" src="/image/binoculars.png"/>
                       </div>
                     : 
                     this.checkCondition() && this.state.searchField.length == 0 ? 
-                    <div style={{top: '50%', left:'50%',position:'fixed',width:'70%',transform: 'translate(-50%, -50%)'}}>
-                    <span className='message' style={{ paddingLeft: '20%' ,fontSize:'16px'}}>Looks like you'r list empty</span><br/>
-                      <img src="/image/binoculars.png" style={{ maxHeight: '50%', maxWidth: '50%', paddingTop: '25px' }}/>
+                    <div className="errormessage-conatiner">
+                    <span className='message-favorites'>Looks like you'r list empty</span><br/>
+                      <img className="errormessage-favorites" src="/image/binoculars.png"/>
                       </div> :
                     this.state.favoritesArr.filter(this.resultsFilter).length > 20 ? 
                      <PaginatedList
                         list={this.state.favoritesArr.filter(this.resultsFilter)}
                         itemsPerPage={20}
-                        renderList={mapping}/>: mapping(this.state.favoritesArr)}
+                        renderList={mapping}/>: mapping(this.state.favoritesArr.filter(this.resultsFilter))}
         </div>
       </div>
       )

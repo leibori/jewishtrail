@@ -1,4 +1,5 @@
-.fixed {
+@media screen and (max-width: 780px) {
+    .fixed {
     background: url(../../assets/img/signs.jpg) no-repeat;
     background-size: 100% 100%;
     background-position: center center;
@@ -14,13 +15,17 @@
     top: 0%;
     width: 100%;
 }
-@media (min-width: 768px) {
+}
+@media screen and (min-width: 781px) {
     .fixed {
-        background: url(../../assets/img/signs.jpg);
-        background-repeat: no-repeat;
-        background-size: 100% auto;
-        background-attachment: fixed;
-        overflow: hidden;
+        background: url(../../assets/img/fullnewScreen.jpg) no-repeat;
+        background-size: 100% 100%;
+        /* background-repeat: no-repeat;*/
+        /* background-size: 100% auto;
+        -webkit-background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
+        -o-background-size: 100% 100%;
+        background-size: 100% 100%; */
         padding-top: 5%;
         position: fixed;
         z-index: 1;
@@ -30,14 +35,41 @@
         width: 100%;
     }
   }
-.message {
+.errormessage-conatiner{
+    top: 50%;
+    left:50%;
+    position: fixed;
+    width: 70%;
+    transform: translate(-50%, -50%)
+}
+@media (min-width: 768px){
+    .errormessage-conatiner{
+        top: 60%;
+        left:50%;
+        text-align: center;
+        width: 70%;
+        transform: translate(-50%, -50%)
+    }
+}
+.message-favorites {
     font-size: 18sp;
     font-family: sans-serif;
     color: #525252;
+    padding-Left: 20%;
+    font-size: 16px;
+}
+@media (min-width: 768px){
+    .message-favorites {
+        font-size: 23px;
+        font-family: sans-serif;
+        color: #525252;
+        padding-top: 10%;
+        padding-left: 0%;
+    }   
 }
 @media (min-width: 768px){
     .background-fullsize{
-        background-color: rgb(63,122,77,0.3);
+        /* background-color: rgb(63,122,77,0.3); */
         /* background: url(../../assets/img/signs.jpg); */
         background-size: cover;
         background-position: center center;
@@ -74,5 +106,19 @@
     .site-favContiner{
         width: 50%;
         margin-left: 27%;
+    }
+}
+
+.errormessage-favorites{
+    max-height: 50%;
+    max-width: 50%;
+    padding-top: 25px;
+}
+
+@media (min-width: 768px){
+    .errormessage-favorites{
+        max-height: 25%;
+        max-width: 25%;
+        padding-top: 5%;
     }
 }

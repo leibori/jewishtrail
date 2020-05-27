@@ -17,10 +17,19 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     margin: 'auto',
     maxWidth: '100%',
+    ['@media screen and (min-width:600px)']: {
+      padding: theme.spacing(1),
+      width:'100%',
+      height:'180px'
+    },
   },
   image: {
     width: '100%',
     height: '150px',
+    ['@media screen and (min-width:600px)']: {
+      height: '150px',
+      width:'100%'
+    },
   },
   img: {
     outline: 'none',
