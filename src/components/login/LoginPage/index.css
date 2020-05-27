@@ -53,20 +53,62 @@
     background: rgba(255, 255, 255, 0.94);
     border-radius: 5px;
 }
+@media (min-width: 768px) {
+    .field {
+        position: relative;
+        height: 45px;
+        width: 100%;
+        display: flex;
+        background: rgba(255, 255, 255, 0.94);
+        border-radius: 5px;
+    }
+}
 .field span {
     color: #222;
     width: 40px;
     line-height: 45px;
 }
+@media (min-width: 768px){
+    .field span {
+        color: #222;
+        width: 40px;
+        line-height: 45px;
+    }    
+}
 
 .field input {
     height: 100%;
-    width: 100%;
+    width: 50%;
     background: transparent;
     border: none;
     outline: none;
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
+}
+@media (min-width: 768px){
+    .field input {
+        height: 100%;
+        width: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+    }   
+}
+
+.form-conatiner{
+    padding-bottom: 0%;
+    margin-top: 0%;
+    width: 100%;
+}
+@media (min-width: 900px){
+    .form-conatiner{
+        padding-bottom: 0%;
+        margin-top: 0%;
+        width: 35%;
+        margin-left: 33%;
+    }
 }
 
 .space {
@@ -229,7 +271,13 @@ input[type="submit"]:hover{
     top: 178px;
     right: 0px;
 }
-
+@media (min-width: 850px) {
+    .forSearch-options{
+        position: absolute;
+        top: 178px;
+        margin-right: 28%;
+    }
+}
 .sort-by {
     position: absolute;
     float: right;

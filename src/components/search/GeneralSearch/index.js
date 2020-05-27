@@ -240,7 +240,7 @@ class GeneralSearch extends Component {
         return (
             <div style={{width: '100%'}}>
                 <div className="searchbar">
-                    <form onSubmit={this.onSearchButtonClicked} style={{paddingBottom: '0%', marginTop: '0%', width: '100%'}}>
+                    <form className= "form-conatiner" onSubmit={this.onSearchButtonClicked}>
                         <header style={headerStyle}>Find a trail</header>
                         <div className='field'>
                             <span><i className="fas fa-search" style={{marginLeft: '12px'}}></i></span>
@@ -253,13 +253,15 @@ class GeneralSearch extends Component {
                         <p className="error pink-text center-align"></p>
                     </form>
                     {finishedSearch && searchResult.length !== 0 && 
-                        <div>
+                        <div className="filterLeft">
                             <button
+                                className="filterLeft"
                                 onClick={this.onlySitesClicked}
-                                style={{backgroundColor: siteColorPredicate, borderRadius: '4px', marginLeft: '5%'}}>Only sites</button>
+                                style={{backgroundColor: siteColorPredicate}}>Only sites</button>
                             <button
+                                className="filterRight"
                                 onClick={this.onlyTrailsClicked}
-                                style={{backgroundColor: trailColorPredicate, borderRadius: '4px', marginLeft: '10px' }}>Only trails</button>
+                                style={{backgroundColor: trailColorPredicate}}>Only trails</button>
                             <div className='forSearch-options'>
                                 <SelectStyle passFunction={this.sortBy} type ={sortOptions}/>
                             </div>
@@ -267,14 +269,14 @@ class GeneralSearch extends Component {
                         </div>
                     }
                 </div>
-                <div className="results" style={{zIndex:'0', paddingTop: '12%'}}>
+                <div className="collection" style={{zIndex:'0', paddingTop: '12%'}}>
                 { startedSearch && ! finishedSearch ? (
                     <div style={{top: '50%', left:'50%',position:'fixed',transform: 'translate(-50%, -50%)'}}>
                         <ReactLoading type={"bars"} color={"black"} />
                     </div>
                     ) : finishedSearch && searchResult.length !== 0 ? (
                     <div style={{width: '100%'}}>
-                        <div className="container" style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px' }}>
+                        <div className="results container" style={{ width: '100%', paddingLeft: '0px', paddingRight: '0px' }}>
                             {
                                 searchResult.filter(this.resultsFilter).length === 0 ?
                                 <div className="results-test" style={{ height: '100%', paddingTop: '30%' }}>
@@ -291,15 +293,15 @@ class GeneralSearch extends Component {
                     </div>
                     ) : finishedSearch && searchResult.length === 0 ? (
                         <div className="results-test">
-                            <span className='message' style={{ paddingLeft: '33%', fontWeight: "bold"  }}>Looks like nothing is</span><br/>
-                            <span className='message' style={{ paddingLeft: '31%', fontWeight: "bold"}}>going around here yet...</span>
-                            <img src={noResultsIcon} alt="No results found" style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                            <span className='messageFirst' >Looks like nothing is</span><br/>
+                            <span className='messageSecond'>going around here yet...</span>
+                            <img className="iconMessage" src={noResultsIcon} alt="No results found"/>
                         </div>
                     ) : (
-                        <div style={{ height: '100%', paddingTop: '30%' }}>
-                            <span className='message' style={{ paddingLeft: '38%', fontWeight: "bold" }}>Search for a trail</span><br/>
-                            <span className='message' style={{ paddingLeft: '36%', fontWeight: "bold" }}>to find your journey</span>
-                            <img src={SearchStart} alt="Please start searching" style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
+                        <div className="results-test">
+                            <span className='noResultFirst'>Search for a trail</span><br/>
+                            <span className='noResultSecond'>to start your journey</span>
+                            <img className="iconMessage" src={SearchStart} alt="Please start searching"/>
                         </div>
                     )
                 }
