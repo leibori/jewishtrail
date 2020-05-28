@@ -104,7 +104,7 @@ class TrailPage extends Component {
         })
     }
 
-    async handleNavigationLink(position) {
+    handleNavigationLink(position) {
 
         const { siteList } = this.state;
 
@@ -127,6 +127,7 @@ class TrailPage extends Component {
             navLink += "&destination=" + firstSite.latitude + "%2C" + firstSite.longitude
         }
         navLink += "&dir_action=navigate"
+        
         this.setState({
             navigationLink: navLink
         })
