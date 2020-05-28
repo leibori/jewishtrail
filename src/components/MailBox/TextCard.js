@@ -12,12 +12,12 @@ const buttonstyle = {
 
 const TextCard = (props) => {
     const { massege, buttonsProps } = props;
-    const myButtonFunction = buttonsProps ? buttonsProps.find((buttonProps) => buttonProps.canRender(massege.id)) : undefined;
+    const myButtonFunction = buttonsProps ? buttonsProps : undefined
     const info_url = '/massege/' + massege.id
     // get summery of user massege.
     const cardDetials = massege.details.length > 30 ? massege.details.substring(0,30) + '...' : massege.details; 
     return(  
-    <Card style={{ width: '22rem'}}>
+    <Card style={{ width: '100%'}}>
     <Card.Body>
         <Card.Title>{massege.title}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">From: {massege.name}</Card.Subtitle>
@@ -26,7 +26,7 @@ const TextCard = (props) => {
         <Link style={{color:"#1295b1", paddingRight:'4%'}} to={{pathname:'/massege/' + massege.id, state:{data:massege}}}>More Info</Link>
 
         {myButtonFunction &&
-            (<Card.Link  item>
+            (<Card.Link>
                 <button onClick={(e) => myButtonFunction.buttonFunction(e, massege.id)} style={buttonstyle}>{myButtonFunction.buttonName}</button>
             </Card.Link>)
         }

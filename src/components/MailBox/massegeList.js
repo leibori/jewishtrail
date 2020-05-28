@@ -53,17 +53,16 @@ class massegeList extends Component {
         const mapping = (list) => list.map((massege, i) => {
             return (
                 <Card.Body key={i}>
-                    <TextCard variant="top" massege={massege} buttonsProps={[{buttonName: buttonName, canRender: (massegeID)=>true, buttonFunction: this.DeleteSite}]}/>
+                    <TextCard variant="top" massege={massege} buttonsProps={{buttonFunction: this.DeleteSite, buttonName: buttonName }}/>
                 </Card.Body>)
         });
         return (
-            <div className="fullscreen-message" >
-                <Card className="fullscreen-message">
-                    <div className="messageimage-container">
-                        <Card.Img src="/image/contactUs.png" variant="top"  style={{marginTop:'30px',height: '300px', width: '100%'}} />
+                <Card>
+                    <div className="messageimage-container" style={{height: '30%'}}>
+                        <Card.Img src="/image/contactUs.png" variant="top"  style={{marginTop:'10%', width: '100%'}} />
                     </div>
                     {/* <Card.Body> */}
-                    <div style={{marginLeft:'20px',marginTop:'15px'}}>
+                    <div style={{marginLeft:'10%',marginTop:'3%'}}>
                         <Card.Title>Mail Box</Card.Title>
                         <Card.Text>You Have {MassegeCounter} New Masseges</Card.Text>
                     {/* </Card.Body> */}
@@ -77,7 +76,6 @@ class massegeList extends Component {
                         </ListGroupItem>
                     </ListGroup>) : null}
                 </Card>
-            </div>
         )
     }
 }
