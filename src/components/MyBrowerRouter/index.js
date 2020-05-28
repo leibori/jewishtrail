@@ -33,6 +33,18 @@ import { connect } from 'react-redux'
 
 
 class MyBrowserRouter extends Component{
+  constructor(props) {
+    super(props);
+
+    this.userListiner = this.userListiner.bind(this)
+  }
+
+  userListiner = myFirebase.auth().onAuthStateChanged((user) => {
+    if(user === null && this.props.uid !== '') {
+      this.props.logOut()
+    }
+  })
+
   render() {
   let admin = this.props.claims === 'admin';
   let online = ((this.props.claims === 'registered') || admin) && (this.props.id !== '');
@@ -74,8 +86,8 @@ class MyBrowserRouter extends Component{
             <MyRoute exact path='/massegeList' component={massegeList} aboutCond={!admin} verCond={online_not_verified} />
             <MyRoute exact path='/massege/:id' component={massegePage} aboutCond={!admin} verCond={online_not_verified}/>
             <MyRoute exact path='/site/:id' component={SitePage} />
-            <MyRoute exact path='/trailform' component={TrailForm} />
-            <MyRoute exact path='/trailform/:searchVal' component={TrailForm} />
+            <MyRoute exact path='/trailform' component={TrailForm} aboutCond={!admin} verCond={online_not_verified}/>
+            <MyRoute exact path='/trailform/:searchVal' component={TrailForm} aboutCond={!admin} verCond={online_not_verified}/>
             <MyRoute exact path='/trail/:id' component={TrailPage} />
             <MyRoute exact path='/deletetrail' component={DeleteTrail} aboutCond={!admin} verCond={online_not_verified}/>
             <MyRoute exact path='/deletetrail/:searchVal' component={DeleteTrail} aboutCond={!admin} verCond={online_not_verified}/>          
@@ -98,12 +110,6 @@ function MyRoute(props){
       {aboutCond ? <Redirect to="/about"/> : verCond ? <Redirect to='/notverified'/> : undefined}
     </Route>);
 }
-
-const userListiner = myFirebase.auth().onAuthStateChanged((user) => {
-  if(!user) {
-    this.props.logOut()
-  }
-})
 
 const mapStateToProps = (state) => {
   return {
