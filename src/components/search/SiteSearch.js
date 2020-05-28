@@ -134,14 +134,13 @@ export default class SiteSearch extends Component {
                 </form>
                 
                 {/* Results */}
-                <div className="container" style={{padding:'10px', paddingLeft:'0px',paddingRight:'0px'}}>
-                    {siteList.length > 5 ?
+                <div className="results container" style={{padding:'10px', paddingLeft:'0px',paddingRight:'0px'}}>
+                    {siteList.length > 30 ?
                     siteList.length !== 0 && <PaginatedList
                         list={siteList}
-                        itemsPerPage={5}
+                        itemsPerPage={30}
                         renderList={mapping}/> : mapping(siteList)}
                 </div>
-
                 {
                     this.state.searchVal.length !== 0 && this.state.siteList.length === 0 && this.state.haveSearched ?
                         (<h5>No matches found.</h5>) : ''

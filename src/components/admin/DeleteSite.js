@@ -57,14 +57,6 @@ DeleteSite = async(e, siteID) => {
   this.setState({siteList});
 }
 
-
-// async onSearchButtonClicked(e) {
-//     e.preventDefault();
-
-//     const result = await findFromDB(this.state.topDownValue, this.state.searchVal)
-//     this.setState({siteList: result})
-// }
-
 updateSearchValue(e) {
   this.setState({searchVal: e.target.value})
 }

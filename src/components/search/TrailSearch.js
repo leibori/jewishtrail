@@ -76,7 +76,7 @@ class TrailSearch extends Component {
                 </form>
                 
                 {/* Results */}
-                <div className="container" style={{padding:'10px', paddingLeft:'0px',paddingRight:'0px'}}>
+                <div className="results container" style={{padding:'10px', paddingLeft:'0px',paddingRight:'0px'}}>
                     {trailList.length > 30 ? <PaginatedList
                         list={trailList}
                         itemsPerPage={31}
