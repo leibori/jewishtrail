@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const TrailFavComponent = (props) => {
   const classes = useStyles()
   const { Trail, siteButtonsProps } = props;
-  var info_url = '/road/'+Trail.uid
+  var info_url = '/trail/'+Trail.uid
   
 
   const buttonProps = siteButtonsProps[0]
