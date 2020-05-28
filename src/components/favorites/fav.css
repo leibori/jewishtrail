@@ -18,14 +18,14 @@
 }
 @media screen and (min-width: 781px) {
     .fixed {
-        background: url(../../assets/img/fullnewScreen.jpg) no-repeat;
+        background: url(../../assets/img/resizeimage.jpg) no-repeat;
         background-size: 100% 100%;
         /* background-repeat: no-repeat;*/
         /* background-size: 100% auto;
-        -webkit-background-size: 100% 100%;
+        /* -webkit-background-size: 100% 100%; */
         -moz-background-size: 100% 100%;
         -o-background-size: 100% 100%;
-        background-size: 100% 100%; */
+        background-size: 100% 100%;
         padding-top: 5%;
         position: fixed;
         z-index: 1;

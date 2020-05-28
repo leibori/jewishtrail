@@ -284,11 +284,11 @@ class GeneralSearch extends Component {
                                 <span className='message' style={{ paddingLeft: '28%' }}>going around here yet...</span>
                                 <img src={noResultsIcon} alt={no_image_available} style={{ maxHeight: '33%', maxWidth: '33%', paddingTop: '25px' }}/>
                                 </div> :
-                                searchResult.filter(this.resultsFilter).length > 9 ?
+                                searchResult.filter(this.resultsFilter).length > 30 ?
                                 < PaginatedList style={{width:'100%'}}
                                 list={searchResult.filter(this.resultsFilter)}
-                                itemsPerPage={9}
-                                renderList={mapping}/> : mapping(searchResult.filter(this.resultsFilter))}
+                                itemsPerPage={30}
+                                renderList={mapping}/>: mapping(searchResult.filter(this.resultsFilter))}
                         </div>
                     </div>
                     ) : finishedSearch && searchResult.length === 0 ? (
