@@ -297,7 +297,7 @@ class SitePage extends Component {
                         <ReactLoading type={"bars"} color={"black"} />
                     </div>}
                     <div style={{height: '33%'}}>
-                        <Card.Img variant="top" src={imageUrl} style={{height: '33%', width: '100%'}} />
+                        <Card.Img variant="top" src={imageUrl} style={{minHeight:'250px',height: '33%', width: '100%'}} />
                         <div className="card-img-overlay" style={{position: 'absolute', paddingTop:'43%', paddingLeft: '75%', maxHeight:'300px', zIndex: '1'}}>
                         {this.state.done &&
                             <span style={{borderRadius: '50%', backgroundColor:'rgba(255,255,255,0.8)', height: '70px', width: '70px', display: 'inline-block'}}>
