@@ -168,7 +168,7 @@ class CreateSite extends Component {
               return (
                 <div key={index}>
                   <input  onChange={(e) => this.handleChangeTokens(e,index)} value={token}  /> 
-                  <button type="button" className="white-text" style={{margin:'6px',backgroundColor:'#5dbb63',opacity:'0.8'}} onClick={(e) => this.deleteTag(index)}> Delete Tag</button>
+                  <button type="button" className="white-text" style={{margin:'6px',backgroundColor:'#5dbb63',opacity:'0.8'}} onClick={(e) => this.deleteTag(e, index)}> Delete Tag</button>
                 </div>
               )
             })
