@@ -8,6 +8,7 @@ const buttonstyle = {
     fontweight: '600',
     border: '2px solid #e3242b',
     borderRadius: '5px',
+    marginTop: '0%'
 }
 
 const TextCard = (props) => {

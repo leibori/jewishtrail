@@ -80,7 +80,7 @@ const TrailComponent = (props) => {
                     </Row>
                     { buttonProps &&
                       <Row style={{ paddingTop: '20%', paddingLeft: '45%'}}>
-                        <button variant="outlined" style={{ maxHeight: '40px' }} onClick={(e) => buttonProps.buttonFunction(e, trail.id)}>{buttonProps.buttonName}</button> 
+                        <button variant="outlined" style={{ maxHeight: '40px', marginTop: '0%' }} onClick={(e) => buttonProps.buttonFunction(e, trail.id)}>{buttonProps.buttonName}</button> 
                       </Row>
                     }
                   </Col>
