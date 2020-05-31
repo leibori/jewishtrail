@@ -115,7 +115,7 @@ class TrailPage extends Component {
 
         if(firstDistance < lastDistance) {
             navLink += firstSite.latitude + "%2C" + firstSite.longitude
-            for(var i = 1; i < siteList.length - 2; ++i) {
+            for(var i = 1; i < siteList.length - 1; ++i) {
                 navLink += "%7C" + siteList[i].latitude + "%2C" + siteList[i].longitude
             }
             navLink += "&destination=" + lastSite.latitude + "%2C" + lastSite.longitude
