@@ -8,7 +8,7 @@ import { saveSearchResults } from '../../../actions'
 import { connect } from 'react-redux'
 import SelectStyle from '../../favorites/selectStyle'
 import './index.css';         
-import noResultsIcon from '../../../assets/img/SearchNoResults.png'
+import noResultsIcon from '../../../assets/img/SearchNoResults.jpeg'
 import SearchStart from '../../../assets/img/SearchStart.png'
 import _ from 'underscore'
 import no_image_available from '../../../assets/img/no-image-available.png'
@@ -191,8 +191,10 @@ class GeneralSearch extends Component {
     }
 
 
+    /**
+     * This functions sorts the search results by the category it receives as string.
+     */
     sortBy = (typeSort) => {
-        console.log(typeSort)
         let sortedArray = []
         if(typeSort === 'Rates'){
           sortedArray = this.state.searchResult.sort((a, b) => parseFloat(b.vote) - parseFloat(a.vote))
